@@ -1,6 +1,12 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Core/app_colors.dart';
+import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
+import 'package:manda_bai/UI/home/components/listview_item_component.dart';
+import 'package:websafe_svg/websafe_svg.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({Key? key}) : super(key: key);
@@ -13,24 +19,111 @@ class _StartPageState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children:[
-          Container(
-            width: Get.width,
-              child: Image.asset(AppImages.Banner),
-
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Stack(
+              children: [
+                Image.asset(
+                  AppImages.Banner,
+                  width: Get.width,
+                  fit: BoxFit.fitWidth,
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 195),
+                  child: SizedBox(
+                    width: 350,
+                    height: 40,
+                    child: TextField(
+                      cursorColor: AppColors.greenColor,
+                      decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30.0)),
+                            borderSide:
+                                BorderSide(color: AppColors.greenColor)),
+                        hintText: 'Pesquisar Produto...',
+                        contentPadding: EdgeInsets.only(top: 10, left: 15),
+                        suffixIcon: Icon(
+                          Icons.search,
+                          color: AppColors.greenColor,
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-         const TextField(
-           decoration: InputDecoration(
-               hintText: 'Pesquisar Produto...',
-             border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
-           ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(top: 20.0, left: 10.0),
+                  child: const Text(
+                    'Categorias',
+                    style: TextStyle(
+                      fontFamily: AppFonts.poppinsBoldFont,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(top: 20.0, right: 10.0),
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle:
+                          const TextStyle(decoration: TextDecoration.underline),
+                      primary: AppColors.greenColor,
+                    ),
+                    onPressed: () {},
+                    child: const Text(
+                      'Ver Todas',
+                      style: TextStyle(
+                        fontFamily: AppFonts.poppinsBoldFont,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            Container(
+              height: Get.height * 0.06,
+              child: ListView(
+                // This next line does the trick.
+                scrollDirection: Axis.horizontal,
+                children: const <Widget>[
+                  ListViewItemComponent( categoryName: 'Electronics'),
+                  ListViewItemComponent( categoryName: 'Cosmetics'),
+                  ListViewItemComponent( categoryName: 'Foods'),
+                  ListViewItemComponent( categoryName:'Vegetables'),
+                  ListViewItemComponent( categoryName: 'Salad'),
+                  ListViewItemComponent( categoryName: 'Drinks'),
 
-         ),
 
 
-        ]
+                ],
 
+              ),
+            ),
+           /*Container(
+             child: ListView(
+                 scrollDirection: Axis.horizontal,
+                 children: const <Widget>[
+
+
+
+             ),
+           )*/
+          ],
+        ),
       ),
     );
   }
