@@ -12,8 +12,8 @@ class AppImages {
   static const banana = 'assets/images/banana.png';
   static const abacate= 'assets/images/abacate.png';
   static const tv = 'assets/images/tv.png';
-  static const fogao = 'assets/images/fogao.png';
-  static const tostadeira = 'assets/images/tostadeira.png';
+  static const fogao = 'assets/images/Fogao.png';
+  static const tostadeira = 'assets/images/Tostadeira.png';
   static const tressemme = 'assets/images/tresseme.png';
   static const bolacha = 'assets/images/bolacha.png';
 

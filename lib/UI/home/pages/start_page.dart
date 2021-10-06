@@ -31,6 +31,7 @@ class _StartPageState extends State<StartPage> {
                   fit: BoxFit.fitWidth,
                 ),
                 const Padding(
+                  // ignore: unnecessary_const
                   padding: EdgeInsets.only(left: 20, right: 20, top: 195),
                   child: SizedBox(
                     width: 350,
@@ -101,28 +102,27 @@ class _StartPageState extends State<StartPage> {
                 // This next line does the trick.
                 scrollDirection: Axis.horizontal,
                 children: const <Widget>[
-                  ListViewItemComponent( categoryName: 'Electronics'),
-                  ListViewItemComponent( categoryName: 'Cosmetics'),
-                  ListViewItemComponent( categoryName: 'Foods'),
-                  ListViewItemComponent( categoryName:'Vegetables'),
-                  ListViewItemComponent( categoryName: 'Salad'),
-                  ListViewItemComponent( categoryName: 'Drinks'),
-
-
-
+                  ListViewItemComponent(categoryName: 'Electronics'),
+                  ListViewItemComponent(categoryName: 'Cosmetics'),
+                  ListViewItemComponent(categoryName: 'Foods'),
+                  ListViewItemComponent(categoryName: 'Vegetables'),
+                  ListViewItemComponent(categoryName: 'Salad'),
+                  ListViewItemComponent(categoryName: 'Drinks'),
                 ],
-
               ),
             ),
-           Container(
-             height: Get.height * 0.26,
-             child: ListView(
-                 scrollDirection: Axis.horizontal,
-                 children: const <Widget>[
-                   ProductListComponent(imageName:AppImages.tostadeira, productName: 'Tostadeira', priceProduct: '20.00 €'),
-                 ]
-             ),
-           ),
+            Container(
+              height: Get.height * 0.29,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: const <Widget>[
+                  ProductListComponent(
+                      imageName: AppImages.fogao,
+                      productName: 'Tostadeira',
+                      priceProduct: '20.00 €'),
+                ],
+              ),
+            ),
           ],
         ),
       ),
