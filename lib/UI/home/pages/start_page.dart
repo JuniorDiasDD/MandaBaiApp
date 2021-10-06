@@ -6,6 +6,7 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/home/components/listview_item_component.dart';
+import 'package:manda_bai/UI/home/components/product_list_component.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 class StartPage extends StatefulWidget {
@@ -113,15 +114,15 @@ class _StartPageState extends State<StartPage> {
 
               ),
             ),
-           /*Container(
+           Container(
+             height: Get.height * 0.26,
              child: ListView(
                  scrollDirection: Axis.horizontal,
                  children: const <Widget>[
-
-
-
+                   ProductListComponent(imageName:AppImages.tostadeira, productName: 'Tostadeira', priceProduct: '20.00 €'),
+                 ]
              ),
-           )*/
+           ),
           ],
         ),
       ),
