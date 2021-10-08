@@ -20,10 +20,10 @@ class ProductListComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(13.0),
+      padding: const EdgeInsets.only(left: 8.0, top: 10.0),
       child: Container(
-        width: Get.width * 0.38,
-        height: Get.height * 0.3,
+        width: Get.width * 0.44,
+        //height: Get.height * 0.3,
         decoration: BoxDecoration(
           border: Border.all(color: Colors.white54, width: 1.0),
           color: Colors.grey[200],
@@ -34,9 +34,10 @@ class ProductListComponent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.asset(
-              AppImages.fogao,
-              width: Get.width * 0.4,
+              AppImages.tv,
+              width: Get.width * 0.8,
               height: Get.height * 0.1,
+              alignment: Alignment.center,
             ),
             Container(
               child: Text(
@@ -52,32 +53,51 @@ class ProductListComponent extends StatelessWidget {
                 left: 7.0,
               ),
             ),
-            Row(
-            //  crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  priceProduct,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontFamily: AppFonts.poppinsRegularFont,
-                    fontSize: 10,
-                    color: AppColors.greenColor,
+            Container(
+              padding: const EdgeInsets.only(left: 7.0, top: 5.0),
+              width: Get.width * 0.8,
+              height: Get.height * 0.05,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    priceProduct,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontFamily: AppFonts.poppinsRegularFont,
+                      fontSize: 10,
+                      color: AppColors.greenColor,
+                    ),
                   ),
-                ),
-                IconButton(
-                  padding: const EdgeInsets.all(0.0),
-                  onPressed: () {},
-                  icon: const Icon(Icons.favorite),
-                  iconSize: Get.width * 0.05,
-                ),
-                IconButton(
-                  padding: const EdgeInsets.all(0.0),
-                  onPressed: () {},
-                  icon: const Icon(Icons.shopping_cart),
-                  iconSize: Get.width * 0.05,
-                ),
-              ],
+                  /*IconButton(
+                    icon: new Icon(Icons.volume_up),
+                    alignment: Alignment.centerRight,
+                    padding: new EdgeInsets.all(0.0),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: new Icon(Icons.volume_up),
+                    alignment: Alignment.centerLeft,
+                    padding: new EdgeInsets.all(0.0),
+                    onPressed: () {},
+                  )*/
+                  IconButton(
+                    padding: const EdgeInsets.all(0.0),
+                    onPressed: () {},
+                    icon: const Icon(Icons.favorite_outline_outlined),
+                    iconSize: Get.width * 0.05,
+                    alignment: Alignment.centerRight,
+                  
+                  ),
+                  IconButton(
+                    padding: const EdgeInsets.all(0.0),
+                    onPressed: () {},
+                    icon: const Icon(Icons.shopping_cart_outlined),
+                    iconSize: Get.width * 0.05,
+                    alignment: Alignment.center,
+                  ),
+                ],
+              ),
             ),
           ],
         ),

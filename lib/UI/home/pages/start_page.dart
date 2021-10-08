@@ -21,7 +21,7 @@ class _StartPageState extends State<StartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
+               child: Column(
           children: [
             Stack(
               children: [
@@ -67,7 +67,7 @@ class _StartPageState extends State<StartPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  padding: const EdgeInsets.only(top: 20.0, left: 10.0),
+                  padding: const EdgeInsets.only(top: 10.0, left: 10.0),
                   child: const Text(
                     'Categorias',
                     style: TextStyle(
@@ -77,7 +77,7 @@ class _StartPageState extends State<StartPage> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(top: 20.0, right: 10.0),
+                  padding: const EdgeInsets.only(top: 10.0, right: 10.0),
                   child: TextButton(
                     style: TextButton.styleFrom(
                       textStyle:
@@ -112,16 +112,40 @@ class _StartPageState extends State<StartPage> {
               ),
             ),
             Container(
-              height: Get.height * 0.29,
+              height: Get.height * 0.21,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: const <Widget>[
                   ProductListComponent(
-                      imageName: AppImages.fogao,
+                      imageName: AppImages.tv,
+                      productName: 'Samsung Smart Tv',
+                      priceProduct: '500.00 €'),
+                  ProductListComponent(
+                      imageName: AppImages.tostadeira,
+                      productName: 'Tostadeira',
+                      priceProduct: '20.00 €'),
+                  ProductListComponent(
+                      imageName: AppImages.tostadeira,
                       productName: 'Tostadeira',
                       priceProduct: '20.00 €'),
                 ],
               ),
+            ),
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(top: 10.0, left: 10.0),
+                  child: const Text(
+                    'Produtos em Destaque',
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontFamily: AppFonts.poppinsBoldFont,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+                //Container(),
+              ],
             ),
           ],
         ),
