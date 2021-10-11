@@ -17,4 +17,6 @@ class AppImages {
   static const tressemme = 'assets/images/tresseme.png';
   static const bolacha = 'assets/images/bolacha.png';
   static const appIniciarSessao = 'assets/images/inicio_1.svg';
+  static const ilha_1 = 'assets/images/ilha_1.svg';
+  static const ilha_2 = 'assets/images/ilhas_design.png';
 }

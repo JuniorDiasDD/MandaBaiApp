@@ -3,6 +3,7 @@ import 'package:flutter_onboarding_screen/OnbordingData.dart';
 import 'package:flutter_onboarding_screen/flutteronboardingscreens.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/pages/Login.dart';
+import 'package:manda_bai/UI/pages/choose_island.dart';
 import 'package:manda_bai/UI/pages/iniciar_sessao.dart';
 
 import 'escolher_ilha.dart';
@@ -38,7 +39,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Scaffold(
       body: IntroScreen(
         list,
-        MaterialPageRoute(builder: (context) => IniciarSessao()),
+        MaterialPageRoute(builder: (context) => ChooseIsland()),
       ),
     );
   }

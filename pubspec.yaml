@@ -35,6 +35,7 @@ dependencies:
   flutter_onboarding_screen: ^2.0.2
 
   flutter_signin_button: ^2.0.0
+  dropdown_search: ^1.0.3
 
 
 
