@@ -3,6 +3,7 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_images.dart';
+import 'package:manda_bai/UI/home/pages/home_page.dart';
 import 'package:manda_bai/UI/pages/Registar.dart';
 import 'package:manda_bai/UI/pages/redifinir_senha.dart';
 
@@ -131,7 +132,12 @@ class _LoginState extends State<Login> {
                   color: AppColors.greenColor,
                   textColor: Colors.white,
                   child: Text('Login'),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  },
                   shape: RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0),
                   ),

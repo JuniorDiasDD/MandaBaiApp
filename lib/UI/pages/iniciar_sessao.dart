@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
+import 'package:manda_bai/UI/home/pages/home_page.dart';
 import 'package:manda_bai/UI/pages/Registar.dart';
 import 'package:manda_bai/UI/pages/login.dart';
 import 'package:manda_bai/main.dart';
@@ -57,7 +58,7 @@ class _IniciarSessaoState extends State<IniciarSessao> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Registar()),
+                    MaterialPageRoute(builder: (context) => HomePage()),
                   );
                 },
                 child: const Text(
