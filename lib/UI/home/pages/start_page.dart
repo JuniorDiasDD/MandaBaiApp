@@ -21,7 +21,7 @@ class _StartPageState extends State<StartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-               child: Column(
+        child: Column(
           children: [
             Stack(
               children: [
@@ -117,36 +117,96 @@ class _StartPageState extends State<StartPage> {
                 scrollDirection: Axis.horizontal,
                 children: const <Widget>[
                   ProductListComponent(
-                      imageName: AppImages.tv,
-                      productName: 'Samsung Smart Tv',
-                      priceProduct: '500.00 €'),
+                    imageName: AppImages.tv,
+                    productName: 'Samsung Smart Tv',
+                    priceProduct: '500.00 €',
+                  ),
                   ProductListComponent(
-                      imageName: AppImages.tostadeira,
-                      productName: 'Tostadeira',
-                      priceProduct: '20.00 €'),
+                    imageName: AppImages.tostadeira,
+                    productName: 'Tostadeira',
+                    priceProduct: '20.00 €',
+                  ),
                   ProductListComponent(
-                      imageName: AppImages.tostadeira,
-                      productName: 'Tostadeira',
-                      priceProduct: '20.00 €'),
+                    imageName: AppImages.tostadeira,
+                    productName: 'Tostadeira',
+                    priceProduct: '20.00 €',
+                  ),
                 ],
               ),
             ),
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(top: 10.0, left: 10.0),
-                  child: const Text(
-                    'Produtos em Destaque',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontFamily: AppFonts.poppinsBoldFont,
-                      fontSize: 15,
-                    ),
+            const Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: EdgeInsets.only(top: 10.0, left: 10.0),
+                child: Text(
+                  'Produtos em Destaque',
+                  style: TextStyle(
+                    fontFamily: AppFonts.poppinsBoldFont,
+                    fontSize: 15,
                   ),
                 ),
-                //Container(),
-              ],
+              ),
             ),
+            Container(
+              height: Get.height * 0.21,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: const <Widget>[
+                  ProductListComponent(
+                    imageName: AppImages.tv,
+                    productName: 'Samsung Smart Tv',
+                    priceProduct: '500.00 €',
+                  ),
+                  ProductListComponent(
+                    imageName: AppImages.tostadeira,
+                    productName: 'Tostadeira',
+                    priceProduct: '20.00 €',
+                  ),
+                  ProductListComponent(
+                    imageName: AppImages.tostadeira,
+                    productName: 'Tostadeira',
+                    priceProduct: '20.00 €',
+                  ),
+                ],
+              ),
+            ),
+            const Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: EdgeInsets.only(top: 10.0, left: 10.0),
+                child: Text(
+                  'Produtos mais Vendidos',
+                  style: TextStyle(
+                    fontFamily: AppFonts.poppinsBoldFont,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              height: Get.height * 0.21,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: const <Widget>[
+                  ProductListComponent(
+                    imageName: AppImages.tv,
+                    productName: 'Samsung Smart Tv',
+                    priceProduct: '500.00 €',
+                  ),
+                  ProductListComponent(
+                    imageName: AppImages.tostadeira,
+                    productName: 'Tostadeira',
+                    priceProduct: '20.00 €',
+                  ),
+                  ProductListComponent(
+                    imageName: AppImages.tostadeira,
+                    productName: 'Tostadeira',
+                    priceProduct: '20.00 €',
+                  ),
+                ],
+              ),
+            ),
+            
           ],
         ),
       ),

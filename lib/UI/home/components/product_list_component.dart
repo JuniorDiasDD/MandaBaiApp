@@ -34,7 +34,7 @@ class ProductListComponent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.asset(
-              AppImages.tv,
+              imageName,
               width: Get.width * 0.8,
               height: Get.height * 0.1,
               alignment: Alignment.center,
@@ -49,9 +49,7 @@ class ProductListComponent extends StatelessWidget {
                   color: Colors.black,
                 ),
               ),
-              padding: const EdgeInsets.only(
-                left: 7.0,
-              ),
+              padding: const EdgeInsets.only(left: 7.0),
             ),
             Container(
               padding: const EdgeInsets.only(left: 7.0, top: 5.0),
@@ -87,7 +85,6 @@ class ProductListComponent extends StatelessWidget {
                     icon: const Icon(Icons.favorite_outline_outlined),
                     iconSize: Get.width * 0.05,
                     alignment: Alignment.centerRight,
-                  
                   ),
                   IconButton(
                     padding: const EdgeInsets.all(0.0),

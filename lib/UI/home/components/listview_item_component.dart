@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
+import 'package:manda_bai/UI/home/pages/start_page.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 class ListViewItemComponent extends StatelessWidget {
@@ -15,13 +16,9 @@ class ListViewItemComponent extends StatelessWidget {
       padding: const EdgeInsets.only(left: 8.0),
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(
-             color: AppColors.greenColor,
-              width: 2.0
-          ),
+          border: Border.all(color: AppColors.greenColor, width: 2.0),
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
-
 
           /*boxShadow: const [
             BoxShadow(
