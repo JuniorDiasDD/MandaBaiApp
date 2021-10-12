@@ -1,0 +1,159 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:manda_bai/Core/app_colors.dart';
+import 'package:manda_bai/Core/app_fonts.dart';
+import 'package:manda_bai/Controller/Cart.dart';
+import 'package:manda_bai/Model/cart_model.dart';
+
+class ItemCart extends StatefulWidget {
+  final CartPageController cartPageController = Get.find();
+  final String name, image;
+  double price;
+  int amount;
+  ItemCart(
+      {required this.name,
+      required this.image,
+      required this.amount,
+      required this.price});
+
+  @override
+  _ItemCartState createState() => _ItemCartState();
+}
+
+class _ItemCartState extends State<ItemCart> {
+  bool isChecked = false;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding:
+          const EdgeInsets.only(top: 4.0, left: 2.0, right: 2.0, bottom: 4.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 2.0,
+              //spreadRadius: 0.0,
+              offset: Offset(2.0, 2.0), // shadow direction: bottom right
+            )
+          ],
+        ),
+        padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
+        width: Get.width,
+        height: Get.height * 0.15,
+        child: Row(
+          children: [
+            Image.asset(
+              widget.image,
+              width: Get.width * 0.2,
+              height: Get.height * 0.2,
+              alignment: Alignment.center,
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 10, right: 5),
+              width: Get.width * 0.6,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        widget.name,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontFamily: AppFonts.poppinsBoldFont,
+                          fontSize: 15,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Checkbox(
+                        checkColor: Colors.white,
+                        activeColor: AppColors.greenColor,
+                        value: isChecked,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isChecked = value!;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: Get.width * 0.3,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Container(
+                              width: Get.width * 0.08,
+                              child: FloatingActionButton(
+                                onPressed: () {
+                                  setState(
+                                    () {
+                                      if (widget.amount != 1) {
+                                        widget.amount = widget.amount - 1;
+                                        widget.cartPageController.amount =
+                                            widget.amount;
+                                        widget.cartPageController.price =
+                                            widget.amount * widget.price;
+                                        widget.cartPageController.calcule();
+                                      }
+                                    },
+                                  );
+                                },
+                                child: Icon(
+                                  Icons.remove,
+                                  color: Colors.black87,
+                                ),
+                                backgroundColor: Colors.white,
+                              ),
+                            ),
+                            Text(
+                              widget.amount.toString(),
+                              style: TextStyle(fontSize: 18.0),
+                            ),
+                            Container(
+                              width: Get.width * 0.08,
+                              child: FloatingActionButton(
+                                child: Icon(Icons.add, color: Colors.black87),
+                                backgroundColor: Colors.white,
+                                onPressed: () {
+                                  setState(() {
+                                    widget.amount = widget.amount + 1;
+                                    widget.cartPageController.amount =
+                                        widget.amount;
+                                    widget.cartPageController.price =
+                                        widget.amount * widget.price;
+
+                                    widget.cartPageController.calcule();
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text(
+                        widget.cartPageController.price.toString() + " \$00",
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontFamily: AppFonts.poppinsRegularFont,
+                          fontSize: 12,
+                          color: AppColors.greenColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
