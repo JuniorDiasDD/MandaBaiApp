@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Controller/cart_controller.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
-import 'package:manda_bai/Controller/Cart.dart';
+
 import 'package:manda_bai/Model/cart_model.dart';
 
 class ItemCart extends StatefulWidget {

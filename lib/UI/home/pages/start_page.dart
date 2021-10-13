@@ -7,6 +7,7 @@ import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/home/components/listview_item_component.dart';
 import 'package:manda_bai/UI/home/components/product_list_component.dart';
+import 'package:manda_bai/UI/home/pages/product_detail_page.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 class StartPage extends StatefulWidget {
@@ -30,10 +31,10 @@ class _StartPageState extends State<StartPage> {
                   width: Get.width,
                   fit: BoxFit.fitWidth,
                 ),
-                const Padding(
+                 Padding(
                   // ignore: unnecessary_const
-                  padding: EdgeInsets.only(left: 20, right: 20, top: 195),
-                  child: SizedBox(
+                  padding: EdgeInsets.only(left: 20, right: 20, top: Get.height * 0.3,),
+                  child: const SizedBox(
                     width: 350,
                     height: 40,
                     child: TextField(
@@ -115,22 +116,28 @@ class _StartPageState extends State<StartPage> {
               height: Get.height * 0.21,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: const <Widget>[
+                children: <Widget>[
                   ProductListComponent(
                     imageName: AppImages.tv,
                     productName: 'Samsung Smart Tv',
                     priceProduct: '500.00 €',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProdutoDetailPage(),
+                      ),
+                    ),
                   ),
                   ProductListComponent(
-                    imageName: AppImages.tostadeira,
-                    productName: 'Tostadeira',
-                    priceProduct: '20.00 €',
-                  ),
+                      imageName: AppImages.tostadeira,
+                      productName: 'Tostadeira',
+                      priceProduct: '20.00 €',
+                      onTap: () {}),
                   ProductListComponent(
-                    imageName: AppImages.tostadeira,
-                    productName: 'Tostadeira',
-                    priceProduct: '20.00 €',
-                  ),
+                      imageName: AppImages.tostadeira,
+                      productName: 'Tostadeira',
+                      priceProduct: '20.00 €',
+                      onTap: () {}),
                 ],
               ),
             ),
@@ -151,21 +158,24 @@ class _StartPageState extends State<StartPage> {
               height: Get.height * 0.21,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: const <Widget>[
+                children: <Widget>[
                   ProductListComponent(
                     imageName: AppImages.tv,
                     productName: 'Samsung Smart Tv',
                     priceProduct: '500.00 €',
+                    onTap: () {},
                   ),
                   ProductListComponent(
                     imageName: AppImages.tostadeira,
                     productName: 'Tostadeira',
                     priceProduct: '20.00 €',
+                    onTap: () {},
                   ),
                   ProductListComponent(
                     imageName: AppImages.tostadeira,
                     productName: 'Tostadeira',
                     priceProduct: '20.00 €',
+                    onTap: () {},
                   ),
                 ],
               ),
@@ -187,26 +197,28 @@ class _StartPageState extends State<StartPage> {
               height: Get.height * 0.21,
               child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: const <Widget>[
+                children: <Widget>[
                   ProductListComponent(
                     imageName: AppImages.tv,
                     productName: 'Samsung Smart Tv',
                     priceProduct: '500.00 €',
+                    onTap: () {},
                   ),
                   ProductListComponent(
                     imageName: AppImages.tostadeira,
                     productName: 'Tostadeira',
                     priceProduct: '20.00 €',
+                    onTap: () {},
                   ),
                   ProductListComponent(
                     imageName: AppImages.tostadeira,
                     productName: 'Tostadeira',
                     priceProduct: '20.00 €',
+                    onTap: () {},
                   ),
                 ],
               ),
             ),
-            
           ],
         ),
       ),

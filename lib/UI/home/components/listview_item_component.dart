@@ -35,9 +35,9 @@ class ListViewItemComponent extends StatelessWidget {
         child: Text(
           categoryName,
           textAlign: TextAlign.center,
-          style: const TextStyle(
+          style:  TextStyle(
             fontFamily: AppFonts.poppinsRegularFont,
-            fontSize: 10,
+            fontSize: Get.height * 0.015,
             color: AppColors.greenColor,
           ),
         ),
