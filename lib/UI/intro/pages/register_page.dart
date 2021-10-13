@@ -4,14 +4,14 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_images.dart';
 
-class Registar extends StatefulWidget {
-  const Registar({Key? key}) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  _RegistarState createState() => _RegistarState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _RegistarState extends State<Registar> {
+class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

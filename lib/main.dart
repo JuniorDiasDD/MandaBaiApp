@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:manda_bai/UI/home/pages/home_page.dart';
-import 'package:manda_bai/UI/intro/splash_page.dart';
+
+import 'UI/intro/pages/login_page.dart';
 
 void main() {
   runApp(const App());
@@ -18,7 +18,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SplashPage(),
+      home: const LoginPage(),
     );
   }
 }

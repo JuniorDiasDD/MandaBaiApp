@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 
-class RedifinirSenha extends StatefulWidget {
-  const RedifinirSenha({Key? key}) : super(key: key);
+class RecoveryPassword extends StatefulWidget {
+  const RecoveryPassword({Key? key}) : super(key: key);
 
   @override
-  _RedifinirSenhaState createState() => _RedifinirSenhaState();
+  _RecoveryPasswordState createState() => _RecoveryPasswordState();
 }
 
-class _RedifinirSenhaState extends State<RedifinirSenha> {
+class _RecoveryPasswordState extends State<RecoveryPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

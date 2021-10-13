@@ -4,42 +4,50 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/home/pages/home_page.dart';
-import 'package:manda_bai/UI/pages/Registar.dart';
-import 'package:manda_bai/UI/pages/redifinir_senha.dart';
+import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
+import 'package:manda_bai/UI/intro/pages/recovery_password_page.dart';
+import 'package:manda_bai/UI/intro/pages/register_page.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  _LoginState createState() => _LoginState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.only(
+          /*padding: EdgeInsets.only(
             left: Get.width * 0.05,
             right: Get.height * 0.05,
-          ),
+          ),*/
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: Get.height * 0.05,
+              Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: ColoredCircleComponent(),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 33.0),
+                    width: Get.width,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.arrow_back),
+                      alignment: Alignment.topLeft,
+                    ),
+                  ),
+                ],
               ),
-              Container(
-                width: Get.width,
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.arrow_back),
-                  alignment: Alignment.topLeft,
-                ),
-              ),
+              SizedBox(height: Get.height * 0.05),
               SizedBox(
                 height: Get.height * 0.015,
               ),
@@ -71,7 +79,7 @@ class _LoginState extends State<Login> {
                     ),
                     labelText: 'User@gmail.com',
                     labelStyle: TextStyle(
-                      color: AppColors.greenColor,
+                      color: Colors.grey,
                     ),
                   ),
                 ),
@@ -94,7 +102,7 @@ class _LoginState extends State<Login> {
                     ),
                     labelText: 'Palavra-passe',
                     labelStyle: TextStyle(
-                      color: AppColors.greenColor,
+                      color: Colors.grey,
                     ),
                   ),
                 ),
@@ -107,7 +115,7 @@ class _LoginState extends State<Login> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => RedifinirSenha()),
+                    MaterialPageRoute(builder: (context) => RecoveryPassword()),
                   );
                 },
                 child: const Text(
@@ -151,7 +159,7 @@ class _LoginState extends State<Login> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Registar()),
+                    MaterialPageRoute(builder: (context) => RegisterPage()),
                   );
                 },
                 child: const Text(
@@ -211,20 +219,6 @@ class _LoginState extends State<Login> {
                               Buttons.Facebook,
                               text: "Login com Facebook",
                               onPressed: () {},
-                            ),
-                          ),
-                          Container(
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: Get.width,
-                                  child: SignInButton(
-                                    Buttons.Twitter,
-                                    text: "Login com Twiter",
-                                    onPressed: () {},
-                                  ),
-                                ),
-                              ],
                             ),
                           ),
                         ],
