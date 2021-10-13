@@ -1,12 +1,8 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
-import 'package:manda_bai/Core/app_images.dart';
-import 'package:manda_bai/Controller/Cart.dart';
-import 'package:manda_bai/Model/cart_model.dart';
-import 'package:manda_bai/UI/home/components/listview_item_cart.dart';
+import 'package:manda_bai/UI/home/pages/checkout_page_step_2.dart';
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({Key? key}) : super(key: key);
@@ -111,7 +107,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   ),
                 ),
               ),
-              SizedBox(height: Get.height * 0.05),
+              SizedBox(height: Get.height * 0.02),
               Container(
                 height: Get.height * 0.055,
                 width: Get.width,
@@ -239,21 +235,38 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   ),
                 ),
               ),
-              SizedBox(height: Get.height * 0.25),
-              Align(
-                alignment: Alignment.topRight,
-                child: TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      "seguinte >",
-                      style: TextStyle(
-                          fontFamily: AppFonts.poppinsRegularFont,
-                          color: AppColors.greenColor),
-                    )),
-              )
+              SizedBox(height: Get.height * 0.28),
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(" "),
+          Padding(
+            padding: EdgeInsets.only(
+              right: 15,
+              bottom: 10,
+            ),
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CheckoutPageStep2(),
+                  ),
+                );
+              },
+              child: Text(
+                "Seguinte >",
+                style: TextStyle(
+                    fontFamily: AppFonts.poppinsRegularFont,
+                    color: AppColors.greenColor),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

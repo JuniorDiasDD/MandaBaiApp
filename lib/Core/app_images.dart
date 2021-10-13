@@ -19,4 +19,8 @@ class AppImages {
   static const appIniciarSessao = 'assets/images/inicio_1.svg';
   static const ilha_1 = 'assets/images/ilha_1.svg';
   static const ilha_2 = 'assets/images/ilhas_design.png';
+  static const credit_card = 'assets/images/creditCard.svg';
+  static const pay_pal = 'assets/images/payPal.svg';
+  static const ideal = 'assets/images/ideal.svg';
+  static const cart_empyt = 'assets/images/cart_empyt.svg';
 }

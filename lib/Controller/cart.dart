@@ -6,6 +6,7 @@ class CartPageController extends GetxController {
   final _image = ''.obs;
   final _price = 0.0.obs;
   final _amount = 0.obs;
+  final _id = 0.obs;
   final _subTotal = 0.0.obs;
   final _total = 0.0.obs;
   final _taxa = 0.0.obs;
@@ -52,6 +53,14 @@ class CartPageController extends GetxController {
     this._amount.value = amount;
   }
 
+  int get id {
+    return _id.value;
+  }
+
+  set id(int id) {
+    this._id.value = id;
+  }
+
   double get taxa {
     return _taxa.value;
   }
@@ -76,11 +85,35 @@ class CartPageController extends GetxController {
     this._subTotal.value = subTotal;
   }
 
+  decrementar(int id) {
+    if (!_list.isEmpty) {
+      for (int i = 0; i < _list.length; i++) {
+        if (_list[i].id == id) {
+          if (_list[i].amount != 1) {
+            _list[i].amount = _list[i].amount - 1;
+          }
+        }
+      }
+    }
+  }
+
+  incrementar(int id) {
+    if (!_list.isEmpty) {
+      for (int i = 0; i < _list.length; i++) {
+        if (_list[i].id == id) {
+          _list[i].amount = _list[i].amount + 1;
+        }
+      }
+    }
+  }
+
   calcule() {
+    subTotal = 0;
+    total = 0;
     // ignore: unused_local_variable
     if (!_list.isEmpty) {
       for (int i = 0; i < _list.length; i++) {
-        subTotal += _list[i].price;
+        subTotal += _list[i].price * _list[i].amount;
       }
 
       total = subTotal + taxa;
@@ -90,6 +123,7 @@ class CartPageController extends GetxController {
   @override
   void onInit() {
     taxa = 5;
+
     calcule();
     super.onInit();
   }

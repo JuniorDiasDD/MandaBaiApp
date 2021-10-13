@@ -10,8 +10,10 @@ class ItemCart extends StatefulWidget {
   final String name, image;
   double price;
   int amount;
+  int id;
   ItemCart(
-      {required this.name,
+      {required this.id,
+      required this.name,
       required this.image,
       required this.amount,
       required this.price});
@@ -22,6 +24,7 @@ class ItemCart extends StatefulWidget {
 
 class _ItemCartState extends State<ItemCart> {
   bool isChecked = false;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -96,10 +99,12 @@ class _ItemCartState extends State<ItemCart> {
                                     () {
                                       if (widget.amount != 1) {
                                         widget.amount = widget.amount - 1;
-                                        widget.cartPageController.amount =
-                                            widget.amount;
+                                        // widget.cartPageController.amount =
+                                        //      widget.amount;
                                         widget.cartPageController.price =
                                             widget.amount * widget.price;
+                                        widget.cartPageController
+                                            .decrementar(widget.id);
                                         widget.cartPageController.calcule();
                                       }
                                     },
@@ -107,9 +112,10 @@ class _ItemCartState extends State<ItemCart> {
                                 },
                                 child: Icon(
                                   Icons.remove,
-                                  color: Colors.black87,
+                                  color: Colors.white,
                                 ),
-                                backgroundColor: Colors.white,
+                                backgroundColor: AppColors.greenColor,
+                                elevation: 0,
                               ),
                             ),
                             Text(
@@ -119,16 +125,16 @@ class _ItemCartState extends State<ItemCart> {
                             Container(
                               width: Get.width * 0.08,
                               child: FloatingActionButton(
-                                child: Icon(Icons.add, color: Colors.black87),
-                                backgroundColor: Colors.white,
+                                child: Icon(Icons.add, color: Colors.white),
+                                backgroundColor: AppColors.greenColor,
+                                elevation: 0,
                                 onPressed: () {
                                   setState(() {
                                     widget.amount = widget.amount + 1;
-                                    widget.cartPageController.amount =
-                                        widget.amount;
                                     widget.cartPageController.price =
                                         widget.amount * widget.price;
-
+                                    widget.cartPageController
+                                        .incrementar(widget.id);
                                     widget.cartPageController.calcule();
                                   });
                                 },
@@ -138,7 +144,7 @@ class _ItemCartState extends State<ItemCart> {
                         ),
                       ),
                       Text(
-                        widget.cartPageController.price.toString() + " \$00",
+                        widget.cartPageController.price.toString(),
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontFamily: AppFonts.poppinsRegularFont,
