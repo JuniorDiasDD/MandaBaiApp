@@ -148,13 +148,16 @@ class _ItemCartState extends State<ItemCart> {
                           ],
                         ),
                       ),
-                      Text(
-                        widget.cartPageController.price.toString(),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontFamily: AppFonts.poppinsBoldFont,
-                          fontSize: 15,
-                          color: AppColors.greenColor,
+                      Padding(
+                        padding: EdgeInsets.only(right: Get.width * 0.02),
+                        child: Text(
+                          widget.cartPageController.price.toString(),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontFamily: AppFonts.poppinsBoldFont,
+                            fontSize: 15,
+                            color: AppColors.greenColor,
+                          ),
                         ),
                       ),
                     ],

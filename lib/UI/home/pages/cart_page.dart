@@ -123,26 +123,27 @@ class _StartPageState extends State<CartPage> {
                       ],
                     ),
                     Container(
-                        height: Get.height * 0.45,
-                        child: ListView.builder(
-                          padding: EdgeInsets.all(0.0),
-                          shrinkWrap: true,
-                          itemCount: list_cart.length,
-                          itemBuilder: (context, index) {
-                            var list = list_cart[index];
-                            //  cartPageController.name = list.name;
-                            //  cartPageController.amount = list.amount;
-                            cartPageController.price = list.price * list.amount;
+                      height: Get.height * 0.45,
+                      child: ListView.builder(
+                        padding: EdgeInsets.all(0.0),
+                        shrinkWrap: true,
+                        itemCount: list_cart.length,
+                        itemBuilder: (context, index) {
+                          var list = list_cart[index];
+                          //  cartPageController.name = list.name;
+                          //  cartPageController.amount = list.amount;
+                          cartPageController.price = list.price * list.amount;
 
-                            return ItemCart(
-                              id: list.id,
-                              name: list.name,
-                              image: list.image,
-                              amount: list.amount,
-                              price: list.price,
-                            );
-                          },
-                        )),
+                          return ItemCart(
+                            id: list.id,
+                            name: list.name,
+                            image: list.image,
+                            amount: list.amount,
+                            price: list.price,
+                          );
+                        },
+                      ),
+                    ),
                     SizedBox(height: Get.height * 0.01),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

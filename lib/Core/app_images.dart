@@ -25,4 +25,5 @@ class AppImages {
   static const cart_empyt = 'assets/images/cart_empyt.svg';
   static const world = 'assets/images/world.svg';
   static const homem = 'assets/images/homem.svg';
+  static const favorite_empyt = 'assets/images/favorite_empyt.svg';
 }
