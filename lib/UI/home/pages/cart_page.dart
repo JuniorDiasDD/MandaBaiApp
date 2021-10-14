@@ -268,6 +268,7 @@ class _StartPageState extends State<CartPage> {
                         ),
                       ),
                     ),
+                    SizedBox(height: Get.height * 0.02),
                   ],
                 ),
               ),
