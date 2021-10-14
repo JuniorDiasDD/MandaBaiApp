@@ -44,10 +44,11 @@ class _ItemCartState extends State<ItemCart> {
             )
           ],
         ),
-        padding: const EdgeInsets.only(top: 10.0, left: 10.0, right: 10.0),
         width: Get.width,
         height: Get.height * 0.15,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
               widget.image,
@@ -56,9 +57,12 @@ class _ItemCartState extends State<ItemCart> {
               alignment: Alignment.center,
             ),
             Container(
-              margin: EdgeInsets.only(left: 10, right: 5),
-              width: Get.width * 0.6,
+              margin: EdgeInsets.only(
+                left: 10,
+              ),
+              width: Get.width * 0.62,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -148,8 +152,8 @@ class _ItemCartState extends State<ItemCart> {
                         widget.cartPageController.price.toString(),
                         textAlign: TextAlign.center,
                         style: const TextStyle(
-                          fontFamily: AppFonts.poppinsRegularFont,
-                          fontSize: 12,
+                          fontFamily: AppFonts.poppinsBoldFont,
+                          fontSize: 15,
                           color: AppColors.greenColor,
                         ),
                       ),
