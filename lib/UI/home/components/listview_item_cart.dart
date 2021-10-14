@@ -62,7 +62,7 @@ class _ItemCartState extends State<ItemCart> {
               ),
               width: Get.width * 0.62,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -93,6 +93,7 @@ class _ItemCartState extends State<ItemCart> {
                     children: [
                       Container(
                         width: Get.width * 0.3,
+                        height: Get.height * 0.06,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
