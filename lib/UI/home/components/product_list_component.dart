@@ -11,19 +11,19 @@ class ProductListComponent extends StatelessWidget {
   final String productName;
   final String priceProduct;
   final Function()? onTap;
-  
 
   const ProductListComponent(
       {required this.imageName,
       required this.productName,
       required this.priceProduct,
-     required this.onTap});
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Padding(
-        padding: const EdgeInsets.only(left: 8.0, top: 10.0),
+        padding:
+            EdgeInsets.only(left: Get.width * 0.023, top: Get.height * 0.009),
         child: Container(
           width: Get.width * 0.44,
           //height: Get.height * 0.3,
@@ -45,17 +45,18 @@ class ProductListComponent extends StatelessWidget {
               Container(
                 child: Text(
                   productName,
-                  textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontFamily: AppFonts.poppinsRegularFont,
                     fontSize: 12,
                     color: Colors.black,
                   ),
                 ),
-                padding: const EdgeInsets.only(left: 7.0),
+                padding: EdgeInsets.only(
+                  left: Get.width * 0.03,
+                ),
               ),
               Container(
-                padding: const EdgeInsets.only(left: 7.0, top: 5.0),
+                padding: EdgeInsets.only(left: Get.width * 0.01, top: Get.height * 0.01),
                 width: Get.width * 0.8,
                 height: Get.height * 0.05,
                 child: Row(
@@ -70,18 +71,7 @@ class ProductListComponent extends StatelessWidget {
                         color: AppColors.greenColor,
                       ),
                     ),
-                    /*IconButton(
-                      icon: new Icon(Icons.volume_up),
-                      alignment: Alignment.centerRight,
-                      padding: new EdgeInsets.all(0.0),
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: new Icon(Icons.volume_up),
-                      alignment: Alignment.centerLeft,
-                      padding: new EdgeInsets.all(0.0),
-                      onPressed: () {},
-                    )*/
+                    
                     IconButton(
                       padding: const EdgeInsets.all(0.0),
                       onPressed: () {},
@@ -103,7 +93,7 @@ class ProductListComponent extends StatelessWidget {
           ),
         ),
       ),
-     onTap: onTap,
+      onTap: onTap,
     );
   }
 }

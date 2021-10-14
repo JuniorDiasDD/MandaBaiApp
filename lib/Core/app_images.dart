@@ -27,4 +27,5 @@ class AppImages {
   static const homem = 'assets/images/homem.svg';
   static const favorite_empyt = 'assets/images/favorite_empyt.svg';
   static const icone_user = 'assets/images/icone_user.png';
+  static const filter = 'assets/images/filter.svg';
 }

@@ -8,7 +8,6 @@ import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/home/components/listview_item_component.dart';
 import 'package:manda_bai/UI/home/components/product_list_component.dart';
 import 'package:manda_bai/UI/home/pages/product_detail_page.dart';
-import 'package:websafe_svg/websafe_svg.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({Key? key}) : super(key: key);
@@ -31,9 +30,12 @@ class _StartPageState extends State<StartPage> {
                   width: Get.width,
                   fit: BoxFit.fitWidth,
                 ),
-                 Padding(
+                Padding(
                   // ignore: unnecessary_const
-                  padding: EdgeInsets.only(left: 20, right: 20, top: Get.height * 0.3,),
+                  padding: EdgeInsets.only(
+                    left: Get.width * 0.07,
+                    top: Get.height * 0.25,
+                  ),
                   child: const SizedBox(
                     width: 350,
                     height: 40,
@@ -68,7 +70,7 @@ class _StartPageState extends State<StartPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  padding: const EdgeInsets.only(top: 10.0, left: 10.0),
+                  padding:  EdgeInsets.only(top: Get.height * 0.015, left: Get.width * 0.023),
                   child: const Text(
                     'Categorias',
                     style: TextStyle(
@@ -78,7 +80,7 @@ class _StartPageState extends State<StartPage> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(top: 10.0, right: 10.0),
+                  padding:  EdgeInsets.only(top: Get.height * 0.015, right:  Get.width * 0.001),
                   child: TextButton(
                     style: TextButton.styleFrom(
                       textStyle:
@@ -98,7 +100,7 @@ class _StartPageState extends State<StartPage> {
               ],
             ),
             Container(
-              height: Get.height * 0.06,
+              height: Get.height * 0.05,
               child: ListView(
                 // This next line does the trick.
                 scrollDirection: Axis.horizontal,
@@ -112,8 +114,9 @@ class _StartPageState extends State<StartPage> {
                 ],
               ),
             ),
+            // ignore: sized_box_for_whitespace
             Container(
-              height: Get.height * 0.21,
+              height: Get.height * 0.19,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
@@ -124,28 +127,52 @@ class _StartPageState extends State<StartPage> {
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ProdutoDetailPage(),
+                        builder: (context) => ProdutoDetailPage(
+                          imageName: AppImages.tv,
+                          productName: 'Samsung Smart Tv',
+                          priceProduct: '500.00 €',
+                        ),
                       ),
                     ),
                   ),
                   ProductListComponent(
-                      imageName: AppImages.tostadeira,
-                      productName: 'Tostadeira',
-                      priceProduct: '20.00 €',
-                      onTap: () {}),
+                    imageName: AppImages.tostadeira,
+                    productName: 'Tostadeira',
+                    priceProduct: '20.00 €',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProdutoDetailPage(
+                          imageName: AppImages.tostadeira,
+                          productName: 'Tostadeira',
+                          priceProduct: '20.00 €',
+                        ),
+                      ),
+                    ),
+                  ),
                   ProductListComponent(
-                      imageName: AppImages.tostadeira,
-                      productName: 'Tostadeira',
-                      priceProduct: '20.00 €',
-                      onTap: () {}),
+                    imageName: AppImages.tostadeira,
+                    productName: 'Tostadeira',
+                    priceProduct: '20.00 €',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProdutoDetailPage(
+                          imageName: AppImages.tostadeira,
+                          productName: 'Tostadeira',
+                          priceProduct: '20.00 €',
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
-            const Align(
+            Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: EdgeInsets.only(top: 10.0, left: 10.0),
-                child: Text(
+                  padding:  EdgeInsets.only(top: Get.height * 0.01, left: Get.width * 0.02),
+                child: const Text(
                   'Produtos em Destaque',
                   style: TextStyle(
                     fontFamily: AppFonts.poppinsBoldFont,
@@ -154,8 +181,9 @@ class _StartPageState extends State<StartPage> {
                 ),
               ),
             ),
+            // ignore: sized_box_for_whitespace
             Container(
-              height: Get.height * 0.21,
+              height: Get.height * 0.19,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
@@ -163,13 +191,31 @@ class _StartPageState extends State<StartPage> {
                     imageName: AppImages.tv,
                     productName: 'Samsung Smart Tv',
                     priceProduct: '500.00 €',
-                    onTap: () {},
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProdutoDetailPage(
+                          imageName: AppImages.tv,
+                          productName: 'Samsung Smart Tv',
+                          priceProduct: '500.00 €',
+                        ),
+                      ),
+                    ),
                   ),
                   ProductListComponent(
                     imageName: AppImages.tostadeira,
                     productName: 'Tostadeira',
                     priceProduct: '20.00 €',
-                    onTap: () {},
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProdutoDetailPage(
+                          imageName: AppImages.tostadeira,
+                          productName: 'Tostadeira',
+                          priceProduct: '20.00 €',
+                        ),
+                      ),
+                    ),
                   ),
                   ProductListComponent(
                     imageName: AppImages.tostadeira,
@@ -180,11 +226,11 @@ class _StartPageState extends State<StartPage> {
                 ],
               ),
             ),
-            const Align(
+             Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: EdgeInsets.only(top: 10.0, left: 10.0),
-                child: Text(
+                padding:  EdgeInsets.only(top: Get.height * 0.01, left: Get.width * 0.02),
+                child: const Text(
                   'Produtos mais Vendidos',
                   style: TextStyle(
                     fontFamily: AppFonts.poppinsBoldFont,
@@ -194,7 +240,7 @@ class _StartPageState extends State<StartPage> {
               ),
             ),
             Container(
-              height: Get.height * 0.21,
+              height: Get.height * 0.19,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
@@ -202,13 +248,31 @@ class _StartPageState extends State<StartPage> {
                     imageName: AppImages.tv,
                     productName: 'Samsung Smart Tv',
                     priceProduct: '500.00 €',
-                    onTap: () {},
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProdutoDetailPage(
+                          imageName: AppImages.tv,
+                          productName: 'Samsung Smart Tv',
+                          priceProduct: '500.00 €',
+                        ),
+                      ),
+                    ),
                   ),
                   ProductListComponent(
                     imageName: AppImages.tostadeira,
                     productName: 'Tostadeira',
                     priceProduct: '20.00 €',
-                    onTap: () {},
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProdutoDetailPage(
+                          imageName: AppImages.tostadeira,
+                          productName: 'Tostadeira',
+                          priceProduct: '20.00 €',
+                        ),
+                      ),
+                    ),
                   ),
                   ProductListComponent(
                     imageName: AppImages.tostadeira,

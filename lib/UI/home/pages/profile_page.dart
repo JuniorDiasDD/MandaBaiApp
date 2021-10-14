@@ -20,15 +20,15 @@ class _StartPageState extends State<ProfilePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: Get.height * 0.08),
+            SizedBox(height: Get.height * 0.05),
             Image.asset(
               AppImages.icone_user,
-              width: Get.width * 0.3,
-              height: Get.height * 0.3,
+              width: Get.width * 0.25,
+              height: Get.height * 0.25,
               alignment: Alignment.center,
             ),
-            SizedBox(height: Get.height * 0.01),
-            Text(
+           
+            const Text(
               "Alberto Duarte",
               style: TextStyle(
                 fontFamily: AppFonts.poppinsBoldFont,

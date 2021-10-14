@@ -6,7 +6,10 @@ import 'package:manda_bai/Core/app_images.dart';
 import 'package:get/get.dart';
 
 class ProdutoDetailPage extends StatefulWidget {
-  const ProdutoDetailPage({Key? key}) : super(key: key);
+ final String imageName;
+  final String productName;
+  final String priceProduct;
+   ProdutoDetailPage({required this.imageName,required this.priceProduct,required this.productName});
 
   @override
   State<ProdutoDetailPage> createState() => _ProdutoDetailPageState();
@@ -31,7 +34,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
             ),
             Container(
               child: Image.asset(
-                AppImages.tv,
+                widget.imageName,
                 width: Get.width,
                 fit: BoxFit.cover,
               ),
@@ -50,10 +53,10 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                     right: 10.0,
                   ),
                   child: Column(
-                    children: const [
+                    children:  [
                       Text(
-                        'Samsung SmartTv',
-                        style: TextStyle(
+                       widget.productName,
+                        style: const TextStyle(
                           fontFamily: AppFonts.poppinsBoldFont,
                           fontSize: 15,
                         ),
@@ -80,12 +83,12 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                     ],
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(
+                 Padding(
+                  padding: const EdgeInsets.only(
                     right: 10.0,
                   ),
                   child: Text(
-                    '500.00 €',
+                    widget.priceProduct,
                   ),
                 ),
               ],
