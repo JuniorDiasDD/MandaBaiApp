@@ -4,12 +4,16 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/UI/home/pages/cart_page.dart';
 
 class ProdutoDetailPage extends StatefulWidget {
- final String imageName;
+  final String imageName;
   final String productName;
   final String priceProduct;
-   ProdutoDetailPage({required this.imageName,required this.priceProduct,required this.productName});
+  ProdutoDetailPage(
+      {required this.imageName,
+      required this.priceProduct,
+      required this.productName});
 
   @override
   State<ProdutoDetailPage> createState() => _ProdutoDetailPageState();
@@ -22,7 +26,22 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
       body: SafeArea(
         child: Column(
           children: [
-            Align(
+            //SizedBox(height: Get.height * 0.01),
+            
+            Stack(
+              children:[ 
+                Container(
+                child: Image.asset(
+                  widget.imageName,
+                  width: Get.width,
+                  fit: BoxFit.cover,
+                ),
+                padding: const EdgeInsets.only(
+                  right: 10.0,
+                  left: 10.0,
+                ),
+              ),
+              Align(
               alignment: Alignment.topLeft,
               child: IconButton(
                 onPressed: () {
@@ -32,30 +51,22 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                 icon: Icon(Icons.arrow_back),
               ),
             ),
-            Container(
-              child: Image.asset(
-                widget.imageName,
-                width: Get.width,
-                fit: BoxFit.cover,
-              ),
-              padding: const EdgeInsets.only(
-                right: 10.0,
-                left: 10.0,
-              ),
+              ],
+              
             ),
             SizedBox(height: Get.height * 0.01),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(
-                    left: 10.0,
-                    right: 10.0,
+                  padding: EdgeInsets.only(
+                    left: Get.width * 0.02,
+                    //right: 10.0,
                   ),
                   child: Column(
-                    children:  [
+                    children: [
                       Text(
-                       widget.productName,
+                        widget.productName,
                         style: const TextStyle(
                           fontFamily: AppFonts.poppinsBoldFont,
                           fontSize: 15,
@@ -83,9 +94,9 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                     ],
                   ),
                 ),
-                 Padding(
-                  padding: const EdgeInsets.only(
-                    right: 10.0,
+                Padding(
+                  padding: EdgeInsets.only(
+                    right: Get.width * 0.02,
                   ),
                   child: Text(
                     widget.priceProduct,
@@ -94,9 +105,9 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(
-                left: 10.0,
-                right: 10.0,
+              padding:  EdgeInsets.only(
+                left: Get.width * 0.02,
+                right: Get.width * 0.02,
               ),
               child: Align(
                 alignment: Alignment.topLeft,
@@ -119,12 +130,12 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
               ),
             ),
             SizedBox(height: Get.height * 0.06),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(
-                left: 10.0,
-                right: 10.0,
+                left: Get.width * 0.02,
+                right: Get.width * 0.02,
               ),
-              child: Text(
+              child: const Text(
                 'blablahhhhfffffffblablahhhhfffffffblablahhhhfffffffblablahhhhfffffffblablahhhhffffffffblablahhhhffffffffblablahhhhffffffffblablahhhhffffffffblablahhhhffffffffblablahhhhffffffffblablahhhhfffffff',
                 style: TextStyle(
                   fontFamily: AppFonts.poppinsRegularFont,
@@ -173,6 +184,34 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                     ),
                   ),
                 ],
+              ),
+            ),
+            SizedBox(height: Get.height * 0.05),
+            Padding(
+              padding: EdgeInsets.only(left: Get.width * 0.02,right: Get.width * 0.02,),
+              child: Container(
+                height: Get.height * 0.05,
+                width: Get.width,
+                child: FlatButton(
+                  padding: EdgeInsets.only(
+                    left: Get.width * 0.05,
+                    right: Get.height * 0.05,
+                  ),
+                  color: AppColors.greenColor,
+                  textColor: Colors.white,
+                  child: Text('Checkout'),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CartPage(),
+                      ),
+                    );
+                  },
+                  shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30.0),
+                  ),
+                ),
               ),
             ),
           ],

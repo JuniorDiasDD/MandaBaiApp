@@ -20,6 +20,7 @@ class CartPage extends StatefulWidget {
 }
 
 class _StartPageState extends State<CartPage> {
+  // ignore: non_constant_identifier_names
   List<CartModel> list_cart = [
     CartModel(id: 1, amount: 1, image: AppImages.tv, name: "Tv", price: 100.0),
     CartModel(

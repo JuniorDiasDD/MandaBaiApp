@@ -36,7 +36,7 @@ class CategoryPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    width: 250,
+                    width: 270,
                     height: 40,
                     child: TextField(
                       cursorColor: AppColors.greenColor,
@@ -62,11 +62,52 @@ class CategoryPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  IconButton(
+                   IconButton(
+                    padding: const EdgeInsets.all(0.0),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Scaffold(
+                            backgroundColor: Colors.transparent,
+                            body: Center(
+                              child: Container(
+                                width: Get.width,
+                                height: Get.height * 0.3,
+                                margin: EdgeInsets.only(left: 20, right: 20),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(Icons.close),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    icon: WebsafeSvg.asset(AppImages.filter),
+                      color: AppColors.greenColor,
+                      iconSize: Get.width * 0.05,
+                    ),
+                    
+                    //alignment: Alignment.centerRight,
+                  
+                  /*IconButton(
                     onPressed: () {},
                     icon: WebsafeSvg.asset(AppImages.filter),
                     iconSize: 20,
-                  ),
+                  ),*/
                 ],
               ),
             ),

@@ -17,7 +17,7 @@ class ListViewItemComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: Get.width * 0.023),
+      padding: EdgeInsets.only(left: Get.width * 0.023,),
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: AppColors.greenColor, width: 2.0),
