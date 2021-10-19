@@ -199,7 +199,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                   ),
                   color: AppColors.greenColor,
                   textColor: Colors.white,
-                  child: Text('Checkout'),
+                  child: Text('Adicionar ao Carrinho'),
                   onPressed: () {
                     Navigator.push(
                       context,
