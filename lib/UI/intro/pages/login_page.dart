@@ -148,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                             );
                           },
                           child: const Text(
-                            'Esueceu sua senha?',
+                            'Esqueceu sua senha?',
                             style: TextStyle(
                               fontStyle: FontStyle.italic,
                               fontFamily: AppFonts.poppinsRegularFont,
