@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
+import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/home/pages/home_page.dart';
 import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
@@ -16,6 +17,24 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final input_username = TextEditingController();
+  final input_senha = TextEditingController();
+
+  Future<void> validateAndSave() async {
+    final FormState? form = _formKey.currentState;
+    if (form!.validate()) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+      print('Form is valid');
+    } else {
+      print('Form is invalid');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
               SizedBox(
-                height: Get.height * 0.05,
+                height: Get.height * 0.02,
               ),
               Image.asset(
                 AppImages.appLogo,
@@ -57,155 +76,193 @@ class _LoginPageState extends State<LoginPage> {
               Padding(
                 padding: EdgeInsets.only(
                   left: Get.width * 0.05,
-                  right: Get.height * 0.05,
+                  right: Get.width * 0.05,
                 ),
-                child: Column(
-                  children: [
-                    Container(
-                      height: Get.height * 0.07,
-                      width: Get.width,
-                      child: TextField(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: input_username,
                         obscureText: false,
                         decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.person,
-                            color: AppColors.greenColor,
-                          ),
+                          filled: true,
+                          fillColor: Colors.white,
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(35),
+                            borderRadius: new BorderRadius.circular(35.0),
+                            borderSide: new BorderSide(),
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 1, color: AppColors.greenColor),
-                            borderRadius: BorderRadius.circular(35),
+                          prefixIcon: Padding(
+                            padding: EdgeInsets.all(0.0),
+                            child: Icon(
+                              Icons.person,
+                              color: Colors.grey,
+                            ), // icon is 48px widget.
                           ),
-                          labelText: 'User@gmail.com',
+                          labelText: 'Utilizador',
                           labelStyle: TextStyle(
                             color: Colors.grey,
                           ),
                         ),
+                        validator: (value) =>
+                            value!.isEmpty ? 'Insira o Utilizador' : null,
                       ),
-                    ),
-                    SizedBox(height: Get.height * 0.01),
-                    Container(
-                      height: Get.height * 0.07,
-                      width: Get.width,
-                      child: TextField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          prefixIcon:
-                              Icon(Icons.lock, color: AppColors.greenColor),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(35),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 1, color: AppColors.greenColor),
-                            borderRadius: BorderRadius.circular(35),
-                          ),
-                          labelText: 'Palavra-passe',
-                          labelStyle: TextStyle(
+                      SizedBox(height: Get.height * 0.01),
+                      TextFormField(
+                      controller: input_senha,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: new BorderRadius.circular(35.0),
+                          borderSide: new BorderSide(),
+                        ),
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.all(0.0),
+                          child: Icon(
+                            Icons.lock,
                             color: Colors.grey,
+                          ), // icon is 48px widget.
+                        ),
+                        labelText: 'Palavra-passe',
+                        labelStyle: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      ),
+                      validator: (value) =>
+                          value!.isEmpty ? 'Insira a senha' : null,
+                    ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            primary: Colors.black,
+                            textStyle: TextStyle(fontSize: Get.width * 0.025),
                           ),
-                        ),
-                      ),
-                    ),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        primary: Colors.black,
-                        textStyle: const TextStyle(fontSize: 10),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => RecoveryPassword()),
-                        );
-                      },
-                      child: const Text(
-                        'Esueceu sua senha?',
-                        style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.01,
-                    ),
-                    Container(
-                      height: Get.height * 0.07,
-                      width: Get.width,
-                      child: FlatButton(
-                        padding: EdgeInsets.only(
-                          left: Get.width * 0.05,
-                          right: Get.height * 0.05,
-                        ),
-                        color: AppColors.greenColor,
-                        textColor: Colors.white,
-                        child: Text('Login'),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => HomePage()),
-                          );
-                        },
-                        shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0),
-                        ),
-                      ),
-                    ),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        primary: Colors.black,
-                        textStyle: const TextStyle(fontSize: 10),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => RegisterPage()),
-                        );
-                      },
-                      child: const Text(
-                        'Registar agora',
-                        style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          fontStyle: FontStyle.italic,
-                        ),
-                      ),
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: new Container(
-                                margin: const EdgeInsets.only(
-                                    left: 10.0, right: 20.0),
-                                child: Divider(
-                                  color: Colors.black,
-                                  height: 36,
-                                ),
-                              ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RecoveryPassword()),
+                            );
+                          },
+                          child: const Text(
+                            'Esueceu sua senha?',
+                            style: TextStyle(
+                              fontStyle: FontStyle.italic,
+                              fontFamily: AppFonts.poppinsRegularFont,
                             ),
-                            Text("OU"),
-                            Expanded(
-                              child: Container(
-                                margin: const EdgeInsets.only(
-                                    left: 20.0, right: 10.0),
-                                child: const Divider(
-                                  color: Colors.black,
-                                  height: 36,
-                                ),
-                              ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: Get.height * 0.01,
+                      ),
+                      Container(
+                        height: Get.height * 0.07,
+                        width: Get.width,
+                        decoration: BoxDecoration(
+                          color: AppColors.greenColor,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(35),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey,
+                              blurRadius: 2.0,
+                              spreadRadius: 0.0,
+                              offset: Offset(
+                                  2.0, 2.0), // changes position of shadow
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                    Container(
-                      child: Column(
+                        child: TextButton(
+                          child: Text(
+                            'Entrar',
+                            style: TextStyle(
+                                fontFamily: AppFonts.poppinsRegularFont,
+                                fontSize: Get.width * 0.035,
+                                color: Colors.white),
+                          ),
+                          onPressed: validateAndSave,
+                        ),
+                      ),
+                      SizedBox(
+                        height: Get.height * 0.01,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Não possui uma conta?",
+                            style: TextStyle(
+                                fontFamily: AppFonts.poppinsRegularFont,
+                                fontSize: Get.width * 0.03),
+                          ),
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              primary: Colors.black,
+                              textStyle: TextStyle(fontSize: Get.width * 0.03),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RegisterPage()),
+                              );
+                            },
+                            child: const Text(
+                              'Registar agora',
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                fontStyle: FontStyle.italic,
+                                fontFamily: AppFonts.poppinsItalicFont,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: Get.height * 0.01,
+                      ),
+                      Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: new Container(
+                                  width: Get.width * 0.4,
+                                  child: Divider(
+                                    color: Colors.black,
+                                    height: 36,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left: Get.width * 0.05,
+                                  right: Get.width * 0.05,
+                                ),
+                                child: Text("ou"),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  width: Get.width * 0.4,
+                                  child: const Divider(
+                                    color: Colors.black,
+                                    height: 36,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: Get.height * 0.02,
+                      ),
+                      Column(
                         children: [
                           Container(
                             width: Get.width,
@@ -216,23 +273,17 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           Container(
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: Get.width,
-                                  child: SignInButton(
-                                    Buttons.Facebook,
-                                    text: "Login com Facebook",
-                                    onPressed: () {},
-                                  ),
-                                ),
-                              ],
+                            width: Get.width,
+                            child: SignInButton(
+                              Buttons.Facebook,
+                              text: "Login com Facebook",
+                              onPressed: () {},
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],

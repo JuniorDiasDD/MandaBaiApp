@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:manda_bai/Core/app_colors.dart';
 
 import 'UI/intro/pages/login_page.dart';
 
@@ -14,9 +15,9 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'MandaBai',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
       home: const LoginPage(),
     );
