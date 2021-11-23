@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/static_config.dart';
@@ -59,17 +60,71 @@ class InfoPage extends StatelessWidget {
                           fontSize: Get.width * 0.05),
                     ),
                     SizedBox(height: Get.height * 0.02),
-                ReadMoreText(
-                  description_mandabai,
-                  trimLines: 2,
-                  colorClickableText: AppColors.greenColor,
-                  trimMode: TrimMode.Line,
-                  trimCollapsedText: 'Ver mais',
-                  trimExpandedText: 'Fechar',
-                  style: TextStyle(fontSize: 14, fontFamily: AppFonts.poppinsRegularFont, color: Colors.black),
-                  moreStyle: TextStyle(fontSize: 14, fontFamily: AppFonts.poppinsRegularFont, color: AppColors.greenColor),
-                ),
-
+                    ReadMoreText(
+                      description_mandabai,
+                      trimLines: 2,
+                      colorClickableText: AppColors.greenColor,
+                      trimMode: TrimMode.Line,
+                      trimCollapsedText: 'Ver mais',
+                      trimExpandedText: 'Fechar',
+                      style: const TextStyle(
+                          fontSize: 14,
+                          fontFamily: AppFonts.poppinsRegularFont,
+                          color: Colors.black),
+                      moreStyle: const TextStyle(
+                          fontSize: 14,
+                          fontFamily: AppFonts.poppinsRegularFont,
+                          color: AppColors.greenColor),
+                    ),
+                    SizedBox(height: Get.height * 0.05),
+                    Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'Carlos Pereira',
+                            style: TextStyle(
+                                fontFamily: AppFonts.poppinsBoldFont,
+                                color: Colors.black,
+                                fontSize: Get.width * 0.04),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'Fundador da Empresa',
+                            style: TextStyle(
+                                fontFamily: AppFonts.poppinsRegularFont,
+                                color: Colors.black,
+                                fontSize: Get.width * 0.033),
+                          ),
+                        ),
+                        SizedBox(height: Get.height * 0.02),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children:[
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Container(
+                            width: Get.width * 0.3,
+                            height: Get.height * 0.16,
+                            color: Colors.red,
+                          ),
+                        ),
+                            Padding(
+                              padding:  EdgeInsets.only(right: Get.width * 0.1, bottom: Get.height * 0.13),
+                              child: Text(
+                                'blablblablabal',
+                                style: TextStyle(
+                                    fontFamily: AppFonts.poppinsRegularFont,
+                                    color: Colors.black,
+                                    fontSize: Get.width * 0.033),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
