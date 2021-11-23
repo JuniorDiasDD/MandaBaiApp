@@ -5,46 +5,57 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
+import 'package:manda_bai/Model/product.dart';
 
 class ProductListComponent extends StatelessWidget {
-  final String imageName;
-  final String productName;
-  final String priceProduct;
-  final Function()? onTap;
+  Product product;
 
-  const ProductListComponent(
-      {required this.imageName,
-      required this.productName,
-      required this.priceProduct,
-      required this.onTap});
+  ProductListComponent({required this.product});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Padding(
-        padding:
-            EdgeInsets.only(left: Get.width * 0.023, top: Get.height * 0.009),
+        padding: EdgeInsets.only(
+            left: Get.width * 0.023,
+            top: Get.height * 0.009,
+            bottom: Get.height * 0.005),
         child: Container(
-          width: Get.width * 0.44,
-          //height: Get.height * 0.3,
+          width: Get.width * 0.38,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.white54, width: 1.0),
             color: Colors.grey[200],
             borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                blurRadius: 1.0,
+                spreadRadius: 0.0,
+                offset: Offset(1.0, 1.0), // changes position of shadow
+              ),
+            ],
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(
-                imageName,
-                width: Get.width * 0.8,
-                height: Get.height * 0.1,
-                alignment: Alignment.center,
-              ),
               Container(
+                width: Get.width,
+                height: Get.height * 0.11,
+                decoration: new BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10.0),
+                      topRight: Radius.circular(10.0)),
+                  color: Colors.white,
+                  image: new DecorationImage(
+                    fit: BoxFit.fill,
+                    image: NetworkImage(product.image),
+                  ),
+                ),
+              ),
+              Padding(
                 child: Text(
-                  productName,
+                  product.name,
                   style: const TextStyle(
                     fontFamily: AppFonts.poppinsRegularFont,
                     fontSize: 12,
@@ -53,38 +64,49 @@ class ProductListComponent extends StatelessWidget {
                 ),
                 padding: EdgeInsets.only(
                   left: Get.width * 0.03,
+                  top: Get.width * 0.03,
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(left: Get.width * 0.01, top: Get.height * 0.01),
-                width: Get.width * 0.8,
-                height: Get.height * 0.05,
+                padding: EdgeInsets.only(
+                  left: Get.width * 0.01,
+                ),
+                width: Get.width,
+                height: Get.height * 0.03,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      priceProduct,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontFamily: AppFonts.poppinsRegularFont,
-                        fontSize: 10,
-                        color: AppColors.greenColor,
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: Get.width * 0.02,
+                      ),
+                      child: Text(
+                        product.price.toString(),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontFamily: AppFonts.poppinsRegularFont,
+                          fontSize: 10,
+                          color: AppColors.greenColor,
+                        ),
                       ),
                     ),
-                    
-                    IconButton(
-                      padding: const EdgeInsets.all(0.0),
-                      onPressed: () {},
-                      icon: const Icon(Icons.favorite_outline_outlined),
-                      iconSize: Get.width * 0.05,
-                      alignment: Alignment.centerRight,
-                    ),
-                    IconButton(
-                      padding: const EdgeInsets.all(0.0),
-                      onPressed: () {},
-                      icon: const Icon(Icons.shopping_cart_outlined),
-                      iconSize: Get.width * 0.05,
-                      alignment: Alignment.center,
+                    Row(
+                      children: [
+                        IconButton(
+                          padding: const EdgeInsets.all(0.0),
+                          onPressed: () {},
+                          icon: const Icon(Icons.favorite_outline_outlined),
+                          iconSize: Get.width * 0.05,
+                          alignment: Alignment.centerRight,
+                        ),
+                        IconButton(
+                          padding: const EdgeInsets.all(0.0),
+                          onPressed: () {},
+                          icon: const Icon(Icons.shopping_cart_outlined),
+                          iconSize: Get.width * 0.05,
+                          alignment: Alignment.center,
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -93,7 +115,7 @@ class ProductListComponent extends StatelessWidget {
           ),
         ),
       ),
-      onTap: onTap,
+      // onTap: onTap,
     );
   }
 }

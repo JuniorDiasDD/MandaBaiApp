@@ -17,23 +17,22 @@ class ListViewItemComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: Get.width * 0.023,),
+      padding: EdgeInsets.only(left: Get.width * 0.023,bottom: Get.width * 0.01,),
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: AppColors.greenColor, width: 2.0),
+          border: Border.all(color: AppColors.greenColor, width: 1.0),
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
-
-          /*boxShadow: const [
-            BoxShadow(
-              color: Colors.grey,
-              blurRadius: 2.0,
-              //spreadRadius: 0.0,
-              offset: Offset(2.0, 2.0), // shadow direction: bottom right
-            )
-          ],*/
+          boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                blurRadius: 1.0,
+                spreadRadius: 0.0,
+                offset: Offset(0.5, 0.5), // changes position of shadow
+              ),
+            ],
         ),        
-        width: Get.width * 0.24,
+        width: Get.width * 0.3,
         height: Get.height * 0.1,
         child: TextButton(
           onPressed: () => Navigator.push(

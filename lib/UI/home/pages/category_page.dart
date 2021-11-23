@@ -4,14 +4,31 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
+import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/home/components/listview_item_component.dart';
 import 'package:manda_bai/UI/home/components/product_list_component.dart';
 import 'package:manda_bai/UI/home/pages/product_detail_page.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
-class CategoryPage extends StatelessWidget {
+class CategoryPage extends StatefulWidget {
   const CategoryPage({Key? key}) : super(key: key);
 
+  @override
+  State<CategoryPage> createState() => _CategoryPageState();
+}
+
+class _CategoryPageState extends State<CategoryPage> {
+    List<Product>list_product = [];
+    Future _carregar() async {
+  //  list_product = await Request.loadEntidades();
+    list_product.add(new Product(id:1,name:"Televisão",image:"https://i.zst.com.br/thumbs/12/32/f/-52450406.jpg",price:20000,amount:1));
+    list_product.add(new Product(id:1,name:"Iphone 11",image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone11-select-2019-family?wid=882&hei=1058&fmt=jpeg&qlt=80&.v=1567022175704",price:49000,amount:1));
+     if (list_product.isEmpty) {
+      return null;
+    }
+
+    return list_product;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,58 +162,26 @@ class CategoryPage extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              height: Get.height * 0.19,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  ProductListComponent(
-                    imageName: AppImages.tv,
-                    productName: 'Samsung Smart Tv',
-                    priceProduct: '500.00 €',
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ProdutoDetailPage(
-                          imageName: AppImages.tv,
-                          productName: 'Samsung Smart Tv',
-                          priceProduct: '500.00 €',
-                        ),
-                      ),
-                    ),
-                  ),
-                  ProductListComponent(
-                    imageName: AppImages.tostadeira,
-                    productName: 'Tostadeira',
-                    priceProduct: '20.00 €',
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ProdutoDetailPage(
-                          imageName: AppImages.tostadeira,
-                          productName: 'Tostadeira',
-                          priceProduct: '20.00 €',
-                        ),
-                      ),
-                    ),
-                  ),
-                  ProductListComponent(
-                    imageName: AppImages.tostadeira,
-                    productName: 'Tostadeira',
-                    priceProduct: '20.00 €',
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ProdutoDetailPage(
-                          imageName: AppImages.tostadeira,
-                          productName: 'Tostadeira',
-                          priceProduct: '20.00 €',
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+            FutureBuilder(
+              future: _carregar(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.data == null) {
+                  return Container();
+                } else {
+                  return Container(
+                    height: Get.height,
+                    child: GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount:
+                                (Get.width == Orientation.portrait) ? 2 : 2),
+                        itemCount: list_product.length,
+                        itemBuilder: (BuildContext ctx, index) {
+                          var list = list_product[index];
+                          return ProductListComponent(product: list);
+                        }),
+                  );
+                }
+              },
             ),
           ],
         ),
