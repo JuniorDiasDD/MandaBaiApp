@@ -8,6 +8,7 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/about/pages/info_page.dart';
+import 'package:manda_bai/UI/category_filter/pages/category_page.dart';
 import 'package:manda_bai/UI/home/components/item_category.dart';
 import 'package:manda_bai/UI/home/components/product_list_component.dart';
 
@@ -145,7 +146,12 @@ class _StartPageState extends State<StartPage> {
                             decoration: TextDecoration.underline),
                         primary: AppColors.greenColor,
                       ),
-                      onPressed: () {},
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CategoryPage(),
+                        ),
+                      ),
                       child: const Text(
                         'Ver Todas',
                         style: TextStyle(
