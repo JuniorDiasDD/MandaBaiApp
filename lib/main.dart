@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'UI/authention/pages/login_page.dart';
+import 'UI/authention/pages/register_page.dart';
+import 'UI/home/pages/home_page.dart';
 
 
 void main() {
@@ -19,7 +21,21 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const LoginPage(),
+      //home: const LoginPage(),
+       initialRoute: '/',
+      routes: {
+        '/': (context) => LoginPage(),
+        '/login': (context) => LoginPage(),
+        '/register': (context) => RegisterPage(),
+        '/home': (context) => HomePage(),
+       //// '/solicitacao': (context) => PageSolicitacao(),
+       // '/gestaoPagamentoo': (context) => PageStartPayments(),
+       // '/servicos': (context) => PageServicos(),
+       // '/restaurePassword': (context) => PageRestaurePassword(),
+       //  '/ativar': (context)=>PageAtivacaoCategoria(),
+       // '/onboarding': (context) => PageOnboarding(),
+        //'/StartPage': (context) => StartPage(),
+      },
     );
   }
 }

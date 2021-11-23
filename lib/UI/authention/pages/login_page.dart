@@ -5,8 +5,6 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/authention/pages/recovery_password_page.dart';
-import 'package:manda_bai/UI/authention/pages/register_page.dart';
-import 'package:manda_bai/UI/home/pages/home_page.dart';
 import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
 
 
@@ -26,10 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
+          Navigator.pushReplacementNamed(context, '/home');
       print('Form is valid');
     } else {
       print('Form is invalid');
@@ -207,11 +202,7 @@ class _LoginPageState extends State<LoginPage> {
                               textStyle: TextStyle(fontSize: Get.width * 0.03),
                             ),
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => RegisterPage()),
-                              );
+                               Navigator.pushNamed(context, '/register');
                             },
                             child: const Text(
                               'Registar agora',

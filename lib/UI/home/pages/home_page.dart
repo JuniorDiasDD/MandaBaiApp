@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:manda_bai/Core/app_colors.dart';
+import 'package:manda_bai/UI/Favorite/page/favorite_page.dart';
 import 'package:manda_bai/UI/account/pages/profile_page.dart';
 import 'package:manda_bai/UI/cart/pages/cart_page.dart';
 import 'package:manda_bai/UI/home/pages/start_page.dart';
@@ -18,6 +19,7 @@ class _HomePageState extends State<HomePage> {
   static const List<Widget> _widgetOptions = <Widget>[
     StartPage(),
     CartPage(),
+    FavoritePage(),
     ProfilePage()
   ];
 
@@ -45,12 +47,17 @@ class _HomePageState extends State<HomePage> {
             label: 'Carrinho',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.favorite_border),
+            label: 'Favoritos',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.person_outlined),
             label: 'Perfil',
           ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: AppColors.greenColor,
+        unselectedItemColor: Colors.black54,
         onTap: _onItemTapped,
       ),
     );
