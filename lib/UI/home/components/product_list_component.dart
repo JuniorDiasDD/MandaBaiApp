@@ -1,11 +1,11 @@
 // ignore_for_file: avoid_unnecessary_containers, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Model/product.dart';
+import 'package:manda_bai/UI/description_product/pages/product_detail_page.dart';
 
 class ProductListComponent extends StatelessWidget {
   Product product;
@@ -15,6 +15,14 @@ class ProductListComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProdutoDetailPage(
+            product: product,
+          ),
+        ),
+      ),
       child: Padding(
         padding: EdgeInsets.only(
             left: Get.width * 0.023,

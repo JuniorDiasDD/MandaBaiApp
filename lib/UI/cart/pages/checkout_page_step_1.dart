@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
-import 'package:manda_bai/UI/home/pages/checkout_page_step_2.dart';
+import 'package:manda_bai/UI/cart/pages/checkout_page_step_2.dart';
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({Key? key}) : super(key: key);

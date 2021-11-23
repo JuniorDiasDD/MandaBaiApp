@@ -4,17 +4,13 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/UI/home/pages/cart_page.dart';
+import 'package:manda_bai/Model/product.dart';
+import 'package:manda_bai/UI/cart/pages/cart_page.dart';
 
 class ProdutoDetailPage extends StatefulWidget {
-  final String imageName;
-  final String productName;
-  final String priceProduct;
+ Product product;
   ProdutoDetailPage(
-      {required this.imageName,
-      required this.priceProduct,
-      required this.productName});
-
+      {required this.product});
   @override
   State<ProdutoDetailPage> createState() => _ProdutoDetailPageState();
 }
@@ -26,33 +22,30 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
       body: SafeArea(
         child: Column(
           children: [
-            //SizedBox(height: Get.height * 0.01),
-            
             Stack(
-              children:[ 
+              children: [
                 Container(
-                child: Image.asset(
-                  widget.imageName,
-                  width: Get.width,
-                  fit: BoxFit.cover,
+                  child: Image.network(
+                    widget.product.image,
+                    width: Get.width,
+                    fit: BoxFit.cover,
+                  ),
+                  padding: const EdgeInsets.only(
+                    right: 10.0,
+                    left: 10.0,
+                  ),
                 ),
-                padding: const EdgeInsets.only(
-                  right: 10.0,
-                  left: 10.0,
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    // ignore: prefer_const_constructors
+                    icon: Icon(Icons.arrow_back),
+                  ),
                 ),
-              ),
-              Align(
-              alignment: Alignment.topLeft,
-              child: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                // ignore: prefer_const_constructors
-                icon: Icon(Icons.arrow_back),
-              ),
-            ),
               ],
-              
             ),
             SizedBox(height: Get.height * 0.01),
             Row(
@@ -66,7 +59,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                   child: Column(
                     children: [
                       Text(
-                        widget.productName,
+                        widget.product.name,
                         style: const TextStyle(
                           fontFamily: AppFonts.poppinsBoldFont,
                           fontSize: 15,
@@ -99,13 +92,13 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                     right: Get.width * 0.02,
                   ),
                   child: Text(
-                    widget.priceProduct,
+                    widget.product.price.toString(),
                   ),
                 ),
               ],
             ),
             Padding(
-              padding:  EdgeInsets.only(
+              padding: EdgeInsets.only(
                 left: Get.width * 0.02,
                 right: Get.width * 0.02,
               ),
@@ -188,7 +181,10 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
             ),
             SizedBox(height: Get.height * 0.05),
             Padding(
-              padding: EdgeInsets.only(left: Get.width * 0.02,right: Get.width * 0.02,),
+              padding: EdgeInsets.only(
+                left: Get.width * 0.02,
+                right: Get.width * 0.02,
+              ),
               child: Container(
                 height: Get.height * 0.05,
                 width: Get.width,

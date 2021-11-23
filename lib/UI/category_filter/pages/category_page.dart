@@ -5,9 +5,8 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/product.dart';
-import 'package:manda_bai/UI/home/components/listview_item_component.dart';
+import 'package:manda_bai/UI/home/components/item_category.dart';
 import 'package:manda_bai/UI/home/components/product_list_component.dart';
-import 'package:manda_bai/UI/home/pages/product_detail_page.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 class CategoryPage extends StatefulWidget {

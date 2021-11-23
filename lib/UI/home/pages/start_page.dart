@@ -6,12 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
-import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/product.dart';
-import 'package:manda_bai/UI/home/components/listview_item_component.dart';
+import 'package:manda_bai/UI/about/pages/info_page.dart';
+import 'package:manda_bai/UI/home/components/item_category.dart';
 import 'package:manda_bai/UI/home/components/product_list_component.dart';
-import 'package:manda_bai/UI/home/pages/info_page.dart';
-import 'package:manda_bai/UI/home/pages/product_detail_page.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({Key? key}) : super(key: key);
@@ -95,7 +93,7 @@ class _StartPageState extends State<StartPage> {
                     child:  SizedBox(
                       width: 350,
                       height: Get.height*0.05,
-                      child: TextField(
+                      child: const TextField(
                         cursorColor: AppColors.greenColor,
                         decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(

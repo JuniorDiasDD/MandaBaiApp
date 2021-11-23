@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:manda_bai/Core/app_colors.dart';
 
-import 'UI/intro/pages/login_page.dart';
+import 'UI/authention/pages/login_page.dart';
+
 
 void main() {
   runApp(const App());

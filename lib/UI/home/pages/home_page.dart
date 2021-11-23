@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:manda_bai/Core/app_colors.dart';
-import 'package:manda_bai/UI/home/pages/cart_page.dart';
-import 'package:manda_bai/UI/home/pages/profile_page.dart';
+import 'package:manda_bai/UI/account/pages/profile_page.dart';
+import 'package:manda_bai/UI/cart/pages/cart_page.dart';
 import 'package:manda_bai/UI/home/pages/start_page.dart';
-
-
-
-
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -22,9 +17,7 @@ class _HomePageState extends State<HomePage> {
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     StartPage(),
-
-    CartPage (),
-
+    CartPage(),
     ProfilePage()
   ];
 

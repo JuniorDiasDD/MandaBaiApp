@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
-import 'package:manda_bai/Core/app_images.dart';
-import 'package:manda_bai/UI/home/pages/category_page.dart';
-import 'package:manda_bai/UI/home/pages/start_page.dart';
-import 'package:websafe_svg/websafe_svg.dart';
+import 'package:manda_bai/UI/category_filter/pages/category_page.dart';
 
 class ListViewItemComponent extends StatelessWidget {
   final String categoryName;

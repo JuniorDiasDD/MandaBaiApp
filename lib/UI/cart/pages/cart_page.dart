@@ -5,9 +5,8 @@ import 'package:manda_bai/Controller/cart_controller.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
-
 import 'package:manda_bai/Model/cart_model.dart';
-import 'package:manda_bai/UI/home/components/listview_item_cart.dart';
+import 'package:manda_bai/UI/cart/components/listview_item_cart.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 import 'checkout_page_step_1.dart';
@@ -134,7 +133,6 @@ class _StartPageState extends State<CartPage> {
                           //  cartPageController.name = list.name;
                           //  cartPageController.amount = list.amount;
                           cartPageController.price = list.price * list.amount;
-
                           return ItemCart(
                             id: list.id,
                             name: list.name,
