@@ -13,7 +13,23 @@ class CheckoutPageStep3 extends StatefulWidget {
 }
 
 class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   int val = 1;
+  bool isCheckedPromocao = false;
+  final input_codigo = TextEditingController();
+  final input_cartao = TextEditingController();
+  final input_ccv = TextEditingController();
+  final input_data_expiracao = TextEditingController();
+  Future<void> validateAndSave() async {
+    final FormState? form = _formKey.currentState;
+
+    if (form!.validate()) {
+      print('Form is valid');
+    } else {
+      print('Form is invalid');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,323 +37,376 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
         padding:
             EdgeInsets.only(left: Get.width * 0.04, right: Get.width * 0.04),
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: Get.height * 0.08),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    child: IconButton(
-                      // padding: EdgeInsets.all(0.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                SizedBox(height: Get.height * 0.08),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      child: IconButton(
+                        // padding: EdgeInsets.all(0.0),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.black,
+                        ),
+                        alignment: Alignment.centerRight,
+                      ),
+                    ),
+                    Text(
+                      'Checkout',
+                      style: TextStyle(
+                          fontFamily: AppFonts.poppinsBoldFont,
+                          fontSize: Get.width * 0.05),
+                    ),
+                    IconButton(
+                      padding: const EdgeInsets.all(0.0),
                       onPressed: () {
-                        Navigator.pop(context);
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Scaffold(
+                              backgroundColor: Colors.transparent,
+                              body: Center(
+                                child: Container(
+                                  width: Get.width,
+                                  height: Get.height * 0.3,
+                                  margin: EdgeInsets.only(left: 20, right: 20),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(Icons.close),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
                       },
                       icon: const Icon(
-                        Icons.arrow_back,
-                        color: Colors.black,
+                        Icons.info,
+                        color: AppColors.greenColor,
                       ),
+                      iconSize: Get.width * 0.05,
                       alignment: Alignment.centerRight,
                     ),
-                  ),
-                  Text(
-                    'Checkout',
+                  ],
+                ),
+                SizedBox(height: Get.height * 0.05),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "Pagamento",
                     style: TextStyle(
                         fontFamily: AppFonts.poppinsBoldFont,
-                        fontSize: Get.width * 0.05),
+                        fontSize: Get.width * 0.045),
                   ),
-                  IconButton(
-                    padding: const EdgeInsets.all(0.0),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Scaffold(
-                            backgroundColor: Colors.transparent,
-                            body: Center(
-                              child: Container(
-                                width: Get.width,
-                                height: Get.height * 0.3,
-                                margin: EdgeInsets.only(left: 20, right: 20),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                      icon: Icon(Icons.close),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  ],
+                ),
+                Row(
+                  children: [
+                    Checkbox(
+                      checkColor: Colors.white,
+                      activeColor: Colors.green,
+                      value: isCheckedPromocao,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          isCheckedPromocao = value!;
+                        });
+                      },
+                    ),
+                    Text(
+                      "Tenho um desconto",
+                      style: TextStyle(
+                        fontFamily: AppFonts.poppinsRegularFont,
+                        fontSize: Get.width * 0.035,
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  child: isCheckedPromocao == true
+                      ? Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                "Codigo de Desconto",
+                                style: TextStyle(
+                                  fontFamily: AppFonts.poppinsRegularFont,
+                                  fontSize: Get.width * 0.035,
                                 ),
                               ),
                             ),
-                          );
-                        },
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.info,
-                      color: AppColors.greenColor,
-                    ),
-                    iconSize: Get.width * 0.05,
-                    alignment: Alignment.centerRight,
-                  ),
-                ],
-              ),
-              SizedBox(height: Get.height * 0.05),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "Pagamento",
-                  style: TextStyle(
-                      fontFamily: AppFonts.poppinsBoldFont,
-                      fontSize: Get.width * 0.045),
+                            SizedBox(
+                              height: Get.height * 0.005,
+                            ),
+                            TextFormField(
+                              controller: input_codigo,
+                              style: TextStyle(
+                                fontFamily: AppFonts.poppinsRegularFont,
+                              ),
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(35.0),
+                                  borderSide: new BorderSide(),
+                                ),
+                              ),
+                              validator: (value) => value!.isEmpty
+                                  ? 'Insira o codigo de desconto'
+                                  : null,
+                            ),
+                            SizedBox(
+                              height: Get.height * 0.01,
+                            ),
+                          ],
+                        )
+                      : Container(),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      WebsafeSvg.asset(AppImages.credit_card),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: Text(
-                          "Credit Card",
-                          style: TextStyle(
-                            fontFamily: AppFonts.poppinsBoldFont,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        WebsafeSvg.asset(AppImages.credit_card),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            "Credit Card",
+                            style: TextStyle(
+                              fontFamily: AppFonts.poppinsBoldFont,
+                            ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                  Radio(
-                    value: 1,
-                    groupValue: val,
-                    onChanged: (value) {
-                      setState(() {
-                        val = 1;
-                      });
-                    },
-                    activeColor: Colors.green,
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      WebsafeSvg.asset(AppImages.pay_pal),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: Text(
-                          "PayPal",
-                          style: TextStyle(
-                            fontFamily: AppFonts.poppinsBoldFont,
+                        )
+                      ],
+                    ),
+                    Radio(
+                      value: 1,
+                      groupValue: val,
+                      onChanged: (value) {
+                        setState(() {
+                          val = 1;
+                        });
+                      },
+                      activeColor: Colors.green,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        WebsafeSvg.asset(AppImages.pay_pal),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            "PayPal",
+                            style: TextStyle(
+                              fontFamily: AppFonts.poppinsBoldFont,
+                            ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                  Radio(
-                    value: 2,
-                    groupValue: val,
-                    onChanged: (value) {
-                      setState(() {
-                        val = 2;
-                      });
-                    },
-                    activeColor: Colors.green,
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      WebsafeSvg.asset(AppImages.ideal),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: Text(
-                          "iDEAL",
-                          style: TextStyle(
-                            fontFamily: AppFonts.poppinsBoldFont,
+                        )
+                      ],
+                    ),
+                    Radio(
+                      value: 2,
+                      groupValue: val,
+                      onChanged: (value) {
+                        setState(() {
+                          val = 2;
+                        });
+                      },
+                      activeColor: Colors.green,
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        WebsafeSvg.asset(AppImages.ideal),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text(
+                            "iDEAL",
+                            style: TextStyle(
+                              fontFamily: AppFonts.poppinsBoldFont,
+                            ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
+                    Radio(
+                      value: 3,
+                      groupValue: val,
+                      onChanged: (value) {
+                        setState(() {
+                          val = 3;
+                        });
+                      },
+                      activeColor: Colors.green,
+                    ),
+                  ],
+                ),
+                SizedBox(height: Get.height * 0.01),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "Número de Cartão",
+                    style: TextStyle(
+                      fontFamily: AppFonts.poppinsRegularFont,
+                      fontSize: Get.width * 0.035,
+                    ),
                   ),
-                  Radio(
-                    value: 3,
-                    groupValue: val,
-                    onChanged: (value) {
-                      setState(() {
-                        val = 3;
-                      });
-                    },
-                    activeColor: Colors.green,
-                  ),
-                ],
-              ),
-              SizedBox(height: Get.height * 0.01),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "Número de Cartão",
+                ),
+                SizedBox(height: Get.height * 0.01),
+                TextFormField(
+                  controller: input_cartao,
                   style: TextStyle(
                     fontFamily: AppFonts.poppinsRegularFont,
-                    fontSize: Get.width * 0.035,
                   ),
-                ),
-              ),
-              SizedBox(height: Get.height * 0.01),
-              Container(
-                height: Get.height * 0.055,
-                width: Get.width,
-                child: TextField(
-                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                    filled: true,
+                    fillColor: Colors.white,
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(35),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(width: 1, color: Colors.black54),
-                      borderRadius: BorderRadius.circular(35),
+                      borderRadius: new BorderRadius.circular(35.0),
+                      borderSide: new BorderSide(),
                     ),
                   ),
+                  validator: (value) =>
+                      value!.isEmpty ? 'Número do cartão' : null,
                 ),
-              ),
-              SizedBox(height: Get.height * 0.01),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
+                SizedBox(height: Get.height * 0.01),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
                           "Expiração",
                           style: TextStyle(
                             fontFamily: AppFonts.poppinsRegularFont,
                             fontSize: Get.width * 0.035,
                           ),
                         ),
-                      ),
-                      SizedBox(height: Get.height * 0.01),
-                      Container(
-                        height: Get.height * 0.055,
-                        width: Get.width * 0.3,
-                        child: TextField(
-                          keyboardType: TextInputType.datetime,
-                          decoration: InputDecoration(
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 20),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(35),
+                        SizedBox(height: Get.height * 0.01),
+                        Container(
+                          width: Get.width * 0.3,
+                          child: TextFormField(
+                            controller: input_data_expiracao,
+                            style: TextStyle(
+                              fontFamily: AppFonts.poppinsRegularFont,
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(width: 1, color: Colors.black54),
-                              borderRadius: BorderRadius.circular(35),
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(35.0),
+                                borderSide: new BorderSide(),
+                              ),
                             ),
-                            hintText: 'mm/aaa',
+                            validator: (value) =>
+                                value!.isEmpty ? 'Número do data' : null,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Text(
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
                           "CVV2",
                           style: TextStyle(
                             fontFamily: AppFonts.poppinsRegularFont,
                             fontSize: Get.width * 0.035,
                           ),
                         ),
-                      ),
-                      SizedBox(height: Get.height * 0.01),
-                      Container(
-                        height: Get.height * 0.055,
-                        width: Get.width * 0.3,
-                        child: TextField(
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 20),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(35),
+                        SizedBox(height: Get.height * 0.01),
+                        Container(
+                          width: Get.width * 0.3,
+                          child: TextFormField(
+                            controller: input_ccv,
+                            style: TextStyle(
+                              fontFamily: AppFonts.poppinsRegularFont,
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(width: 1, color: Colors.black54),
-                              borderRadius: BorderRadius.circular(35),
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(35.0),
+                                borderSide: new BorderSide(),
+                              ),
                             ),
+                            validator: (value) =>
+                                value!.isEmpty ? 'insira ccv' : null,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: Get.height * 0.1),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Total",
-                    style: TextStyle(
-                        fontFamily: AppFonts.poppinsBoldFont,
-                        fontSize: Get.width * 0.045),
-                  ),
-                  Text(
-                    "99",
-                    style: TextStyle(
-                        fontFamily: AppFonts.poppinsBoldFont,
-                        color: AppColors.greenColor,
-                        fontSize: Get.width * 0.045),
-                  ),
-                ],
-              ),
-              SizedBox(height: Get.height * 0.02),
-              Container(
-                height: Get.height * 0.05,
-                width: Get.width,
-                child: FlatButton(
-                  padding: EdgeInsets.only(
-                    left: Get.width * 0.05,
-                    right: Get.height * 0.05,
-                  ),
-                  color: AppColors.greenColor,
-                  textColor: Colors.white,
-                  child: Text('Finalizar'),
-                  onPressed: () {
-                    /*  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CheckoutPage(),
+                      ],
                     ),
-                  );*/
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30.0),
+                  ],
+                ),
+                SizedBox(height: Get.height * 0.1),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Total",
+                      style: TextStyle(
+                          fontFamily: AppFonts.poppinsBoldFont,
+                          fontSize: Get.width * 0.045),
+                    ),
+                    Text(
+                      "99",
+                      style: TextStyle(
+                          fontFamily: AppFonts.poppinsBoldFont,
+                          color: AppColors.greenColor,
+                          fontSize: Get.width * 0.045),
+                    ),
+                  ],
+                ),
+                SizedBox(height: Get.height * 0.02),
+                Container(
+                  height: Get.height * 0.05,
+                  width: Get.width,
+                  child: FlatButton(
+                    padding: EdgeInsets.only(
+                      left: Get.width * 0.05,
+                      right: Get.height * 0.05,
+                    ),
+                    color: AppColors.greenColor,
+                    textColor: Colors.white,
+                    child: Text('Finalizar'),
+                    onPressed: validateAndSave,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0),
+                    ),
                   ),
                 ),
-              ),
-            ],
+                 SizedBox(height: Get.height * 0.02),
+              ],
+            ),
           ),
         ),
       ),

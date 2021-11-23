@@ -4,9 +4,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Model/product.dart';
+import 'package:manda_bai/Model/user.dart';
 import 'package:manda_bai/UI/about/pages/info_page.dart';
 import 'package:manda_bai/UI/category_filter/pages/category_page.dart';
 import 'package:manda_bai/UI/home/components/item_category.dart';
@@ -35,6 +37,13 @@ class _StartPageState extends State<StartPage> {
     }
 
     return list_product;
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    
+    user= new User(name:"Júnior",telefone:"9123456",email:"junior@gmail.com",senha: "12344",username:"junior39");
   }
   @override
   Widget build(BuildContext context) {

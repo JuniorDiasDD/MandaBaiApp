@@ -10,6 +10,7 @@ import 'package:manda_bai/UI/cart/components/listview_item_cart.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 import 'checkout_page_step_1.dart';
+import 'checkout_page_step_2.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -259,7 +260,7 @@ class _StartPageState extends State<CartPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => CheckoutPage(),
+                              builder: (context) => CheckoutPageStep2(),
                             ),
                           );
                         },

@@ -23,7 +23,6 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
     if (form!.validate()) {
       if (input_senha.text != user.senha) {
         if (input_senha == input_senha_conf) {
-         
           user.senha = input_senha.text;
           if (input_email.text != user.email) {
             user.email = input_email.text;
