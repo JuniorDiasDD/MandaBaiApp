@@ -8,3 +8,16 @@ String description_carlos = 'Mentor por trás do  empreendimento Mandabai. Acred
 String description_missao = 'Contribuir para o aprofundamento e fortalecimento das relações familiares e de amizade entre os nossos clientes ;\nFazer com que os Cabo-Verdianos espalhados pela diáspora se sintam cada vez mais próximos de Cabo Verde ;\nOferecer produtos e serviços de qualidade com rapidez e simpatia.';
 String description_visao ='Ser o melhor e maior site de Cabo Verde na mente e no coração dos consumidores e dos funcionários.\nColocar á disposição dos nossos clientes um serviço que seja visto como qualitativamente diferenciador no curto, médio e longo prazo.\nSer uma startup reconhecida pela sua excelência, rapidez, qualidade e simpatia.';
 String description_valores ='Integridade e honestidade;\nEmpenho para com os clientes e parceiros;\nAbertura e respeito para com os outros e empenho para contribuir para o seu desenvolvimento;\nQualidade, excelência e rapidez;/nResponsabilidade social e ambiental;\nCo-prosperidades;\nConfiança, respeito para com os clientes, funcionários e parceiros;\nLiderança e diversidade.';
+
+
+
+
+
+//! Configuração de serviços
+
+const String link="https://www.mandabai.com/wp-json/wc/v3/";
+const String consumer_key="ck_99b6b6151e8db4d15190cd8fef823839f2595594";
+const String consumer_secret="cs_2f6fd0fc9ff05307dada1a8104e6f27c39b6cd86";
+
+const String categorias=link+"products/categories?consumer_key="+consumer_key+"&consumer_secret="+consumer_secret;
+const String productCategorias=link+"products?consumer_key="+consumer_key+"&consumer_secret="+consumer_secret+"&category=";

@@ -39,6 +39,7 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   carousel_slider: ^4.0.0
   readmore: ^2.1.0
+  http: ^0.13.4
   
 
 

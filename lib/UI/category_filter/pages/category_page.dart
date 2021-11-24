@@ -20,8 +20,8 @@ class _CategoryPageState extends State<CategoryPage> {
     List<Product>list_product = [];
     Future _carregar() async {
   //  list_product = await Request.loadEntidades();
-    list_product.add(new Product(id:1,name:"Televisão",image:"https://i.zst.com.br/thumbs/12/32/f/-52450406.jpg",price:20000,amount:1));
-    list_product.add(new Product(id:1,name:"Iphone 11",image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone11-select-2019-family?wid=882&hei=1058&fmt=jpeg&qlt=80&.v=1567022175704",price:49000,amount:1));
+ //   list_product.add(new Product(id:1,name:"Televisão",image:"https://i.zst.com.br/thumbs/12/32/f/-52450406.jpg",price:20000,amount:1));
+  //  list_product.add(new Product(id:1,name:"Iphone 11",image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone11-select-2019-family?wid=882&hei=1058&fmt=jpeg&qlt=80&.v=1567022175704",price:49000,amount:1));
      if (list_product.isEmpty) {
       return null;
     }
@@ -151,12 +151,10 @@ class _CategoryPageState extends State<CategoryPage> {
                   // This next line does the trick.
                   scrollDirection: Axis.horizontal,
                   children: const <Widget>[
-                    ListViewItemComponent(categoryName: 'Electronics'),
-                    ListViewItemComponent(categoryName: 'Cosmetics'),
-                    ListViewItemComponent(categoryName: 'Foods'),
-                    ListViewItemComponent(categoryName: 'Vegetables'),
-                    ListViewItemComponent(categoryName: 'Salad'),
-                    ListViewItemComponent(categoryName: 'Drinks'),
+                 //   ListViewItemComponent(categoryName: 'Electronics'),
+                   // ListViewItemComponent(categoryName: 'Cosmetics'),
+                 ////   ListViewItemComponent(categoryName: 'Foods'),
+                   
                   ],
                 ),
               ),

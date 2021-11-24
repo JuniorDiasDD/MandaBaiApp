@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
-import 'package:manda_bai/UI/about/item_bio.dart';
+import 'package:manda_bai/UI/about/components/item_bio.dart';
 import 'package:readmore/readmore.dart';
 
 class InfoPage extends StatelessWidget {

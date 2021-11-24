@@ -64,6 +64,7 @@ class ProductListComponent extends StatelessWidget {
               Padding(
                 child: Text(
                   product.name,
+                  maxLines: 1,
                   style: const TextStyle(
                     fontFamily: AppFonts.poppinsRegularFont,
                     fontSize: 12,

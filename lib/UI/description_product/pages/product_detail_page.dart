@@ -24,7 +24,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
           children: [
             Stack(
               children: [
-                Container(
+               Container(
                   child: Image.network(
                     widget.product.image,
                     width: Get.width,

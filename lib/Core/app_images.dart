@@ -22,4 +22,6 @@ class AppImages {
   static const favorite_empyt = 'assets/images/favorite_empyt.svg';
   static const icone_user = 'assets/images/icone_user.png';
   static const filter = 'assets/images/filter.svg';
+   static const cvmovel = 'assets/images/cvmovel.png';
+    static const camara = 'assets/images/camara.png';
 }
