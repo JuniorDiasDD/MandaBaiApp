@@ -7,6 +7,8 @@ import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/user.dart';
 import 'package:manda_bai/UI/Favorite/page/favorite_page.dart';
 import 'package:manda_bai/UI/account/pages/edit_profile.dart';
+import 'package:manda_bai/UI/home/components/header.dart';
+import 'package:manda_bai/UI/home/components/menu.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -16,28 +18,39 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _StartPageState extends State<ProfilePage> {
- 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    user= new User(name:"Júnior",telefone:"9123456",email:"junior@gmail.com",senha: "12344",username:"junior39");
+    user = new User(
+        name: "Júnior",
+        telefone: "9123456",
+        email: "junior@gmail.com",
+        senha: "12344",
+        username: "junior39");
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        // backgroundColor: Colors.white,
+        title: Header(title: 'Minha Conta'),
+      ),
+      drawer: Menu(),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: Get.height * 0.05),
+            SizedBox(height: Get.height * 0.03),
             Image.asset(
               AppImages.icone_user,
               width: Get.width * 0.2,
-              height: Get.height * 0.2,
+              // height: Get.height * 0.2,
               alignment: Alignment.center,
             ),
-             Text(
+            SizedBox(height: Get.height * 0.03),
+            Text(
               user.name,
               style: TextStyle(
                 fontFamily: AppFonts.poppinsBoldFont,

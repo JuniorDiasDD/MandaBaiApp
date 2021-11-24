@@ -5,6 +5,8 @@ import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/cart_model.dart';
 import 'package:manda_bai/UI/Favorite/components/listview_item_favorite.dart';
+import 'package:manda_bai/UI/home/components/header.dart';
+import 'package:manda_bai/UI/home/components/menu.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 class FavoritePage extends StatefulWidget {
@@ -30,6 +32,43 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        // backgroundColor: Colors.white,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Meus Favoritos',
+              style: TextStyle(
+                fontFamily: AppFonts.poppinsRegularFont,
+              ),
+            ),
+            Row(
+              children: [
+                IconButton(
+                  padding: const EdgeInsets.all(0.0),
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.white,
+                  ),
+                  iconSize: Get.width * 0.05,
+                ),
+                IconButton(
+                  padding: const EdgeInsets.all(0.0),
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.shopping_cart,
+                    color: Colors.white,
+                  ),
+                  iconSize: Get.width * 0.05,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      drawer: Menu(),
       body: Padding(
         padding:
             EdgeInsets.only(left: Get.width * 0.04, right: Get.width * 0.04),
@@ -40,36 +79,6 @@ class _FavoritePageState extends State<FavoritePage> {
                   ? Column(
                       children: [
                         SizedBox(height: Get.height * 0.08),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              child: IconButton(
-                                // padding: EdgeInsets.all(0.0),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                icon: const Icon(
-                                  Icons.arrow_back,
-                                  color: Colors.black,
-                                ),
-                                alignment: Alignment.centerRight,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(right: Get.width * 0.1),
-                              child: Text(
-                                'Favoritos',
-                                style: TextStyle(
-                                    fontFamily: AppFonts.poppinsBoldFont,
-                                    fontSize: Get.width * 0.05),
-                              ),
-                            ),
-                            Text(
-                              '  ',
-                            ),
-                          ],
-                        ),
                         Container(
                           alignment: Alignment.center,
                           height: Get.height * 0.8,
@@ -93,59 +102,6 @@ class _FavoritePageState extends State<FavoritePage> {
                   : SingleChildScrollView(
                       child: Column(
                         children: [
-                          SizedBox(height: Get.height * 0.08),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                child: IconButton(
-                                  // padding: EdgeInsets.all(0.0),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  icon: const Icon(
-                                    Icons.arrow_back,
-                                    color: Colors.black,
-                                  ),
-                                  alignment: Alignment.centerRight,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: Get.width * 0.1),
-                                child: Text(
-                                  'Favoritos',
-                                  style: TextStyle(
-                                      fontFamily: AppFonts.poppinsBoldFont,
-                                      fontSize: Get.width * 0.05),
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    IconButton(
-                                      padding: const EdgeInsets.all(0.0),
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        Icons.delete,
-                                        color: AppColors.greenColor,
-                                      ),
-                                      iconSize: Get.width * 0.05,
-                                    ),
-                                    IconButton(
-                                      padding: const EdgeInsets.all(0.0),
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        Icons.shopping_cart,
-                                        color: AppColors.greenColor,
-                                      ),
-                                      iconSize: Get.width * 0.05,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
                           SizedBox(height: Get.height * 0.01),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,

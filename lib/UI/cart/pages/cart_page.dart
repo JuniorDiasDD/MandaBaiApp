@@ -7,6 +7,8 @@ import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/cart_model.dart';
 import 'package:manda_bai/UI/cart/components/listview_item_cart.dart';
+import 'package:manda_bai/UI/home/components/header.dart';
+import 'package:manda_bai/UI/home/components/menu.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 import 'checkout_page_step_1.dart';
@@ -41,6 +43,33 @@ class _StartPageState extends State<CartPage> {
     cartPageController.list = list_cart;
     cartPageController.calcule();
     return Scaffold(
+      appBar: AppBar(
+        // backgroundColor: Colors.white,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Meu Carinho',
+              style: TextStyle(
+                fontFamily: AppFonts.poppinsRegularFont,
+              ),
+            ),
+            IconButton(
+              padding: EdgeInsets.only(
+                right: Get.width * 0.02,
+              ),
+              onPressed: () {},
+              icon: const Icon(
+                Icons.delete,
+                color: Colors.white,
+              ),
+              iconSize: Get.width * 0.05,
+              alignment: Alignment.centerRight,
+            ),
+          ],
+        ),
+      ),
+      drawer: Menu(),
       body: Padding(
         padding:
             EdgeInsets.only(left: Get.width * 0.04, right: Get.width * 0.04),
@@ -51,13 +80,8 @@ class _StartPageState extends State<CartPage> {
                   height: Get.height,
                   child: Column(
                     children: [
-                      SizedBox(height: Get.height * 0.08),
-                      Text(
-                        "Carrinho",
-                        style: TextStyle(
-                            fontFamily: AppFonts.poppinsBoldFont,
-                            fontSize: Get.width * 0.05),
-                      ),
+                      
+                     
                       SizedBox(height: Get.height * 0.2),
                       WebsafeSvg.asset(AppImages.cart_empyt),
                       SizedBox(height: Get.height * 0.08),
@@ -74,34 +98,8 @@ class _StartPageState extends State<CartPage> {
             : SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(height: Get.height * 0.08),
-                    Padding(
-                      padding:
-                          EdgeInsets.only(left: Get.width * 0.1, right: 10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('   '),
-                          Text(
-                            'Meu Carrinho',
-                            style: TextStyle(
-                              fontFamily: AppFonts.poppinsBoldFont,
-                              fontSize: Get.width * 0.05,
-                            ),
-                          ),
-                          IconButton(
-                            padding: const EdgeInsets.all(0.0),
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.delete,
-                              color: AppColors.greenColor,
-                            ),
-                            iconSize: Get.width * 0.05,
-                            alignment: Alignment.centerRight,
-                          ),
-                        ],
-                      ),
-                    ),
+                   
+                   
                     SizedBox(height: Get.height * 0.01),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
