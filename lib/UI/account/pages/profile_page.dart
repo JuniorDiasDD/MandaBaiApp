@@ -6,6 +6,7 @@ import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/user.dart';
 import 'package:manda_bai/UI/Favorite/page/favorite_page.dart';
+import 'package:manda_bai/UI/about/pages/info_page.dart';
 import 'package:manda_bai/UI/account/pages/edit_profile.dart';
 import 'package:manda_bai/UI/home/components/header.dart';
 import 'package:manda_bai/UI/home/components/menu.dart';
@@ -438,7 +439,14 @@ class _StartPageState extends State<ProfilePage> {
                           ),
                         ],
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => InfoPage(),
+                          ),
+                        );
+                      },
                     ),
                   ),
                   SizedBox(height: Get.height * 0.01),

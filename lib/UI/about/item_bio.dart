@@ -23,6 +23,7 @@ class _Item_BioState extends State<Item_Bio> {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,7 +35,7 @@ class _Item_BioState extends State<Item_Bio> {
                     color: Colors.black,
                     fontSize: Get.width * 0.03),
               ),
-              SizedBox(height: Get.height * 0.001),
+              SizedBox(height: Get.height * 0.002),
               Text(
                 'Fundador ',
                 style: TextStyle(
@@ -60,22 +61,23 @@ class _Item_BioState extends State<Item_Bio> {
           ),
           Column(
             children: [
-              Container(
-                width: Get.width * 0.4,
-                height: Get.height * 0.2,
-                 child: ListView(
-                   children: [
-                     Text (
-                   description_carlos,
-                       style: TextStyle(
-                           fontFamily: AppFonts.poppinsRegularFont,
-                           color: Colors.black,
-                           fontSize: Get.width * 0.03),
-                     ),
-
-
-                   ],
-                 ),
+              Padding(
+                padding: EdgeInsets.only(top: Get.height * 0.06),
+                child: Container(
+                  width: Get.width * 0.52,
+                  height: Get.height * 0.2,
+                  child: ListView(
+                    children: [
+                      Text(
+                        description_carlos,
+                        style: TextStyle(
+                            fontFamily: AppFonts.poppinsRegularFont,
+                            color: Colors.black,
+                            fontSize: Get.width * 0.03),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),

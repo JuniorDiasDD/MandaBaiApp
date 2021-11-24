@@ -70,6 +70,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                         Navigator.pop(context);
                                       },
                                     ),
+
                                   ],
                                 ),
                               ),

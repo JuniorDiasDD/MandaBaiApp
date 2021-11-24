@@ -103,6 +103,33 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                         Navigator.pop(context);
                                       },
                                     ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        left: Get.width * 0.04,
+                                        right: Get.width * 0.04,
+                                      ),
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'Neste campo, terás de completar os dados da pessoa que irá receber os produtos.',
+                                              style: TextStyle(
+                                                  fontFamily:
+                                                      AppFonts.poppinsBoldFont,
+                                                  fontSize: Get.width * 0.03),
+                                            ),
+                                            SizedBox(height: Get.height * 0.05),
+                                            Text(
+                                              'Neste campo, terás de completar os dados da pessoa que irá receber os produtos.',
+                                              style: TextStyle(
+                                                  fontFamily:
+                                                  AppFonts.poppinsBoldFont,
+                                                  fontSize: Get.width * 0.03),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),

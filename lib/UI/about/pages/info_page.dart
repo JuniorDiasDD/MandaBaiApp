@@ -77,27 +77,23 @@ class InfoPage extends StatelessWidget {
                           fontFamily: AppFonts.poppinsRegularFont,
                           color: AppColors.greenColor),
                     ),
-                    SizedBox(height: Get.height * 0.03),
-
+                    SizedBox(height: Get.height * 0.04),
                     Align(
                       alignment: Alignment.topLeft,
-                      child: Text (
+                      child: Text(
                         'Constituição da Empresa',
                         style: TextStyle(
                             fontFamily: AppFonts.poppinsBoldFont,
                             color: Colors.black,
                             fontSize: Get.width * 0.045),
-
                       ),
                     ),
-
                     Container(
                         width: Get.width,
-                        height: Get.height * 0.4,
-                        color: Colors.amberAccent,
-                        child: ListView(children:[ Item_Bio()],)),
-
-
+                        height: Get.height * 0.3,
+                        child: ListView(
+                          children: [Item_Bio()],
+                        )),
                     SizedBox(height: Get.height * 0.04),
                     Container(
                       margin: EdgeInsets.only(
@@ -114,21 +110,24 @@ class InfoPage extends StatelessWidget {
                       ),
                       child: ExpansionTile(
                         backgroundColor: Colors.white,
-                        title: Text("Missão",
-                            style: TextStyle(
-                            fontFamily: AppFonts.poppinsBoldFont,
-                            color: AppColors.greenColor,
-                            fontSize: Get.width * 0.04),
+                        title: Text(
+                          "Missão",
+                          style: TextStyle(
+                              fontFamily: AppFonts.poppinsBoldFont,
+                              color: AppColors.greenColor,
+                              fontSize: Get.width * 0.04),
                         ),
                         children: <Widget>[
                           Padding(
-                            padding:  EdgeInsets.only(left:Get.width * 0.01, right: Get.width * 0.01),
-                            child: Text(description_missao,
+                            padding: EdgeInsets.only(
+                                left: Get.width * 0.01,
+                                right: Get.width * 0.01),
+                            child: Text(
+                              description_missao,
                               style: TextStyle(
                                   fontFamily: AppFonts.poppinsRegularFont,
                                   color: Colors.black,
                                   fontSize: Get.width * 0.03),
-
                             ),
                           ),
                         ],
@@ -149,7 +148,8 @@ class InfoPage extends StatelessWidget {
                       ),
                       child: ExpansionTile(
                         backgroundColor: Colors.white,
-                        title: Text("Visão",
+                        title: Text(
+                          "Visão",
                           style: TextStyle(
                               fontFamily: AppFonts.poppinsBoldFont,
                               color: AppColors.greenColor,
@@ -157,13 +157,15 @@ class InfoPage extends StatelessWidget {
                         ),
                         children: <Widget>[
                           Padding(
-                            padding:  EdgeInsets.only(left:Get.width * 0.01, right: Get.width * 0.01),
-                            child: Text(description_visao,
+                            padding: EdgeInsets.only(
+                                left: Get.width * 0.01,
+                                right: Get.width * 0.01),
+                            child: Text(
+                              description_visao,
                               style: TextStyle(
                                   fontFamily: AppFonts.poppinsRegularFont,
                                   color: Colors.black,
                                   fontSize: Get.width * 0.03),
-
                             ),
                           ),
                         ],
@@ -184,7 +186,8 @@ class InfoPage extends StatelessWidget {
                       ),
                       child: ExpansionTile(
                         backgroundColor: Colors.white,
-                        title: Text("Valores",
+                        title: Text(
+                          "Valores",
                           style: TextStyle(
                               fontFamily: AppFonts.poppinsBoldFont,
                               color: AppColors.greenColor,
@@ -192,22 +195,255 @@ class InfoPage extends StatelessWidget {
                         ),
                         children: <Widget>[
                           Padding(
-                            padding:  EdgeInsets.only(left:Get.width * 0.01, right: Get.width * 0.01),
-                            child: Text(description_valores,
+                            padding: EdgeInsets.only(
+                                left: Get.width * 0.01,
+                                right: Get.width * 0.01),
+                            child: Text(
+                              description_valores,
                               style: TextStyle(
                                   fontFamily: AppFonts.poppinsRegularFont,
                                   color: Colors.black,
                                   fontSize: Get.width * 0.03),
-
                             ),
                           ),
                         ],
                       ),
                     ),
-
-
+                    SizedBox(height: Get.height * 0.03),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: new Container(
+                            width: Get.width * 0.1,
+                            child: Divider(
+                              color: Colors.black,
+                              height: 36,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: Get.width * 0.05,
+                            right: Get.width * 0.05,
+                          ),
+                          child: Text("Sobre Aplicação"),
+                        ),
+                        Expanded(
+                          child: Container(
+                            width: Get.width * 0.4,
+                            child: const Divider(
+                              color: Colors.black,
+                              height: 36,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: Get.height * 0.01),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: Get.width * 0.01, right: Get.width * 0.01),
+                      child: Container(
+                        height: Get.height * 0.06,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(8),
+                          ),
+                          border: Border.all(
+                            color: Colors.black38,
+                          ),
+                        ),
+                        child: TextButton(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left: Get.width * 0.02,
+                                ),
+                                child: Text(
+                                  'Publicado por',
+                                  style: TextStyle(
+                                    fontFamily: AppFonts.poppinsRegularFont,
+                                    color: Colors.black,
+                                    fontSize: Get.height * 0.018,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  right: Get.width * 0.02,
+                                ),
+                                child: Text(
+                                  'MandaBai  >',
+                                  style: TextStyle(
+                                    fontFamily: AppFonts.poppinsRegularFont,
+                                    color: Colors.black,
+                                    fontSize: Get.height * 0.018,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: Get.height * 0.02),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: Get.width * 0.01, right: Get.width * 0.01),
+                      child: Container(
+                        height: Get.height * 0.06,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(8),
+                          ),
+                          border: Border.all(
+                            color: Colors.black38,
+                          ),
+                        ),
+                        child: TextButton(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left: Get.width * 0.02,
+                                ),
+                                child: Text(
+                                  'Desenvolvido por',
+                                  style: TextStyle(
+                                    fontFamily: AppFonts.poppinsRegularFont,
+                                    color: Colors.black,
+                                    fontSize: Get.height * 0.018,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  right: Get.width * 0.02,
+                                ),
+                                child: Text(
+                                  'MandaBai  >',
+                                  style: TextStyle(
+                                    fontFamily: AppFonts.poppinsRegularFont,
+                                    color: Colors.black,
+                                    fontSize: Get.height * 0.018,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: Get.height * 0.01),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: Get.width * 0.01, right: Get.width * 0.01),
+                      child: Container(
+                        height: Get.height * 0.06,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(8),
+                          ),
+                          border: Border.all(
+                            color: Colors.black38,
+                          ),
+                        ),
+                        child: TextButton(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left: Get.width * 0.02,
+                                ),
+                                child: Text(
+                                  'Termos de Uso',
+                                  style: TextStyle(
+                                    fontFamily: AppFonts.poppinsRegularFont,
+                                    color: Colors.black,
+                                    fontSize: Get.height * 0.018,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  right: Get.width * 0.02,
+                                ),
+                                child: Text(
+                                  ' >',
+                                  style: TextStyle(
+                                    fontFamily: AppFonts.poppinsRegularFont,
+                                    color: Colors.black,
+                                    fontSize: Get.height * 0.018,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: Get.height * 0.01),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: Get.width * 0.01, right: Get.width * 0.01),
+                      child: Container(
+                        height: Get.height * 0.06,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(8),
+                          ),
+                          border: Border.all(
+                            color: Colors.black38,
+                          ),
+                        ),
+                        child: TextButton(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left: Get.width * 0.02,
+                                ),
+                                child: Text(
+                                  'Políticas e Serviços',
+                                  style: TextStyle(
+                                    fontFamily: AppFonts.poppinsRegularFont,
+                                    color: Colors.black,
+                                    fontSize: Get.height * 0.018,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  right: Get.width * 0.02,
+                                ),
+                                child: Text(
+                                  'MandaBai  >',
+                                  style: TextStyle(
+                                    fontFamily: AppFonts.poppinsRegularFont,
+                                    color: Colors.black,
+                                    fontSize: Get.height * 0.018,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ),
                   ],
-
                 ),
               ),
             ],
