@@ -89,7 +89,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                             body: Center(
                               child: Container(
                                 width: Get.width,
-                                height: Get.height * 0.3,
+                                height: Get.height * 0.6,
                                 margin: EdgeInsets.only(left: 20, right: 20),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
@@ -123,54 +123,87 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                       ),
                                       Padding(
                                         padding: EdgeInsets.only(
-                                          left: Get.width * 0.04,
-                                          right: Get.width * 0.04,
+                                          left: Get.width * 0.05,
+                                          right: Get.width * 0.05,
                                         ),
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
                                           children: [
+                                            SizedBox(height: Get.height * 0.01),
                                             Text(
-                                              'Faturação e Envio',
+                                              'Informações do Formulário',
                                               style: TextStyle(
                                                   fontFamily:
-                                                  AppFonts.poppinsBoldFont,
+                                                      AppFonts.poppinsBoldFont,
                                                   fontSize: Get.width * 0.036),
                                             ),
                                             SizedBox(height: Get.height * 0.01),
                                             Text(
-                                              'Neste campo, terá de completar os dados da pessoa que irá receber os produtos.',
+                                              'Neste formulário, deverá completar com os dados da pessoa receptora da encomenda (produtos).',
                                               style: TextStyle(
-                                                  fontFamily:
-                                                      AppFonts.poppinsRegularFont,
+                                                  fontFamily: AppFonts
+                                                      .poppinsRegularFont,
                                                   fontSize: Get.width * 0.03),
                                             ),
                                             SizedBox(height: Get.height * 0.01),
                                             Text(
-                                              '1º- Selecione o Nome da Pessoa que irá receber a encomenda;',
+                                              '1º "Nome"',
                                               style: TextStyle(
                                                   fontFamily:
-                                                  AppFonts.poppinsRegularFont,
+                                                      AppFonts.poppinsBoldFont,
                                                   fontSize: Get.width * 0.03),
                                             ),
                                             Text(
-                                              '2º- Selecione a Cidade onde reside essa Pessoa;',
+                                              ' Escreva o Nome da Pessoa que irá receber a encomenda;',
+                                              style: TextStyle(
+                                                  fontFamily: AppFonts
+                                                      .poppinsRegularFont,
+                                                  fontSize: Get.width * 0.03),
+                                            ),
+                                            SizedBox(height: Get.height * 0.01),
+                                            Text(
+                                              '2º "Cidade"',
                                               style: TextStyle(
                                                   fontFamily:
-                                                  AppFonts.poppinsRegularFont,
+                                                      AppFonts.poppinsBoldFont,
                                                   fontSize: Get.width * 0.03),
                                             ),
                                             Text(
-                                              '3º- Selecione o Endereço dessa Pessoa;',
+                                              'Escreva a Cidade onde reside essa Pessoa acima referida;',
+                                              style: TextStyle(
+                                                  fontFamily: AppFonts
+                                                      .poppinsRegularFont,
+                                                  fontSize: Get.width * 0.03),
+                                            ),
+                                            SizedBox(height: Get.height * 0.01),
+                                            Text(
+                                              '3º "Endereço"',
                                               style: TextStyle(
                                                   fontFamily:
-                                                  AppFonts.poppinsRegularFont,
+                                                      AppFonts.poppinsBoldFont,
                                                   fontSize: Get.width * 0.03),
                                             ),
                                             Text(
-                                              '4º- E por último, selecione o Contato dessa Pessoa.',
+                                              'Escreva o Endereço onde deverá ser entregue a encomenda;',
+                                              style: TextStyle(
+                                                  fontFamily: AppFonts
+                                                      .poppinsRegularFont,
+                                                  fontSize: Get.width * 0.03),
+                                            ),
+                                            SizedBox(height: Get.height * 0.01),
+                                            Text(
+                                              '4º "Telemovel/Telefone"',
                                               style: TextStyle(
                                                   fontFamily:
-                                                  AppFonts.poppinsRegularFont,
+                                                      AppFonts.poppinsBoldFont,
+                                                  fontSize: Get.width * 0.03),
+                                            ),
+                                            Text(
+                                              'Introduza o Contacto do receptor para podermos lhe contactar.',
+                                              style: TextStyle(
+                                                  fontFamily: AppFonts
+                                                      .poppinsRegularFont,
                                                   fontSize: Get.width * 0.03),
                                             ),
                                             SizedBox(height: Get.height * 0.02),
@@ -178,19 +211,20 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                               'Informação Adicional',
                                               style: TextStyle(
                                                   fontFamily:
-                                                  AppFonts.poppinsBoldFont,
+                                                      AppFonts.poppinsBoldFont,
                                                   fontSize: Get.width * 0.036),
                                             ),
                                             SizedBox(height: Get.height * 0.01),
                                             Text(
                                               'Neste campo, poderá adicionar qualquer informação extra que deseja informar a Empresa. Exemplo: a data que deseja a ser entregue.',
                                               style: TextStyle(
-                                                  fontFamily:
-                                                  AppFonts.poppinsRegularFont,
+                                                  fontFamily: AppFonts
+                                                      .poppinsRegularFont,
                                                   fontSize: Get.width * 0.03),
                                             ),
-
-
+                                            SizedBox(
+                                              height: Get.height * 0.02,
+                                            ),
                                           ],
                                         ),
                                       ),
