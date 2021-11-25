@@ -81,16 +81,65 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(12),
                                   ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      IconButton(
-                                        icon: Icon(Icons.close),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ],
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                              width: Get.width * 0.08,
+                                            ),
+                                            Text(
+                                              'Instruções',
+                                              style: TextStyle(
+                                                  fontFamily:
+                                                      AppFonts.poppinsBoldFont,
+                                                  fontSize: Get.width * 0.04),
+                                            ),
+                                            IconButton(
+                                              icon: Icon(Icons.close),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                            left: Get.width * 0.04,
+                                            right: Get.width * 0.04,
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            children: [
+                                              SizedBox(height: Get.height * 0.01),
+                                              Text(
+                                                'Pagamento',
+                                                style: TextStyle(
+                                                    fontFamily: AppFonts
+                                                        .poppinsBoldFont,
+                                                    fontSize:
+                                                        Get.width * 0.036),
+                                              ),
+                                              SizedBox(
+                                                  height: Get.height * 0.01),
+                                              Text(
+                                                'Caso tiver um Cuppon de Desconto, clica na caixinha "Tenho um desconto", a seguir, introduza o código do desconto.',
+                                                style: TextStyle(
+                                                    fontFamily: AppFonts
+                                                        .poppinsRegularFont,
+                                                    fontSize: Get.width * 0.03),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -404,7 +453,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                     ),
                   ),
                 ),
-                 SizedBox(height: Get.height * 0.02),
+                SizedBox(height: Get.height * 0.02),
               ],
             ),
           ),
