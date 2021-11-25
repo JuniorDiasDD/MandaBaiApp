@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_colors.dart';
@@ -94,43 +95,107 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                      icon: Icon(Icons.close),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        left: Get.width * 0.04,
-                                        right: Get.width * 0.04,
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            width: Get.width * 0.08,
+                                          ),
+                                          Text(
+                                            'Instruções',
+                                            style: TextStyle(
+                                                fontFamily:
+                                                    AppFonts.poppinsBoldFont,
+                                                fontSize: Get.width * 0.04),
+                                          ),
+                                          IconButton(
+                                            icon: Icon(Icons.close),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                        ],
                                       ),
-                                      child: SingleChildScrollView(
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          left: Get.width * 0.04,
+                                          right: Get.width * 0.04,
+                                        ),
                                         child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.stretch,
                                           children: [
                                             Text(
-                                              'Neste campo, terás de completar os dados da pessoa que irá receber os produtos.',
-                                              style: TextStyle(
-                                                  fontFamily:
-                                                      AppFonts.poppinsBoldFont,
-                                                  fontSize: Get.width * 0.03),
-                                            ),
-                                            SizedBox(height: Get.height * 0.05),
-                                            Text(
-                                              'Neste campo, terás de completar os dados da pessoa que irá receber os produtos.',
+                                              'Faturação e Envio',
                                               style: TextStyle(
                                                   fontFamily:
                                                   AppFonts.poppinsBoldFont,
+                                                  fontSize: Get.width * 0.036),
+                                            ),
+                                            SizedBox(height: Get.height * 0.01),
+                                            Text(
+                                              'Neste campo, terá de completar os dados da pessoa que irá receber os produtos.',
+                                              style: TextStyle(
+                                                  fontFamily:
+                                                      AppFonts.poppinsRegularFont,
                                                   fontSize: Get.width * 0.03),
                                             ),
+                                            SizedBox(height: Get.height * 0.01),
+                                            Text(
+                                              '1º- Selecione o Nome da Pessoa que irá receber a encomenda;',
+                                              style: TextStyle(
+                                                  fontFamily:
+                                                  AppFonts.poppinsRegularFont,
+                                                  fontSize: Get.width * 0.03),
+                                            ),
+                                            Text(
+                                              '2º- Selecione a Cidade onde reside essa Pessoa;',
+                                              style: TextStyle(
+                                                  fontFamily:
+                                                  AppFonts.poppinsRegularFont,
+                                                  fontSize: Get.width * 0.03),
+                                            ),
+                                            Text(
+                                              '3º- Selecione o Endereço dessa Pessoa;',
+                                              style: TextStyle(
+                                                  fontFamily:
+                                                  AppFonts.poppinsRegularFont,
+                                                  fontSize: Get.width * 0.03),
+                                            ),
+                                            Text(
+                                              '4º- E por último, selecione o Contato dessa Pessoa.',
+                                              style: TextStyle(
+                                                  fontFamily:
+                                                  AppFonts.poppinsRegularFont,
+                                                  fontSize: Get.width * 0.03),
+                                            ),
+                                            SizedBox(height: Get.height * 0.02),
+                                            Text(
+                                              'Informação Adicional',
+                                              style: TextStyle(
+                                                  fontFamily:
+                                                  AppFonts.poppinsBoldFont,
+                                                  fontSize: Get.width * 0.036),
+                                            ),
+                                            SizedBox(height: Get.height * 0.01),
+                                            Text(
+                                              'Neste campo, poderá adicionar qualquer informação extra que deseja informar a Empresa. Exemplo: a data que deseja a ser entregue.',
+                                              style: TextStyle(
+                                                  fontFamily:
+                                                  AppFonts.poppinsRegularFont,
+                                                  fontSize: Get.width * 0.03),
+                                            ),
+
+
                                           ],
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
