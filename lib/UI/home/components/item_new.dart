@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
+import 'package:manda_bai/UI/home/components/carrega_saldo.dart';
 
 class ItemNew extends StatefulWidget {
-  String image,title;
-  ItemNew({required this.image,required this.title});
+  String image, title;
+  ItemNew({required this.image, required this.title});
   @override
   _ItemNewState createState() => _ItemNewState();
 }
@@ -14,7 +15,13 @@ class _ItemNewState extends State<ItemNew> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Carrega_Saldo();
+            });
+      },
       child: Padding(
         padding: EdgeInsets.only(
           left: Get.width * 0.023,
@@ -42,19 +49,19 @@ class _ItemNewState extends State<ItemNew> {
               children: [
                 Image.asset(
                   widget.image,
-                  width:Get.width*0.2,
-                  height:Get.width*0.2,
+                  width: Get.width * 0.2,
+                  height: Get.width * 0.2,
                 ),
                 SizedBox(
-              height: Get.height * 0.01,
-            ),
+                  height: Get.height * 0.01,
+                ),
                 Text(
-                    widget.title,
-                    style: TextStyle(
-                      fontFamily: AppFonts.poppinsBoldFont,
-                      fontSize: Get.width*0.025,
-                    ),
+                  widget.title,
+                  style: TextStyle(
+                    fontFamily: AppFonts.poppinsBoldFont,
+                    fontSize: Get.width * 0.025,
                   ),
+                ),
               ],
             )),
       ),

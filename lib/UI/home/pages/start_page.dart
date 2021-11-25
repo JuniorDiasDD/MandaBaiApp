@@ -175,6 +175,7 @@ class _StartPageState extends State<StartPage> {
                   height: Get.height * 0.15,
                   child: ListView(scrollDirection: Axis.horizontal, children: [
                     ItemNew(image: AppImages.cvmovel, title: "Saldo CvMovel"),
+
                     ItemNew(
                         image: AppImages.camara, title: "Serviços da Câmara"),
                   ]),
