@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:manda_bai/Core/app_colors.dart';
+import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 
 import 'onboarding_screen.dart';
@@ -11,53 +14,45 @@ import 'onboarding_screen.dart';
  }
 
  class _SplashPageState extends State<SplashPage> {
-   static const _padding = EdgeInsets.only(top: 150.0);
    @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(seconds:4)).then((_){
+   Future.delayed(Duration(seconds:2)).then((_){
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>OnboardingScreen()));
-    });
+  });
   }
-
    @override
    Widget build(BuildContext context) {
      return Scaffold(
        backgroundColor:Colors.white,
        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
          children: [
            Container(
-             width: 400,
-             padding:EdgeInsets.only (top: 200.0) ,
-             child:  Container(
-               width: 200,
-               height: 200,
-               child: Image.asset(AppImages.appLogo),
-
-             ),
+             width: Get.width,
+             height: Get.height*0.1,
+             child: Image.asset(AppImages.appLogo),
            ),
-
-           Container(
-             padding: _padding,
-             child: Container(
-               padding:EdgeInsets.only (top: 40.0) ,
-               child: Text(
-                 'Powered by MandaBai',
-                 textAlign: TextAlign.center,
-                 overflow: TextOverflow.ellipsis,
-                 style: const TextStyle(fontWeight: FontWeight.normal),
-
-               ),
-             ),
-
-
-           )
-
-
          ],
        ),
-
+  bottomNavigationBar: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: Get.height*0.04,
+            ),
+            child: Text(
+              "Powered by MandaBai",
+              style: TextStyle(
+                  fontFamily: AppFonts.poppinsRegularFont,
+                  color: AppColors.greenColor),
+            ),
+          ),
+        ],
+      ),
      );
    }
  }
