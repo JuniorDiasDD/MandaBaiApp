@@ -16,16 +16,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final List<OnbordingData> list = [
     OnbordingData(
       imagePath: AppImages.firstOnboardingImage,
+      title: "1",
       desc: "Ajude a sua família lá dentro, cá fora.",
     ),
     OnbordingData(
       imagePath: AppImages.secondOnboardingImage,
-      //  title: "Order",
+      title: "2",
       desc: "Aceda a loja e compre os produtos que pretende.",
     ),
     OnbordingData(
       imagePath: AppImages.thirdOnboardingImage,
-      // title: "Eat",
+      title: "3",
       desc:
           "Faça o pagamento online e os produtos serão entregues ao domicílio.",
     ),

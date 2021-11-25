@@ -1,6 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
@@ -88,35 +89,37 @@ class _ChooseIslandState extends State<ChooseIsland> {
             ),
           ),
           SizedBox(height: Get.height * 0.2),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  primary: Colors.black,
-                  textStyle: const TextStyle(fontSize: 10),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LanguagePage(),
-                    ),
-                  );
-                },
-                child: const Text(
-                  'Seguinte',
-                  style: TextStyle(
-                    color: AppColors.greenColor,
-                    fontSize: 15.0,
-                  ),
-                ),
+        ],
+      ),
+      bottomNavigationBar: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(" "),
+          Padding(
+            padding: EdgeInsets.only(
+              right: 15,
+              bottom: 10,
+            ),
+            child: TextButton(
+              onPressed: () {
+                _navigacao();
+              },
+              child: Text(
+                "seguinte >",
+                style: TextStyle(
+                    fontFamily: AppFonts.poppinsRegularFont,
+                    color: AppColors.greenColor),
               ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  _navigacao() async {
+    var session = FlutterSession();
+    await session.set('onboarding', true);
+    Navigator.pushReplacementNamed(context, '/home');
   }
 }

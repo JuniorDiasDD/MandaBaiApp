@@ -81,273 +81,282 @@ class _StartPageState extends State<StartPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // backgroundColor: Colors.white,
-        title: Header(title: 'MandaBai'),
-      ),
-      drawer: Menu(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
+    return RefreshIndicator(
+      onRefresh: () => Navigator.pushReplacementNamed(context, '/home'),
+      child: WillPopScope(
+        onWillPop: () {
+          return new Future(() => false);
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            // backgroundColor: Colors.white,
+            title: Header(title: 'MandaBai'),
+          ),
+          drawer: Menu(),
+          body: SingleChildScrollView(
+            child: Column(
               children: [
-                CarouselSlider(
-                  options: CarouselOptions(
-                    viewportFraction: 1,
-                    autoPlayAnimationDuration:
-                        const Duration(milliseconds: 100),
-                    autoPlay: true,
-                    enlargeCenterPage: true,
-                  ),
-                  items: imagesList
-                      .map(
-                        (item) => Center(
-                          child: Image.network(
-                            item,
-                            fit: BoxFit.cover,
-                            width: Get.width,
-                          ),
-                        ),
-                      )
-                      .toList(),
-                ),
-                Padding(
-                  // ignore: unnecessary_const
-                  padding: EdgeInsets.only(
-                    left: Get.width * 0.07,
-                    top: Get.height * 0.235,
-                  ),
-                  child: SizedBox(
-                    width: 350,
-                    height: Get.height * 0.05,
-                    child: const TextField(
-                      cursorColor: AppColors.greenColor,
-                      decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(30.0)),
-                            borderSide:
-                                BorderSide(color: AppColors.greenColor)),
-                        hintText: 'Pesquisar Produto...',
-                        contentPadding: EdgeInsets.only(top: 10, left: 15),
-                        suffixIcon: Icon(
-                          Icons.search,
-                          color: AppColors.greenColor,
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(30.0),
+                Stack(
+                  children: [
+                    CarouselSlider(
+                      options: CarouselOptions(
+                        viewportFraction: 1,
+                        autoPlayAnimationDuration:
+                            const Duration(milliseconds: 100),
+                        autoPlay: true,
+                        enlargeCenterPage: true,
+                      ),
+                      items: imagesList
+                          .map(
+                            (item) => Center(
+                              child: Image.network(
+                                item,
+                                fit: BoxFit.cover,
+                                width: Get.width,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                    Padding(
+                      // ignore: unnecessary_const
+                      padding: EdgeInsets.only(
+                        left: Get.width * 0.07,
+                        top: Get.height * 0.235,
+                      ),
+                      child: SizedBox(
+                        width: 350,
+                        height: Get.height * 0.05,
+                        child: const TextField(
+                          cursorColor: AppColors.greenColor,
+                          decoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30.0)),
+                                borderSide:
+                                    BorderSide(color: AppColors.greenColor)),
+                            hintText: 'Pesquisar Produto...',
+                            contentPadding: EdgeInsets.only(top: 10, left: 15),
+                            suffixIcon: Icon(
+                              Icons.search,
+                              color: AppColors.greenColor,
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30.0),
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-            SizedBox(
-              height: Get.height * 0.01,
-            ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: EdgeInsets.only(
-                    top: Get.height * 0.01, left: Get.width * 0.02),
-                child: const Text(
-                  'Novos Serviços',
-                  style: TextStyle(
-                    fontFamily: AppFonts.poppinsBoldFont,
-                    fontSize: 15,
-                  ),
+                SizedBox(
+                  height: Get.height * 0.01,
                 ),
-              ),
-            ),
-            Container(
-              height: Get.height * 0.15,
-              child: ListView(scrollDirection: Axis.horizontal, children: [
-                ItemNew(image: AppImages.cvmovel, title: "Saldo CvMovel"),
-                ItemNew(image: AppImages.camara, title: "Serviços da Câmara"),
-              ]),
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.only(
-                      top: Get.height * 0.01, left: Get.width * 0.023),
-                  child: const Text(
-                    'Categorias',
-                    style: TextStyle(
-                      fontFamily: AppFonts.poppinsBoldFont,
-                      fontSize: 15,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: Get.height * 0.01),
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      textStyle:
-                          const TextStyle(decoration: TextDecoration.underline),
-                      primary: AppColors.greenColor,
-                    ),
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CategoryPage(),
-                      ),
-                    ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        top: Get.height * 0.01, left: Get.width * 0.02),
                     child: const Text(
-                      'Ver Todas',
+                      'Novos Serviços',
                       style: TextStyle(
                         fontFamily: AppFonts.poppinsBoldFont,
                         fontSize: 15,
                       ),
                     ),
                   ),
-                )
-              ],
-            ),
-            // ignore: sized_box_for_whitespace
+                ),
+                Container(
+                  height: Get.height * 0.15,
+                  child: ListView(scrollDirection: Axis.horizontal, children: [
+                    ItemNew(image: AppImages.cvmovel, title: "Saldo CvMovel"),
+                    ItemNew(
+                        image: AppImages.camara, title: "Serviços da Câmara"),
+                  ]),
+                ),
 
-            FutureBuilder(
-              future: _carregarCategory(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.data == null) {
-                  return Container();
-                } else {
-                  return Container(
-                    height: Get.height * 0.05,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (BuildContext context, index) {
-                        var list = list_category[index];
-                        // return ListViewItemComponent(category: list);
-                        return Padding(
-                          padding: EdgeInsets.only(
-                            left: Get.width * 0.023,
-                            bottom: Get.width * 0.01,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(
+                          top: Get.height * 0.01, left: Get.width * 0.023),
+                      child: const Text(
+                        'Categorias',
+                        style: TextStyle(
+                          fontFamily: AppFonts.poppinsBoldFont,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: Get.height * 0.01),
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          textStyle: const TextStyle(
+                              decoration: TextDecoration.underline),
+                          primary: AppColors.greenColor,
+                        ),
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CategoryPage(),
                           ),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: AppColors.greenColor, width: 1.0),
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey,
-                                  blurRadius: 1.0,
-                                  spreadRadius: 0.0,
-                                  offset: Offset(
-                                      0.5, 0.5), // changes position of shadow
+                        ),
+                        child: const Text(
+                          'Ver Todas',
+                          style: TextStyle(
+                            fontFamily: AppFonts.poppinsBoldFont,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                // ignore: sized_box_for_whitespace
+
+                FutureBuilder(
+                  future: _carregarCategory(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.data == null) {
+                      return Container();
+                    } else {
+                      return Container(
+                        height: Get.height * 0.05,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (BuildContext context, index) {
+                            var list = list_category[index];
+                            // return ListViewItemComponent(category: list);
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                left: Get.width * 0.023,
+                                bottom: Get.width * 0.01,
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: AppColors.greenColor, width: 1.0),
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(12),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey,
+                                      blurRadius: 1.0,
+                                      spreadRadius: 0.0,
+                                      offset: Offset(0.5,
+                                          0.5), // changes position of shadow
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            width: Get.width * 0.3,
-                            height: Get.height * 0.1,
-                            child: TextButton(
-                              onPressed: () {
-                                print("aqui2");
-                                setState(() {
-                                  categoryId = list.id;
-                                  carregarProdutos();
-                                });
-                              },
-                              child: Text(
-                                list.name,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontFamily: AppFonts.poppinsRegularFont,
-                                  fontSize: Get.height * 0.013,
-                                  color: AppColors.greenColor,
+                                width: Get.width * 0.3,
+                                height: Get.height * 0.1,
+                                child: TextButton(
+                                  onPressed: () {
+                                    print("aqui2");
+                                    setState(() {
+                                      categoryId = list.id;
+                                      carregarProdutos();
+                                    });
+                                  },
+                                  child: Text(
+                                    list.name,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: AppFonts.poppinsRegularFont,
+                                      fontSize: Get.height * 0.013,
+                                      color: AppColors.greenColor,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                }
-              },
-            ),
+                            );
+                          },
+                        ),
+                      );
+                    }
+                  },
+                ),
 
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: EdgeInsets.only(
-                    top: Get.height * 0.01, left: Get.width * 0.02),
-                child: const Text(
-                  'Produtos',
-                  style: TextStyle(
-                    fontFamily: AppFonts.poppinsBoldFont,
-                    fontSize: 15,
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        top: Get.height * 0.01, left: Get.width * 0.02),
+                    child: const Text(
+                      'Produtos',
+                      style: TextStyle(
+                        fontFamily: AppFonts.poppinsBoldFont,
+                        fontSize: 15,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            // ignore: sized_box_for_whitespace
-            FutureBuilder(
-              future: carregarProdutos(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.data == null) {
-                  return Container();
-                } else {
-                  return Container(
-                    height: Get.height * 0.2,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (BuildContext context, index) {
-                        var list = list_products[index];
-                        return ProductListComponent(product: list);
-                      },
+                // ignore: sized_box_for_whitespace
+                FutureBuilder(
+                  future: carregarProdutos(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.data == null) {
+                      return Container();
+                    } else {
+                      return Container(
+                        height: Get.height * 0.2,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (BuildContext context, index) {
+                            var list = list_products[index];
+                            return ProductListComponent(product: list);
+                          },
+                        ),
+                      );
+                    }
+                  },
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        top: Get.height * 0.01, left: Get.width * 0.02),
+                    child: const Text(
+                      'Produtos mais Vendidos',
+                      style: TextStyle(
+                        fontFamily: AppFonts.poppinsBoldFont,
+                        fontSize: 15,
+                      ),
                     ),
-                  );
-                }
-              },
-            ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: EdgeInsets.only(
-                    top: Get.height * 0.01, left: Get.width * 0.02),
-                child: const Text(
-                  'Produtos mais Vendidos',
-                  style: TextStyle(
-                    fontFamily: AppFonts.poppinsBoldFont,
-                    fontSize: 15,
                   ),
                 ),
-              ),
+                FutureBuilder(
+                  future: _carregar(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.data == null) {
+                      return Container();
+                    } else {
+                      return Container(
+                        height: Get.height * 0.2,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (BuildContext context, index) {
+                            var list = list_product[index];
+                            return ProductListComponent(product: list);
+                          },
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ],
             ),
-            FutureBuilder(
-              future: _carregar(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.data == null) {
-                  return Container();
-                } else {
-                  return Container(
-                    height: Get.height * 0.2,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (BuildContext context, index) {
-                        var list = list_product[index];
-                        return ProductListComponent(product: list);
-                      },
-                    ),
-                  );
-                }
-              },
-            ),
-          ],
+          ),
         ),
       ),
     );
