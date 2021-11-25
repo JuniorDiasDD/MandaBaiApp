@@ -85,19 +85,37 @@ class ProductListComponent extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: Get.width * 0.02,
-                      ),
-                      child: Text(
-                        product.price.toString(),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontFamily: AppFonts.poppinsRegularFont,
-                          fontSize: 10,
-                          color: AppColors.greenColor,
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: Get.width * 0.02,
+                          ),
+                          child: Text(
+                            product.price.toString(),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontFamily: AppFonts.poppinsRegularFont,
+                              fontSize: 10,
+                              color: AppColors.greenColor,
+                            ),
+                          ),
                         ),
-                      ),
+                         Padding(
+                          padding: EdgeInsets.only(
+                            left: Get.width * 0.01,
+                          ),
+                          child: Text(
+                             '€',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontFamily: AppFonts.poppinsRegularFont,
+                              fontSize: 10,
+                              color: AppColors.greenColor,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     Row(
                       children: [

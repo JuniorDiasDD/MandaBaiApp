@@ -14,14 +14,29 @@ class AppImages {
   static const ilha_1 = 'assets/images/ilha_1.svg';
   static const ilha_2 = 'assets/images/ilhas_design.png';
   static const credit_card = 'assets/images/creditCard.svg';
-  static const pay_pal = 'assets/images/payPal.svg';
-  static const ideal = 'assets/images/ideal.svg';
+  static const pay_pal =
+      'https://www.mandabai.com/wp-content/plugins/mollie-payments-for-woocommerce/public/images/paypal.svg';
+  static const ideal =
+      'https://www.mandabai.com/wp-content/plugins/mollie-payments-for-woocommerce/public/images/ideal.svg';
+  static const kbc =
+      'https://www.mandabai.com/wp-content/plugins/mollie-payments-for-woocommerce/public/images/kbc.svg';
+  static const giropay =
+      'https://www.mandabai.com/wp-content/plugins/mollie-payments-for-woocommerce/public/images/giropay.svg';
+  static const sofort =
+      'https://www.mandabai.com/wp-content/plugins/mollie-payments-for-woocommerce/public/images/sofort.svg';
+  static const belfius =
+      'https://www.mandabai.com/wp-content/plugins/mollie-payments-for-woocommerce/public/images/belfius.svg';
+  static const bancontact =
+      'https://www.mandabai.com/wp-content/plugins/mollie-payments-for-woocommerce/public/images/bancontact.svg';
+  static const przelewy =
+      'https://www.mandabai.com/wp-content/plugins/mollie-payments-for-woocommerce/public/images/przelewy24.svg';
+
   static const cart_empyt = 'assets/images/cart_empyt.svg';
   static const world = 'assets/images/world.svg';
   static const homem = 'assets/images/homem.svg';
   static const favorite_empyt = 'assets/images/favorite_empyt.svg';
   static const icone_user = 'assets/images/icone_user.png';
   static const filter = 'assets/images/filter.svg';
-   static const cvmovel = 'assets/images/cvmovel.png';
-    static const camara = 'assets/images/camara.png';
+  static const cvmovel = 'assets/images/cvmovel.png';
+  static const camara = 'assets/images/camara.png';
 }

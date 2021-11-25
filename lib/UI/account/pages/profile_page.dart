@@ -36,7 +36,12 @@ class _StartPageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         // backgroundColor: Colors.white,
-        title: Header(title: 'Minha Conta'),
+        title: Text(
+          "Minha Conta",
+          style: TextStyle(
+            fontFamily: AppFonts.poppinsRegularFont,
+          ),
+        ),
       ),
       drawer: Menu(),
       body: SingleChildScrollView(

@@ -8,14 +8,20 @@ import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/cart/pages/cart_page.dart';
 
 class ProdutoDetailPage extends StatefulWidget {
- Product product;
-  ProdutoDetailPage(
-      {required this.product});
+  Product product;
+  ProdutoDetailPage({required this.product});
   @override
   State<ProdutoDetailPage> createState() => _ProdutoDetailPageState();
 }
 
 class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
+  int quantidade = 1;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +30,8 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
           children: [
             Stack(
               children: [
-               Container(
+                Container(
+                  height: Get.height * 0.5,
                   child: Image.network(
                     widget.product.image,
                     width: Get.width,
@@ -60,9 +67,9 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                     children: [
                       Text(
                         widget.product.name,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontFamily: AppFonts.poppinsBoldFont,
-                          fontSize: 15,
+                          fontSize: Get.width * 0.045,
                         ),
                       ),
                       /*Align(
@@ -87,13 +94,33 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    right: Get.width * 0.02,
-                  ),
-                  child: Text(
-                    widget.product.price.toString(),
-                  ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        right: Get.width * 0.01,
+                      ),
+                      child: Text(
+                        widget.product.price.toString(),
+                        style: TextStyle(
+                          fontFamily: AppFonts.poppinsRegularFont,
+                          fontSize: Get.width * 0.04,
+                        ),
+                      ),
+                    ),
+                     Padding(
+                      padding: EdgeInsets.only(
+                        right: Get.width * 0.02,
+                      ),
+                      child: Text(
+                      '€',
+                        style: TextStyle(
+                          fontFamily: AppFonts.poppinsRegularFont,
+                          fontSize: Get.width * 0.04,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -105,8 +132,8 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: RatingBar.builder(
-                  initialRating: 4,
-                  minRating: 1,
+                  initialRating: widget.product.rating_count.toDouble(),
+                  minRating: 0,
                   direction: Axis.horizontal,
                   allowHalfRating: true,
                   itemCount: 5,
@@ -128,8 +155,8 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                 left: Get.width * 0.02,
                 right: Get.width * 0.02,
               ),
-              child: const Text(
-                'blablahhhhfffffffblablahhhhfffffffblablahhhhfffffffblablahhhhfffffffblablahhhhffffffffblablahhhhffffffffblablahhhhffffffffblablahhhhffffffffblablahhhhffffffffblablahhhhffffffffblablahhhhfffffff',
+              child: Text(
+                widget.product.description,
                 style: TextStyle(
                   fontFamily: AppFonts.poppinsRegularFont,
                   fontSize: 12,
@@ -149,7 +176,11 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                     child: FloatingActionButton(
                       onPressed: () {
                         setState(
-                          () {},
+                          () {
+                            if (quantidade != 1) {
+                              quantidade--;
+                            }
+                          },
                         );
                       },
                       child: const Icon(
@@ -160,8 +191,8 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                       elevation: 0,
                     ),
                   ),
-                  const Text(
-                    '1',
+                  Text(
+                    quantidade.toString(),
                     style: TextStyle(fontSize: 18.0),
                   ),
                   // ignore: sized_box_for_whitespace
@@ -172,7 +203,9 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                       backgroundColor: AppColors.greenColor,
                       elevation: 0,
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          quantidade++;
+                        });
                       },
                     ),
                   ),

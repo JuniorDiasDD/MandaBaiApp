@@ -228,95 +228,283 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                         )
                       : Container(),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        WebsafeSvg.asset(AppImages.credit_card),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Text(
-                            "Credit Card",
-                            style: TextStyle(
-                              fontFamily: AppFonts.poppinsBoldFont,
-                            ),
+                  Container(
+                  height: Get.height * 0.3,
+                  child: ListView(
+                    padding: EdgeInsets.all(0.0),
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              WebsafeSvg.asset(AppImages.credit_card),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10.0),
+                                child: Text(
+                                  "Credit Card",
+                                  style: TextStyle(
+                                    fontFamily: AppFonts.poppinsBoldFont,
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
-                        )
-                      ],
-                    ),
-                    Radio(
-                      value: 1,
-                      groupValue: val,
-                      onChanged: (value) {
-                        setState(() {
-                          val = 1;
-                        });
-                      },
-                      activeColor: Colors.green,
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        WebsafeSvg.asset(AppImages.pay_pal),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Text(
-                            "PayPal",
-                            style: TextStyle(
-                              fontFamily: AppFonts.poppinsBoldFont,
-                            ),
+                          Radio(
+                            value: 1,
+                            groupValue: val,
+                            onChanged: (value) {
+                              setState(() {
+                                val = 1;
+                              });
+                            },
+                            activeColor: Colors.green,
                           ),
-                        )
-                      ],
-                    ),
-                    Radio(
-                      value: 2,
-                      groupValue: val,
-                      onChanged: (value) {
-                        setState(() {
-                          val = 2;
-                        });
-                      },
-                      activeColor: Colors.green,
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        WebsafeSvg.asset(AppImages.ideal),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Text(
-                            "iDEAL",
-                            style: TextStyle(
-                              fontFamily: AppFonts.poppinsBoldFont,
-                            ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              WebsafeSvg.network(AppImages.pay_pal),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10.0),
+                                child: Text(
+                                  "PayPal",
+                                  style: TextStyle(
+                                    fontFamily: AppFonts.poppinsBoldFont,
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
-                        )
-                      ],
-                    ),
-                    Radio(
-                      value: 3,
-                      groupValue: val,
-                      onChanged: (value) {
-                        setState(() {
-                          val = 3;
-                        });
-                      },
-                      activeColor: Colors.green,
-                    ),
-                  ],
+                          Radio(
+                            value: 2,
+                            groupValue: val,
+                            onChanged: (value) {
+                              setState(() {
+                                val = 2;
+                              });
+                            },
+                            activeColor: Colors.green,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              WebsafeSvg.network(AppImages.ideal),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10.0),
+                                child: Text(
+                                  "iDEAL",
+                                  style: TextStyle(
+                                    fontFamily: AppFonts.poppinsBoldFont,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          Radio(
+                            value: 3,
+                            groupValue: val,
+                            onChanged: (value) {
+                              setState(() {
+                                val = 3;
+                              });
+                            },
+                            activeColor: Colors.green,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              WebsafeSvg.network(AppImages.kbc),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10.0),
+                                child: Text(
+                                  "KBC/CBC Payment Button",
+                                  style: TextStyle(
+                                    fontFamily: AppFonts.poppinsBoldFont,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          Radio(
+                            value: 4,
+                            groupValue: val,
+                            onChanged: (value) {
+                              setState(() {
+                                val = 4;
+                              });
+                            },
+                            activeColor: Colors.green,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              WebsafeSvg.network(AppImages.giropay),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10.0),
+                                child: Text(
+                                  "Giropay",
+                                  style: TextStyle(
+                                    fontFamily: AppFonts.poppinsBoldFont,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          Radio(
+                            value: 5,
+                            groupValue: val,
+                            onChanged: (value) {
+                              setState(() {
+                                val = 5;
+                              });
+                            },
+                            activeColor: Colors.green,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              WebsafeSvg.network(AppImages.sofort),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10.0),
+                                child: Text(
+                                  "SOFORT Banking",
+                                  style: TextStyle(
+                                    fontFamily: AppFonts.poppinsBoldFont,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          Radio(
+                            value: 6,
+                            groupValue: val,
+                            onChanged: (value) {
+                              setState(() {
+                                val = 6;
+                              });
+                            },
+                            activeColor: Colors.green,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              WebsafeSvg.network(AppImages.belfius),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10.0),
+                                child: Text(
+                                  "Belfius Direct Net",
+                                  style: TextStyle(
+                                    fontFamily: AppFonts.poppinsBoldFont,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          Radio(
+                            value: 7,
+                            groupValue: val,
+                            onChanged: (value) {
+                              setState(() {
+                                val = 7;
+                              });
+                            },
+                            activeColor: Colors.green,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              WebsafeSvg.network(AppImages.bancontact),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10.0),
+                                child: Text(
+                                  "Bancontact",
+                                  style: TextStyle(
+                                    fontFamily: AppFonts.poppinsBoldFont,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          Radio(
+                            value: 8,
+                            groupValue: val,
+                            onChanged: (value) {
+                              setState(() {
+                                val = 8;
+                              });
+                            },
+                            activeColor: Colors.green,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              WebsafeSvg.network(AppImages.przelewy),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10.0),
+                                child: Text(
+                                  "Przelewy24",
+                                  style: TextStyle(
+                                    fontFamily: AppFonts.poppinsBoldFont,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          Radio(
+                            value: 9,
+                            groupValue: val,
+                            onChanged: (value) {
+                              setState(() {
+                                val = 9;
+                              });
+                            },
+                            activeColor: Colors.green,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(height: Get.height * 0.01),
                 Align(
@@ -332,6 +520,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                 SizedBox(height: Get.height * 0.01),
                 TextFormField(
                   controller: input_cartao,
+                  keyboardType: TextInputType.number,
                   style: TextStyle(
                     fontFamily: AppFonts.poppinsRegularFont,
                   ),
@@ -365,6 +554,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                           width: Get.width * 0.3,
                           child: TextFormField(
                             controller: input_data_expiracao,
+                             keyboardType: TextInputType.number,
                             style: TextStyle(
                               fontFamily: AppFonts.poppinsRegularFont,
                             ),
@@ -396,6 +586,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                         Container(
                           width: Get.width * 0.3,
                           child: TextFormField(
+                             keyboardType: TextInputType.number,
                             controller: input_ccv,
                             style: TextStyle(
                               fontFamily: AppFonts.poppinsRegularFont,
@@ -416,7 +607,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                     ),
                   ],
                 ),
-                SizedBox(height: Get.height * 0.1),
+                SizedBox(height: Get.height * 0.02),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
