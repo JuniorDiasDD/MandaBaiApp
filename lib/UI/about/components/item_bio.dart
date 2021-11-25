@@ -70,6 +70,7 @@ class _Item_BioState extends State<Item_Bio> {
                     children: [
                       Text(
                         description_carlos,
+                        textAlign: TextAlign.justify,
                         style: TextStyle(
                             fontFamily: AppFonts.poppinsRegularFont,
                             color: Colors.black,

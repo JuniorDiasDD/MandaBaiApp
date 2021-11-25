@@ -120,10 +120,11 @@ class InfoPage extends StatelessWidget {
                         children: <Widget>[
                           Padding(
                             padding: EdgeInsets.only(
-                                left: Get.width * 0.01,
-                                right: Get.width * 0.01),
+                                left: Get.width * 0.06,
+                                right: Get.width * 0.06),
                             child: Text(
                               description_missao,
+                              textAlign: TextAlign.justify,
                               style: TextStyle(
                                   fontFamily: AppFonts.poppinsRegularFont,
                                   color: Colors.black,
@@ -158,10 +159,11 @@ class InfoPage extends StatelessWidget {
                         children: <Widget>[
                           Padding(
                             padding: EdgeInsets.only(
-                                left: Get.width * 0.01,
-                                right: Get.width * 0.01),
+                                left: Get.width * 0.06,
+                                right: Get.width * 0.06),
                             child: Text(
                               description_visao,
+                              textAlign: TextAlign.justify,
                               style: TextStyle(
                                   fontFamily: AppFonts.poppinsRegularFont,
                                   color: Colors.black,
@@ -196,10 +198,11 @@ class InfoPage extends StatelessWidget {
                         children: <Widget>[
                           Padding(
                             padding: EdgeInsets.only(
-                                left: Get.width * 0.01,
-                                right: Get.width * 0.01),
+                                left: Get.width * 0.06,
+                                right: Get.width * 0.06),
                             child: Text(
                               description_valores,
+                              textAlign: TextAlign.justify,
                               style: TextStyle(
                                   fontFamily: AppFonts.poppinsRegularFont,
                                   color: Colors.black,
@@ -443,6 +446,7 @@ class InfoPage extends StatelessWidget {
                         ),
                       ),
                     ),
+                    SizedBox(height: Get.height * 0.02),
                   ],
                 ),
               ),
