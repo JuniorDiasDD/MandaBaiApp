@@ -16,11 +16,15 @@ class _ItemNewState extends State<ItemNew> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Carrega_Saldo();
-            });
+        if (widget.title == "Saldo CvMovel") {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Carrega_Saldo();
+              });
+        }else if(widget.title=="Serviços da Câmara"){
+
+        }
       },
       child: Padding(
         padding: EdgeInsets.only(

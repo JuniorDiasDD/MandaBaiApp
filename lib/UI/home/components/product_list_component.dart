@@ -29,7 +29,7 @@ class ProductListComponent extends StatelessWidget {
             top: Get.height * 0.009,
             bottom: Get.height * 0.005),
         child: Container(
-          width: Get.width * 0.38,
+          width: Get.width * 0.4,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.white54, width: 1.0),
             color: Colors.grey[200],
@@ -65,9 +65,9 @@ class ProductListComponent extends StatelessWidget {
                 child: Text(
                   product.name,
                   maxLines: 1,
-                  style: const TextStyle(
+                  style:  TextStyle(
                     fontFamily: AppFonts.poppinsRegularFont,
-                    fontSize: 12,
+                    fontSize: Get.width*0.033,
                     color: Colors.black,
                   ),
                 ),
@@ -94,9 +94,9 @@ class ProductListComponent extends StatelessWidget {
                           child: Text(
                             product.price.toString(),
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style:  TextStyle(
                               fontFamily: AppFonts.poppinsRegularFont,
-                              fontSize: 10,
+                              fontSize: Get.width*0.03,
                               color: AppColors.greenColor,
                             ),
                           ),
@@ -108,9 +108,9 @@ class ProductListComponent extends StatelessWidget {
                           child: Text(
                              '€',
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style:  TextStyle(
                               fontFamily: AppFonts.poppinsRegularFont,
-                              fontSize: 10,
+                               fontSize: Get.width*0.03,
                               color: AppColors.greenColor,
                             ),
                           ),

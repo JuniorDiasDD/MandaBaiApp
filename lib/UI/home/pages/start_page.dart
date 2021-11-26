@@ -36,7 +36,7 @@ class _StartPageState extends State<StartPage> {
   int categoryId = 0;
   Future carregarProdutos() async {
     list_products = await ServiceRequest.loadProduct(categoryId);
-    print("aqui1");
+    //  print("aqui1");
     if (list_products.isEmpty) {
       return null;
     }
@@ -45,21 +45,33 @@ class _StartPageState extends State<StartPage> {
   }
 
   Future _carregar() async {
-    //  list_product = await Request.loadEntidades();
-
     if (list_product.isEmpty) {
-      return null;
+      list_product = await ServiceRequest.loadProduct(2299);
+
+      if (list_product.isEmpty) {
+        return null;
+      }
     }
 
     return list_product;
   }
 
   Future _carregarCategory() async {
-    list_category = await ServiceRequest.loadCategory();
+    if(list_category.isEmpty){
+list_category = await ServiceRequest.loadCategory();
 
     if (list_category.isEmpty) {
       return null;
+    } else {
+      setState(() {
+        if (list_products.isEmpty) {
+          categoryId = list_category[0].id;
+          carregarProdutos();
+        }
+      });
     }
+    }
+    
 
     return list_category;
   }
@@ -73,10 +85,6 @@ class _StartPageState extends State<StartPage> {
         email: "junior@gmail.com",
         senha: "12344",
         username: "junior39");
-    /*  setState(() {
-      categoryId = list_category[0].id;
-      carregarProdutos();
-    });*/
   }
 
   @override
@@ -175,7 +183,6 @@ class _StartPageState extends State<StartPage> {
                   height: Get.height * 0.15,
                   child: ListView(scrollDirection: Axis.horizontal, children: [
                     ItemNew(image: AppImages.cvmovel, title: "Saldo CvMovel"),
-
                     ItemNew(
                         image: AppImages.camara, title: "Serviços da Câmara"),
                   ]),

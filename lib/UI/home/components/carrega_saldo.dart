@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
+import 'package:manda_bai/Core/app_images.dart';
 
 class Carrega_Saldo extends StatefulWidget {
   const Carrega_Saldo({Key? key}) : super(key: key);
@@ -46,11 +47,16 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      width: Get.width * 0.08,
+                    Padding(
+                      padding: EdgeInsets.only(left:Get.width*0.04,),
+                      child: Image.asset(
+                        AppImages.cvmovel,
+                        width: Get.width * 0.05,
+                        height: Get.width * 0.05,
+                      ),
                     ),
                     Text(
-                      'Instruções',
+                      'Saldo CvMovel',
                       style: TextStyle(
                           fontFamily: AppFonts.poppinsBoldFont,
                           fontSize: Get.width * 0.04),
@@ -168,7 +174,7 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                           ),
                           child: TextButton(
                             child: Text(
-                              'Registar',
+                              'Enviar Saldo',
                               style: TextStyle(
                                   fontFamily: AppFonts.poppinsRegularFont,
                                   fontSize: Get.width * 0.035,
