@@ -25,9 +25,8 @@ class _HomePageState extends State<HomePage> {
     ProfilePage()
   ];
 
-  void _onItemTapped(int index) {
-    setState(() async {
-
+  Future<void> _onItemTapped(int index) async {
+   
       if (index == 3){
         var check = await FlutterSession().get('username');
         if (check == 'null' || check == null) {
@@ -37,13 +36,13 @@ class _HomePageState extends State<HomePage> {
                 return Pop_Login();
               });
         } else {
-          _selectedIndex = index;
+          setState(()  { _selectedIndex = index;  });
         }
       }else{
-        _selectedIndex = index;
+           setState(()  { _selectedIndex = index;  });
       }
 
-    });
+  
   }
 
   @override

@@ -235,6 +235,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 } else {
                   return Container(
                     height: Get.height,
+                    margin: EdgeInsets.only(left: Get.width*0.05,right: Get.width*0.05,),
                     child: GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount:

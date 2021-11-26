@@ -124,7 +124,6 @@ class _StartPageState extends State<StartPage> {
                           .toList(),
                     ),
                     Padding(
-                      // ignore: unnecessary_const
                       padding: EdgeInsets.only(
                         left: Get.width * 0.07,
                         top: Get.height * 0.235,
@@ -135,7 +134,6 @@ class _StartPageState extends State<StartPage> {
                         decoration: new BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
                         color: Theme.of(context).bottomAppBarColor,
-                          //color: Colors.white,
                         ),
                         child: const TextField(
                           cursorColor: AppColors.greenColor,
@@ -186,9 +184,8 @@ class _StartPageState extends State<StartPage> {
                     ItemNew(image: AppImages.cvmovel, title: "Saldo CvMovel"),
                     ItemNew(
                         image: AppImages.camara, title: "Serviços da Câmara"),
-                  ]),
+                  ],),
                 ),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -225,11 +222,9 @@ class _StartPageState extends State<StartPage> {
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
-                // ignore: sized_box_for_whitespace
-
                 FutureBuilder(
                   future: _carregarCategory(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -261,7 +256,7 @@ class _StartPageState extends State<StartPage> {
                                       blurRadius: 1.0,
                                       spreadRadius: 0.0,
                                       offset: Offset(1,
-                                          1), // changes position of shadow
+                                          1), 
                                     ),
                                   ],
                                 ),
@@ -269,7 +264,7 @@ class _StartPageState extends State<StartPage> {
                                 height: Get.height * 0.1,
                                 child: TextButton(
                                   onPressed: () {
-                                    print("aqui2");
+                              
                                     setState(() {
                                       categoryId = list.id;
                                       carregarProdutos();
