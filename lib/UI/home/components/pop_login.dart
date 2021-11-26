@@ -78,7 +78,7 @@ class _Pop_LoginState extends State<Pop_Login> {
                       ],
                     ),
                 ),
-                SizedBox(height: Get.height * 0.02),
+                SizedBox(height: Get.height * 0.035),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
