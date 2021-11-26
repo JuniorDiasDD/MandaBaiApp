@@ -62,8 +62,8 @@ class _Pop_LoginState extends State<Pop_Login> {
                 SizedBox(height: Get.height * 0.03),
                 Padding(
                     padding: EdgeInsets.only(
-                      left: Get.width * 0.04,
-                      right: Get.width * 0.04,
+                      left: Get.width * 0.05,
+                      right: Get.width * 0.05,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
