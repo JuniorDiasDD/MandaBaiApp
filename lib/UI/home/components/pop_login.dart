@@ -24,7 +24,7 @@ class _Pop_LoginState extends State<Pop_Login> {
           margin:
               EdgeInsets.only(left: Get.width * 0.12, right: Get.width * 0.12),
           decoration: BoxDecoration(
-            color: Colors.white,
+                 color:Theme.of(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(12),
           ),
           child: SingleChildScrollView(
