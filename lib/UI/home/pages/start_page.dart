@@ -13,7 +13,6 @@ import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/Model/user.dart';
 import 'package:manda_bai/UI/category_filter/pages/category_page.dart';
 import 'package:manda_bai/UI/home/components/header.dart';
-import 'package:manda_bai/UI/home/components/item_category.dart';
 import 'package:manda_bai/UI/home/components/item_new.dart';
 import 'package:manda_bai/UI/home/components/menu.dart';
 import 'package:manda_bai/UI/home/components/product_list_component.dart';
@@ -36,7 +35,6 @@ class _StartPageState extends State<StartPage> {
   int categoryId = 0;
   Future carregarProdutos() async {
     list_products = await ServiceRequest.loadProduct(categoryId);
-    //  print("aqui1");
     if (list_products.isEmpty) {
       return null;
     }

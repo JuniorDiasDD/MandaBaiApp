@@ -31,124 +31,129 @@ class _FavoritePageState extends State<FavoritePage> {
   ];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // backgroundColor: Colors.white,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Meus Favoritos',
-              style: TextStyle(
-                fontFamily: AppFonts.poppinsRegularFont,
+    return  WillPopScope(
+        onWillPop: () {
+          return new Future(() => false);
+        },
+          child: Scaffold(
+        appBar: AppBar(
+          // backgroundColor: Colors.white,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Meus Favoritos',
+                style: TextStyle(
+                  fontFamily: AppFonts.poppinsRegularFont,
+                ),
               ),
-            ),
-            Row(
-              children: [
-                IconButton(
-                  padding: const EdgeInsets.all(0.0),
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.delete,
-                    color: Colors.white,
+              Row(
+                children: [
+                  IconButton(
+                    padding: const EdgeInsets.all(0.0),
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                    ),
+                    iconSize: Get.width * 0.05,
                   ),
-                  iconSize: Get.width * 0.05,
-                ),
-                IconButton(
-                  padding: const EdgeInsets.all(0.0),
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.shopping_cart,
-                    color: Colors.white,
+                  IconButton(
+                    padding: const EdgeInsets.all(0.0),
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.shopping_cart,
+                      color: Colors.white,
+                    ),
+                    iconSize: Get.width * 0.05,
                   ),
-                  iconSize: Get.width * 0.05,
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
-      drawer: Menu(),
-      body: Padding(
-        padding:
-            EdgeInsets.only(left: Get.width * 0.04, right: Get.width * 0.04),
-        child: Column(
-          children: [
-            Container(
-              child: list_favorite.isEmpty
-                  ? Column(
-                      children: [
-                        SizedBox(height: Get.height * 0.08),
-                        Container(
-                          alignment: Alignment.center,
-                          height: Get.height * 0.8,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              WebsafeSvg.asset(AppImages.favorite_empyt),
-                              SizedBox(height: Get.height * 0.08),
-                              Text(
-                                "Sem produto marcado como favorito...",
-                                style: TextStyle(
-                                    fontFamily: AppFonts.poppinsRegularFont,
-                                    fontSize: Get.width * 0.035),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    )
-                  : SingleChildScrollView(
-                      child: Column(
+        drawer: Menu(),
+        body: Padding(
+          padding:
+              EdgeInsets.only(left: Get.width * 0.04, right: Get.width * 0.04),
+          child: Column(
+            children: [
+              Container(
+                child: list_favorite.isEmpty
+                    ? Column(
                         children: [
-                          SizedBox(height: Get.height * 0.01),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                "Selecionar Todos",
-                                style: TextStyle(
-                                    fontFamily: AppFonts.poppinsRegularFont),
-                              ),
-                              Checkbox(
-                                checkColor: Colors.white,
-                                activeColor: AppColors.greenColor,
-                                value: isChecked,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    isChecked = value!;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
+                          SizedBox(height: Get.height * 0.08),
                           Container(
-                            height: Get.height * 0.45,
-                            child: ListView.builder(
-                              padding: EdgeInsets.all(0.0),
-                              shrinkWrap: true,
-                              itemCount: list_favorite.length,
-                              itemBuilder: (context, index) {
-                                var list = list_favorite[index];
-                                //  cartPageController.name = list.name;
-                                //  cartPageController.amount = list.amount;
-
-                                return ItemFavoriteComponent(
-                                  id: list.id,
-                                  name: list.name,
-                                  image: list.image,
-                                  amount: list.amount,
-                                  price: list.price,
-                                );
-                              },
+                            alignment: Alignment.center,
+                            height: Get.height * 0.8,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                WebsafeSvg.asset(AppImages.favorite_empyt),
+                                SizedBox(height: Get.height * 0.08),
+                                Text(
+                                  "Sem produto marcado como favorito...",
+                                  style: TextStyle(
+                                      fontFamily: AppFonts.poppinsRegularFont,
+                                      fontSize: Get.width * 0.035),
+                                ),
+                              ],
                             ),
                           ),
                         ],
+                      )
+                    : SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SizedBox(height: Get.height * 0.01),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  "Selecionar Todos",
+                                  style: TextStyle(
+                                      fontFamily: AppFonts.poppinsRegularFont),
+                                ),
+                                Checkbox(
+                                  checkColor: Colors.white,
+                                  activeColor: AppColors.greenColor,
+                                  value: isChecked,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      isChecked = value!;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                            Container(
+                              height: Get.height * 0.45,
+                              child: ListView.builder(
+                                padding: EdgeInsets.all(0.0),
+                                shrinkWrap: true,
+                                itemCount: list_favorite.length,
+                                itemBuilder: (context, index) {
+                                  var list = list_favorite[index];
+                                  //  cartPageController.name = list.name;
+                                  //  cartPageController.amount = list.amount;
+
+                                  return ItemFavoriteComponent(
+                                    id: list.id,
+                                    name: list.name,
+                                    image: list.image,
+                                    amount: list.amount,
+                                    price: list.price,
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
