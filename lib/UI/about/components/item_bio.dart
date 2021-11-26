@@ -28,11 +28,12 @@ class _Item_BioState extends State<Item_Bio> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: Get.height*0.01),
               Text(
                 'Carlos Pereira',
                 style: TextStyle(
                     fontFamily: AppFonts.poppinsRegularFont,
-                    color: Colors.black,
+
                     fontSize: Get.width * 0.03),
               ),
               SizedBox(height: Get.height * 0.002),
@@ -40,7 +41,7 @@ class _Item_BioState extends State<Item_Bio> {
                 'Fundador ',
                 style: TextStyle(
                     fontFamily: AppFonts.poppinsBoldFont,
-                    color: Colors.black,
+
                     fontSize: Get.width * 0.03),
               ),
               SizedBox(height: Get.height * 0.01),
@@ -67,13 +68,14 @@ class _Item_BioState extends State<Item_Bio> {
                   width: Get.width * 0.52,
                   height: Get.height * 0.2,
                   child: ListView(
+                    padding: EdgeInsets.all(0.0),
                     children: [
                       Text(
                         description_carlos,
                         textAlign: TextAlign.justify,
                         style: TextStyle(
                             fontFamily: AppFonts.poppinsRegularFont,
-                            color: Colors.black,
+
                             fontSize: Get.width * 0.03),
                       ),
                     ],

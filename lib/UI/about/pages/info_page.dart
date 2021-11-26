@@ -31,7 +31,7 @@ class InfoPage extends StatelessWidget {
                       },
                       icon: const Icon(
                         Icons.arrow_back,
-                        color: Colors.black,
+
                       ),
                       alignment: Alignment.centerRight,
                     ),
@@ -71,7 +71,7 @@ class InfoPage extends StatelessWidget {
                       style: const TextStyle(
                           fontSize: 14,
                           fontFamily: AppFonts.poppinsRegularFont,
-                          color: Colors.black),
+                          ),
                       moreStyle: const TextStyle(
                           fontSize: 14,
                           fontFamily: AppFonts.poppinsRegularFont,
@@ -84,7 +84,7 @@ class InfoPage extends StatelessWidget {
                         'Constituição da Empresa',
                         style: TextStyle(
                             fontFamily: AppFonts.poppinsBoldFont,
-                            color: Colors.black,
+
                             fontSize: Get.width * 0.045),
                       ),
                     ),
@@ -92,6 +92,7 @@ class InfoPage extends StatelessWidget {
                         width: Get.width,
                         height: Get.height * 0.3,
                         child: ListView(
+                          padding: EdgeInsets.all(0.0),
                           children: [Item_Bio()],
                         )),
                     SizedBox(height: Get.height * 0.04),

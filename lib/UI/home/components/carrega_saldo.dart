@@ -37,7 +37,7 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
           margin:
               EdgeInsets.only(left: Get.width * 0.12, right: Get.width * 0.12),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color:Theme.of(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(12),
           ),
           child: SingleChildScrollView(
@@ -78,6 +78,7 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                     key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(height: Get.height * 0.01),
                         Text(
@@ -94,7 +95,7 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                             keyboardType: TextInputType.number,
                             obscureText: false,
                             decoration: InputDecoration(
-                              filled: true,
+                              filled: false,
                               fillColor: Colors.white,
                               border: OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(35.0),
@@ -104,13 +105,11 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                                 padding: EdgeInsets.all(0.0),
                                 child: Icon(
                                   Icons.phone,
-                                  color: Colors.grey,
+
                                 ), // icon is 48px widget.
                               ),
                               labelText: 'Numero',
-                              labelStyle: TextStyle(
-                                color: Colors.grey,
-                              ),
+
                             ),
                             validator: (value) =>
                                 value!.isEmpty ? 'Insira o Numero' : null,
@@ -131,7 +130,7 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                             keyboardType: TextInputType.number,
                             obscureText: false,
                             decoration: InputDecoration(
-                              filled: true,
+                              filled: false,
                               fillColor: Colors.white,
                               border: OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(35.0),
@@ -141,13 +140,11 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                                 padding: EdgeInsets.all(0.0),
                                 child: Icon(
                                   Icons.attach_money,
-                                  color: Colors.grey,
+
                                 ), // icon is 48px widget.
                               ),
                               labelText: 'Montante',
-                              labelStyle: TextStyle(
-                                color: Colors.grey,
-                              ),
+
                             ),
                             validator: (value) =>
                                 value!.isEmpty ? 'Insira o Montante' : null,
