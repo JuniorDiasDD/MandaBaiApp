@@ -20,7 +20,7 @@ class _Pop_LoginState extends State<Pop_Login> {
       body: Center(
         child: Container(
           width: Get.width,
-          height: Get.height * 0.3,
+          height: Get.height * 0.28,
           margin:
               EdgeInsets.only(left: Get.width * 0.12, right: Get.width * 0.12),
           decoration: BoxDecoration(
@@ -62,8 +62,8 @@ class _Pop_LoginState extends State<Pop_Login> {
                 SizedBox(height: Get.height * 0.03),
                 Padding(
                     padding: EdgeInsets.only(
-                      left: Get.width * 0.06,
-                      right: Get.width * 0.06,
+                      left: Get.width * 0.04,
+                      right: Get.width * 0.04,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -73,12 +73,12 @@ class _Pop_LoginState extends State<Pop_Login> {
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontFamily: AppFonts.poppinsRegularFont,
-                              fontSize: Get.width * 0.035),
+                              fontSize: Get.width * 0.038),
                         ),
                       ],
                     ),
                 ),
-                SizedBox(height: Get.height * 0.05),
+                SizedBox(height: Get.height * 0.02),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
@@ -104,7 +104,7 @@ class _Pop_LoginState extends State<Pop_Login> {
                         'Login',
                         style: TextStyle(
                             fontFamily: AppFonts.poppinsBoldFont,
-                            fontSize: Get.width * 0.035,
+                            fontSize: Get.width * 0.04,
                             color: Colors.white),
                       ),
                       onPressed: () => Navigator.pushNamed(context, '/login'),
