@@ -78,7 +78,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                   height: Get.height * 0.3,
                                   margin: EdgeInsets.only(left: 20, right: 20),
                                   decoration: BoxDecoration(
-                                    color: Colors.white,
+                                    color:Theme.of(context).scaffoldBackgroundColor,
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: SingleChildScrollView(
