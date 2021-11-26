@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/UI/Favorite/page/favorite_page.dart';
 import 'package:manda_bai/UI/account/pages/profile_page.dart';
 import 'package:manda_bai/UI/cart/pages/cart_page.dart';
+import 'package:manda_bai/UI/home/components/pop_login.dart';
 import 'package:manda_bai/UI/home/pages/start_page.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,8 +26,23 @@ class _HomePageState extends State<HomePage> {
   ];
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
+    setState(() async {
+
+      if (index == 3){
+        var check = await FlutterSession().get('username');
+        if (check == 'null' || check == null) {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Pop_Login();
+              });
+        } else {
+          _selectedIndex = index;
+        }
+      }else{
+        _selectedIndex = index;
+      }
+
     });
   }
 
@@ -59,6 +76,7 @@ class _HomePageState extends State<HomePage> {
         selectedItemColor: AppColors.greenColor,
         unselectedItemColor: Colors.black54,
         onTap: _onItemTapped,
+
       ),
     );
   }
