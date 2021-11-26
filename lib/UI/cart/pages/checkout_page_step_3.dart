@@ -53,7 +53,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                         },
                         icon: const Icon(
                           Icons.arrow_back,
-                          color: Colors.black,
+                          
                         ),
                         alignment: Alignment.centerRight,
                       ),
@@ -149,7 +149,6 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                       },
                       icon: const Icon(
                         Icons.info,
-                        color: AppColors.greenColor,
                       ),
                       iconSize: Get.width * 0.05,
                       alignment: Alignment.centerRight,
@@ -210,7 +209,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                 fontFamily: AppFonts.poppinsRegularFont,
                               ),
                               decoration: InputDecoration(
-                                filled: true,
+                                filled: false,
                                 fillColor: Colors.white,
                                 border: OutlineInputBorder(
                                   borderRadius: new BorderRadius.circular(35.0),
@@ -525,7 +524,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                     fontFamily: AppFonts.poppinsRegularFont,
                   ),
                   decoration: InputDecoration(
-                    filled: true,
+                    filled: false,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
                       borderRadius: new BorderRadius.circular(35.0),
@@ -559,7 +558,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                               fontFamily: AppFonts.poppinsRegularFont,
                             ),
                             decoration: InputDecoration(
-                              filled: true,
+                              filled: false,
                               fillColor: Colors.white,
                               border: OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(35.0),
@@ -592,7 +591,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                               fontFamily: AppFonts.poppinsRegularFont,
                             ),
                             decoration: InputDecoration(
-                              filled: true,
+                              filled: false,
                               fillColor: Colors.white,
                               border: OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(35.0),

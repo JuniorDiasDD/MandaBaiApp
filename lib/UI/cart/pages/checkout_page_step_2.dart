@@ -66,7 +66,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                         },
                         icon: const Icon(
                           Icons.arrow_back,
-                          color: Colors.black,
+                        
                         ),
                         alignment: Alignment.centerRight,
                       ),
@@ -249,7 +249,6 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                       },
                       icon: const Icon(
                         Icons.info,
-                        color: AppColors.greenColor,
                       ),
                       iconSize: Get.width * 0.05,
                       alignment: Alignment.centerRight,
@@ -282,7 +281,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                         style: TextStyle(
                             fontSize: 14,
                             fontFamily: AppFonts.poppinsRegularFont,
-                            color: Colors.black),
+                           ),
                         moreStyle: TextStyle(
                           fontSize: 14,
                           fontFamily: AppFonts.poppinsRegularFont,
@@ -332,7 +331,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                 ),
                 
                 SizedBox(height: Get.height * 0.01),
-                Container(
+                SizedBox(
                   width: Get.width,
                   child: TextFormField(
                     controller: input_cidade,
@@ -341,7 +340,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                     ),
                     decoration: InputDecoration(
                       labelText: "Cidade",
-                      filled: true,
+                      filled: false,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
                         borderRadius: new BorderRadius.circular(35.0),
@@ -353,7 +352,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                   ),
                 ),
                 SizedBox(height: Get.height * 0.01),
-                Container(
+                SizedBox(
                   width: Get.width,
                   child: TextFormField(
                     controller: input_endereco,
@@ -362,7 +361,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                     ),
                     decoration: InputDecoration(
                       labelText: "Endereço",
-                      filled: true,
+                      filled: false,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
                         borderRadius: new BorderRadius.circular(35.0),
@@ -374,7 +373,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                   ),
                 ),
                 SizedBox(height: Get.height * 0.01),
-                Container(
+                SizedBox(
                   width: Get.width,
                   child: TextFormField(
                     controller: input_tel,
@@ -384,7 +383,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                     ),
                     decoration: InputDecoration(
                       labelText: "Telefone ou Telemovel",
-                      filled: true,
+                      filled: false,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(
                         borderRadius: new BorderRadius.circular(35.0),
