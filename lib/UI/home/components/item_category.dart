@@ -26,7 +26,7 @@ class _ListViewItemComponentState extends State<ListViewItemComponent> {
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: AppColors.greenColor, width: 1.0),
-          color: Colors.white,
+         color:Theme.of(context).scaffoldBackgroundColor,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(

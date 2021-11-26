@@ -55,21 +55,20 @@ class _StartPageState extends State<StartPage> {
   }
 
   Future _carregarCategory() async {
-    if(list_category.isEmpty){
-list_category = await ServiceRequest.loadCategory();
-
     if (list_category.isEmpty) {
-      return null;
-    } else {
-      setState(() {
-        if (list_products.isEmpty) {
-          categoryId = list_category[0].id;
-          carregarProdutos();
-        }
-      });
+      list_category = await ServiceRequest.loadCategory();
+
+      if (list_category.isEmpty) {
+        return null;
+      } else {
+        setState(() {
+          if (list_products.isEmpty) {
+            categoryId = list_category[0].id;
+            carregarProdutos();
+          }
+        });
+      }
     }
-    }
-    
 
     return list_category;
   }
@@ -130,9 +129,14 @@ list_category = await ServiceRequest.loadCategory();
                         left: Get.width * 0.07,
                         top: Get.height * 0.235,
                       ),
-                      child: SizedBox(
+                      child: Container(
                         width: 350,
                         height: Get.height * 0.05,
+                        decoration: new BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                        color: Theme.of(context).bottomAppBarColor,
+                          //color: Colors.white,
+                        ),
                         child: const TextField(
                           cursorColor: AppColors.greenColor,
                           decoration: InputDecoration(
@@ -148,7 +152,6 @@ list_category = await ServiceRequest.loadCategory();
                               color: AppColors.greenColor,
                             ),
                             filled: true,
-                            fillColor: Colors.white,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(30.0),
@@ -250,15 +253,15 @@ list_category = await ServiceRequest.loadCategory();
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                       color: AppColors.greenColor, width: 1.0),
-                                  color: Colors.white,
+                                  color:Theme.of(context).scaffoldBackgroundColor,
                                   borderRadius: BorderRadius.circular(12),
                                   boxShadow: [
                                     BoxShadow(
                                       color: Colors.grey,
                                       blurRadius: 1.0,
                                       spreadRadius: 0.0,
-                                      offset: Offset(0.5,
-                                          0.5), // changes position of shadow
+                                      offset: Offset(1,
+                                          1), // changes position of shadow
                                     ),
                                   ],
                                 ),

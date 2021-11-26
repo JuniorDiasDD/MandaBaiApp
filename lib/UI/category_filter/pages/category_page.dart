@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
+import 'package:manda_bai/Model/category.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/home/components/item_category.dart';
 import 'package:manda_bai/UI/home/components/product_list_component.dart';
@@ -17,17 +19,37 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
-    List<Product>list_product = [];
-    Future _carregar() async {
-  //  list_product = await Request.loadEntidades();
- //   list_product.add(new Product(id:1,name:"Televisão",image:"https://i.zst.com.br/thumbs/12/32/f/-52450406.jpg",price:20000,amount:1));
-  //  list_product.add(new Product(id:1,name:"Iphone 11",image:"https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone11-select-2019-family?wid=882&hei=1058&fmt=jpeg&qlt=80&.v=1567022175704",price:49000,amount:1));
-     if (list_product.isEmpty) {
+  List<Product> list_product = [];
+  List<Category> list_category = [];
+  int categoryId = 0;
+  Future _carregar() async {
+    list_product = await ServiceRequest.loadProduct(categoryId);
+    if (list_product.isEmpty) {
       return null;
     }
 
     return list_product;
   }
+
+  Future _carregarCategory() async {
+    if (list_category.isEmpty) {
+      list_category = await ServiceRequest.loadCategory();
+
+      if (list_category.isEmpty) {
+        return null;
+      } else {
+        setState(() {
+          if (list_product.isEmpty) {
+            categoryId = list_category[0].id;
+            _carregar();
+          }
+        });
+      }
+    }
+
+    return list_category;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +100,7 @@ class _CategoryPageState extends State<CategoryPage> {
                       ),
                     ),
                   ),
-                   IconButton(
+                  IconButton(
                     padding: const EdgeInsets.all(0.0),
                     onPressed: () {
                       showDialog(
@@ -113,12 +135,12 @@ class _CategoryPageState extends State<CategoryPage> {
                       );
                     },
                     icon: WebsafeSvg.asset(AppImages.filter),
-                      color: AppColors.greenColor,
-                      iconSize: Get.width * 0.05,
-                    ),
-                    
-                    //alignment: Alignment.centerRight,
-                  
+                    color: AppColors.greenColor,
+                    iconSize: Get.width * 0.05,
+                  ),
+
+                  //alignment: Alignment.centerRight,
+
                   /*IconButton(
                     onPressed: () {},
                     icon: WebsafeSvg.asset(AppImages.filter),
@@ -142,23 +164,69 @@ class _CategoryPageState extends State<CategoryPage> {
               ),
             ),
             // ignore: sized_box_for_whitespace
-            Padding(
-              padding: EdgeInsets.only(top: Get.height * 0.01),
-              // ignore: sized_box_for_whitespace
-              child: Container(
-                height: Get.height * 0.05,
-                child: ListView(
-                  // This next line does the trick.
-                  scrollDirection: Axis.horizontal,
-                  children: const <Widget>[
-                 //   ListViewItemComponent(categoryName: 'Electronics'),
-                   // ListViewItemComponent(categoryName: 'Cosmetics'),
-                 ////   ListViewItemComponent(categoryName: 'Foods'),
-                   
-                  ],
+             FutureBuilder(
+                  future: _carregarCategory(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.data == null) {
+                      return Container();
+                    } else {
+                      return Container(
+                        height: Get.height * 0.05,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (BuildContext context, index) {
+                            var list = list_category[index];
+                            // return ListViewItemComponent(category: list);
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                left: Get.width * 0.023,
+                                bottom: Get.width * 0.01,
+                              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: AppColors.greenColor, width: 1.0),
+                                  color:Theme.of(context).scaffoldBackgroundColor,
+                                  borderRadius: BorderRadius.circular(12),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey,
+                                      blurRadius: 1.0,
+                                      spreadRadius: 0.0,
+                                      offset: Offset(1,
+                                          1), // changes position of shadow
+                                    ),
+                                  ],
+                                ),
+                                width: Get.width * 0.3,
+                                height: Get.height * 0.1,
+                                child: TextButton(
+                                  onPressed: () {
+                                   // print("aqui2");
+                                    setState(() {
+                                      categoryId = list.id;
+                                      _carregar();
+                                    });
+                                  },
+                                  child: Text(
+                                    list.name,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: AppFonts.poppinsRegularFont,
+                                      fontSize: Get.height * 0.013,
+                                      color: AppColors.greenColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    }
+                  },
                 ),
-              ),
-            ),
             FutureBuilder(
               future: _carregar(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {

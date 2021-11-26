@@ -1,3 +1,4 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 
 import 'UI/authention/pages/login_page.dart';
@@ -19,10 +20,15 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MandaBai',
-      theme: ThemeData(
+      /*theme: ThemeData(
         primarySwatch: Colors.green,
-      ),
+      ),*/
       //home: const LoginPage(),
+      theme: FlexThemeData.light(scheme: FlexScheme.green),
+      // The Mandy red, dark theme.
+      darkTheme: FlexThemeData.dark(scheme: FlexScheme.green),
+      // Use dark or light theme based on system setting.
+      themeMode: ThemeMode.system,
        initialRoute: '/',
       routes: {
         '/': (context) => SplashPage(),

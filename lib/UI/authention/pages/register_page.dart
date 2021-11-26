@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_pw_validator/Resource/Strings.dart';
+import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
+
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -19,7 +22,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final input_numero = TextEditingController();
   final input_username = TextEditingController();
   final input_senha = TextEditingController();
-  final input_senha_conf = TextEditingController();
   final input_nome = TextEditingController();
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
@@ -204,35 +206,23 @@ class _RegisterPageState extends State<RegisterPage> {
                       validator: (value) =>
                           value!.isEmpty ? 'Insira a senha' : null,
                     ),
-                    SizedBox(height: Get.height * 0.01),
-                    TextFormField(
-                      controller: input_senha_conf,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        // errorText: checkPassword == false
-                        //     ? 'Senha não corresponde'
-                        //     : null,
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(35.0),
-                          borderSide: new BorderSide(),
-                        ),
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(0.0),
-                          child: Icon(
-                            Icons.lock,
-                            color: Colors.grey,
-                          ), // icon is 48px widget.
-                        ),
-                        labelText: 'Palavra-passe confirmar',
-                        labelStyle: TextStyle(
-                          color: Colors.grey,
-                        ),
-                      ),
-                      validator: (value) =>
-                          value!.isEmpty ? 'Campo vazio' : null,
-                    ),
+                    SizedBox(height: Get.height * 0.005),
+                    FlutterPwValidator(
+                    controller: input_senha,
+                    minLength: 8,
+                    uppercaseCharCount: 1,
+                    numericCharCount: 2,
+                    specialCharCount: 1,
+                    width: 400,
+                    height: 150,
+                 //   strings:FrenchStrings(),
+                    onSuccess: () {
+                      print("Matched");
+                      Scaffold.of(context).showSnackBar(new SnackBar(
+                          content: new Text("Password is matched")));
+                    },
+                  ),
+                   
                     SizedBox(
                       height: Get.height * 0.02,
                     ),
@@ -265,6 +255,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         onPressed: validateAndSave,
                       ),
                     ),
+                    SizedBox(height: Get.height * 0.02),
                   ],
                 ),
               ),
@@ -274,4 +265,14 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
+}
+class FrenchStrings implements FlutterPwValidatorStrings {
+  @override
+  final String atLeast = 'Au moins - caractères';
+  @override
+  final String uppercaseLetters = '- Lettres majuscules';
+  @override
+  final String numericCharacters = '- Chiffres';
+  @override
+  final String specialCharacters = '- Caractères spéciaux';
 }

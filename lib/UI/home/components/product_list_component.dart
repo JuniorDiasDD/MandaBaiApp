@@ -32,7 +32,7 @@ class ProductListComponent extends StatelessWidget {
           width: Get.width * 0.4,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.white54, width: 1.0),
-            color: Colors.grey[200],
+            color:Theme.of(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
@@ -68,7 +68,7 @@ class ProductListComponent extends StatelessWidget {
                   style:  TextStyle(
                     fontFamily: AppFonts.poppinsRegularFont,
                     fontSize: Get.width*0.033,
-                    color: Colors.black,
+                    
                   ),
                 ),
                 padding: EdgeInsets.only(

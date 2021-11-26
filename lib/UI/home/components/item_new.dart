@@ -12,8 +12,16 @@ class ItemNew extends StatefulWidget {
 }
 
 class _ItemNewState extends State<ItemNew> {
+ 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //print(check.);
+  }
   @override
   Widget build(BuildContext context) {
+   
     return GestureDetector(
       onTap: () {
         if (widget.title == "Saldo CvMovel") {
@@ -45,7 +53,7 @@ class _ItemNewState extends State<ItemNew> {
                   offset: Offset(0.5, 0.5), // changes position of shadow
                 ),
               ],
-              color: Colors.white,
+             color:Theme.of(context).dialogBackgroundColor,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
