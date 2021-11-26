@@ -20,7 +20,7 @@ class _Pop_LoginState extends State<Pop_Login> {
       body: Center(
         child: Container(
           width: Get.width,
-          height: Get.height * 0.28,
+          height: Get.height * 0.272,
           margin:
               EdgeInsets.only(left: Get.width * 0.12, right: Get.width * 0.12),
           decoration: BoxDecoration(
@@ -78,7 +78,7 @@ class _Pop_LoginState extends State<Pop_Login> {
                       ],
                     ),
                 ),
-                SizedBox(height: Get.height * 0.035),
+                SizedBox(height: Get.height * 0.03),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
