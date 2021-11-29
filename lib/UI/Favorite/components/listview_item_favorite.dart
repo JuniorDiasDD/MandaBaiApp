@@ -67,37 +67,51 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        widget.name,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontFamily: AppFonts.poppinsBoldFont,
-                          fontSize: 15,
-                          color: Colors.black,
+                      SizedBox(
+                            width: Get.width * 0.35,
+                        child: Text(
+                          widget.name,
+                         
+                          style: const TextStyle(
+                            fontFamily: AppFonts.poppinsBoldFont,
+                            fontSize: 15,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
-                      Checkbox(
-                        checkColor: Colors.white,
-                        activeColor: AppColors.greenColor,
-                        value: isChecked,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            isChecked = value!;
-                          });
-                        },
+                      Row(
+                        children: [
+                          
+                          IconButton(
+                            padding: const EdgeInsets.all(0.0),
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.shopping_cart,
+                            ),
+                            iconSize: Get.width * 0.05,
+                          ),
+                          IconButton(
+                            padding: const EdgeInsets.all(0.0),
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.delete,
+                            ),
+                            iconSize: Get.width * 0.05,
+                          ),
+                        ],
                       ),
                     ],
                   ),
                   Align(
                     alignment: Alignment.bottomRight,
                     child: Padding(
-                      padding: EdgeInsets.only(right: Get.width * 0.02),
+                      padding: EdgeInsets.only(right: Get.width * 0.04),
                       child: Text(
                         widget.price.toString(),
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
+                        style:  TextStyle(
                           fontFamily: AppFonts.poppinsBoldFont,
-                          fontSize: 15,
+                          fontSize: Get.width*0.035,
                           color: AppColors.greenColor,
                         ),
                       ),

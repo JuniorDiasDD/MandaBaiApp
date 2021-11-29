@@ -88,11 +88,11 @@ class _StartPageState extends State<StartPage> {
           return new Future(() => false);
         },
         child: Scaffold(
-          appBar: AppBar(
-            // backgroundColor: Colors.white,
+         /* appBar: AppBar(
+  
             title: Header(title: 'MandaBai'),
-          ),
-          drawer: Menu(),
+          ),*/
+        //  drawer: Menu(),
           body: SingleChildScrollView(
             child: Column(
               children: [

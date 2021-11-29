@@ -31,12 +31,12 @@ class _FavoritePageState extends State<FavoritePage> {
   ];
   @override
   Widget build(BuildContext context) {
-    return  WillPopScope(
-        onWillPop: () {
-          return new Future(() => false);
-        },
-          child: Scaffold(
-        appBar: AppBar(
+    return WillPopScope(
+      onWillPop: () {
+        return new Future(() => false);
+      },
+      child: Scaffold(
+        /*  appBar: AppBar(
           // backgroundColor: Colors.white,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -72,7 +72,7 @@ class _FavoritePageState extends State<FavoritePage> {
             ],
           ),
         ),
-        drawer: Menu(),
+        drawer: Menu(),*/
         body: Padding(
           padding:
               EdgeInsets.only(left: Get.width * 0.04, right: Get.width * 0.04),
@@ -106,27 +106,15 @@ class _FavoritePageState extends State<FavoritePage> {
                     : SingleChildScrollView(
                         child: Column(
                           children: [
-                            SizedBox(height: Get.height * 0.01),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  "Selecionar Todos",
-                                  style: TextStyle(
-                                      fontFamily: AppFonts.poppinsRegularFont),
-                                ),
-                                Checkbox(
-                                  checkColor: Colors.white,
-                                  activeColor: AppColors.greenColor,
-                                  value: isChecked,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      isChecked = value!;
-                                    });
-                                  },
-                                ),
-                              ],
+                            SizedBox(height: Get.height * 0.08),
+                            Text(
+                              'Meus Favoritos',
+                              style: TextStyle(
+                                  fontFamily: AppFonts.poppinsBoldFont,
+                                  fontSize: Get.width * 0.05),
                             ),
+                            SizedBox(height: Get.height * 0.01),
+                           
                             Container(
                               height: Get.height * 0.45,
                               child: ListView.builder(

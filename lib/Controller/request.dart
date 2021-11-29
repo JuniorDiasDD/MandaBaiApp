@@ -28,7 +28,7 @@ class ServiceRequest {
     List<Product> list = [];
     var response = await http.get(Uri.parse(productCategorias + id.toString()));
     final jsonResponse = json.decode(response.body);
-    print(response.body);
+  //  print(response.body);
     if (response.statusCode == 200) {
       final _cats = jsonResponse.cast<Map<String, dynamic>>();
       list = _cats.map<Product>((cat) => Product.fromJson(cat)).toList();
@@ -78,7 +78,7 @@ class ServiceRequest {
     var response = await http.post(Uri.parse(register_client),
         headers: headers, body: data);
 
-    print(response.body);
+  //  print(response.body);
     //  print(response.statusCode);
     if (response.statusCode == 201) {
       final jsonResponse = json.decode(response.body);
@@ -95,7 +95,7 @@ class ServiceRequest {
     var response = await http.post(Uri.parse(request_login),
         body: {'username': username, 'password': password});
     final jsonResponse = json.decode(response.body);
-    print(response.body);
+   // print(response.body);
     if (response.statusCode == 200) {
       var session = FlutterSession();
       await session.set('id', jsonResponse["user_id"]);
@@ -112,9 +112,9 @@ class ServiceRequest {
     var response = await http.post(Uri.parse(
       getUser + id.toString() + "?" + key,
     ));
-    print(getUser + id.toString() + "?" + key);
+   // print(getUser + id.toString() + "?" + key);
     final jsonResponse = json.decode(response.body);
-    print(response.body);
+   // print(response.body);
     if (response.statusCode == 200) {
       user.name = jsonResponse["first_name"];
       user.email = jsonResponse["email"];

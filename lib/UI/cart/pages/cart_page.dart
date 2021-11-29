@@ -47,7 +47,7 @@ class _StartPageState extends State<CartPage> {
         return new Future(() => false);
       },
       child: Scaffold(
-        appBar: AppBar(
+      /*  appBar: AppBar(
           // backgroundColor: Colors.white,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -72,8 +72,8 @@ class _StartPageState extends State<CartPage> {
               ),
             ],
           ),
-        ),
-        drawer: Menu(),
+        ),*/
+        //drawer: Menu(),
         body: Padding(
           padding:
               EdgeInsets.only(left: Get.width * 0.04, right: Get.width * 0.04),
@@ -100,6 +100,33 @@ class _StartPageState extends State<CartPage> {
               : SingleChildScrollView(
                   child: Column(
                     children: [
+                          SizedBox(height: Get.height * 0.08),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                           width: Get.width*0.1,
+                          ),
+                          Text(
+                            'Meu Carinho',
+                            style: TextStyle(
+                                fontFamily: AppFonts.poppinsBoldFont,
+                                fontSize: Get.width * 0.05),
+                          ),
+                           Container(
+                            child: IconButton(
+                              // padding: EdgeInsets.all(0.0),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(
+                                Icons.delete,
+                              ),
+                              alignment: Alignment.centerRight,
+                            ),
+                          ),
+                        ],
+                      ),
                       SizedBox(height: Get.height * 0.01),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
