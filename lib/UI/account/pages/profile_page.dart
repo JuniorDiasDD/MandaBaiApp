@@ -10,6 +10,7 @@ import 'package:manda_bai/Model/user.dart';
 import 'package:manda_bai/UI/Favorite/page/favorite_page.dart';
 import 'package:manda_bai/UI/about/pages/info_page.dart';
 import 'package:manda_bai/UI/account/pages/edit_profile.dart';
+import 'package:manda_bai/UI/home/components/carrega_saldo.dart';
 import 'package:manda_bai/UI/home/components/header.dart';
 import 'package:manda_bai/UI/home/components/menu.dart';
 
@@ -64,7 +65,7 @@ class _StartPageState extends State<ProfilePage> {
                         "Loading...",
                       ),
                     );
-                  }else {
+                  } else {
                     return Column(
                       children: [
                         Image.network(
@@ -99,200 +100,259 @@ class _StartPageState extends State<ProfilePage> {
                   left: Get.width * 0.05,
                   right: Get.width * 0.05,
                 ),
-                child: Column(
-                  children: [
-                    Container(
-                      height: Get.height * 0.06,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8),
+                child: Container(
+                  height: Get.height * 0.06,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditPorfilePage(),
                         ),
-                        border: Border.all(
-                          color: Colors.black38,
-                        ),
-                      ),
-                      child: TextButton(
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.edit,
-                              color: AppColors.greenColor,
-                              size: Get.height * 0.035,
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        Container(
+                          height: Get.height * 0.042,
+                          width: Get.height * 0.042,
+                          decoration: BoxDecoration(
+                            color: Colors.teal,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(100),
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                left: Get.width * 0.02,
-                              ),
-                              child: Text(
-                                'Editar Perfil',
-                                style: TextStyle(
-                                  fontFamily: AppFonts.poppinsRegularFont,
-                                  color: Colors.black,
-                                  fontSize: Get.height * 0.018,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EditPorfilePage(),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    SizedBox(height: Get.height * 0.01),
-                    Container(
-                      height: Get.height * 0.06,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8),
-                        ),
-                        border: Border.all(
-                          color: Colors.black38,
-                        ),
-                      ),
-                      child: TextButton(
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.favorite,
-                              color: AppColors.greenColor,
-                              size: Get.height * 0.035,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                left: Get.width * 0.02,
-                              ),
-                              child: Text(
-                                'Favorito',
-                                style: TextStyle(
-                                  fontFamily: AppFonts.poppinsRegularFont,
-                                  color: Colors.black,
-                                  fontSize: Get.height * 0.018,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => FavoritePage(),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    SizedBox(height: Get.height * 0.01),
-                    Container(
-                      height: Get.height * 0.06,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8),
-                        ),
-                        border: Border.all(
-                          color: Colors.black38,
-                        ),
-                      ),
-                      child: TextButton(
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.logout,
-                              color: AppColors.greenColor,
-                              size: Get.height * 0.035,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                left: Get.width * 0.02,
-                              ),
-                              child: Text(
-                                'Terminar Sessão',
-                                style: TextStyle(
-                                  fontFamily: AppFonts.poppinsRegularFont,
-                                  color: Colors.black,
-                                  fontSize: Get.height * 0.018,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        onPressed: () => _terminarSessao(),
-                      ),
-                    ),
-                    SizedBox(height: Get.height * 0.01),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: new Container(
-                            width: Get.width * 0.1,
-                            child: Divider(
-                              color: Colors.black,
-                              height: 36,
-                            ),
+                            border: Border.all(color: Colors.teal),
+                          ),
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                            size: Get.height * 0.025,
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.only(
-                            left: Get.width * 0.05,
-                            right: Get.width * 0.05,
+                            left: Get.width * 0.02,
                           ),
-                          child: Text("Configurações"),
-                        ),
-                        Expanded(
-                          child: Container(
-                            width: Get.width * 0.4,
-                            child: const Divider(
+                          child: Text(
+                            'Editar Perfil',
+                            style: TextStyle(
+                              fontFamily: AppFonts.poppinsRegularFont,
                               color: Colors.black,
-                              height: 36,
+                              fontSize: Get.height * 0.018,
                             ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(height: Get.height * 0.01),
-                    Container(
-                      height: Get.height * 0.06,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8),
-                        ),
-                        border: Border.all(
-                          color: Colors.black38,
+                  ),
+                ),
+              ),
+              SizedBox(height: Get.height * 0.01),
+              Padding(
+                padding:  EdgeInsets.only(left: Get.width * 0.05,
+                  right: Get.width * 0.05,),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: new Container(
+                        width: Get.width * 0.1,
+                        child: Divider(
+                          color: Colors.black,
+                          height: 36,
                         ),
                       ),
-                      child: TextButton(
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: Get.width * 0.05,
+                        right: Get.width * 0.05,
+                      ),
+                      child: Text("Outros Serviços"),
+                    ),
+                    Expanded(
+                      child: Container(
+                        width: Get.width * 0.4,
+                        child: const Divider(
+                          color: Colors.black,
+                          height: 36,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: Get.width * 0.05,
+                  right: Get.width * 0.05,
+                ),
+                child: Container(
+                  height: Get.height * 0.06,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Carrega_Saldo(),
+                        ),
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        Container(
+                          height: Get.height * 0.042,
+                          width: Get.height * 0.042,
+                          decoration: BoxDecoration(
+                            color: Colors.lightBlueAccent,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(100),
+                            ),
+                            border: Border.all(color: Colors.lightBlueAccent),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Image.asset(
+                              AppImages.cvmovel,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: Get.height * 0.01),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: Get.width * 0.02,
+                          ),
+                          child: Text(
+                            'Saldo CvMóvel',
+                            style: TextStyle(
+                              fontFamily: AppFonts.poppinsRegularFont,
+                              color: Colors.black,
+                              fontSize: Get.height * 0.018,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: Get.height * 0.01),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: Get.width * 0.05,
+                  right: Get.width * 0.05,
+                ),
+                child: Container(
+                  height: Get.height * 0.06,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Row(
+                      children: [
+                        Container(
+                          height: Get.height * 0.042,
+                          width: Get.height * 0.042,
+                          decoration: BoxDecoration(
+                            color: Colors.deepPurpleAccent,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(100),
+                            ),
+                            border: Border.all(color: Colors.deepPurpleAccent),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Image.asset(
+                              AppImages.camara,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: Get.height * 0.01),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: Get.width * 0.02,
+                          ),
+                          child: Text(
+                            'Serviços da Câmara ',
+                            style: TextStyle(
+                              fontFamily: AppFonts.poppinsRegularFont,
+                              color: Colors.black,
+                              fontSize: Get.height * 0.018,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: Get.width * 0.05,
+                  right: Get.width * 0.05,),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: new Container(
+                        width: Get.width * 0.1,
+                        child: Divider(
+                          color: Colors.black,
+                          height: 36,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: Get.width * 0.05,
+                        right: Get.width * 0.05,
+                      ),
+                      child: Text("Configurações"),
+                    ),
+                    Expanded(
+                      child: Container(
+                        width: Get.width * 0.4,
+                        child: const Divider(
+                          color: Colors.black,
+                          height: 36,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: Get.width * 0.05,
+                  right: Get.width * 0.05,
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      height: Get.height * 0.06,
+                      child: GestureDetector(
+                        onTap: () {},
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            Container(
+                              height: Get.height * 0.042,
+                              width: Get.height * 0.042,
+                              decoration: BoxDecoration(
+                                color: Colors.lightBlueAccent,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(100),
+                                ),
+                                border:
+                                    Border.all(color: Colors.lightBlueAccent),
+                              ),
+                              child: Image.asset(
+                                AppImages.santiago,
+                                color: Colors.white,
+                                height: Get.height * 0.1,
+                                width: Get.width * 0.6,
+                              ),
+                            ),
                             Padding(
                               padding: EdgeInsets.only(
                                 left: Get.width * 0.02,
                               ),
                               child: Text(
-                                'Mudar de ilha',
-                                style: TextStyle(
-                                  fontFamily: AppFonts.poppinsRegularFont,
-                                  color: Colors.black,
-                                  fontSize: Get.height * 0.018,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                right: Get.width * 0.02,
-                              ),
-                              child: Text(
-                                'Santiago  >',
+                                'Mudar de ILha',
                                 style: TextStyle(
                                   fontFamily: AppFonts.poppinsRegularFont,
                                   color: Colors.black,
@@ -302,44 +362,37 @@ class _StartPageState extends State<ProfilePage> {
                             ),
                           ],
                         ),
-                        onPressed: () {},
                       ),
                     ),
                     SizedBox(height: Get.height * 0.01),
                     Container(
                       height: Get.height * 0.06,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8),
-                        ),
-                        border: Border.all(
-                          color: Colors.black38,
-                        ),
-                      ),
-                      child: TextButton(
+                      child: GestureDetector(
+                        onTap: () {},
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            Container(
+                              height: Get.height * 0.042,
+                              width: Get.height * 0.042,
+                              decoration: BoxDecoration(
+                                color: Colors.orangeAccent,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(100),
+                                ),
+                                border: Border.all(color: Colors.orangeAccent),
+                              ),
+                              child: Icon(
+                                Icons.language,
+                                color: Colors.white,
+                                size: Get.height * 0.025,
+                              ),
+                            ),
                             Padding(
                               padding: EdgeInsets.only(
                                 left: Get.width * 0.02,
                               ),
                               child: Text(
-                                'Mudar de idioma',
-                                style: TextStyle(
-                                  fontFamily: AppFonts.poppinsRegularFont,
-                                  color: Colors.black,
-                                  fontSize: Get.height * 0.018,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                right: Get.width * 0.02,
-                              ),
-                              child: Text(
-                                'pt  >',
+                                'Mudar de Idioma',
                                 style: TextStyle(
                                   fontFamily: AppFonts.poppinsRegularFont,
                                   color: Colors.black,
@@ -349,25 +402,31 @@ class _StartPageState extends State<ProfilePage> {
                             ),
                           ],
                         ),
-                        onPressed: () {},
                       ),
                     ),
                     SizedBox(height: Get.height * 0.01),
                     Container(
                       height: Get.height * 0.06,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8),
-                        ),
-                        border: Border.all(
-                          color: Colors.black38,
-                        ),
-                      ),
-                      child: TextButton(
+                      child: GestureDetector(
+                        onTap: () {},
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            Container(
+                              height: Get.height * 0.042,
+                              width: Get.height * 0.042,
+                              decoration: BoxDecoration(
+                                color: Colors.lightGreen,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(100),
+                                ),
+                                border: Border.all(color: Colors.lightGreen),
+                              ),
+                              child: Icon(
+                                Icons.attach_money,
+                                color: Colors.white,
+                                size: Get.height * 0.025,
+                              ),
+                            ),
                             Padding(
                               padding: EdgeInsets.only(
                                 left: Get.width * 0.02,
@@ -381,73 +440,71 @@ class _StartPageState extends State<ProfilePage> {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                right: Get.width * 0.02,
-                              ),
-                              child: Text(
-                                'USD  >',
-                                style: TextStyle(
-                                  fontFamily: AppFonts.poppinsRegularFont,
-                                  color: Colors.black,
-                                  fontSize: Get.height * 0.018,
-                                ),
-                              ),
-                            ),
                           ],
                         ),
-                        onPressed: () {},
                       ),
                     ),
-                    SizedBox(height: Get.height * 0.01),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: new Container(
-                            width: Get.width * 0.1,
-                            child: Divider(
-                              color: Colors.black,
-                              height: 36,
+                    Padding(
+                      padding:EdgeInsets.only(left: Get.width * 0.05,
+                        right: Get.width * 0.05,),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: new Container(
+                              width: Get.width * 0.1,
+                              child: Divider(
+                                color: Colors.black,
+                                height: 36,
+                              ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: Get.width * 0.05,
-                            right: Get.width * 0.05,
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: Get.width * 0.05,
+                              right: Get.width * 0.05,
+                            ),
+                            child: Text("Informações"),
                           ),
-                          child: Text("Informações"),
-                        ),
-                        Expanded(
-                          child: Container(
-                            width: Get.width * 0.4,
-                            child: const Divider(
-                              color: Colors.black,
-                              height: 36,
+                          Expanded(
+                            child: Container(
+                              width: Get.width * 0.4,
+                              child: const Divider(
+                                color: Colors.black,
+                                height: 36,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     SizedBox(height: Get.height * 0.01),
                     Container(
                       height: Get.height * 0.06,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8),
-                        ),
-                        border: Border.all(
-                          color: Colors.black38,
-                        ),
-                      ),
-                      child: TextButton(
+                      child: GestureDetector(
+                        onTap: () {Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => InfoPage(),
+                          ),
+                        );},
                         child: Row(
                           children: [
-                            Icon(
-                              Icons.info,
-                              color: AppColors.greenColor,
-                              size: Get.height * 0.035,
+                            Container(
+                              height: Get.height * 0.042,
+                              width: Get.height * 0.042,
+                              decoration: BoxDecoration(
+                                color: Colors.deepPurpleAccent,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(100),
+                                ),
+                                border:
+                                    Border.all(color: Colors.deepPurpleAccent),
+                              ),
+                              child: Icon(
+                                Icons.info,
+                                color: Colors.white,
+                                size: Get.height * 0.025,
+                              ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(
@@ -464,42 +521,37 @@ class _StartPageState extends State<ProfilePage> {
                             ),
                           ],
                         ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => InfoPage(),
-                            ),
-                          );
-                        },
                       ),
                     ),
                     SizedBox(height: Get.height * 0.01),
                     Container(
                       height: Get.height * 0.06,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8),
-                        ),
-                        border: Border.all(
-                          color: Colors.black38,
-                        ),
-                      ),
-                      child: TextButton(
+                      child: GestureDetector(
+                        onTap: () {},
                         child: Row(
                           children: [
-                            Icon(
-                              Icons.phone,
-                              color: AppColors.greenColor,
-                              size: Get.height * 0.035,
+                            Container(
+                              height: Get.height * 0.042,
+                              width: Get.height * 0.042,
+                              decoration: BoxDecoration(
+                                color: Colors.teal,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(100),
+                                ),
+                                border: Border.all(color: Colors.teal),
+                              ),
+                              child: Icon(
+                                Icons.phone,
+                                color: Colors.white,
+                                size: Get.height * 0.025,
+                              ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(
                                 left: Get.width * 0.02,
                               ),
                               child: Text(
-                                'Contactos',
+                                'Contacto',
                                 style: TextStyle(
                                   fontFamily: AppFonts.poppinsRegularFont,
                                   color: Colors.black,
@@ -509,7 +561,46 @@ class _StartPageState extends State<ProfilePage> {
                             ),
                           ],
                         ),
-                        onPressed: () {},
+                      ),
+                    ),
+                    SizedBox(height: Get.height * 0.01),
+                    Container(
+                      height: Get.height * 0.06,
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Row(
+                          children: [
+                            Container(
+                              height: Get.height * 0.042,
+                              width: Get.height * 0.042,
+                              decoration: BoxDecoration(
+                                color: Colors.redAccent,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(100),
+                                ),
+                                border: Border.all(color: Colors.redAccent),
+                              ),
+                              child: Icon(
+                                Icons.logout,
+                                color: Colors.white,
+                                size: Get.height * 0.025,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: Get.width * 0.02,
+                              ),
+                              child: Text(
+                                'Terminar Sessão',
+                                style: TextStyle(
+                                  fontFamily: AppFonts.poppinsRegularFont,
+                                  color: Colors.black,
+                                  fontSize: Get.height * 0.018,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

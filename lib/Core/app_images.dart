@@ -39,4 +39,6 @@ class AppImages {
   static const filter = 'assets/images/filter.svg';
   static const cvmovel = 'assets/images/cvmovel.png';
   static const camara = 'assets/images/camara.png';
+  static const santiago = 'assets/images/santiago.png';
+
 }
