@@ -3,11 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_pw_validator/Resource/Strings.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
+import 'package:manda_bai/Model/user.dart';
 import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
-
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -19,13 +20,26 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final input_email = TextEditingController();
-  final input_numero = TextEditingController();
+  final input_nickname = TextEditingController();
   final input_username = TextEditingController();
   final input_senha = TextEditingController();
   final input_nome = TextEditingController();
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
+      User new_user = new User(
+          name: input_nome.text,
+          telefone: "0",
+          email: input_email.text,
+          senha: input_senha.text,
+          username: input_username.text,
+          nickname: input_nickname.text,
+          avatar: "");
+
+      bool check = await ServiceRequest.createAccount(new_user);
+      if (check == true) {
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {}
       print('Form is valid');
     } else {
       print('Form is invalid');
@@ -75,37 +89,60 @@ class _RegisterPageState extends State<RegisterPage> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    TextFormField(
-                      controller: input_nome,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(35.0),
-                          borderSide: new BorderSide(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: Get.width * 0.43,
+                          child: TextFormField(
+                            controller: input_nome,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              filled: false,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(35.0),
+                                borderSide: new BorderSide(),
+                              ),
+                              labelText: 'Nome',
+                              labelStyle: TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            validator: (value) =>
+                                value!.isEmpty ? 'Insira o Nome' : null,
+                          ),
                         ),
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(0.0),
-                          child: Icon(
-                            Icons.person,
-                            color: Colors.grey,
-                          ), // icon is 48px widget.
+                        SizedBox(
+                          width: Get.width * 0.43,
+                          child: TextFormField(
+                            controller: input_nickname,
+                            autocorrect: false,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              filled: false,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(35.0),
+                                borderSide: new BorderSide(),
+                              ),
+                              labelText: 'Apelido',
+                              labelStyle: TextStyle(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            validator: (value) =>
+                                value!.isEmpty ? 'Insira o Apelido' : null,
+                          ),
                         ),
-                        labelText: 'Nome',
-                        labelStyle: TextStyle(
-                          color: Colors.grey,
-                        ),
-                      ),
-                      validator: (value) =>
-                          value!.isEmpty ? 'Insira o Nome' : null,
+                      ],
                     ),
                     SizedBox(height: Get.height * 0.01),
                     TextFormField(
                       controller: input_email,
                       obscureText: false,
                       decoration: InputDecoration(
-                        filled: true,
+                        filled: false,
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
                           borderRadius: new BorderRadius.circular(35.0),
@@ -128,38 +165,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     SizedBox(height: Get.height * 0.01),
                     TextFormField(
-                      keyboardType: TextInputType.phone,
-                      controller: input_numero,
-                      autocorrect: false,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(35.0),
-                          borderSide: new BorderSide(),
-                        ),
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(0.0),
-                          child: Icon(
-                            Icons.phone,
-                            color: Colors.grey,
-                          ), // icon is 48px widget.
-                        ),
-                        labelText: 'Telefone',
-                        labelStyle: TextStyle(
-                          color: Colors.grey,
-                        ),
-                      ),
-                      validator: (value) =>
-                          value!.isEmpty ? 'Insira o Número' : null,
-                    ),
-                    SizedBox(height: Get.height * 0.01),
-                    TextFormField(
                       controller: input_username,
                       obscureText: false,
                       decoration: InputDecoration(
-                        filled: true,
+                        filled: false,
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
                           borderRadius: new BorderRadius.circular(35.0),
@@ -185,7 +194,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       controller: input_senha,
                       obscureText: true,
                       decoration: InputDecoration(
-                        filled: true,
+                        filled: false,
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
                           borderRadius: new BorderRadius.circular(35.0),
@@ -208,21 +217,20 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     SizedBox(height: Get.height * 0.005),
                     FlutterPwValidator(
-                    controller: input_senha,
-                    minLength: 8,
-                    uppercaseCharCount: 1,
-                    numericCharCount: 2,
-                    specialCharCount: 1,
-                    width: 400,
-                    height: 150,
-                 //   strings:FrenchStrings(),
-                    onSuccess: () {
-                      print("Matched");
-                      Scaffold.of(context).showSnackBar(new SnackBar(
-                          content: new Text("Password is matched")));
-                    },
-                  ),
-                   
+                      controller: input_senha,
+                      minLength: 8,
+                      uppercaseCharCount: 1,
+                      numericCharCount: 2,
+                      specialCharCount: 1,
+                      width: 400,
+                      height: 150,
+                      //   strings:FrenchStrings(),
+                      onSuccess: () {
+                        print("Matched");
+                        Scaffold.of(context).showSnackBar(new SnackBar(
+                            content: new Text("Password is matched")));
+                      },
+                    ),
                     SizedBox(
                       height: Get.height * 0.02,
                     ),
@@ -266,6 +274,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 }
+
 class FrenchStrings implements FlutterPwValidatorStrings {
   @override
   final String atLeast = 'Au moins - caractères';

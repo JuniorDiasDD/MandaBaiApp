@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
@@ -23,23 +25,23 @@ class _StartPageState extends State<ProfilePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    user = new User(
-        name: "Júnior",
-        telefone: "9123456",
-        email: "junior@gmail.com",
-        senha: "12344",
-        username: "junior39");
+  }
+
+  Future _carregarUser() async {
+    bool check = await ServiceRequest.GetUser();
+    if (check == false) {
+      return null;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return  WillPopScope(
-        onWillPop: () {
-          return new Future(() => false);
-        },
-          child: Scaffold(
+    return WillPopScope(
+      onWillPop: () {
+        return new Future(() => false);
+      },
+      child: Scaffold(
         appBar: AppBar(
-          // backgroundColor: Colors.white,
           title: Text(
             "Minha Conta",
             style: TextStyle(
@@ -53,26 +55,43 @@ class _StartPageState extends State<ProfilePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(height: Get.height * 0.03),
-              Image.asset(
-                AppImages.icone_user,
-                width: Get.width * 0.2,
-                // height: Get.height * 0.2,
-                alignment: Alignment.center,
-              ),
-              SizedBox(height: Get.height * 0.03),
-              Text(
-                user.name,
-                style: TextStyle(
-                  fontFamily: AppFonts.poppinsBoldFont,
-                  fontSize: 14,
-                ),
-              ),
-              Text(
-                user.email,
-                style: TextStyle(
-                  fontFamily: AppFonts.poppinsRegularFont,
-                  fontSize: 12,
-                ),
+              FutureBuilder(
+                future: _carregarUser(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (ConnectionState.waiting == true) {
+                    return Container(
+                      child: Text(
+                        "Loading...",
+                      ),
+                    );
+                  }else {
+                    return Column(
+                      children: [
+                        Image.network(
+                          user.avatar,
+                          width: Get.width * 0.2,
+                          // height: Get.height * 0.2,
+                          alignment: Alignment.center,
+                        ),
+                        SizedBox(height: Get.height * 0.03),
+                        Text(
+                          user.name,
+                          style: TextStyle(
+                            fontFamily: AppFonts.poppinsBoldFont,
+                            fontSize: 14,
+                          ),
+                        ),
+                        Text(
+                          user.email,
+                          style: TextStyle(
+                            fontFamily: AppFonts.poppinsRegularFont,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                },
               ),
               SizedBox(height: Get.height * 0.05),
               Padding(
@@ -206,10 +225,7 @@ class _StartPageState extends State<ProfilePage> {
                             ),
                           ],
                         ),
-                        onPressed: () {
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/login', (Route<dynamic> route) => false);
-                        },
+                        onPressed: () => _terminarSessao(),
                       ),
                     ),
                     SizedBox(height: Get.height * 0.01),
@@ -505,5 +521,12 @@ class _StartPageState extends State<ProfilePage> {
         ),
       ),
     );
+  }
+
+  _terminarSessao() async {
+    var session = FlutterSession();
+    await session.set('id', "null");
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
   }
 }

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/authention/pages/recovery_password_page.dart';
 import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
-
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -24,8 +24,13 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
-          Navigator.pushReplacementNamed(context, '/home');
-      print('Form is valid');
+      var check =
+      await ServiceRequest.login(input_username.text, input_senha.text);
+      if (check == true) {
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {}
+
+      //print('Form is valid');
     } else {
       print('Form is invalid');
     }
@@ -105,30 +110,30 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       SizedBox(height: Get.height * 0.01),
                       TextFormField(
-                      controller: input_senha,
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(35.0),
-                          borderSide: new BorderSide(),
-                        ),
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(0.0),
-                          child: Icon(
-                            Icons.lock,
+                        controller: input_senha,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(35.0),
+                            borderSide: new BorderSide(),
+                          ),
+                          prefixIcon: Padding(
+                            padding: EdgeInsets.all(0.0),
+                            child: Icon(
+                              Icons.lock,
+                              color: Colors.grey,
+                            ), // icon is 48px widget.
+                          ),
+                          labelText: 'Palavra-passe',
+                          labelStyle: TextStyle(
                             color: Colors.grey,
-                          ), // icon is 48px widget.
+                          ),
                         ),
-                        labelText: 'Palavra-passe',
-                        labelStyle: TextStyle(
-                          color: Colors.grey,
-                        ),
+                        validator: (value) =>
+                            value!.isEmpty ? 'Insira a senha' : null,
                       ),
-                      validator: (value) =>
-                          value!.isEmpty ? 'Insira a senha' : null,
-                    ),
                       Align(
                         alignment: Alignment.topLeft,
                         child: TextButton(
@@ -202,7 +207,7 @@ class _LoginPageState extends State<LoginPage> {
                               textStyle: TextStyle(fontSize: Get.width * 0.03),
                             ),
                             onPressed: () {
-                               Navigator.pushNamed(context, '/register');
+                              Navigator.pushNamed(context, '/register');
                             },
                             child: const Text(
                               'Registar agora',

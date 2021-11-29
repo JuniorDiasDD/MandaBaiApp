@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> _onItemTapped(int index) async {
    
       if (index == 3){
-        var check = await FlutterSession().get('username');
+        var check = await FlutterSession().get('id');
         if (check == 'null' || check == null) {
           showDialog(
               context: context,
@@ -67,8 +67,8 @@ class _HomePageState extends State<HomePage> {
             label: 'Favoritos',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outlined),
-            label: 'Perfil',
+            icon: Icon(Icons.line_weight),
+            label: 'Mais',
           ),
         ],
         currentIndex: _selectedIndex,

@@ -76,12 +76,7 @@ class _StartPageState extends State<StartPage> {
   @override
   void initState() {
     super.initState();
-    user = new User(
-        name: "Júnior",
-        telefone: "9123456",
-        email: "junior@gmail.com",
-        senha: "12344",
-        username: "junior39");
+   
   }
 
   @override
