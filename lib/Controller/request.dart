@@ -95,7 +95,7 @@ class ServiceRequest {
     var response = await http.post(Uri.parse(request_login),
         body: {'username': username, 'password': password});
     final jsonResponse = json.decode(response.body);
-   // print(response.body);
+    print(response.body);
     if (response.statusCode == 200) {
       var session = FlutterSession();
       await session.set('id', jsonResponse["user_id"]);

@@ -230,10 +230,8 @@ class _StartPageState extends State<StartPage> {
                     } else {
                       return Container(
                         height: Get.height * 0.5,
-
-
-
                         child: ListView.builder(
+                          padding: EdgeInsets.only(top:0.0,bottom: Get.height*0.08,),
                           scrollDirection: Axis.vertical,
                           itemCount: snapshot.data.length,
                           itemBuilder: (BuildContext context, index) {

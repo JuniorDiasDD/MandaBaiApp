@@ -22,7 +22,7 @@ class _ListViewItemComponentState extends State<ListViewItemComponent> {
       padding: EdgeInsets.only(
         left: Get.width * 0.03,
         right: Get.width * 0.03,
-        bottom: Get.height * 0.06,
+        bottom: Get.height * 0.03,
       ),
       child: Container(
         alignment: Alignment.topLeft,
