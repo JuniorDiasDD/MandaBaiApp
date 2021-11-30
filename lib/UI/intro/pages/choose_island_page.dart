@@ -21,6 +21,17 @@ class ChooseIsland extends StatefulWidget {
 
 class _ChooseIslandState extends State<ChooseIsland> {
   String dropdownValue = 'Santiago';
+  List<String> list_island = [
+    'Santo Antão',
+    'São Vicente',
+    'São Nicolau',
+    'Sal',
+    'Boavista',
+    'Maio',
+    'Santiago',
+    'Fogo',
+    'Brava',
+  ];
   @override
   Widget build(BuildContext context) {
     var child;
@@ -60,32 +71,56 @@ class _ChooseIslandState extends State<ChooseIsland> {
             ),
           ),
           SizedBox(height: Get.height * 0.05),
-          Padding(
-            padding: EdgeInsets.only(
-              left: Get.width * 0.05,
-              right: Get.width * 0.05,
+          Container(
+            width: Get.width,
+            height: Get.height * 0.06,
+            margin: EdgeInsets.only(
+              left: Get.width * 0.04,
+              right: Get.width * 0.04,
             ),
-            child: DropdownSearch<String>(
-              dropdownSearchDecoration: const InputDecoration(
-                hintText: "Selecionar Ilha",
-                contentPadding: EdgeInsets.fromLTRB(12, 12, 0, 0),
-                border: OutlineInputBorder(),
+            padding: EdgeInsets.only(
+              left: Get.width * 0.04,
+              right: Get.width * 0.04,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15.0),
+              border: Border.all(
+                  color: Colors.black38, style: BorderStyle.solid, width: 0.80),
+            ),
+            child: DropdownButton<String>(
+              value: dropdownValue,
+              icon: const Icon(
+                Icons.arrow_drop_down,
               ),
-              mode: Mode.DIALOG,
-              showSelectedItems: false,
-              dropdownSearchBaseStyle:
-                  const TextStyle(fontFamily: AppFonts.poppinsRegularFont),
-              items: const [
-                'Santo Antão',
-                'São Vicente',
-                'São Nicolau',
-                'Sal',
-                'Boavista',
-                'Maio',
-                'Santiago',
-                'Fogo',
-                'Brava',
-              ],
+              iconSize: Get.width * 0.05,
+              elevation: 16,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: Get.width * 0.04,
+              ),
+              borderRadius: BorderRadius.circular(15.0),
+              underline: Container(
+                height: 0,
+                color: Colors.transparent,
+              ),
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownValue = newValue!;
+                });
+              },
+              items: list_island.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(
+                    value,
+                    style: TextStyle(
+                      fontFamily: AppFonts.poppinsRegularFont,
+                      color: Colors.black,
+                      fontSize: Get.width * 0.04,
+                    ),
+                  ),
+                );
+              }).toList(),
             ),
           ),
           SizedBox(height: Get.height * 0.2),
@@ -118,8 +153,10 @@ class _ChooseIslandState extends State<ChooseIsland> {
   }
 
   _navigacao() async {
-    var session = FlutterSession();
+   // print(dropdownValue);
+     var session = FlutterSession();
     await session.set('onboarding', true);
+    await session.set('island', dropdownValue);
     Navigator.pushReplacementNamed(context, '/home');
   }
 }

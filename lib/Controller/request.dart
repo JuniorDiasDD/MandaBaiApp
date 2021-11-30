@@ -10,16 +10,34 @@ class ServiceRequest {
   // ! Load Category
   static Future<List<Category>> loadCategory() async {
     List<Category> list = [];
+    List<Category> list_final = [];
     var response = await http.get(Uri.parse(categorias));
-    final jsonResponse = json.decode(response.body);
-    // print(response.body);
+    var jsonResponse = json.decode(response.body);
+    //print(response.headers['x-wp-totalpages']);
     if (response.statusCode == 200) {
-      final _cats = jsonResponse.cast<Map<String, dynamic>>();
-      list = _cats.map<Category>((cat) => Category.fromJson(cat)).toList();
+      var quantidade = response.headers['x-wp-total'];
+      response = await http
+          .get(Uri.parse(categorias + "&per_page=" + quantidade.toString()));
+      jsonResponse = json.decode(response.body);
+      if (response.statusCode == 200) {
+      //  print(response.headers['x-wp-totalpages']);
+        final _cats = jsonResponse.cast<Map<String, dynamic>>();
+        list = _cats.map<Category>((cat) => Category.fromJson(cat)).toList();
+        var island = await FlutterSession().get('island');
+        for (var i = 0; i < list.length; i++) {
+          if (list[i].name.contains(island) == true) {
+            var name = list[i].name.split(" / ");
+            list[i].name = name[0];
+            list_final.add(list[i]);
+          }
+        }
+      } else {
+        print("Erro 2");
+      }
     } else {
       print("Erro de autenticação");
     }
-    return list;
+    return list_final;
   }
 
   //! Load Products
@@ -28,7 +46,7 @@ class ServiceRequest {
     List<Product> list = [];
     var response = await http.get(Uri.parse(productCategorias + id.toString()));
     final jsonResponse = json.decode(response.body);
-  //  print(response.body);
+    //  print(response.body);
     if (response.statusCode == 200) {
       final _cats = jsonResponse.cast<Map<String, dynamic>>();
       list = _cats.map<Product>((cat) => Product.fromJson(cat)).toList();
@@ -78,7 +96,7 @@ class ServiceRequest {
     var response = await http.post(Uri.parse(register_client),
         headers: headers, body: data);
 
-  //  print(response.body);
+    //  print(response.body);
     //  print(response.statusCode);
     if (response.statusCode == 201) {
       final jsonResponse = json.decode(response.body);
@@ -112,9 +130,9 @@ class ServiceRequest {
     var response = await http.post(Uri.parse(
       getUser + id.toString() + "?" + key,
     ));
-   // print(getUser + id.toString() + "?" + key);
+    // print(getUser + id.toString() + "?" + key);
     final jsonResponse = json.decode(response.body);
-   // print(response.body);
+    // print(response.body);
     if (response.statusCode == 200) {
       user.name = jsonResponse["first_name"];
       user.email = jsonResponse["email"];
@@ -123,7 +141,7 @@ class ServiceRequest {
       user.avatar = jsonResponse["avatar_url"];
       user.telefone = jsonResponse["billing"]["phone"];
       return true;
-    }else{
+    } else {
       return false;
     }
   }
