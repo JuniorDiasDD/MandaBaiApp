@@ -202,7 +202,7 @@ class _StartPageState extends State<StartPage> {
                         ),
                       ),
                     ),
-                    Padding(
+                  /*  Padding(
                       padding: EdgeInsets.only(top: Get.height * 0.01),
                       child: TextButton(
                         style: TextButton.styleFrom(
@@ -224,7 +224,7 @@ class _StartPageState extends State<StartPage> {
                           ),
                         ),
                       ),
-                    ),
+                    ),*/
                   ],
                 ),
                 FutureBuilder(
@@ -245,49 +245,7 @@ class _StartPageState extends State<StartPage> {
                           itemBuilder: (BuildContext context, index) {
                             var list = list_category[index];
                             return ListViewItemComponent(category: list);
-                            /*return Padding(
-                              padding: EdgeInsets.only(
-                                left: Get.width * 0.023,
-                                bottom: Get.width * 0.01,
-                              ),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: AppColors.greenColor, width: 1.0),
-                                  color:Theme.of(context).scaffoldBackgroundColor,
-                                  borderRadius: BorderRadius.circular(12),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey,
-                                      blurRadius: 1.0,
-                                      spreadRadius: 0.0,
-                                      offset: Offset(1,
-                                          1), 
-                                    ),
-                                  ],
-                                ),
-                                width: Get.width * 0.3,
-                                height: Get.height * 0.1,
-                                child: TextButton(
-                                  onPressed: () {
-                              
-                                    setState(() {
-                                      categoryId = list.id;
-                                      carregarProdutos();
-                                    });
-                                  },
-                                  child: Text(
-                                    list.name,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontFamily: AppFonts.poppinsRegularFont,
-                                      fontSize: Get.height * 0.013,
-                                      color: AppColors.greenColor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            );*/
+                           
                           },
                         ),
                       );
