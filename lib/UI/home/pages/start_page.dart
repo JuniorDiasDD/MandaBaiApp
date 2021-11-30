@@ -13,6 +13,7 @@ import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/Model/user.dart';
 import 'package:manda_bai/UI/category_filter/pages/category_page.dart';
 import 'package:manda_bai/UI/home/components/header.dart';
+import 'package:manda_bai/UI/home/components/item_category.dart';
 import 'package:manda_bai/UI/home/components/item_new.dart';
 import 'package:manda_bai/UI/home/components/menu.dart';
 import 'package:manda_bai/UI/home/components/product_list_component.dart';
@@ -113,6 +114,7 @@ class _StartPageState extends State<StartPage> {
                                 item,
                                 fit: BoxFit.cover,
                                 width: Get.width,
+                                height: Get.height * 0.25,
                               ),
                             ),
                           )
@@ -227,14 +229,17 @@ class _StartPageState extends State<StartPage> {
                       return Container();
                     } else {
                       return Container(
-                        height: Get.height * 0.05,
+                        height: Get.height * 0.5,
+
+
+
                         child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
+                          scrollDirection: Axis.vertical,
                           itemCount: snapshot.data.length,
                           itemBuilder: (BuildContext context, index) {
                             var list = list_category[index];
-                            // return ListViewItemComponent(category: list);
-                            return Padding(
+                             return ListViewItemComponent(category: list);
+                            /*return Padding(
                               padding: EdgeInsets.only(
                                 left: Get.width * 0.023,
                                 bottom: Get.width * 0.01,
@@ -276,7 +281,7 @@ class _StartPageState extends State<StartPage> {
                                   ),
                                 ),
                               ),
-                            );
+                            );*/
                           },
                         ),
                       );
@@ -284,7 +289,7 @@ class _StartPageState extends State<StartPage> {
                   },
                 ),
 
-                Align(
+                /*Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
                     padding: EdgeInsets.only(
@@ -352,7 +357,7 @@ class _StartPageState extends State<StartPage> {
                       );
                     }
                   },
-                ),
+                ),*/
               ],
             ),
           ),

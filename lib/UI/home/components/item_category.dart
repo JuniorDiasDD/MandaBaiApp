@@ -20,14 +20,15 @@ class _ListViewItemComponentState extends State<ListViewItemComponent> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        left: Get.width * 0.023,
-        bottom: Get.width * 0.01,
+        left: Get.width * 0.03,
+        right: Get.width * 0.03,
+        bottom: Get.height * 0.06,
       ),
       child: Container(
+        alignment: Alignment.topLeft,
         decoration: BoxDecoration(
-          border: Border.all(color: AppColors.greenColor, width: 1.0),
-         color:Theme.of(context).scaffoldBackgroundColor,
-          borderRadius: BorderRadius.circular(12),
+          color: Theme.of(context).dialogBackgroundColor,
+          borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
               color: Colors.grey,
@@ -36,28 +37,37 @@ class _ListViewItemComponentState extends State<ListViewItemComponent> {
               offset: Offset(0.5, 0.5), // changes position of shadow
             ),
           ],
+          image: new DecorationImage(
+            fit: BoxFit.fill,
+            image: NetworkImage(
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSstt-VUp5wyfJwhGxRcerVunK9mHR0QIf5RQ&usqp=CAU'),
+          ),
         ),
-        width: Get.width * 0.3,
-        height: Get.height * 0.1,
+        width: Get.width,
+        height: Get.height * 0.2,
         child: TextButton(
           onPressed: () {
-           // StartPage.categoryId=widget.category.id;
-          //  StartPage.carregarProdutos;
+            // StartPage.categoryId=widget.category.id;
+            //  StartPage.carregarProdutos;
             print("aqui2");
-           /* Navigator.push(
+            /* Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => const CategoryPage(),
               ),
             );*/
           },
-          child: Text(
-            widget.category.name,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontFamily: AppFonts.poppinsRegularFont,
-              fontSize: Get.height * 0.013,
-              color: AppColors.greenColor,
+          child: Padding(
+            padding:
+                EdgeInsets.only(left: Get.width * 0.01, top: Get.height * 0.14),
+            child: Text(
+              widget.category.name,
+              textAlign: TextAlign.start,
+              style: TextStyle(
+                fontFamily: AppFonts.poppinsBoldFont,
+                fontSize: Get.height * 0.026,
+                color: Colors.white,
+              ),
             ),
           ),
         ),
