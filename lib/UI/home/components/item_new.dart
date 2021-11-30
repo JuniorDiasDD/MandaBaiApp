@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/UI/home/components/carrega_saldo.dart';
+import 'package:manda_bai/UI/home/components/pop_up_message.dart';
 
 class ItemNew extends StatefulWidget {
   String image, title;
@@ -31,13 +32,18 @@ class _ItemNewState extends State<ItemNew> {
                 return Carrega_Saldo();
               });
         }else if(widget.title=="Serviços da Câmara"){
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Pop_up_Message();
+              });
 
         }
       },
       child: Padding(
         padding: EdgeInsets.only(
           left: Get.width * 0.023,
-          top: Get.height * 0.009,
+          top: Get.height * 0.014,
           bottom: Get.height * 0.005,
         ),
         child: Container(
@@ -61,8 +67,8 @@ class _ItemNewState extends State<ItemNew> {
               children: [
                 Image.asset(
                   widget.image,
-                  width: Get.width * 0.2,
-                  height: Get.width * 0.2,
+                  width: Get.width * 0.15,
+                  height: Get.width * 0.15,
                 ),
                 SizedBox(
                   height: Get.height * 0.01,

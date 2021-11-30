@@ -77,7 +77,6 @@ class _StartPageState extends State<StartPage> {
   @override
   void initState() {
     super.initState();
-   
   }
 
   @override
@@ -89,11 +88,11 @@ class _StartPageState extends State<StartPage> {
           return new Future(() => false);
         },
         child: Scaffold(
-         /* appBar: AppBar(
-  
+          /* appBar: AppBar(
+
             title: Header(title: 'MandaBai'),
           ),*/
-        //  drawer: Menu(),
+          //  drawer: Menu(),
           body: SingleChildScrollView(
             child: Column(
               children: [
@@ -122,15 +121,16 @@ class _StartPageState extends State<StartPage> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                        left: Get.width * 0.07,
-                        top: Get.height * 0.235,
+                        left: Get.width * 0.05,
+                        right: Get.width * 0.05,
+                        top: Get.height * 0.255,
                       ),
                       child: Container(
                         width: 350,
                         height: Get.height * 0.05,
                         decoration: new BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                        color: Theme.of(context).bottomAppBarColor,
+                          color: Theme.of(context).bottomAppBarColor,
                         ),
                         child: const TextField(
                           cursorColor: AppColors.greenColor,
@@ -166,22 +166,26 @@ class _StartPageState extends State<StartPage> {
                   child: Padding(
                     padding: EdgeInsets.only(
                         top: Get.height * 0.01, left: Get.width * 0.02),
-                    child: const Text(
+                    child:  Text(
                       'Novos Serviços',
                       style: TextStyle(
                         fontFamily: AppFonts.poppinsBoldFont,
-                        fontSize: 15,
+                        fontSize: Get.width * 0.042,
+
                       ),
                     ),
                   ),
                 ),
                 Container(
                   height: Get.height * 0.15,
-                  child: ListView(scrollDirection: Axis.horizontal, children: [
-                    ItemNew(image: AppImages.cvmovel, title: "Saldo CvMovel"),
-                    ItemNew(
-                        image: AppImages.camara, title: "Serviços da Câmara"),
-                  ],),
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      ItemNew(image: AppImages.cvmovel, title: "Saldo CvMovel"),
+                      ItemNew(
+                          image: AppImages.camara, title: "Serviços da Câmara"),
+                    ],
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -189,11 +193,12 @@ class _StartPageState extends State<StartPage> {
                     Container(
                       padding: EdgeInsets.only(
                           top: Get.height * 0.01, left: Get.width * 0.023),
-                      child: const Text(
+                      child:  Text(
                         'Categorias',
                         style: TextStyle(
                           fontFamily: AppFonts.poppinsBoldFont,
-                          fontSize: 15,
+                          fontSize: Get.width * 0.042,
+
                         ),
                       ),
                     ),
@@ -211,11 +216,11 @@ class _StartPageState extends State<StartPage> {
                             builder: (context) => const CategoryPage(),
                           ),
                         ),
-                        child: const Text(
+                        child: Text(
                           'Ver Todas',
                           style: TextStyle(
                             fontFamily: AppFonts.poppinsBoldFont,
-                            fontSize: 15,
+                            fontSize: Get.width * 0.035,
                           ),
                         ),
                       ),
@@ -231,12 +236,15 @@ class _StartPageState extends State<StartPage> {
                       return Container(
                         height: Get.height * 0.5,
                         child: ListView.builder(
-                          padding: EdgeInsets.only(top:0.0,bottom: Get.height*0.08,),
+                          padding: EdgeInsets.only(
+                            top: 0.0,
+                            bottom: Get.height * 0.03,
+                          ),
                           scrollDirection: Axis.vertical,
                           itemCount: snapshot.data.length,
                           itemBuilder: (BuildContext context, index) {
                             var list = list_category[index];
-                             return ListViewItemComponent(category: list);
+                            return ListViewItemComponent(category: list);
                             /*return Padding(
                               padding: EdgeInsets.only(
                                 left: Get.width * 0.023,

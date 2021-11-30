@@ -67,6 +67,7 @@ class _ListViewItemComponentState extends State<ListViewItemComponent> {
                 fontFamily: AppFonts.poppinsBoldFont,
                 fontSize: Get.height * 0.026,
                 color: Colors.white,
+                backgroundColor: Colors.black26,
               ),
             ),
           ),
