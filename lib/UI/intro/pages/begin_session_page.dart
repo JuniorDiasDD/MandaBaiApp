@@ -55,7 +55,7 @@ class _BeginSessionState extends State<BeginSession> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HomePage()),
+                MaterialPageRoute(builder: (context) => HomePage(index:0)),
               );
             },
             child: const Text(

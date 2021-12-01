@@ -7,17 +7,17 @@ import 'package:manda_bai/UI/cart/pages/cart_page.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
 import 'package:manda_bai/UI/home/pages/start_page.dart';
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
+  int index;
+  HomePage({required this.index});
   @override
   State<HomePage> createState() => _HomePageState();
 }
-
-/// This is the private State class that goes with MyStatefulWidget.
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
+
   static  List<Widget> _widgetOptions = <Widget>[
     StartPage(),
     CartPage(),
@@ -44,7 +44,14 @@ class _HomePageState extends State<HomePage> {
 
   
   }
-
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState((){
+      _selectedIndex=widget.index;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

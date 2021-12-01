@@ -34,7 +34,7 @@ class App extends StatelessWidget {
         '/': (context) => SplashPage(),
         '/login': (context) => LoginPage(),
         '/register': (context) => RegisterPage(),
-        '/home': (context) => HomePage(),
+        '/home': (context) => HomePage(index:0),
        //// '/solicitacao': (context) => PageSolicitacao(),
        // '/gestaoPagamentoo': (context) => PageStartPayments(),
        // '/servicos': (context) => PageServicos(),

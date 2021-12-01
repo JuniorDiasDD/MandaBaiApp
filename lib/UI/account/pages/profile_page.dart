@@ -24,20 +24,26 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _StartPageState extends State<ProfilePage> {
-  String check ="";
+  String check = "";
   @override
-   initState(){
+  initState() {
     // TODO: implement initState
     super.initState();
+  }
 
-
+  String island = "";
+  Future _carregarIsland() async {
+    island = await FlutterSession().get('island');
+    return island;
   }
 
   Future _carregarUser() async {
     bool check = await ServiceRequest.GetUser();
+
     if (check == false) {
       return null;
     }
+    return check;
   }
 
   @override
@@ -64,10 +70,17 @@ class _StartPageState extends State<ProfilePage> {
               FutureBuilder(
                 future: _carregarUser(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (ConnectionState.waiting == true) {
+                  if (!snapshot.hasData) {
                     return Container(
-                      child: Text(
-                        "Loading...",
+                      height: Get.height * 0.1,
+                      width: Get.width,
+                      child: Center(
+                        child: Image.asset(
+                          AppImages.loading,
+                          width: Get.width * 0.1,
+                          height: Get.height * 0.1,
+                          alignment: Alignment.center,
+                        ),
                       ),
                     );
                   } else {
@@ -154,8 +167,10 @@ class _StartPageState extends State<ProfilePage> {
               ),
               SizedBox(height: Get.height * 0.01),
               Padding(
-                padding:  EdgeInsets.only(left: Get.width * 0.05,
-                  right: Get.width * 0.05,),
+                padding: EdgeInsets.only(
+                  left: Get.width * 0.05,
+                  right: Get.width * 0.05,
+                ),
                 child: Row(
                   children: <Widget>[
                     Expanded(
@@ -289,8 +304,10 @@ class _StartPageState extends State<ProfilePage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: Get.width * 0.05,
-                  right: Get.width * 0.05,),
+                padding: EdgeInsets.only(
+                  left: Get.width * 0.05,
+                  right: Get.width * 0.05,
+                ),
                 child: Row(
                   children: <Widget>[
                     Expanded(
@@ -337,7 +354,6 @@ class _StartPageState extends State<ProfilePage> {
                               builder: (BuildContext context) {
                                 return Popup_Island();
                               });
-
                         },
                         child: Row(
                           children: [
@@ -363,13 +379,35 @@ class _StartPageState extends State<ProfilePage> {
                               padding: EdgeInsets.only(
                                 left: Get.width * 0.02,
                               ),
-                              child: Text(
-                                'Mudar de ILha ('+check+')',
-                                style: TextStyle(
-                                  fontFamily: AppFonts.poppinsRegularFont,
-                                  color: Colors.black,
-                                  fontSize: Get.height * 0.018,
-                                ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Mudar de ILha',
+                                    style: TextStyle(
+                                      fontFamily: AppFonts.poppinsRegularFont,
+                                      color: Colors.black,
+                                      fontSize: Get.height * 0.018,
+                                    ),
+                                  ),
+                                  FutureBuilder(
+                                      future: _carregarIsland(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot snapshot) {
+                                        if (snapshot.data == null) {
+                                          return Text(" ");
+                                        } else {
+                                          return Text(
+                                            '(' + island + ')',
+                                            style: TextStyle(
+                                              fontFamily:
+                                                  AppFonts.poppinsRegularFont,
+                                              color: Colors.black,
+                                              fontSize: Get.height * 0.018,
+                                            ),
+                                          );
+                                        }
+                                      }),
+                                ],
                               ),
                             ),
                           ],
@@ -463,8 +501,10 @@ class _StartPageState extends State<ProfilePage> {
                       ),
                     ),
                     Padding(
-                      padding:EdgeInsets.only(left: Get.width * 0.05,
-                        right: Get.width * 0.05,),
+                      padding: EdgeInsets.only(
+                        left: Get.width * 0.05,
+                        right: Get.width * 0.05,
+                      ),
                       child: Row(
                         children: <Widget>[
                           Expanded(
@@ -499,12 +539,14 @@ class _StartPageState extends State<ProfilePage> {
                     Container(
                       height: Get.height * 0.06,
                       child: GestureDetector(
-                        onTap: () {Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => InfoPage(),
-                          ),
-                        );},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => InfoPage(),
+                            ),
+                          );
+                        },
                         child: Row(
                           children: [
                             Container(
