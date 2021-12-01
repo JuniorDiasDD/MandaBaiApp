@@ -15,7 +15,7 @@ class Popup_Island extends StatefulWidget {
 }
 
 class _Popup_IslandState extends State<Popup_Island> {
-  String _isRadioSelected = "";
+  String _isRadioSelected = "Santiago";
   @override
   Widget build(BuildContext context) {
     return Scaffold(

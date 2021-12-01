@@ -12,7 +12,7 @@ class Popup_Moeda extends StatefulWidget {
 }
 
 class _Popup_MoedaState extends State<Popup_Moeda> {
-  String _isRadioSelected = "";
+  String _isRadioSelected = "Euro";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,18 +51,18 @@ class _Popup_MoedaState extends State<Popup_Moeda> {
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: Text(
-                      "Santo Antão",
+                      "Euro",
                       style: TextStyle(
                         fontFamily: AppFonts.poppinsRegularFont,
                       ),
                     ),
                   ),
                   Radio(
-                    value: "Santo Antão",
+                    value: "Euro",
                     groupValue: _isRadioSelected,
                     onChanged: (value) {
                       setState(() {
-                        _isRadioSelected = "Santo Antão";
+                        _isRadioSelected = "Euro";
                       });
                     },
                     activeColor: Colors.green,
@@ -75,18 +75,18 @@ class _Popup_MoedaState extends State<Popup_Moeda> {
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: Text(
-                      "São Vicente",
+                      "Escudos",
                       style: TextStyle(
                         fontFamily: AppFonts.poppinsRegularFont,
                       ),
                     ),
                   ),
                   Radio(
-                    value: "São Vicente",
+                    value: "Escudos",
                     groupValue: _isRadioSelected,
                     onChanged: (value) {
                       setState(() {
-                        _isRadioSelected = "São Vicente";
+                        _isRadioSelected = "Escudos";
                       });
                     },
                     activeColor: Colors.green,
@@ -99,18 +99,18 @@ class _Popup_MoedaState extends State<Popup_Moeda> {
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: Text(
-                      "São Nicolau",
+                      "Dólar",
                       style: TextStyle(
                         fontFamily: AppFonts.poppinsRegularFont,
                       ),
                     ),
                   ),
                   Radio(
-                    value: "São Nicolau",
+                    value: "Dólar",
                     groupValue: _isRadioSelected,
                     onChanged: (value) {
                       setState(() {
-                        _isRadioSelected = "São Nicolau";
+                        _isRadioSelected = "Dólar";
                       });
                     },
                     activeColor: Colors.green,
