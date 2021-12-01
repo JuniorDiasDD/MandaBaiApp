@@ -46,3 +46,7 @@ const String request_login = link_2 + "login";
 
 //! Get User
 const String getUser = link + "customers/";
+
+
+//! Cart
+const String getCart = link_2 + "cart";

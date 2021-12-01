@@ -8,16 +8,9 @@ import 'package:manda_bai/Model/cart_model.dart';
 
 class ItemCart extends StatefulWidget {
   final CartPageController cartPageController = Get.find();
-  final String name, image;
-  double price;
-  int amount;
-  int id;
+ CartModel cartModel;
   ItemCart(
-      {required this.id,
-      required this.name,
-      required this.image,
-      required this.amount,
-      required this.price});
+      {required this.cartModel});
 
   @override
   _ItemCartState createState() => _ItemCartState();
@@ -50,8 +43,8 @@ class _ItemCartState extends State<ItemCart> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(
-              widget.image,
+            Image.network(
+              widget.cartModel.image,
               width: Get.width * 0.2,
               height: Get.height * 0.2,
               alignment: Alignment.center,
@@ -68,7 +61,7 @@ class _ItemCartState extends State<ItemCart> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        widget.name,
+                        widget.cartModel.name,
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontFamily: AppFonts.poppinsBoldFont,
@@ -103,14 +96,14 @@ class _ItemCartState extends State<ItemCart> {
                                 onPressed: () {
                                   setState(
                                     () {
-                                      if (widget.amount != 1) {
-                                        widget.amount = widget.amount - 1;
+                                      if (widget.cartModel.amount != 1) {
+                                        widget.cartModel.amount = widget.cartModel.amount - 1;
                                         // widget.cartPageController.amount =
                                         //      widget.amount;
                                         widget.cartPageController.price =
-                                            widget.amount * widget.price;
+                                            widget.cartModel.amount * double.parse(widget.cartModel.price);
                                         widget.cartPageController
-                                            .decrementar(widget.id);
+                                            .decrementar(widget.cartModel.id);
                                         widget.cartPageController.calcule();
                                       }
                                     },
@@ -125,7 +118,7 @@ class _ItemCartState extends State<ItemCart> {
                               ),
                             ),
                             Text(
-                              widget.amount.toString(),
+                              widget.cartModel.amount.toString(),
                               style: TextStyle(fontSize: 18.0),
                             ),
                             Container(
@@ -136,11 +129,11 @@ class _ItemCartState extends State<ItemCart> {
                                 elevation: 0,
                                 onPressed: () {
                                   setState(() {
-                                    widget.amount = widget.amount + 1;
+                                    widget.cartModel.amount = widget.cartModel.amount + 1;
                                     widget.cartPageController.price =
-                                        widget.amount * widget.price;
+                                        widget.cartModel.amount * double.parse(widget.cartModel.price);
                                     widget.cartPageController
-                                        .incrementar(widget.id);
+                                        .incrementar(widget.cartModel.id);
                                     widget.cartPageController.calcule();
                                   });
                                 },

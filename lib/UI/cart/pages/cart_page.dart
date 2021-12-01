@@ -2,6 +2,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/cart_controller.dart';
+import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
@@ -22,22 +23,26 @@ class CartPage extends StatefulWidget {
 }
 
 class _StartPageState extends State<CartPage> {
-  // ignore: non_constant_identifier_names
-  List<CartModel> list_cart = [
-    CartModel(id: 1, amount: 1, image: AppImages.tv, name: "Tv", price: 100.0),
-    CartModel(
-        id: 2,
-        amount: 2,
-        image: AppImages.tv,
-        name: "Tv 55 Polegadas",
-        price: 200.0),
-    // CartModel(amount: 1, image: AppImages.tv, name: "Tv", price: 1200.0),
-    // CartModel(amount: 2, image: AppImages.tv, name: "Tv", price: 1200.0),
-  ];
+ 
   final CartPageController cartPageController = Get.put(CartPageController());
 
   bool isChecked = false;
+List<CartModel> list_cart= [];
+  Future carregarCart() async {
+    list_cart = await ServiceRequest.loadCart();
+    if (list_cart.isEmpty) {
+      return null;
+    }
 
+    return list_cart;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    carregarCart();
+  }
   @override
   Widget build(BuildContext context) {
     cartPageController.list = list_cart;
@@ -148,7 +153,72 @@ class _StartPageState extends State<CartPage> {
                           ),
                         ],
                       ),
-                      Container(
+                      FutureBuilder(
+                  future: carregarCart(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (!snapshot.hasData) {
+                      return Container(
+                        height: Get.height * 0.2,
+                        width: Get.width,
+                        child: Center(
+                          child: Image.asset(
+                            AppImages.loading,
+                            width: Get.width * 0.2,
+                            height: Get.height * 0.2,
+                            alignment: Alignment.center,
+                          ),
+                        ),
+                      );
+                    } else {
+                      if (snapshot.data == null) {
+                        return Container(
+                          height: Get.height * 0.2,
+                          width: Get.width,
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.public_off_outlined,
+                                  color: Colors.grey,
+                                  size: Get.height * 0.06,
+                                ),
+                                Text(
+                                  "Serviço Indispónivel.\n Tente mais tarde...",
+                                  style: TextStyle(
+                                    fontFamily: AppFonts.poppinsBoldFont,
+                                    fontSize: Get.width * 0.035,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      } else {
+                        return Container(
+                           height: Get.height * 0.45,
+                          child: ListView.builder(
+                           padding: EdgeInsets.all(0.0),
+                          shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (BuildContext context, index) {
+                             var list = list_cart[index];
+                            //  cartPageController.name = list.name;
+                            //  cartPageController.amount = list.amount;
+                            cartPageController.price = double.parse(list.price) * list.amount;
+                            return ItemCart(
+                              cartModel:list,
+                            );
+                            },
+                          ),
+                        );
+                      }
+                    }
+                  },
+                ),
+                     /* Container(
                         height: Get.height * 0.45,
                         child: ListView.builder(
                           padding: EdgeInsets.all(0.0),
@@ -158,17 +228,14 @@ class _StartPageState extends State<CartPage> {
                             var list = list_cart[index];
                             //  cartPageController.name = list.name;
                             //  cartPageController.amount = list.amount;
-                            cartPageController.price = list.price * list.amount;
+                            cartPageController.price = double.parse(list.price) * list.amount;
                             return ItemCart(
-                              id: list.id,
-                              name: list.name,
-                              image: list.image,
-                              amount: list.amount,
-                              price: list.price,
+                              cartModel:list,
                             );
                           },
                         ),
-                      ),
+                      ),*/
+
                       SizedBox(height: Get.height * 0.01),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -250,7 +317,7 @@ class _StartPageState extends State<CartPage> {
                               children: [
                                 Obx(
                                   () => Text(
-                                    cartPageController.total.toString(),
+                                    cartPageController.total.toStringAsFixed(2),
                                     style: TextStyle(
                                       fontFamily: AppFonts.poppinsBoldFont,
                                       color: AppColors.greenColor,
