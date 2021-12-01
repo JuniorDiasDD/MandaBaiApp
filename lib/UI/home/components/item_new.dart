@@ -32,11 +32,7 @@ class _ItemNewState extends State<ItemNew> {
                 return Carrega_Saldo();
               });
         }else if(widget.title=="Serviços da Câmara"){
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return Pop_up_Message();
-              });
+         
 
         }
       },

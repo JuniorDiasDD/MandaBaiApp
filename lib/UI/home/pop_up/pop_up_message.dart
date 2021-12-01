@@ -6,7 +6,11 @@ import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/home/pages/start_page.dart';
 
 class Pop_up_Message extends StatefulWidget {
-  const Pop_up_Message({Key? key}) : super(key: key);
+  String mensagem;
+  String caminho;
+  IconData icon;
+  Pop_up_Message(
+      {required this.mensagem, required this.icon, required this.caminho});
 
   @override
   _Pop_up_MessageState createState() => _Pop_up_MessageState();
@@ -34,14 +38,14 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
                   top: Get.height * 0.04,
                 ),
                 child: Icon(
-                  Icons.error_outline,
-                  color: Colors.grey,
+                  widget.icon,
+                  color: widget.caminho!="erro" ? Colors.green : Colors.red,
                   size: Get.height * 0.09,
                 ),
               ),
               SizedBox(height: Get.height * 0.01),
               Text(
-                'ERRO',
+                widget.mensagem,
                 style: TextStyle(
                     fontFamily: AppFonts.poppinsRegularFont,
                     fontSize: Get.width * 0.05,
@@ -61,25 +65,25 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
                       color: Colors.grey,
                       blurRadius: 2.0,
                       spreadRadius: 0.0,
-                      offset: Offset(
-                          2.0, 2.0), // changes position of shadow
+                      offset: Offset(2.0, 2.0), // changes position of shadow
                     ),
                   ],
                 ),
-
                 child: TextButton(
-                  child: Text(
-                    'OK',
-                    style: TextStyle(
-                        fontFamily: AppFonts.poppinsBoldFont,
-                        fontSize: Get.width * 0.035,
-                        color: Colors.white),
-                  ),
-                  onPressed: () => Navigator.pop(
-                    context,
-
-                  ),
-                ),
+                    child: Text(
+                      'OK',
+                      style: TextStyle(
+                          fontFamily: AppFonts.poppinsBoldFont,
+                          fontSize: Get.width * 0.035,
+                          color: Colors.white),
+                    ),
+                    onPressed: () {
+                      if (widget.caminho == "home") {
+                        Navigator.pushReplacementNamed(context, '/home');
+                      } else if (widget.caminho == "erro") {
+                        Navigator.pop(context);
+                      }
+                    }),
               ),
             ],
           ),

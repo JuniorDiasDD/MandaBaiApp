@@ -166,12 +166,11 @@ class _StartPageState extends State<StartPage> {
                   child: Padding(
                     padding: EdgeInsets.only(
                         top: Get.height * 0.01, left: Get.width * 0.02),
-                    child:  Text(
+                    child: Text(
                       'Novos Serviços',
                       style: TextStyle(
                         fontFamily: AppFonts.poppinsBoldFont,
                         fontSize: Get.width * 0.042,
-
                       ),
                     ),
                   ),
@@ -193,16 +192,15 @@ class _StartPageState extends State<StartPage> {
                     Container(
                       padding: EdgeInsets.only(
                           top: Get.height * 0.01, left: Get.width * 0.023),
-                      child:  Text(
+                      child: Text(
                         'Categorias',
                         style: TextStyle(
                           fontFamily: AppFonts.poppinsBoldFont,
                           fontSize: Get.width * 0.042,
-
                         ),
                       ),
                     ),
-                  /*  Padding(
+                    /*  Padding(
                       padding: EdgeInsets.only(top: Get.height * 0.01),
                       child: TextButton(
                         style: TextButton.styleFrom(
@@ -230,25 +228,62 @@ class _StartPageState extends State<StartPage> {
                 FutureBuilder(
                   future: _carregarCategory(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.data == null) {
-                      return Container();
-                    } else {
+                    if (!snapshot.hasData) {
                       return Container(
-                        height: Get.height * 0.5,
-                        child: ListView.builder(
-                          padding: EdgeInsets.only(
-                            top: 0.0,
-                            bottom: Get.height * 0.03,
+                        height: Get.height * 0.2,
+                        width: Get.width,
+                        child: Center(
+                          child: Image.asset(
+                            AppImages.loading,
+                            width: Get.width * 0.2,
+                            height: Get.height * 0.2,
+                            alignment: Alignment.center,
                           ),
-                          scrollDirection: Axis.vertical,
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (BuildContext context, index) {
-                            var list = list_category[index];
-                            return ListViewItemComponent(category: list);
-                           
-                          },
                         ),
                       );
+                    } else {
+                      if (snapshot.data == null) {
+                        return Container(
+                          height: Get.height * 0.2,
+                          width: Get.width,
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.public_off_outlined,
+                                  color: Colors.grey,
+                                  size: Get.height * 0.06,
+                                ),
+                                Text(
+                                  "Serviço Indispónivel.\n Tente mais tarde...",
+                                  style: TextStyle(
+                                    fontFamily: AppFonts.poppinsBoldFont,
+                                    fontSize: Get.width * 0.035,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      } else {
+                        return Container(
+                          height: Get.height * 0.5,
+                          child: ListView.builder(
+                            padding: EdgeInsets.only(
+                              top: 0.0,
+                              bottom: Get.height * 0.03,
+                            ),
+                            scrollDirection: Axis.vertical,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (BuildContext context, index) {
+                              var list = list_category[index];
+                              return ListViewItemComponent(category: list);
+                            },
+                          ),
+                        );
+                      }
                     }
                   },
                 ),
