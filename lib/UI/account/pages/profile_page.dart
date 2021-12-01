@@ -14,6 +14,7 @@ import 'package:manda_bai/UI/home/components/carrega_saldo.dart';
 import 'package:manda_bai/UI/home/components/header.dart';
 import 'package:manda_bai/UI/home/components/menu.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_island.dart';
+import 'package:manda_bai/UI/home/pop_up/popup_moeda.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -23,10 +24,13 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _StartPageState extends State<ProfilePage> {
+  String check ="";
   @override
-  void initState() {
+   initState(){
     // TODO: implement initState
     super.initState();
+
+
   }
 
   Future _carregarUser() async {
@@ -333,6 +337,7 @@ class _StartPageState extends State<ProfilePage> {
                               builder: (BuildContext context) {
                                 return Popup_Island();
                               });
+
                         },
                         child: Row(
                           children: [
@@ -359,7 +364,7 @@ class _StartPageState extends State<ProfilePage> {
                                 left: Get.width * 0.02,
                               ),
                               child: Text(
-                                'Mudar de ILha',
+                                'Mudar de ILha ('+check+')',
                                 style: TextStyle(
                                   fontFamily: AppFonts.poppinsRegularFont,
                                   color: Colors.black,
@@ -415,7 +420,13 @@ class _StartPageState extends State<ProfilePage> {
                     Container(
                       height: Get.height * 0.06,
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Popup_Moeda();
+                              });
+                        },
                         child: Row(
                           children: [
                             Container(

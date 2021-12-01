@@ -1,6 +1,7 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
@@ -14,18 +15,7 @@ class Popup_Island extends StatefulWidget {
 }
 
 class _Popup_IslandState extends State<Popup_Island> {
-  String dropdownValue = 'Santiago';
-  List<String> list_island = [
-    'Santo Antão',
-    'São Vicente',
-    'São Nicolau',
-    'Sal',
-    'Boavista',
-    'Maio',
-    'Santiago',
-    'Fogo',
-    'Brava',
-  ];
+  String _isRadioSelected = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +23,7 @@ class _Popup_IslandState extends State<Popup_Island> {
       body: Center(
         child: Container(
           width: Get.width,
-          height: Get.height * 0.45,
+          height: Get.height * 0.9,
           margin:
               EdgeInsets.only(left: Get.width * 0.12, right: Get.width * 0.12),
           decoration: BoxDecoration(
@@ -41,105 +31,274 @@ class _Popup_IslandState extends State<Popup_Island> {
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
-
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               Padding(
-                padding:  EdgeInsets.only(
-                top: Get.height *0.04,),
+                padding: EdgeInsets.only(
+                  left: Get.width * 0.03,
+                  right: Get.width * 0.03,
+                  top: Get.height * 0.02,
+                ),
                 child: Text(
-                  'Selecione a Ilha pretendida',
+                  'Selecione a Ilha pretendida:',
                   textAlign: TextAlign.start,
-
                   style: TextStyle(
-                      fontFamily: AppFonts.poppinsRegularFont,
-                      fontSize: Get.width * 0.038,
+                    fontFamily: AppFonts.poppinsBoldFont,
+                    fontSize: Get.width * 0.04,
+                  ),
                 ),
-                ),
               ),
-          Container(
-            width: Get.width,
-            height: Get.height * 0.06,
-            margin: EdgeInsets.only(
-              left: Get.width * 0.04,
-              right: Get.width * 0.04,
-            ),
-            padding: EdgeInsets.only(
-              left: Get.width * 0.04,
-              right: Get.width * 0.04,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15.0),
-              border: Border.all(
-                  color: Colors.black38, style: BorderStyle.solid, width: 0.80),
-            ),
-            child: DropdownButton<String>(
-              value: dropdownValue,
-              icon: const Icon(
-                Icons.arrow_drop_down,
-              ),
-              iconSize: Get.width * 0.05,
-              elevation: 16,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: Get.width * 0.04,
-              ),
-              borderRadius: BorderRadius.circular(15.0),
-              underline: Container(
-                height: 0,
-                color: Colors.transparent,
-              ),
-              onChanged: (String? newValue) {
-                setState(() {
-                  dropdownValue = newValue!;
-                });
-              },
-              items: list_island.map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(
-                    value,
-                    style: TextStyle(
-                      fontFamily: AppFonts.poppinsRegularFont,
-                      color: Colors.black,
-                      fontSize: Get.width * 0.04,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Text(
+                      "Santo Antão",
+                      style: TextStyle(
+                        fontFamily: AppFonts.poppinsRegularFont,
+                      ),
                     ),
                   ),
-                );
-              }).toList(),
-            ),
-          ),
-          SizedBox(height: Get.height * 0.2),
-
-
-              Container(
-                height: Get.height * 0.07,
-                width: Get.width * 0.36,
-                decoration: BoxDecoration(
-                  color: AppColors.greenColor,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(35),
+                  Radio(
+                    value: "Santo Antão",
+                    groupValue: _isRadioSelected,
+                    onChanged: (value) {
+                      setState(() {
+                        _isRadioSelected = "Santo Antão";
+                      });
+                    },
+                    activeColor: Colors.green,
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 2.0,
-                      spreadRadius: 0.0,
-                      offset: Offset(2.0, 2.0), // changes position of shadow
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Text(
+                      "São Vicente",
+                      style: TextStyle(
+                        fontFamily: AppFonts.poppinsRegularFont,
+                      ),
                     ),
-                  ],
-                ),
-                child: TextButton(
-                  child: Text(
-                    'OK',
-                    style: TextStyle(
-                        fontFamily: AppFonts.poppinsBoldFont,
-                        fontSize: Get.width * 0.035,
-                        color: Colors.white),
                   ),
-                  onPressed: () => Navigator.pop(
-                    context,
+                  Radio(
+                    value: "São Vicente",
+                    groupValue: _isRadioSelected,
+                    onChanged: (value) {
+                      setState(() {
+                        _isRadioSelected = "São Vicente";
+                      });
+                    },
+                    activeColor: Colors.green,
                   ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Text(
+                      "São Nicolau",
+                      style: TextStyle(
+                        fontFamily: AppFonts.poppinsRegularFont,
+                      ),
+                    ),
+                  ),
+                  Radio(
+                    value: "São Nicolau",
+                    groupValue: _isRadioSelected,
+                    onChanged: (value) {
+                      setState(() {
+                        _isRadioSelected = "São Nicolau";
+                      });
+                    },
+                    activeColor: Colors.green,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Text(
+                      "Sal",
+                      style: TextStyle(
+                        fontFamily: AppFonts.poppinsRegularFont,
+                      ),
+                    ),
+                  ),
+                  Radio(
+                    value: "Sal",
+                    groupValue: _isRadioSelected,
+                    onChanged: (value) {
+                      setState(() {
+                        _isRadioSelected = "Sal";
+                      });
+                    },
+                    activeColor: Colors.green,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Text(
+                      "Boa Vista",
+                      style: TextStyle(
+                        fontFamily: AppFonts.poppinsRegularFont,
+                      ),
+                    ),
+                  ),
+                  Radio(
+                    value: "Boa Vista",
+                    groupValue: _isRadioSelected,
+                    onChanged: (value) {
+                      setState(() {
+                        _isRadioSelected = "Boa Vista";
+                      });
+                    },
+                    activeColor: Colors.green,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Text(
+                      "Maio",
+                      style: TextStyle(
+                        fontFamily: AppFonts.poppinsRegularFont,
+                      ),
+                    ),
+                  ),
+                  Radio(
+                    value: "Maio",
+                    groupValue: _isRadioSelected,
+                    onChanged: (value) {
+                      setState(() {
+                        _isRadioSelected = "Maio";
+                      });
+                    },
+                    activeColor: Colors.green,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Text(
+                      "Santiago",
+                      style: TextStyle(
+                        fontFamily: AppFonts.poppinsRegularFont,
+                      ),
+                    ),
+                  ),
+                  Radio(
+                    value: "Santiago",
+                    groupValue: _isRadioSelected,
+                    onChanged: (value) {
+                      setState(() {
+                        _isRadioSelected = "Santiago";
+                      });
+                    },
+                    activeColor: Colors.green,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Text(
+                      "Fogo",
+                      style: TextStyle(
+                        fontFamily: AppFonts.poppinsRegularFont,
+                      ),
+                    ),
+                  ),
+                  Radio(
+                    value: "Fogo",
+                    groupValue: _isRadioSelected,
+                    onChanged: (value) {
+                      setState(() {
+                        _isRadioSelected = "Fogo";
+                      });
+                    },
+                    activeColor: Colors.green,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0),
+                    child: Text(
+                      "Brava",
+                      style: TextStyle(
+                        fontFamily: AppFonts.poppinsRegularFont,
+                      ),
+                    ),
+                  ),
+                  Radio(
+                    value: "Brava",
+                    groupValue: _isRadioSelected,
+                    onChanged: (value) {
+                      setState(() {
+                        _isRadioSelected = "Brava";
+                      });
+                    },
+                    activeColor: Colors.green,
+                  ),
+                ],
+              ),
+              SizedBox(height: Get.height * 0.03),
+              Align(
+                alignment: Alignment.center,
+                child: Container(
+                  height: Get.height * 0.07,
+                  width: Get.width * 0.3,
+                  decoration: BoxDecoration(
+                    color: AppColors.greenColor,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(35),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 2.0,
+                        spreadRadius: 0.0,
+                        offset: Offset(2.0, 2.0), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  child: TextButton(
+                      child: Text(
+                        'OK',
+                        style: TextStyle(
+                            fontFamily: AppFonts.poppinsBoldFont,
+                            fontSize: Get.width * 0.035,
+                            color: Colors.white),
+                      ),
+                      onPressed: () async {
+                        var session = FlutterSession();
+
+                        await session.set('island', _isRadioSelected);
+
+                        Navigator.pop(context);
+                      }),
                 ),
               ),
             ],
