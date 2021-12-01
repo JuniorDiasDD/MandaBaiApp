@@ -35,12 +35,12 @@ class _HomePageState extends State<HomePage> {
               builder: (BuildContext context) {
                 return Pop_Login();
               });
-        } else {
+        }else {
           setState(()  { _selectedIndex = index;  });
         }
       }else{
            setState(()  { _selectedIndex = index;  });
-      }
+     }
 
   
   }

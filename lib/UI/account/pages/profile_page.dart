@@ -13,6 +13,7 @@ import 'package:manda_bai/UI/account/pages/edit_profile.dart';
 import 'package:manda_bai/UI/home/components/carrega_saldo.dart';
 import 'package:manda_bai/UI/home/components/header.dart';
 import 'package:manda_bai/UI/home/components/menu.dart';
+import 'package:manda_bai/UI/home/pop_up/popup_island.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -326,7 +327,13 @@ class _StartPageState extends State<ProfilePage> {
                     Container(
                       height: Get.height * 0.06,
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Popup_Island();
+                              });
+                        },
                         child: Row(
                           children: [
                             Container(
@@ -567,7 +574,7 @@ class _StartPageState extends State<ProfilePage> {
                     Container(
                       height: Get.height * 0.06,
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () => _terminarSessao(),
                         child: Row(
                           children: [
                             Container(
