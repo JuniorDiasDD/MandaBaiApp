@@ -9,7 +9,7 @@ import 'package:manda_bai/Model/cart_model.dart';
 class ItemFavoriteComponent extends StatefulWidget {
   // final CartPageController cartPageController = Get.find();
   final String name, image;
-  double price;
+  String price;
   int amount;
   int id;
   ItemFavoriteComponent(

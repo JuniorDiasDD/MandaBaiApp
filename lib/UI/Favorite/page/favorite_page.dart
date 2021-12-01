@@ -19,13 +19,14 @@ class FavoritePage extends StatefulWidget {
 class _FavoritePageState extends State<FavoritePage> {
   bool isChecked = false;
   List<CartModel> list_favorite = [
-    CartModel(id: 1, amount: 1, image: AppImages.tv, name: "Tv", price: 100.0),
+    CartModel(id: 1, amount: 1, image: AppImages.tv, name: "Tv", price: "100.0",item_key:"12"),
     CartModel(
         id: 2,
         amount: 2,
+        item_key:"12",
         image: AppImages.tv,
         name: "Tv 55 Polegadas",
-        price: 200.0),
+        price: "200.0"),
     // CartModel(amount: 1, image: AppImages.tv, name: "Tv", price: 1200.0),
     // CartModel(amount: 2, image: AppImages.tv, name: "Tv", price: 1200.0),
   ];
