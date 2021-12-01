@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/UI/home/components/carrega_saldo.dart';
-import 'package:manda_bai/UI/home/components/pop_up_message.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 
 class ItemNew extends StatefulWidget {
   String image, title;

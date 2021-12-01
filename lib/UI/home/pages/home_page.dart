@@ -4,7 +4,7 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/UI/Favorite/page/favorite_page.dart';
 import 'package:manda_bai/UI/account/pages/profile_page.dart';
 import 'package:manda_bai/UI/cart/pages/cart_page.dart';
-import 'package:manda_bai/UI/home/components/pop_login.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
 import 'package:manda_bai/UI/home/pages/start_page.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
