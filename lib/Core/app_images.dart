@@ -40,5 +40,6 @@ class AppImages {
   static const cvmovel = 'assets/images/cvmovel.png';
   static const camara = 'assets/images/camara.png';
   static const santiago = 'assets/images/santiago.png';
+  static const loading = 'assets/images/loading.gif';
 
 }

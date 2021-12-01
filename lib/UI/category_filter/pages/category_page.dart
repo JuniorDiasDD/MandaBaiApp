@@ -60,10 +60,8 @@ class _CategoryPageState extends State<CategoryPage> {
                     cursorColor: AppColors.greenColor,
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(30.0)),
-                          borderSide:
-                              BorderSide(color: AppColors.greenColor)),
+                          borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                          borderSide: BorderSide(color: AppColors.greenColor)),
                       hintText: 'Pesquisar Produto...',
                       contentPadding: EdgeInsets.only(top: 10, left: 15),
                       suffixIcon: Icon(
@@ -118,27 +116,19 @@ class _CategoryPageState extends State<CategoryPage> {
                   color: AppColors.greenColor,
                   iconSize: Get.width * 0.05,
                 ),
-
-                //alignment: Alignment.centerRight,
-
-                /*IconButton(
-                  onPressed: () {},
-                  icon: WebsafeSvg.asset(AppImages.filter),
-                  iconSize: 20,
-                ),*/
               ],
             ),
           ),
           Container(
-            padding: EdgeInsets.only(
-                top: Get.height * 0.01, left: Get.width * 0.04),
-            child:Align(
+            padding:
+                EdgeInsets.only(top: Get.height * 0.01, left: Get.width * 0.04),
+            child: Align(
               alignment: Alignment.topLeft,
               child: Text(
                 widget.category.name,
                 style: TextStyle(
                   fontFamily: AppFonts.poppinsBoldFont,
-                  fontSize: Get.width*0.04,
+                  fontSize: Get.width * 0.04,
                 ),
               ),
             ),
@@ -146,26 +136,56 @@ class _CategoryPageState extends State<CategoryPage> {
           FutureBuilder(
             future: _carregar(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (snapshot.data == null) {
-                return Container();
-              } else {
+              if (!snapshot.hasData) {
                 return Container(
-                  height: Get.height*0.85,
-                  margin: EdgeInsets.only(
-                    left: Get.width * 0.05,
-                    right: Get.width * 0.05,
+                  height: Get.height * 0.2,
+                  width: Get.width,
+                  child: Center(
+                    child: Image.asset(
+                      AppImages.loading,
+                        width: Get.width * 0.2,
+                       height: Get.height * 0.2,
+                      alignment: Alignment.center,
+                    ),
                   ),
-                  child: GridView.builder(
-                    padding: EdgeInsets.only(top:0.0,),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount:
-                              (Get.width == Orientation.portrait) ? 2 : 2),
-                      itemCount: list_product.length,
-                      itemBuilder: (BuildContext ctx, index) {
-                        var list = list_product[index];
-                        return ProductListComponent(product: list);
-                      }),
                 );
+              } else {
+                if (snapshot.data == null) {
+                  return Container(
+                    height: Get.height * 0.85,
+                    width: Get.width,
+                    child: Center(
+                      child: Text(
+                        "Sem Produtos...",
+                        style: TextStyle(
+                          fontFamily: AppFonts.poppinsBoldFont,
+                          fontSize: Get.width * 0.035,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                  );
+                } else {
+                  return Container(
+                    height: Get.height * 0.85,
+                    margin: EdgeInsets.only(
+                      left: Get.width * 0.05,
+                      right: Get.width * 0.05,
+                    ),
+                    child: GridView.builder(
+                        padding: EdgeInsets.only(
+                          top: 0.0,
+                        ),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount:
+                                (Get.width == Orientation.portrait) ? 2 : 2),
+                        itemCount: list_product.length,
+                        itemBuilder: (BuildContext ctx, index) {
+                          var list = list_product[index];
+                          return ProductListComponent(product: list);
+                        }),
+                  );
+                }
               }
             },
           ),

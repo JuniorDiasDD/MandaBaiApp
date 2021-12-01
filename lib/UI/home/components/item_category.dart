@@ -47,14 +47,14 @@ class _ListViewItemComponentState extends State<ListViewItemComponent> {
               image: widget.category.image != 'null'
                   ? NetworkImage(widget.category.image)
                   : NetworkImage(
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSstt-VUp5wyfJwhGxRcerVunK9mHR0QIf5RQ&usqp=CAU'),
+                      'https://static.expressodasilhas.cv/media/2020/10/09324151.normal.jpg'),
             ),
           ),
           width: Get.width,
           height: Get.height * 0.2,
           child: Padding(
             padding: EdgeInsets.only(
-                left: Get.width * 0.01, top: Get.height * 0.14),
+                left: Get.width * 0.01, top: Get.height * 0.15),
             child: Text(
               widget.category.name,
               textAlign: TextAlign.start,

@@ -8,6 +8,7 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/user.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -38,9 +39,24 @@ class _RegisterPageState extends State<RegisterPage> {
 
       bool check = await ServiceRequest.createAccount(new_user);
       if (check == true) {
-        Navigator.pushReplacementNamed(context, '/home');
-      } else {}
-      print('Form is valid');
+        return showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Pop_up_Message(
+                  mensagem: "Registo feito com sucesso!",
+                  icon: Icons.check,
+                  caminho: "home");
+            });
+      } else {
+        return showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Pop_up_Message(
+                  mensagem: "Dados invalidos...",
+                  icon: Icons.error,
+                  caminho: "erro");
+            });
+      }
     } else {
       print('Form is invalid');
     }
