@@ -8,9 +8,8 @@ import 'package:manda_bai/Model/cart_model.dart';
 
 class ItemCart extends StatefulWidget {
   final CartPageController cartPageController = Get.find();
- CartModel cartModel;
-  ItemCart(
-      {required this.cartModel});
+  CartModel cartModel;
+  ItemCart({required this.cartModel});
 
   @override
   _ItemCartState createState() => _ItemCartState();
@@ -97,11 +96,14 @@ class _ItemCartState extends State<ItemCart> {
                                   setState(
                                     () {
                                       if (widget.cartModel.amount != 1) {
-                                        widget.cartModel.amount = widget.cartModel.amount - 1;
+                                        widget.cartModel.amount =
+                                            widget.cartModel.amount - 1;
                                         // widget.cartPageController.amount =
                                         //      widget.amount;
                                         widget.cartPageController.price =
-                                            widget.cartModel.amount * double.parse(widget.cartModel.price);
+                                            widget.cartModel.amount *
+                                                double.parse(
+                                                    widget.cartModel.price);
                                         widget.cartPageController
                                             .decrementar(widget.cartModel.id);
                                         widget.cartPageController.calcule();
@@ -129,9 +131,11 @@ class _ItemCartState extends State<ItemCart> {
                                 elevation: 0,
                                 onPressed: () {
                                   setState(() {
-                                    widget.cartModel.amount = widget.cartModel.amount + 1;
-                                    widget.cartPageController.price =
-                                        widget.cartModel.amount * double.parse(widget.cartModel.price);
+                                    widget.cartModel.amount =
+                                        widget.cartModel.amount + 1;
+                                    widget.cartPageController.price = widget
+                                            .cartModel.amount *
+                                        double.parse(widget.cartModel.price);
                                     widget.cartPageController
                                         .incrementar(widget.cartModel.id);
                                     widget.cartPageController.calcule();
