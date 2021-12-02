@@ -14,14 +14,12 @@ class ServiceRequest {
     List<Category> list_final = [];
     var response = await http.get(Uri.parse(categorias));
     var jsonResponse = json.decode(response.body);
-    //print(response.headers['x-wp-totalpages']);
     if (response.statusCode == 200) {
       var quantidade = response.headers['x-wp-total'];
       response = await http
           .get(Uri.parse(categorias + "&per_page=" + quantidade.toString()));
       jsonResponse = json.decode(response.body);
       if (response.statusCode == 200) {
-        //  print(response.headers['x-wp-totalpages']);
         final _cats = jsonResponse.cast<Map<String, dynamic>>();
         list = _cats.map<Category>((cat) => Category.fromJson(cat)).toList();
         var island = await FlutterSession().get('island');
@@ -32,11 +30,15 @@ class ServiceRequest {
             list_final.add(list[i]);
           }
         }
+      } else if (response.statusCode == 503) {
+        print("Erro de serviço");
       } else {
-        print("Erro 2");
+        print("Erro de authentiction");
       }
+    } else if (response.statusCode == 503) {
+      print("Erro de serviço");
     } else {
-      print("Erro de autenticação");
+      print("Erro de authentiction");
     }
     return list_final;
   }
@@ -51,8 +53,10 @@ class ServiceRequest {
     if (response.statusCode == 200) {
       final _cats = jsonResponse.cast<Map<String, dynamic>>();
       list = _cats.map<Product>((cat) => Product.fromJson(cat)).toList();
+    } else if (response.statusCode == 503) {
+      print("Erro de serviço");
     } else {
-      print("Erro de autenticação");
+      print("Erro de authentiction");
     }
     return list;
   }
@@ -98,13 +102,16 @@ class ServiceRequest {
         headers: headers, body: data);
 
     //  print(response.body);
-    //  print(response.statusCode);
     if (response.statusCode == 201) {
       final jsonResponse = json.decode(response.body);
       var session = FlutterSession();
       await session.set('id', jsonResponse["id"]);
       return true;
+    } else if (response.statusCode == 503) {
+      print("Erro de serviço");
+      return false;
     } else {
+      print("Erro de authentiction");
       return false;
     }
   }
@@ -120,8 +127,13 @@ class ServiceRequest {
       await session.set('id', jsonResponse["user_id"]);
       GetUser();
       return true;
+    } else if (response.statusCode == 503) {
+      print("Erro de serviço");
+      return false;
+    } else {
+      print("Erro de authentiction");
+      return false;
     }
-    return false;
   }
 
   //! Get User
@@ -131,7 +143,6 @@ class ServiceRequest {
     var response = await http.post(Uri.parse(
       getUser + id.toString() + "?" + key,
     ));
-    // print(getUser + id.toString() + "?" + key);
     final jsonResponse = json.decode(response.body);
     // print(response.body);
     if (response.statusCode == 200) {
@@ -142,7 +153,11 @@ class ServiceRequest {
       user.avatar = jsonResponse["avatar_url"];
       user.telefone = jsonResponse["billing"]["phone"];
       return true;
+    } else if (response.statusCode == 503) {
+      print("Erro de serviço");
+      return false;
     } else {
+      print("Erro de authentiction");
       return false;
     }
   }
@@ -161,8 +176,10 @@ class ServiceRequest {
     if (response.statusCode == 200) {
       final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();
       list = _cats.map<CartModel>((cat) => CartModel.fromJson(cat)).toList();
+    } else if (response.statusCode == 503) {
+      print("Erro de serviço");
     } else {
-      print("Erro de autenticação");
+      print("Erro de authentiction");
     }
     return list;
   }

@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
@@ -74,9 +75,26 @@ class _StartPageState extends State<StartPage> {
     return list_category;
   }
 
+  validateMoney() async {
+    var money = await FlutterSession().get('money');
+    var session = FlutterSession();
+    if (money == "null" || money == null) {
+      await session.set('money', "EUR");
+    }
+  }
+  validateLanguage() async {
+    var language = await FlutterSession().get('language');
+    var session = FlutterSession();
+    if (language == "null" || language == null) {
+      await session.set('language', "pt");
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    validateMoney();
+    validateLanguage();
   }
 
   @override
@@ -119,7 +137,6 @@ class _StartPageState extends State<StartPage> {
                           )
                           .toList(),
                     ),
-                  
                   ],
                 ),
                 SizedBox(
@@ -158,7 +175,6 @@ class _StartPageState extends State<StartPage> {
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
-                   
                   ],
                 ),
                 FutureBuilder(

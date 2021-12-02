@@ -3,16 +3,10 @@ import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
-import 'package:manda_bai/Core/app_colors.dart';
-import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
-import 'package:manda_bai/Model/user.dart';
-import 'package:manda_bai/UI/Favorite/page/favorite_page.dart';
 import 'package:manda_bai/UI/about/pages/info_page.dart';
 import 'package:manda_bai/UI/account/pages/edit_profile.dart';
 import 'package:manda_bai/UI/home/components/carrega_saldo.dart';
-import 'package:manda_bai/UI/home/components/header.dart';
-import 'package:manda_bai/UI/home/components/menu.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_island.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_moeda.dart';
 
@@ -25,16 +19,21 @@ class ProfilePage extends StatefulWidget {
 
 class _StartPageState extends State<ProfilePage> {
   String check = "";
-  @override
-  initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
+  
   String island = "";
+  String money="";
+  String language="";
   Future _carregarIsland() async {
     island = await FlutterSession().get('island');
     return island;
+  }
+  Future _carregarMoney() async {
+    money = await FlutterSession().get('money');
+    return money;
+  }
+  Future _carregarLanguage() async {
+    language = await FlutterSession().get('language');
+    return language;
   }
 
   Future _carregarUser() async {
@@ -120,7 +119,7 @@ class _StartPageState extends State<ProfilePage> {
                           width: Get.height * 0.042,
                           decoration: BoxDecoration(
                             color: Colors.teal,
-                            borderRadius: BorderRadius.all(
+                            borderRadius: const BorderRadius.all(
                               Radius.circular(100),
                             ),
                             border: Border.all(color: Colors.teal),
@@ -338,7 +337,7 @@ class _StartPageState extends State<ProfilePage> {
                                           return const Text(" ");
                                         } else {
                                           return Text(
-                                            '(' + island + ')',
+                                            ' (' + island + ')',
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline3,
@@ -364,7 +363,7 @@ class _StartPageState extends State<ProfilePage> {
                               width: Get.height * 0.042,
                               decoration: BoxDecoration(
                                 color: Colors.orangeAccent,
-                                borderRadius: BorderRadius.all(
+                                borderRadius: const BorderRadius.all(
                                   Radius.circular(100),
                                 ),
                                 border: Border.all(color: Colors.orangeAccent),
@@ -379,9 +378,28 @@ class _StartPageState extends State<ProfilePage> {
                               padding: EdgeInsets.only(
                                 left: Get.width * 0.02,
                               ),
-                              child: Text(
-                                'Mudar de Idioma',
-                                style: Theme.of(context).textTheme.headline3,
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Mudar de Idioma',
+                                    style: Theme.of(context).textTheme.headline3,
+                                  ),
+                                    FutureBuilder(
+                                      future: _carregarLanguage(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot snapshot) {
+                                        if (snapshot.data == null) {
+                                          return const Text(" ");
+                                        } else {
+                                          return Text(
+                                            ' (' + language + ')',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline3,
+                                          );
+                                        }
+                                      }),
+                                ],
                               ),
                             ),
                           ],
@@ -421,9 +439,28 @@ class _StartPageState extends State<ProfilePage> {
                               padding: EdgeInsets.only(
                                 left: Get.width * 0.02,
                               ),
-                              child: Text(
-                                'Selecionar Moeda',
-                                style: Theme.of(context).textTheme.headline3,
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Selecionar Moeda',
+                                    style: Theme.of(context).textTheme.headline3,
+                                  ),
+                                   FutureBuilder(
+                                      future: _carregarMoney(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot snapshot) {
+                                        if (snapshot.data == null) {
+                                          return const Text(" ");
+                                        } else {
+                                          return Text(
+                                            ' (' + money + ')',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline3,
+                                          );
+                                        }
+                                      }),
+                                ],
                               ),
                             ),
                           ],

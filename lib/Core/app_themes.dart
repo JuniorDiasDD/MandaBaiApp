@@ -25,6 +25,11 @@ abstract class AppThemes {
     ),
     fontFamily: AppFonts.poppinsRegularFont,
     textTheme: TextTheme(
+      subtitle1: TextStyle(
+        fontFamily: AppFonts.poppinsBoldFont,
+        fontSize: Get.width * 0.025,
+        color: AppColors.white,
+      ),
       headline1: TextStyle(
         fontFamily: AppFonts.poppinsBoldFont,
         fontSize: Get.width * 0.042,
@@ -81,6 +86,11 @@ abstract class AppThemes {
     ),
     fontFamily: AppFonts.poppinsRegularFont,
     textTheme: TextTheme(
+      subtitle1: TextStyle(
+        fontFamily: AppFonts.poppinsBoldFont,
+        fontSize: Get.width * 0.025,
+        color: AppColors.black_escuro,
+      ),
       headline1: TextStyle(
         fontFamily: AppFonts.poppinsBoldFont,
         fontSize: Get.width * 0.042,
