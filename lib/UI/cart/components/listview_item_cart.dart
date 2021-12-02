@@ -27,12 +27,11 @@ class _ItemCartState extends State<ItemCart> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
-          boxShadow: const [
+          boxShadow:[
             BoxShadow(
-              color: Colors.grey,
+             color: Theme.of(context).cardColor,
               blurRadius: 2.0,
-              //spreadRadius: 0.0,
-              offset: Offset(2.0, 2.0), // shadow direction: bottom right
+              offset: Offset(2.0, 2.0), 
             )
           ],
         ),

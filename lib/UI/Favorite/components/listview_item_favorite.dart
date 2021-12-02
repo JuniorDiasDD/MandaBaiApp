@@ -35,9 +35,9 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
         decoration: BoxDecoration(
           color: Theme.of(context).dialogBackgroundColor,
           borderRadius: BorderRadius.circular(12),
-          boxShadow: const [
+          boxShadow:  [
             BoxShadow(
-              color: Colors.grey,
+             color: Theme.of(context).cardColor,
               blurRadius: 2.0,
               offset: Offset(2.0, 2.0),
             )

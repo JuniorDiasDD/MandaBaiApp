@@ -28,12 +28,11 @@ class ProductListComponent extends StatelessWidget {
         child: Container(
           width: Get.width * 0.4,
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.white54, width: 1.0),
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
-              const BoxShadow(
-                color: Colors.grey,
+               BoxShadow(
+               color: Theme.of(context).cardColor,
                 blurRadius: 1.0,
                 spreadRadius: 0.0,
                 offset: Offset(1.0, 1.0),
