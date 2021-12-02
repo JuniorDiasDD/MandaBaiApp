@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
-import 'package:manda_bai/Core/app_images.dart';
 
 class Pop_Login extends StatefulWidget {
   const Pop_Login({Key? key}) : super(key: key);
-
-
   @override
   _Pop_LoginState createState() => _Pop_LoginState();
 }
@@ -47,12 +44,10 @@ class _Pop_LoginState extends State<Pop_Login> {
                     ),
                     Text(
                       'LOGIN',
-                      style: TextStyle(
-                          fontFamily: AppFonts.poppinsBoldFont,
-                          fontSize: Get.width * 0.04),
+                       style: Theme.of(context).textTheme.headline1,
                     ),
                     IconButton(
-                      icon: Icon(Icons.close),
+                      icon: const Icon(Icons.close),
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -71,9 +66,7 @@ class _Pop_LoginState extends State<Pop_Login> {
                         Text(
                           'Deverá efectuar primeiramente o Login.',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontFamily: AppFonts.poppinsRegularFont,
-                              fontSize: Get.width * 0.038),
+                          style: Theme.of(context).textTheme.headline4,
                         ),
                       ],
                     ),
@@ -84,7 +77,7 @@ class _Pop_LoginState extends State<Pop_Login> {
                   child: Container(
                     height: Get.height * 0.06,
                     width: Get.width *0.4,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: AppColors.greenColor,
                       borderRadius: BorderRadius.all(
                         Radius.circular(35),

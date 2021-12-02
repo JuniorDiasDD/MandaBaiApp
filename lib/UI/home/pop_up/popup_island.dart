@@ -1,11 +1,9 @@
-import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
-import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/home/pages/home_page.dart';
 
 class Popup_Island extends StatefulWidget {
@@ -23,12 +21,6 @@ class _Popup_IslandState extends State<Popup_Island> {
       _isRadioSelected = await FlutterSession().get('island');
     }
     return _isRadioSelected;
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
   }
 
   @override
@@ -69,261 +61,219 @@ class _Popup_IslandState extends State<Popup_Island> {
                           child: Text(
                             'Selecione a Ilha pretendida:',
                             textAlign: TextAlign.start,
-                            style: TextStyle(
-                              fontFamily: AppFonts.poppinsBoldFont,
-                              fontSize: Get.width * 0.04,
-                            ),
+                            style: Theme.of(context).textTheme.headline2,
                           ),
                         ),
                         Container(
-                          height: Get.height*0.35,
+                          height: Get.height * 0.35,
                           child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 10.0),
-                                      child: Text(
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                left: Get.width * 0.02,
+                                right: Get.width * 0.02,
+                              ),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
                                         "Santo Antão",
-                                        style: TextStyle(
-                                          fontFamily:
-                                              AppFonts.poppinsRegularFont,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4,
                                       ),
-                                    ),
-                                    Radio(
-                                      value: "Santo Antão",
-                                      groupValue: _isRadioSelected,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _isRadioSelected = "Santo Antão";
-                                        });
-                                      },
-                                      activeColor: Colors.green,
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 10.0),
-                                      child: Text(
+                                      Radio(
+                                        value: "Santo Antão",
+                                        groupValue: _isRadioSelected,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _isRadioSelected = "Santo Antão";
+                                          });
+                                        },
+                                        activeColor: Colors.green,
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
                                         "São Vicente",
-                                        style: TextStyle(
-                                          fontFamily:
-                                              AppFonts.poppinsRegularFont,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4,
                                       ),
-                                    ),
-                                    Radio(
-                                      value: "São Vicente",
-                                      groupValue: _isRadioSelected,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _isRadioSelected = "São Vicente";
-                                        });
-                                      },
-                                      activeColor: Colors.green,
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 10.0),
-                                      child: Text(
+                                      Radio(
+                                        value: "São Vicente",
+                                        groupValue: _isRadioSelected,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _isRadioSelected = "São Vicente";
+                                          });
+                                        },
+                                        activeColor: Colors.green,
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
                                         "São Nicolau",
-                                        style: TextStyle(
-                                          fontFamily:
-                                              AppFonts.poppinsRegularFont,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4,
                                       ),
-                                    ),
-                                    Radio(
-                                      value: "São Nicolau",
-                                      groupValue: _isRadioSelected,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _isRadioSelected = "São Nicolau";
-                                        });
-                                      },
-                                      activeColor: Colors.green,
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 10.0),
-                                      child: Text(
+                                      Radio(
+                                        value: "São Nicolau",
+                                        groupValue: _isRadioSelected,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _isRadioSelected = "São Nicolau";
+                                          });
+                                        },
+                                        activeColor: Colors.green,
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
                                         "Sal",
-                                        style: TextStyle(
-                                          fontFamily:
-                                              AppFonts.poppinsRegularFont,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4,
                                       ),
-                                    ),
-                                    Radio(
-                                      value: "Sal",
-                                      groupValue: _isRadioSelected,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _isRadioSelected = "Sal";
-                                        });
-                                      },
-                                      activeColor: Colors.green,
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 10.0),
-                                      child: Text(
+                                      Radio(
+                                        value: "Sal",
+                                        groupValue: _isRadioSelected,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _isRadioSelected = "Sal";
+                                          });
+                                        },
+                                        activeColor: Colors.green,
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
                                         "Boa Vista",
-                                        style: TextStyle(
-                                          fontFamily:
-                                              AppFonts.poppinsRegularFont,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4,
                                       ),
-                                    ),
-                                    Radio(
-                                      value: "Boa Vista",
-                                      groupValue: _isRadioSelected,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _isRadioSelected = "Boa Vista";
-                                        });
-                                      },
-                                      activeColor: Colors.green,
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 10.0),
-                                      child: Text(
+                                      Radio(
+                                        value: "Boa Vista",
+                                        groupValue: _isRadioSelected,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _isRadioSelected = "Boa Vista";
+                                          });
+                                        },
+                                        activeColor: Colors.green,
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
                                         "Maio",
-                                        style: TextStyle(
-                                          fontFamily:
-                                              AppFonts.poppinsRegularFont,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4,
                                       ),
-                                    ),
-                                    Radio(
-                                      value: "Maio",
-                                      groupValue: _isRadioSelected,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _isRadioSelected = "Maio";
-                                        });
-                                      },
-                                      activeColor: Colors.green,
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 10.0),
-                                      child: Text(
+                                      Radio(
+                                        value: "Maio",
+                                        groupValue: _isRadioSelected,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _isRadioSelected = "Maio";
+                                          });
+                                        },
+                                        activeColor: Colors.green,
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
                                         "Santiago",
-                                        style: TextStyle(
-                                          fontFamily:
-                                              AppFonts.poppinsRegularFont,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4,
                                       ),
-                                    ),
-                                    Radio(
-                                      value: "Santiago",
-                                      groupValue: _isRadioSelected,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _isRadioSelected = "Santiago";
-                                        });
-                                      },
-                                      activeColor: Colors.green,
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 10.0),
-                                      child: Text(
+                                      Radio(
+                                        value: "Santiago",
+                                        groupValue: _isRadioSelected,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _isRadioSelected = "Santiago";
+                                          });
+                                        },
+                                        activeColor: Colors.green,
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
                                         "Fogo",
-                                        style: TextStyle(
-                                          fontFamily:
-                                              AppFonts.poppinsRegularFont,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4,
                                       ),
-                                    ),
-                                    Radio(
-                                      value: "Fogo",
-                                      groupValue: _isRadioSelected,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _isRadioSelected = "Fogo";
-                                        });
-                                      },
-                                      activeColor: Colors.green,
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 10.0),
-                                      child: Text(
+                                      Radio(
+                                        value: "Fogo",
+                                        groupValue: _isRadioSelected,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _isRadioSelected = "Fogo";
+                                          });
+                                        },
+                                        activeColor: Colors.green,
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
                                         "Brava",
-                                        style: TextStyle(
-                                          fontFamily:
-                                              AppFonts.poppinsRegularFont,
-                                        ),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4,
                                       ),
-                                    ),
-                                    Radio(
-                                      value: "Brava",
-                                      groupValue: _isRadioSelected,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _isRadioSelected = "Brava";
-                                        });
-                                      },
-                                      activeColor: Colors.green,
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                      Radio(
+                                        value: "Brava",
+                                        groupValue: _isRadioSelected,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _isRadioSelected = "Brava";
+                                          });
+                                        },
+                                        activeColor: Colors.green,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -333,7 +283,7 @@ class _Popup_IslandState extends State<Popup_Island> {
                           child: Container(
                             height: Get.height * 0.07,
                             width: Get.width * 0.3,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: AppColors.greenColor,
                               borderRadius: BorderRadius.all(
                                 Radius.circular(35),

@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: AppColors.greenColor,
-        unselectedItemColor: Colors.black54,
+        unselectedItemColor: Theme.of(context).indicatorColor,
         onTap: _onItemTapped,
 
       ),

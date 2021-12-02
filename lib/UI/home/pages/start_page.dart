@@ -119,43 +119,7 @@ class _StartPageState extends State<StartPage> {
                           )
                           .toList(),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: Get.width * 0.05,
-                        right: Get.width * 0.05,
-                        top: Get.height * 0.255,
-                      ),
-                      child: Container(
-                        width: 350,
-                        height: Get.height * 0.05,
-                        decoration: new BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: Theme.of(context).bottomAppBarColor,
-                        ),
-                        child: const TextField(
-                          cursorColor: AppColors.greenColor,
-                          decoration: InputDecoration(
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30.0)),
-                                borderSide:
-                                    BorderSide(color: AppColors.greenColor)),
-                            hintText: 'Pesquisar Produto...',
-                            contentPadding: EdgeInsets.only(top: 10, left: 15),
-                            suffixIcon: Icon(
-                              Icons.search,
-                              color: AppColors.greenColor,
-                            ),
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(30.0),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                  
                   ],
                 ),
                 SizedBox(
@@ -168,10 +132,7 @@ class _StartPageState extends State<StartPage> {
                         top: Get.height * 0.01, left: Get.width * 0.02),
                     child: Text(
                       'Novos Serviços',
-                      style: TextStyle(
-                        fontFamily: AppFonts.poppinsBoldFont,
-                        fontSize: Get.width * 0.042,
-                      ),
+                      style: Theme.of(context).textTheme.headline1,
                     ),
                   ),
                 ),
@@ -194,35 +155,10 @@ class _StartPageState extends State<StartPage> {
                           top: Get.height * 0.01, left: Get.width * 0.023),
                       child: Text(
                         'Categorias',
-                        style: TextStyle(
-                          fontFamily: AppFonts.poppinsBoldFont,
-                          fontSize: Get.width * 0.042,
-                        ),
+                        style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
-                    /*  Padding(
-                      padding: EdgeInsets.only(top: Get.height * 0.01),
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          textStyle: const TextStyle(
-                              decoration: TextDecoration.underline),
-                          primary: AppColors.greenColor,
-                        ),
-                        onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const CategoryPage(),
-                          ),
-                        ),
-                        child: Text(
-                          'Ver Todas',
-                          style: TextStyle(
-                            fontFamily: AppFonts.poppinsBoldFont,
-                            fontSize: Get.width * 0.035,
-                          ),
-                        ),
-                      ),
-                    ),*/
+                   
                   ],
                 ),
                 FutureBuilder(

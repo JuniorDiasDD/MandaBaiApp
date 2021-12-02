@@ -126,10 +126,7 @@ class _CategoryPageState extends State<CategoryPage> {
               alignment: Alignment.topLeft,
               child: Text(
                 widget.category.name,
-                style: TextStyle(
-                  fontFamily: AppFonts.poppinsBoldFont,
-                  fontSize: Get.width * 0.04,
-                ),
+                style: Theme.of(context).textTheme.headline1,
               ),
             ),
           ),

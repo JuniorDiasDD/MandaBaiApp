@@ -1,4 +1,3 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/cart_controller.dart';
@@ -8,11 +7,7 @@ import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/cart_model.dart';
 import 'package:manda_bai/UI/cart/components/listview_item_cart.dart';
-import 'package:manda_bai/UI/home/components/header.dart';
-import 'package:manda_bai/UI/home/components/menu.dart';
 import 'package:websafe_svg/websafe_svg.dart';
-
-import 'checkout_page_step_1.dart';
 import 'checkout_page_step_2.dart';
 
 class CartPage extends StatefulWidget {
@@ -28,25 +23,23 @@ class _StartPageState extends State<CartPage> {
   bool isChecked = false;
   List<CartModel> list_cart = [];
   Future carregarCart() async {
-    if(list_cart.isEmpty){
-  list_cart = await ServiceRequest.loadCart();
     if (list_cart.isEmpty) {
-      return null;
-    } else {
-      setState(() {
-        cartPageController.list = list_cart;
-        cartPageController.calcule();
-      });
+      list_cart = await ServiceRequest.loadCart();
+      if (list_cart.isEmpty) {
+        return null;
+      } else {
+        setState(() {
+          cartPageController.list = list_cart;
+          cartPageController.calcule();
+        });
+      }
     }
-    }
-  
 
     return list_cart;
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     carregarCart();
   }
@@ -58,33 +51,6 @@ class _StartPageState extends State<CartPage> {
         return new Future(() => false);
       },
       child: Scaffold(
-        /*  appBar: AppBar(
-          // backgroundColor: Colors.white,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Meu Carinho',
-                style: TextStyle(
-                  fontFamily: AppFonts.poppinsRegularFont,
-                ),
-              ),
-              IconButton(
-                padding: EdgeInsets.only(
-                  right: Get.width * 0.02,
-                ),
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.delete,
-                  color: Colors.white,
-                ),
-                iconSize: Get.width * 0.05,
-                alignment: Alignment.centerRight,
-              ),
-            ],
-          ),
-        ),*/
-        //drawer: Menu(),
         body: Padding(
           padding:
               EdgeInsets.only(left: Get.width * 0.04, right: Get.width * 0.04),
@@ -100,9 +66,7 @@ class _StartPageState extends State<CartPage> {
                     ),
                     Text(
                       'Meu Carinho',
-                      style: TextStyle(
-                          fontFamily: AppFonts.poppinsBoldFont,
-                          fontSize: Get.width * 0.05),
+                      style: Theme.of(context).textTheme.headline1,
                     ),
                     Container(
                       child: IconButton(
@@ -123,10 +87,10 @@ class _StartPageState extends State<CartPage> {
                   children: [
                     Text(
                       "Selecionar Todos",
-                      style: TextStyle(fontFamily: AppFonts.poppinsRegularFont),
+                      style:Theme.of(context).textTheme.headline4,
                     ),
                     Checkbox(
-                      checkColor: Colors.white,
+                      checkColor: Theme.of(context).cardColor,
                       activeColor: AppColors.greenColor,
                       value: isChecked,
                       onChanged: (bool? value) {
@@ -165,9 +129,7 @@ class _StartPageState extends State<CartPage> {
                               SizedBox(height: Get.height * 0.08),
                               Text(
                                 "O seu carrinho está vazio...",
-                                style: TextStyle(
-                                    fontFamily: AppFonts.poppinsRegularFont,
-                                    fontSize: Get.width * 0.035),
+                                style: Theme.of(context).textTheme.headline4,
                               ),
                             ],
                           ),
@@ -182,8 +144,7 @@ class _StartPageState extends State<CartPage> {
                             itemCount: snapshot.data.length,
                             itemBuilder: (BuildContext context, index) {
                               var list = list_cart[index];
-                              //  cartPageController.name = list.name;
-                              //  cartPageController.amount = list.amount;
+
                               cartPageController.price =
                                   double.parse(list.price) * list.amount;
                               return ItemCart(
@@ -196,39 +157,18 @@ class _StartPageState extends State<CartPage> {
                     }
                   },
                 ),
-                /* Container(
-                        height: Get.height * 0.45,
-                        child: ListView.builder(
-                          padding: EdgeInsets.all(0.0),
-                          shrinkWrap: true,
-                          itemCount: list_cart.length,
-                          itemBuilder: (context, index) {
-                            var list = list_cart[index];
-                            //  cartPageController.name = list.name;
-                            //  cartPageController.amount = list.amount;
-                            cartPageController.price = double.parse(list.price) * list.amount;
-                            return ItemCart(
-                              cartModel:list,
-                            );
-                          },
-                        ),
-                      ),*/
-
                 SizedBox(height: Get.height * 0.01),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "Sub Total: ",
-                      style: TextStyle(fontFamily: AppFonts.poppinsBoldFont),
+                      style: Theme.of(context).textTheme.headline2,
                     ),
                     Obx(
                       () => Text(
                         cartPageController.subTotal.toString(),
-                        style: TextStyle(
-                          fontFamily: AppFonts.poppinsRegularFont,
-                          color: AppColors.greenColor,
-                        ),
+                        style: Theme.of(context).textTheme.headline2,
                       ),
                     ),
                   ],
@@ -239,7 +179,7 @@ class _StartPageState extends State<CartPage> {
                   children: [
                     Text(
                       "Taxa: ",
-                      style: TextStyle(fontFamily: AppFonts.poppinsBoldFont),
+                      style: Theme.of(context).textTheme.headline2,
                     ),
                     Obx(
                       () => Text(
@@ -258,23 +198,18 @@ class _StartPageState extends State<CartPage> {
                   children: [
                     Text(
                       "Entrega: ",
-                      style: TextStyle(fontFamily: AppFonts.poppinsBoldFont),
+                      style: Theme.of(context).textTheme.headline2,
                     ),
                     Text(
                       "Gratis ",
-                      style: TextStyle(
-                        fontFamily: AppFonts.poppinsBoldFont,
-                      ),
+                      style: Theme.of(context).textTheme.headline1,
                     ),
                   ],
                 ),
                 SizedBox(height: Get.height * 0.01),
                 Text(
                   "Envio totalmente Grátis. Cobramos apenas uma pequena taxa por utilização do site no valor de: € 5.00 ",
-                  style: TextStyle(
-                    fontFamily: AppFonts.poppinsRegularFont,
-                    fontSize: 12,
-                  ),
+                  style: Theme.of(context).textTheme.headline4,
                 ),
                 SizedBox(height: Get.height * 0.01),
                 Row(
@@ -282,8 +217,7 @@ class _StartPageState extends State<CartPage> {
                   children: [
                     Text(
                       "Total: ",
-                      style: TextStyle(
-                          fontFamily: AppFonts.poppinsBoldFont, fontSize: 18),
+                      style: Theme.of(context).textTheme.headline1,
                     ),
                     Container(
                       child: Row(
@@ -292,7 +226,7 @@ class _StartPageState extends State<CartPage> {
                           Obx(
                             () => Text(
                               cartPageController.total.toStringAsFixed(2),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontFamily: AppFonts.poppinsBoldFont,
                                 color: AppColors.greenColor,
                                 fontSize: 18,
@@ -301,9 +235,7 @@ class _StartPageState extends State<CartPage> {
                           ),
                           Text(
                             "EUR",
-                            style: TextStyle(
-                              fontFamily: AppFonts.poppinsRegularFont,
-                            ),
+                            style: Theme.of(context).textTheme.headline4,
                           )
                         ],
                       ),

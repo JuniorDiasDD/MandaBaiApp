@@ -33,14 +33,13 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
           const EdgeInsets.only(top: 4.0, left: 2.0, right: 2.0, bottom: 4.0),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).dialogBackgroundColor,
           borderRadius: BorderRadius.circular(12),
           boxShadow: const [
             BoxShadow(
               color: Colors.grey,
               blurRadius: 2.0,
-              //spreadRadius: 0.0,
-              offset: Offset(2.0, 2.0), // shadow direction: bottom right
+              offset: Offset(2.0, 2.0),
             )
           ],
         ),
@@ -58,7 +57,7 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
             ),
             Container(
               margin: EdgeInsets.only(
-                left: 10,
+                left: Get.width * 0.01,
               ),
               width: Get.width * 0.62,
               child: Column(
@@ -68,20 +67,14 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                            width: Get.width * 0.35,
+                        width: Get.width * 0.35,
                         child: Text(
                           widget.name,
-                         
-                          style: const TextStyle(
-                            fontFamily: AppFonts.poppinsBoldFont,
-                            fontSize: 15,
-                            color: Colors.black,
-                          ),
+                          style: Theme.of(context).textTheme.headline4,
                         ),
                       ),
                       Row(
                         children: [
-                          
                           IconButton(
                             padding: const EdgeInsets.all(0.0),
                             onPressed: () {},
@@ -109,11 +102,7 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                       child: Text(
                         widget.price.toString(),
                         textAlign: TextAlign.center,
-                        style:  TextStyle(
-                          fontFamily: AppFonts.poppinsBoldFont,
-                          fontSize: Get.width*0.035,
-                          color: AppColors.greenColor,
-                        ),
+                        style: Theme.of(context).textTheme.headline5,
                       ),
                     ),
                   ),

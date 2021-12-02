@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_unnecessary_containers, use_key_in_widget_constructors
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
@@ -10,8 +8,7 @@ import 'package:manda_bai/UI/description_product/pages/product_detail_page.dart'
 class ProductListComponent extends StatelessWidget {
   Product product;
 
-  ProductListComponent({required this.product});
-
+  ProductListComponent({Key? key, required this.product}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -32,14 +29,14 @@ class ProductListComponent extends StatelessWidget {
           width: Get.width * 0.4,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.white54, width: 1.0),
-            color:Theme.of(context).scaffoldBackgroundColor,
+            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
-              BoxShadow(
+              const BoxShadow(
                 color: Colors.grey,
                 blurRadius: 1.0,
                 spreadRadius: 0.0,
-                offset: Offset(1.0, 1.0), // changes position of shadow
+                offset: Offset(1.0, 1.0),
               ),
             ],
           ),
@@ -65,11 +62,7 @@ class ProductListComponent extends StatelessWidget {
                 child: Text(
                   product.name,
                   maxLines: 1,
-                  style:  TextStyle(
-                    fontFamily: AppFonts.poppinsRegularFont,
-                    fontSize: Get.width*0.033,
-                    
-                  ),
+                  style: Theme.of(context).textTheme.headline4,
                 ),
                 padding: EdgeInsets.only(
                   left: Get.width * 0.03,
@@ -94,25 +87,17 @@ class ProductListComponent extends StatelessWidget {
                           child: Text(
                             product.price.toString(),
                             textAlign: TextAlign.center,
-                            style:  TextStyle(
-                              fontFamily: AppFonts.poppinsRegularFont,
-                              fontSize: Get.width*0.03,
-                              color: AppColors.greenColor,
-                            ),
+                            style: Theme.of(context).textTheme.headline5,
                           ),
                         ),
-                         Padding(
+                        Padding(
                           padding: EdgeInsets.only(
                             left: Get.width * 0.01,
                           ),
                           child: Text(
-                             '€',
+                            '€',
                             textAlign: TextAlign.center,
-                            style:  TextStyle(
-                              fontFamily: AppFonts.poppinsRegularFont,
-                               fontSize: Get.width*0.03,
-                              color: AppColors.greenColor,
-                            ),
+                            style: Theme.of(context).textTheme.headline5,
                           ),
                         ),
                       ],

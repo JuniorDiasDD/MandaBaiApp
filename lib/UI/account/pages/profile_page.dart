@@ -53,72 +53,56 @@ class _StartPageState extends State<ProfilePage> {
         return new Future(() => false);
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Minha Conta",
-            style: TextStyle(
-              fontFamily: AppFonts.poppinsRegularFont,
-            ),
-          ),
-        ),
-        drawer: Menu(),
         body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: Get.height * 0.03),
-              FutureBuilder(
-                future: _carregarUser(),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (!snapshot.hasData) {
-                    return Container(
-                      height: Get.height * 0.1,
-                      width: Get.width,
-                      child: Center(
-                        child: Image.asset(
-                          AppImages.loading,
-                          width: Get.width * 0.1,
-                          height: Get.height * 0.1,
-                          alignment: Alignment.center,
-                        ),
-                      ),
-                    );
-                  } else {
-                    return Column(
-                      children: [
-                        Image.network(
-                          user.avatar,
-                          width: Get.width * 0.2,
-                          // height: Get.height * 0.2,
-                          alignment: Alignment.center,
-                        ),
-                        SizedBox(height: Get.height * 0.03),
-                        Text(
-                          user.name,
-                          style: TextStyle(
-                            fontFamily: AppFonts.poppinsBoldFont,
-                            fontSize: 14,
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: Get.width * 0.05,
+              right: Get.width * 0.05,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: Get.height * 0.1),
+                FutureBuilder(
+                  future: _carregarUser(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (!snapshot.hasData) {
+                      return Container(
+                        height: Get.height * 0.1,
+                        width: Get.width,
+                        child: Center(
+                          child: Image.asset(
+                            AppImages.loading,
+                            width: Get.width * 0.1,
+                            height: Get.height * 0.1,
+                            alignment: Alignment.center,
                           ),
                         ),
-                        Text(
-                          user.email,
-                          style: TextStyle(
-                            fontFamily: AppFonts.poppinsRegularFont,
-                            fontSize: 12,
+                      );
+                    } else {
+                      return Column(
+                        children: [
+                          Image.network(
+                            user.avatar,
+                            width: Get.width * 0.2,
+                            alignment: Alignment.center,
                           ),
-                        ),
-                      ],
-                    );
-                  }
-                },
-              ),
-              SizedBox(height: Get.height * 0.05),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: Get.width * 0.05,
-                  right: Get.width * 0.05,
+                          SizedBox(height: Get.height * 0.03),
+                          Text(
+                            user.name,
+                            style: Theme.of(context).textTheme.headline2,
+                          ),
+                          Text(
+                            user.email,
+                            style: Theme.of(context).textTheme.headline4,
+                          ),
+                        ],
+                      );
+                    }
+                  },
                 ),
-                child: Container(
+                SizedBox(height: Get.height * 0.05),
+                Container(
                   height: Get.height * 0.06,
                   child: GestureDetector(
                     onTap: () {
@@ -153,31 +137,20 @@ class _StartPageState extends State<ProfilePage> {
                           ),
                           child: Text(
                             'Editar Perfil',
-                            style: TextStyle(
-                              fontFamily: AppFonts.poppinsRegularFont,
-                              color: Colors.black,
-                              fontSize: Get.height * 0.018,
-                            ),
+                            style: Theme.of(context).textTheme.headline3,
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: Get.height * 0.01),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: Get.width * 0.05,
-                  right: Get.width * 0.05,
-                ),
-                child: Row(
+                SizedBox(height: Get.height * 0.01),
+                Row(
                   children: <Widget>[
                     Expanded(
-                      child: new Container(
+                      child: SizedBox(
                         width: Get.width * 0.1,
-                        child: Divider(
-                          color: Colors.black,
+                        child: const Divider(
                           height: 36,
                         ),
                       ),
@@ -187,26 +160,22 @@ class _StartPageState extends State<ProfilePage> {
                         left: Get.width * 0.05,
                         right: Get.width * 0.05,
                       ),
-                      child: Text("Outros Serviços"),
+                      child: Text(
+                        "Outros Serviços",
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
                     ),
                     Expanded(
-                      child: Container(
+                      child: SizedBox(
                         width: Get.width * 0.4,
                         child: const Divider(
-                          color: Colors.black,
                           height: 36,
                         ),
                       ),
                     ),
                   ],
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: Get.width * 0.05,
-                  right: Get.width * 0.05,
-                ),
-                child: Container(
+                Container(
                   height: Get.height * 0.06,
                   child: GestureDetector(
                     onTap: () {
@@ -224,7 +193,7 @@ class _StartPageState extends State<ProfilePage> {
                           width: Get.height * 0.042,
                           decoration: BoxDecoration(
                             color: Colors.lightBlueAccent,
-                            borderRadius: BorderRadius.all(
+                            borderRadius: const BorderRadius.all(
                               Radius.circular(100),
                             ),
                             border: Border.all(color: Colors.lightBlueAccent),
@@ -243,25 +212,15 @@ class _StartPageState extends State<ProfilePage> {
                           ),
                           child: Text(
                             'Saldo CvMóvel',
-                            style: TextStyle(
-                              fontFamily: AppFonts.poppinsRegularFont,
-                              color: Colors.black,
-                              fontSize: Get.height * 0.018,
-                            ),
+                            style: Theme.of(context).textTheme.headline3,
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: Get.height * 0.01),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: Get.width * 0.05,
-                  right: Get.width * 0.05,
-                ),
-                child: Container(
+                SizedBox(height: Get.height * 0.01),
+                Container(
                   height: Get.height * 0.06,
                   child: GestureDetector(
                     onTap: () {},
@@ -272,7 +231,7 @@ class _StartPageState extends State<ProfilePage> {
                           width: Get.height * 0.042,
                           decoration: BoxDecoration(
                             color: Colors.deepPurpleAccent,
-                            borderRadius: BorderRadius.all(
+                            borderRadius: const BorderRadius.all(
                               Radius.circular(100),
                             ),
                             border: Border.all(color: Colors.deepPurpleAccent),
@@ -291,30 +250,19 @@ class _StartPageState extends State<ProfilePage> {
                           ),
                           child: Text(
                             'Serviços da Câmara ',
-                            style: TextStyle(
-                              fontFamily: AppFonts.poppinsRegularFont,
-                              color: Colors.black,
-                              fontSize: Get.height * 0.018,
-                            ),
+                            style: Theme.of(context).textTheme.headline3,
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: Get.width * 0.05,
-                  right: Get.width * 0.05,
-                ),
-                child: Row(
+                Row(
                   children: <Widget>[
                     Expanded(
-                      child: new Container(
+                      child: SizedBox(
                         width: Get.width * 0.1,
                         child: Divider(
-                          color: Colors.black,
                           height: 36,
                         ),
                       ),
@@ -324,26 +272,22 @@ class _StartPageState extends State<ProfilePage> {
                         left: Get.width * 0.05,
                         right: Get.width * 0.05,
                       ),
-                      child: Text("Configurações"),
+                      child: Text(
+                        "Configurações",
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
                     ),
                     Expanded(
-                      child: Container(
+                      child: SizedBox(
                         width: Get.width * 0.4,
                         child: const Divider(
-                          color: Colors.black,
                           height: 36,
                         ),
                       ),
                     ),
                   ],
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: Get.width * 0.05,
-                  right: Get.width * 0.05,
-                ),
-                child: Column(
+                Column(
                   children: [
                     Container(
                       height: Get.height * 0.06,
@@ -362,7 +306,7 @@ class _StartPageState extends State<ProfilePage> {
                               width: Get.height * 0.042,
                               decoration: BoxDecoration(
                                 color: Colors.lightBlueAccent,
-                                borderRadius: BorderRadius.all(
+                                borderRadius: const BorderRadius.all(
                                   Radius.circular(100),
                                 ),
                                 border:
@@ -383,27 +327,21 @@ class _StartPageState extends State<ProfilePage> {
                                 children: [
                                   Text(
                                     'Mudar de ILha',
-                                    style: TextStyle(
-                                      fontFamily: AppFonts.poppinsRegularFont,
-                                      color: Colors.black,
-                                      fontSize: Get.height * 0.018,
-                                    ),
+                                    style:
+                                        Theme.of(context).textTheme.headline3,
                                   ),
                                   FutureBuilder(
                                       future: _carregarIsland(),
                                       builder: (BuildContext context,
                                           AsyncSnapshot snapshot) {
                                         if (snapshot.data == null) {
-                                          return Text(" ");
+                                          return const Text(" ");
                                         } else {
                                           return Text(
                                             '(' + island + ')',
-                                            style: TextStyle(
-                                              fontFamily:
-                                                  AppFonts.poppinsRegularFont,
-                                              color: Colors.black,
-                                              fontSize: Get.height * 0.018,
-                                            ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline3,
                                           );
                                         }
                                       }),
@@ -443,11 +381,7 @@ class _StartPageState extends State<ProfilePage> {
                               ),
                               child: Text(
                                 'Mudar de Idioma',
-                                style: TextStyle(
-                                  fontFamily: AppFonts.poppinsRegularFont,
-                                  color: Colors.black,
-                                  fontSize: Get.height * 0.018,
-                                ),
+                                style: Theme.of(context).textTheme.headline3,
                               ),
                             ),
                           ],
@@ -462,7 +396,7 @@ class _StartPageState extends State<ProfilePage> {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return Popup_Moeda();
+                                return const Popup_Moeda();
                               });
                         },
                         child: Row(
@@ -472,7 +406,7 @@ class _StartPageState extends State<ProfilePage> {
                               width: Get.height * 0.042,
                               decoration: BoxDecoration(
                                 color: Colors.lightGreen,
-                                borderRadius: BorderRadius.all(
+                                borderRadius: const BorderRadius.all(
                                   Radius.circular(100),
                                 ),
                                 border: Border.all(color: Colors.lightGreen),
@@ -489,51 +423,42 @@ class _StartPageState extends State<ProfilePage> {
                               ),
                               child: Text(
                                 'Selecionar Moeda',
-                                style: TextStyle(
-                                  fontFamily: AppFonts.poppinsRegularFont,
-                                  color: Colors.black,
-                                  fontSize: Get.height * 0.018,
-                                ),
+                                style: Theme.of(context).textTheme.headline3,
                               ),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: Get.width * 0.05,
-                        right: Get.width * 0.05,
-                      ),
-                      child: Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: new Container(
-                              width: Get.width * 0.1,
-                              child: Divider(
-                                color: Colors.black,
-                                height: 36,
-                              ),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: SizedBox(
+                            width: Get.width * 0.1,
+                            child: Divider(
+                              height: 36,
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: Get.width * 0.05,
-                              right: Get.width * 0.05,
-                            ),
-                            child: Text("Informações"),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: Get.width * 0.05,
+                            right: Get.width * 0.05,
                           ),
-                          Expanded(
-                            child: Container(
-                              width: Get.width * 0.4,
-                              child: const Divider(
-                                color: Colors.black,
-                                height: 36,
-                              ),
+                          child: Text(
+                            "Informações",
+                            style: Theme.of(context).textTheme.headline4,
+                          ),
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                            width: Get.width * 0.4,
+                            child: const Divider(
+                              height: 36,
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: Get.height * 0.01),
                     Container(
@@ -554,7 +479,7 @@ class _StartPageState extends State<ProfilePage> {
                               width: Get.height * 0.042,
                               decoration: BoxDecoration(
                                 color: Colors.deepPurpleAccent,
-                                borderRadius: BorderRadius.all(
+                                borderRadius: const BorderRadius.all(
                                   Radius.circular(100),
                                 ),
                                 border:
@@ -572,11 +497,7 @@ class _StartPageState extends State<ProfilePage> {
                               ),
                               child: Text(
                                 'Sobre Nós e Aplicação',
-                                style: TextStyle(
-                                  fontFamily: AppFonts.poppinsRegularFont,
-                                  color: Colors.black,
-                                  fontSize: Get.height * 0.018,
-                                ),
+                                style: Theme.of(context).textTheme.headline3,
                               ),
                             ),
                           ],
@@ -595,7 +516,7 @@ class _StartPageState extends State<ProfilePage> {
                               width: Get.height * 0.042,
                               decoration: BoxDecoration(
                                 color: Colors.teal,
-                                borderRadius: BorderRadius.all(
+                                borderRadius: const BorderRadius.all(
                                   Radius.circular(100),
                                 ),
                                 border: Border.all(color: Colors.teal),
@@ -612,11 +533,7 @@ class _StartPageState extends State<ProfilePage> {
                               ),
                               child: Text(
                                 'Contacto',
-                                style: TextStyle(
-                                  fontFamily: AppFonts.poppinsRegularFont,
-                                  color: Colors.black,
-                                  fontSize: Get.height * 0.018,
-                                ),
+                                style: Theme.of(context).textTheme.headline3,
                               ),
                             ),
                           ],
@@ -635,7 +552,7 @@ class _StartPageState extends State<ProfilePage> {
                               width: Get.height * 0.042,
                               decoration: BoxDecoration(
                                 color: Colors.redAccent,
-                                borderRadius: BorderRadius.all(
+                                borderRadius: const BorderRadius.all(
                                   Radius.circular(100),
                                 ),
                                 border: Border.all(color: Colors.redAccent),
@@ -652,11 +569,7 @@ class _StartPageState extends State<ProfilePage> {
                               ),
                               child: Text(
                                 'Terminar Sessão',
-                                style: TextStyle(
-                                  fontFamily: AppFonts.poppinsRegularFont,
-                                  color: Colors.black,
-                                  fontSize: Get.height * 0.018,
-                                ),
+                                style: Theme.of(context).textTheme.headline3,
                               ),
                             ),
                           ],
@@ -665,9 +578,9 @@ class _StartPageState extends State<ProfilePage> {
                     ),
                   ],
                 ),
-              ),
-              SizedBox(height: Get.height * 0.03),
-            ],
+                SizedBox(height: Get.height * 0.03),
+              ],
+            ),
           ),
         ),
       ),

@@ -38,12 +38,6 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
   }
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
@@ -60,22 +54,18 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                   children: [
                     Container(
                       child: IconButton(
-                        // padding: EdgeInsets.all(0.0),
                         onPressed: () {
                           Navigator.pop(context);
                         },
                         icon: const Icon(
                           Icons.arrow_back,
-                        
                         ),
                         alignment: Alignment.centerRight,
                       ),
                     ),
                     Text(
                       'Checkout',
-                      style: TextStyle(
-                          fontFamily: AppFonts.poppinsBoldFont,
-                          fontSize: Get.width * 0.05),
+                      style: Theme.of(context).textTheme.headline1,
                     ),
                     IconButton(
                       padding: const EdgeInsets.all(0.0),
@@ -91,7 +81,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                   height: Get.height * 0.6,
                                   margin: EdgeInsets.only(left: 20, right: 20),
                                   decoration: BoxDecoration(
-                                     color:Theme.of(context).scaffoldBackgroundColor,
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor,
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: SingleChildScrollView(
@@ -260,9 +251,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                   alignment: Alignment.topLeft,
                   child: Text(
                     "Faturação e Envio",
-                    style: TextStyle(
-                        fontFamily: AppFonts.poppinsBoldFont,
-                        fontSize: Get.width * 0.045),
+                    style: Theme.of(context).textTheme.headline1,
                   ),
                 ),
                 Align(
@@ -278,10 +267,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                         trimMode: TrimMode.Line,
                         trimCollapsedText: 'Ver os dados',
                         trimExpandedText: 'Fechar',
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: AppFonts.poppinsRegularFont,
-                           ),
+                        style: Theme.of(context).textTheme.headline4,
                         moreStyle: TextStyle(
                           fontSize: 14,
                           fontFamily: AppFonts.poppinsRegularFont,
@@ -291,18 +277,12 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                       SizedBox(height: Get.height * 0.01),
                       Text(
                         "Dados do Destinário",
-                        style: TextStyle(
-                          fontFamily: AppFonts.poppinsRegularFont,
-                          fontSize: Get.width * 0.035,
-                        ),
+                        style: Theme.of(context).textTheme.headline1,
                       ),
                       SizedBox(height: Get.height * 0.01),
                       Text(
-                        "Ilha: "+"Santiago",
-                        style: TextStyle(
-                          fontFamily: AppFonts.poppinsRegularFont,
-                          fontSize: Get.width * 0.035,
-                        ),
+                        "Ilha: " + "Santiago",
+                        style: Theme.of(context).textTheme.headline2,
                       ),
                     ],
                   ),
@@ -310,38 +290,35 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                 SizedBox(height: Get.height * 0.02),
                 SizedBox(
                   width: Get.width,
-                
                   child: TextFormField(
                     controller: input_nome,
-                    style: TextStyle(
-                      fontFamily: AppFonts.poppinsRegularFont,
-                    ),
+                    style: Theme.of(context).textTheme.headline4,
                     decoration: InputDecoration(
                       labelText: "Nome do destinatário",
-                      filled: false,
-                      fillColor: Colors.white,
+                      labelStyle: Theme.of(context).textTheme.headline4,
+                      filled: true,
+                      fillColor: Theme.of(context).backgroundColor,
                       border: OutlineInputBorder(
                         borderRadius: new BorderRadius.circular(35.0),
-                        borderSide: new BorderSide(),
+                        borderSide:
+                            new BorderSide(color: Colors.red, width: 2.0),
                       ),
                     ),
                     validator: (value) =>
                         value!.isEmpty ? 'Insira o nome' : null,
                   ),
                 ),
-                
                 SizedBox(height: Get.height * 0.01),
                 SizedBox(
                   width: Get.width,
                   child: TextFormField(
                     controller: input_cidade,
-                    style: TextStyle(
-                      fontFamily: AppFonts.poppinsRegularFont,
-                    ),
+                    style: Theme.of(context).textTheme.headline4,
                     decoration: InputDecoration(
                       labelText: "Cidade",
-                      filled: false,
-                      fillColor: Colors.white,
+                      labelStyle: Theme.of(context).textTheme.headline4,
+                      filled: true,
+                      fillColor: Theme.of(context).backgroundColor,
                       border: OutlineInputBorder(
                         borderRadius: new BorderRadius.circular(35.0),
                         borderSide: new BorderSide(),
@@ -356,13 +333,12 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                   width: Get.width,
                   child: TextFormField(
                     controller: input_endereco,
-                    style: TextStyle(
-                      fontFamily: AppFonts.poppinsRegularFont,
-                    ),
+                    style: Theme.of(context).textTheme.headline4,
                     decoration: InputDecoration(
                       labelText: "Endereço",
-                      filled: false,
-                      fillColor: Colors.white,
+                      labelStyle: Theme.of(context).textTheme.headline4,
+                      filled: true,
+                      fillColor: Theme.of(context).backgroundColor,
                       border: OutlineInputBorder(
                         borderRadius: new BorderRadius.circular(35.0),
                         borderSide: new BorderSide(),
@@ -378,16 +354,17 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                   child: TextFormField(
                     controller: input_tel,
                     keyboardType: TextInputType.number,
-                    style: TextStyle(
-                      fontFamily: AppFonts.poppinsRegularFont,
-                    ),
+                    style: Theme.of(context).textTheme.headline4,
                     decoration: InputDecoration(
                       labelText: "Telefone ou Telemovel",
-                      filled: false,
-                      fillColor: Colors.white,
+                      labelStyle: Theme.of(context).textTheme.headline4,
+                      filled: true,
+                      fillColor: Theme.of(context).backgroundColor,
                       border: OutlineInputBorder(
                         borderRadius: new BorderRadius.circular(35.0),
-                        borderSide: new BorderSide(),
+                        borderSide: new BorderSide(
+                          color: Colors.red,
+                        ),
                       ),
                     ),
                     validator: (value) =>
@@ -399,19 +376,14 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                   alignment: Alignment.topLeft,
                   child: Text(
                     "Informação Adicional",
-                    style: TextStyle(
-                        fontFamily: AppFonts.poppinsBoldFont,
-                        fontSize: Get.width * 0.045),
+                    style: Theme.of(context).textTheme.headline2,
                   ),
                 ),
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
                     "Notas da encomenda (opcional)",
-                    style: TextStyle(
-                      fontFamily: AppFonts.poppinsRegularFont,
-                      fontSize: Get.width * 0.035,
-                    ),
+                    style: Theme.of(context).textTheme.headline4,
                   ),
                 ),
                 SizedBox(height: Get.height * 0.01),
@@ -427,15 +399,14 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                           EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(width: 2, color: Colors.black54),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black54),
+                        borderSide: BorderSide(width: 2, color: Colors.black54),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       hintText: 'escrever...',
-                      labelStyle: TextStyle(
-                        color: Colors.black87,
-                      ),
+                      labelStyle: Theme.of(context).textTheme.headline4,
                     ),
                   ),
                 ),

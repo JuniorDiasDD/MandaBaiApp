@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Core/app_colors.dart';
-import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/UI/home/components/carrega_saldo.dart';
-import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 
 class ItemNew extends StatefulWidget {
   String image, title;
@@ -13,16 +10,8 @@ class ItemNew extends StatefulWidget {
 }
 
 class _ItemNewState extends State<ItemNew> {
- 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    //print(check.);
-  }
   @override
   Widget build(BuildContext context) {
-   
     return GestureDetector(
       onTap: () {
         if (widget.title == "Saldo CvMovel") {
@@ -31,10 +20,7 @@ class _ItemNewState extends State<ItemNew> {
               builder: (BuildContext context) {
                 return Carrega_Saldo();
               });
-        }else if(widget.title=="Serviços da Câmara"){
-         
-
-        }
+        } else if (widget.title == "Serviços da Câmara") {}
       },
       child: Padding(
         padding: EdgeInsets.only(
@@ -43,43 +29,41 @@ class _ItemNewState extends State<ItemNew> {
           bottom: Get.height * 0.005,
         ),
         child: Container(
-            width: Get.width * 0.3,
-            height: Get.height * 0.15,
-            decoration: new BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  blurRadius: 1.0,
-                  spreadRadius: 0.0,
-                  offset: Offset(0.5, 0.5), // changes position of shadow
-                ),
-              ],
-             color:Theme.of(context).dialogBackgroundColor,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(
-                  widget.image,
-                  width: Get.width * 0.15,
-                  height: Get.width * 0.15,
-                ),
-                SizedBox(
-                  height: Get.height * 0.01,
-                ),
-                Text(
-                  widget.title,
-                  style: TextStyle(
-                    fontFamily: AppFonts.poppinsBoldFont,
-                    fontSize: Get.width * 0.025,
-                  ),
-                ),
-              ],
-            )),
+          width: Get.width * 0.3,
+          height: Get.height * 0.15,
+          decoration: new BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.grey,
+                blurRadius: 1.0,
+                spreadRadius: 0.0,
+                offset: Offset(0.5, 0.5), // changes position of shadow
+              ),
+            ],
+            color: Theme.of(context).dialogBackgroundColor,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                widget.image,
+                width: Get.width * 0.15,
+                height: Get.width * 0.15,
+              ),
+              SizedBox(
+                height: Get.height * 0.01,
+              ),
+              Text(
+                widget.title,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headline2,
+              ),
+            ],
+          ),
+        ),
       ),
-      // onTap: onTap,
     );
   }
 }

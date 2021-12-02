@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
-import 'package:manda_bai/Core/app_images.dart';
-import 'package:manda_bai/UI/home/pages/start_page.dart';
 
 class Pop_up_Message extends StatefulWidget {
   String mensagem;
   String caminho;
   IconData icon;
   Pop_up_Message(
-      {required this.mensagem, required this.icon, required this.caminho});
+      {Key? key, required this.mensagem, required this.icon, required this.caminho}) : super(key: key);
 
   @override
   _Pop_up_MessageState createState() => _Pop_up_MessageState();
@@ -46,16 +44,13 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
               SizedBox(height: Get.height * 0.01),
               Text(
                 widget.mensagem,
-                style: TextStyle(
-                    fontFamily: AppFonts.poppinsRegularFont,
-                    fontSize: Get.width * 0.05,
-                    color: Colors.grey),
+                style: Theme.of(context).textTheme.headline4,
               ),
               SizedBox(height: Get.height * 0.02),
               Container(
                 height: Get.height * 0.07,
                 width: Get.width * 0.3,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppColors.greenColor,
                   borderRadius: BorderRadius.all(
                     Radius.circular(35),
@@ -65,7 +60,7 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
                       color: Colors.grey,
                       blurRadius: 2.0,
                       spreadRadius: 0.0,
-                      offset: Offset(2.0, 2.0), // changes position of shadow
+                      offset: Offset(2.0, 2.0), 
                     ),
                   ],
                 ),
