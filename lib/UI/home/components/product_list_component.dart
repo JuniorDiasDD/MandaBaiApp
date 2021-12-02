@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Core/app_colors.dart';
-import 'package:manda_bai/Core/app_fonts.dart';
+import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/description_product/pages/product_detail_page.dart';
 
-class ProductListComponent extends StatelessWidget {
+class ProductListComponent extends StatefulWidget {
   Product product;
 
   ProductListComponent({Key? key, required this.product}) : super(key: key);
+
+  @override
+  State<ProductListComponent> createState() => _ProductListComponentState();
+}
+
+class _ProductListComponentState extends State<ProductListComponent> {
+  bool checkFavorite = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -16,7 +22,7 @@ class ProductListComponent extends StatelessWidget {
         context,
         MaterialPageRoute(
           builder: (context) => ProdutoDetailPage(
-            product: product,
+            product: widget.product,
           ),
         ),
       ),
@@ -31,8 +37,8 @@ class ProductListComponent extends StatelessWidget {
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
-               BoxShadow(
-               color: Theme.of(context).cardColor,
+              BoxShadow(
+                color: Theme.of(context).cardColor,
                 blurRadius: 1.0,
                 spreadRadius: 0.0,
                 offset: Offset(1.0, 1.0),
@@ -46,20 +52,20 @@ class ProductListComponent extends StatelessWidget {
               Container(
                 width: Get.width,
                 height: Get.height * 0.11,
-                decoration: new BoxDecoration(
-                  borderRadius: BorderRadius.only(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(10.0),
                       topRight: Radius.circular(10.0)),
                   color: Colors.white,
-                  image: new DecorationImage(
+                  image: DecorationImage(
                     fit: BoxFit.fill,
-                    image: NetworkImage(product.image),
+                    image: NetworkImage(widget.product.image),
                   ),
                 ),
               ),
               Padding(
                 child: Text(
-                  product.name,
+                  widget.product.name,
                   maxLines: 1,
                   style: Theme.of(context).textTheme.headline4,
                 ),
@@ -84,7 +90,7 @@ class ProductListComponent extends StatelessWidget {
                             left: Get.width * 0.02,
                           ),
                           child: Text(
-                            product.price.toString(),
+                            widget.product.price.toString(),
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.headline5,
                           ),
@@ -105,10 +111,23 @@ class ProductListComponent extends StatelessWidget {
                       children: [
                         IconButton(
                           padding: const EdgeInsets.all(0.0),
-                          onPressed: () {},
-                          icon: const Icon(Icons.favorite_outline_outlined),
+                          onPressed: () {
+                            if (widget.product.favorite == false) {
+                              ServiceRequest.addFavrite(widget.product.id);
+                              setState((){
+                                widget.product.favorite=!widget.product.favorite;
+                              });
+                            } else {
+                              ServiceRequest.removeFavrite(widget.product.id);
+                               setState((){
+                                widget.product.favorite=!widget.product.favorite;
+                              });
+                            }
+                          },
+                          icon: const Icon(Icons.favorite),
                           iconSize: Get.width * 0.05,
                           alignment: Alignment.centerRight,
+                          color: widget.product.favorite ? Colors.red : Colors.black54,
                         ),
                         IconButton(
                           padding: const EdgeInsets.all(0.0),

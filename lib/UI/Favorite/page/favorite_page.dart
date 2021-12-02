@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_images.dart';
-import 'package:manda_bai/Model/cart_model.dart';
+import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/Favorite/components/listview_item_favorite.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
@@ -14,22 +15,17 @@ class FavoritePage extends StatefulWidget {
 
 class _FavoritePageState extends State<FavoritePage> {
   bool isChecked = false;
-  List<CartModel> list_favorite = [
-    CartModel(
-        id: 1,
-        amount: 1,
-        image: AppImages.tv,
-        name: "Tv",
-        price: "100.0",
-        item_key: "12"),
-    CartModel(
-        id: 2,
-        amount: 2,
-        item_key: "12",
-        image: AppImages.tv,
-        name: "Tv 55 Polegadas",
-        price: "200.0"),
-  ];
+  
+  List<Product> list_product = [];
+
+  Future _carregar() async {
+    list_product = await ServiceRequest.loadFavorite();
+    if (list_product.isEmpty) {
+      return null;
+    }
+    return list_product;
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -39,64 +35,79 @@ class _FavoritePageState extends State<FavoritePage> {
       child: Scaffold(
         body: Padding(
           padding:
-              EdgeInsets.only(left: Get.width * 0.04, right: Get.width * 0.04),
-          child: Column(
-            children: [
-              Container(
-                child: list_favorite.isEmpty
-                    ? Column(
-                        children: [
-                          SizedBox(height: Get.height * 0.08),
-                          Container(
-                            alignment: Alignment.center,
-                            height: Get.height * 0.8,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                WebsafeSvg.asset(AppImages.favorite_empyt),
-                                SizedBox(height: Get.height * 0.08),
-                                Text(
-                                  "Sem produto marcado como favorito...",
-                                  style: Theme.of(context).textTheme.headline3,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      )
-                    : SingleChildScrollView(
+              EdgeInsets.only(left: Get.width * 0.02, right: Get.width * 0.02),
+          child: FutureBuilder(
+            future: _carregar(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+                switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return  Container(
+                  height: Get.height * 0.8,
+                  width: Get.width,
+                  child: Center(
+                    child: Image.asset(
+                      AppImages.loading,
+                      width: Get.width * 0.2,
+                      height: Get.height * 0.2,
+                      alignment: Alignment.center,
+                    ),
+                  ),
+                );
+          default:
+                if (snapshot.data == null) {
+                  return Column(
+                    children: [
+                      SizedBox(height: Get.height * 0.08),
+                      Container(
+                        alignment: Alignment.center,
+                        height: Get.height * 0.8,
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            WebsafeSvg.asset(AppImages.favorite_empyt),
                             SizedBox(height: Get.height * 0.08),
                             Text(
-                              'Meus Favoritos',
-                              style: Theme.of(context).textTheme.headline1,
-                            ),
-                            SizedBox(height: Get.height * 0.01),
-                            Container(
-                              height: Get.height * 0.45,
-                              child: ListView.builder(
-                                padding: EdgeInsets.all(0.0),
-                                shrinkWrap: true,
-                                itemCount: list_favorite.length,
-                                itemBuilder: (context, index) {
-                                  var list = list_favorite[index];
-                                  return ItemFavoriteComponent(
-                                    id: list.id,
-                                    name: list.name,
-                                    image: list.image,
-                                    amount: list.amount,
-                                    price: list.price,
-                                  );
-                                },
-                              ),
+                              "Sem produto marcado como favorito...",
+                              style: Theme.of(context).textTheme.headline3,
                             ),
                           ],
                         ),
                       ),
-              ),
-            ],
+                    ],
+                  );
+                } else {
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(height: Get.height * 0.08),
+                        Text(
+                          'Meus Favoritos',
+                          style: Theme.of(context).textTheme.headline1,
+                        ),
+                        SizedBox(height: Get.height * 0.01),
+                        Container(
+                          height: Get.height * 0.85,
+                          child: ListView.builder(
+                            padding: EdgeInsets.only(
+                              top: 0.0,
+                              bottom: Get.height * 0.03,
+                            ),
+                            scrollDirection: Axis.vertical,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (BuildContext context, index) {
+                              var list = list_product[index];
+                              return ItemFavoriteComponent(product: list);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              
+                }
+            },
           ),
         ),
       ),

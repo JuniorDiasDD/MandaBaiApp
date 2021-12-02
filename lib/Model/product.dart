@@ -4,6 +4,7 @@ class Product {
   int id;
   String in_stock, on_sale;
   String image;
+  bool favorite;
   Product({
     required this.id,
     required this.name,
@@ -15,6 +16,7 @@ class Product {
     required this.price,
     required this.description,
     required this.sale_price,
+    required this.favorite
   });
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
@@ -28,6 +30,7 @@ class Product {
       on_sale: json['on_sale'].toString(),
       stock_quantity: json['stock_quantity'].toString(),
       image: json['images'][0]["src"],
+      favorite:false,
     );
   }
 }

@@ -6,9 +6,11 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/category.dart';
+import 'package:manda_bai/Model/favorite.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/home/components/item_category.dart';
 import 'package:manda_bai/UI/home/components/product_list_component.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 class CategoryPage extends StatefulWidget {
@@ -26,6 +28,20 @@ class _CategoryPageState extends State<CategoryPage> {
     list_product = await ServiceRequest.loadProduct(widget.category.id);
     if (list_product.isEmpty) {
       return null;
+    } else {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final String itemFavortiesString = prefs.getString('itens_favorites');
+
+      if (itemFavortiesString != null) {
+         List<Favorite> list = Favorite.decode(itemFavortiesString);
+        for(int i=0;i<list_product.length;i++){
+          for(int f=0;f<list.length;f++){
+            if(list_product[i].id==list[f].id){
+              list_product[i].favorite=true;
+            }
+          }
+        }
+      }
     }
 
     return list_product;
@@ -140,8 +156,8 @@ class _CategoryPageState extends State<CategoryPage> {
                   child: Center(
                     child: Image.asset(
                       AppImages.loading,
-                        width: Get.width * 0.2,
-                       height: Get.height * 0.2,
+                      width: Get.width * 0.2,
+                      height: Get.height * 0.2,
                       alignment: Alignment.center,
                     ),
                   ),

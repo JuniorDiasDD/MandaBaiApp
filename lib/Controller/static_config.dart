@@ -42,6 +42,7 @@ const String categorias = link + "products/categories?" + key;
 
 //!Products get category
 const String productCategorias = link + "products?" + key + "&category=";
+const String get_Produto = link+"products/";
 
 //! register
 const String register_client = link + "customers?" + key;
