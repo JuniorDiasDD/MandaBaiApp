@@ -38,9 +38,7 @@ class InfoPage extends StatelessWidget {
                   ),
                   Text(
                     'Sobre Nós',
-                    style: TextStyle(
-                        fontFamily: AppFonts.poppinsBoldFont,
-                        fontSize: Get.width * 0.05),
+                    style: Theme.of(context).textTheme.headline1,
                   ),
                   Container(
                     width: Get.width * 0.08,
@@ -53,12 +51,13 @@ class InfoPage extends StatelessWidget {
                     left: Get.width * 0.01, right: Get.width * 0.01),
                 child: Column(
                   children: [
-                    Text(
-                      'MandaBai, somos mais que uma Empresa!',
-                      style: TextStyle(
-                          fontFamily: AppFonts.poppinsBoldFont,
-                          color: AppColors.greenColor,
-                          fontSize: Get.width * 0.05),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'MandaBai, somos mais que uma Empresa!',
+
+                          style: Theme.of(context).textTheme.headline2,
+                      ),
                     ),
                     SizedBox(height: Get.height * 0.02),
                     ReadMoreText(
@@ -68,24 +67,17 @@ class InfoPage extends StatelessWidget {
                       trimMode: TrimMode.Line,
                       trimCollapsedText: 'Ver mais',
                       trimExpandedText: 'Fechar',
-                      style: const TextStyle(
-                          fontSize: 14,
-                          fontFamily: AppFonts.poppinsRegularFont,
-                          ),
-                      moreStyle: const TextStyle(
-                          fontSize: 14,
-                          fontFamily: AppFonts.poppinsRegularFont,
-                          color: AppColors.greenColor),
+                      style:  Theme.of(context).textTheme.headline4,
+                      moreStyle:
+                          Theme.of(context).textTheme.headline6,
+
                     ),
                     SizedBox(height: Get.height * 0.04),
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
                         'Constituição da Empresa',
-                        style: TextStyle(
-                            fontFamily: AppFonts.poppinsBoldFont,
-
-                            fontSize: Get.width * 0.045),
+                        style: Theme.of(context).textTheme.headline2,
                       ),
                     ),
                     Container(
@@ -103,20 +95,17 @@ class InfoPage extends StatelessWidget {
                         top: Get.height * 0.02,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).cardColor,
                         borderRadius: BorderRadius.all(
                           Radius.circular(Get.width * 0.04),
                         ),
-                        border: Border.all(color: Colors.black12, width: 1.0),
+                        border: Border.all(color: Colors.black12, width: Get.width * 0.001),
                       ),
                       child: ExpansionTile(
-                        backgroundColor: Colors.white,
+                        backgroundColor:  Theme.of(context).cardColor,
                         title: Text(
                           "Missão",
-                          style: TextStyle(
-                              fontFamily: AppFonts.poppinsBoldFont,
-                              color: AppColors.greenColor,
-                              fontSize: Get.width * 0.04),
+                            style: Theme.of(context).textTheme.headline5,
                         ),
                         children: <Widget>[
                           Padding(
@@ -126,10 +115,7 @@ class InfoPage extends StatelessWidget {
                             child: Text(
                               description_missao,
                               textAlign: TextAlign.justify,
-                              style: TextStyle(
-                                  fontFamily: AppFonts.poppinsRegularFont,
-                                  color: Colors.black,
-                                  fontSize: Get.width * 0.03),
+                              style: Theme.of(context).textTheme.headline4,
                             ),
                           ),
                         ],
@@ -142,20 +128,17 @@ class InfoPage extends StatelessWidget {
                         top: Get.height * 0.02,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).cardColor,
                         borderRadius: BorderRadius.all(
                           Radius.circular(Get.width * 0.04),
                         ),
-                        border: Border.all(color: Colors.black12, width: 1.0),
+                        border: Border.all(color: Colors.black12, width: Get.width * 0.001),
                       ),
                       child: ExpansionTile(
-                        backgroundColor: Colors.white,
+                        backgroundColor:  Theme.of(context).cardColor,
                         title: Text(
                           "Visão",
-                          style: TextStyle(
-                              fontFamily: AppFonts.poppinsBoldFont,
-                              color: AppColors.greenColor,
-                              fontSize: Get.width * 0.04),
+                          style: Theme.of(context).textTheme.headline5,
                         ),
                         children: <Widget>[
                           Padding(
@@ -165,10 +148,7 @@ class InfoPage extends StatelessWidget {
                             child: Text(
                               description_visao,
                               textAlign: TextAlign.justify,
-                              style: TextStyle(
-                                  fontFamily: AppFonts.poppinsRegularFont,
-                                  color: Colors.black,
-                                  fontSize: Get.width * 0.03),
+                              style: Theme.of(context).textTheme.headline4,
                             ),
                           ),
                         ],
@@ -181,20 +161,17 @@ class InfoPage extends StatelessWidget {
                         top: Get.height * 0.02,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).cardColor,
                         borderRadius: BorderRadius.all(
                           Radius.circular(Get.width * 0.04),
                         ),
-                        border: Border.all(color: Colors.black12, width: 1.0),
+                        border: Border.all(color: Colors.black12, width: Get.width * 0.001),
                       ),
                       child: ExpansionTile(
-                        backgroundColor: Colors.white,
+                        backgroundColor: Theme.of(context).cardColor,
                         title: Text(
                           "Valores",
-                          style: TextStyle(
-                              fontFamily: AppFonts.poppinsBoldFont,
-                              color: AppColors.greenColor,
-                              fontSize: Get.width * 0.04),
+                          style: Theme.of(context).textTheme.headline5,
                         ),
                         children: <Widget>[
                           Padding(
@@ -204,10 +181,7 @@ class InfoPage extends StatelessWidget {
                             child: Text(
                               description_valores,
                               textAlign: TextAlign.justify,
-                              style: TextStyle(
-                                  fontFamily: AppFonts.poppinsRegularFont,
-                                  color: Colors.black,
-                                  fontSize: Get.width * 0.03),
+                                style: Theme.of(context).textTheme.headline4
                             ),
                           ),
                         ],
@@ -220,7 +194,7 @@ class InfoPage extends StatelessWidget {
                           child: new Container(
                             width: Get.width * 0.1,
                             child: Divider(
-                              color: Colors.black,
+                              color: Theme.of(context).cardColor,
                               height: 36,
                             ),
                           ),
@@ -235,8 +209,8 @@ class InfoPage extends StatelessWidget {
                         Expanded(
                           child: Container(
                             width: Get.width * 0.4,
-                            child: const Divider(
-                              color: Colors.black,
+                            child: Divider(
+                              color: Theme.of(context).cardColor,
                               height: 36,
                             ),
                           ),
@@ -250,9 +224,9 @@ class InfoPage extends StatelessWidget {
                       child: Container(
                         height: Get.height * 0.06,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.all(
-                            Radius.circular(8),
+                              Radius.circular(Get.width * 0.02)
                           ),
                           border: Border.all(
                             color: Colors.black38,
@@ -268,11 +242,7 @@ class InfoPage extends StatelessWidget {
                                 ),
                                 child: Text(
                                   'Publicado por',
-                                  style: TextStyle(
-                                    fontFamily: AppFonts.poppinsRegularFont,
-                                    color: Colors.black,
-                                    fontSize: Get.height * 0.018,
-                                  ),
+                                    style: Theme.of(context).textTheme.headline4,
                                 ),
                               ),
                               Padding(
@@ -281,11 +251,7 @@ class InfoPage extends StatelessWidget {
                                 ),
                                 child: Text(
                                   'MandaBai  >',
-                                  style: TextStyle(
-                                    fontFamily: AppFonts.poppinsRegularFont,
-                                    color: Colors.black,
-                                    fontSize: Get.height * 0.018,
-                                  ),
+                                    style: Theme.of(context).textTheme.headline4,
                                 ),
                               ),
                             ],
@@ -294,16 +260,16 @@ class InfoPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: Get.height * 0.02),
+                    SizedBox(height: Get.height * 0.01),
                     Padding(
                       padding: EdgeInsets.only(
                           left: Get.width * 0.01, right: Get.width * 0.01),
                       child: Container(
                         height: Get.height * 0.06,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.all(
-                            Radius.circular(8),
+                              Radius.circular(Get.width * 0.02)
                           ),
                           border: Border.all(
                             color: Colors.black38,
@@ -319,11 +285,7 @@ class InfoPage extends StatelessWidget {
                                 ),
                                 child: Text(
                                   'Desenvolvido por',
-                                  style: TextStyle(
-                                    fontFamily: AppFonts.poppinsRegularFont,
-                                    color: Colors.black,
-                                    fontSize: Get.height * 0.018,
-                                  ),
+                                    style: Theme.of(context).textTheme.headline4,
                                 ),
                               ),
                               Padding(
@@ -332,11 +294,7 @@ class InfoPage extends StatelessWidget {
                                 ),
                                 child: Text(
                                   'MandaBai  >',
-                                  style: TextStyle(
-                                    fontFamily: AppFonts.poppinsRegularFont,
-                                    color: Colors.black,
-                                    fontSize: Get.height * 0.018,
-                                  ),
+                                    style: Theme.of(context).textTheme.headline4,
                                 ),
                               ),
                             ],
@@ -352,9 +310,9 @@ class InfoPage extends StatelessWidget {
                       child: Container(
                         height: Get.height * 0.06,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.all(
-                            Radius.circular(8),
+                            Radius.circular(Get.width * 0.02),
                           ),
                           border: Border.all(
                             color: Colors.black38,
@@ -370,11 +328,7 @@ class InfoPage extends StatelessWidget {
                                 ),
                                 child: Text(
                                   'Termos de Uso',
-                                  style: TextStyle(
-                                    fontFamily: AppFonts.poppinsRegularFont,
-                                    color: Colors.black,
-                                    fontSize: Get.height * 0.018,
-                                  ),
+                                    style: Theme.of(context).textTheme.headline4,
                                 ),
                               ),
                               Padding(
@@ -383,11 +337,7 @@ class InfoPage extends StatelessWidget {
                                 ),
                                 child: Text(
                                   ' >',
-                                  style: TextStyle(
-                                    fontFamily: AppFonts.poppinsRegularFont,
-                                    color: Colors.black,
-                                    fontSize: Get.height * 0.018,
-                                  ),
+                                    style: Theme.of(context).textTheme.headline4,
                                 ),
                               ),
                             ],
@@ -403,9 +353,9 @@ class InfoPage extends StatelessWidget {
                       child: Container(
                         height: Get.height * 0.06,
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.all(
-                            Radius.circular(8),
+                            Radius.circular(Get.width * 0.02),
                           ),
                           border: Border.all(
                             color: Colors.black38,
@@ -421,11 +371,7 @@ class InfoPage extends StatelessWidget {
                                 ),
                                 child: Text(
                                   'Políticas e Serviços',
-                                  style: TextStyle(
-                                    fontFamily: AppFonts.poppinsRegularFont,
-                                    color: Colors.black,
-                                    fontSize: Get.height * 0.018,
-                                  ),
+                                    style: Theme.of(context).textTheme.headline4
                                 ),
                               ),
                               Padding(
@@ -434,11 +380,7 @@ class InfoPage extends StatelessWidget {
                                 ),
                                 child: Text(
                                   'MandaBai  >',
-                                  style: TextStyle(
-                                    fontFamily: AppFonts.poppinsRegularFont,
-                                    color: Colors.black,
-                                    fontSize: Get.height * 0.018,
-                                  ),
+                                    style: Theme.of(context).textTheme.headline4,
                                 ),
                               ),
                             ],

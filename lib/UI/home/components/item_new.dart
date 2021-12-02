@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/UI/home/components/carrega_saldo.dart';
+import 'package:manda_bai/UI/home/pop_up/carrega_saldo.dart';
 
 class ItemNew extends StatefulWidget {
   String image, title;

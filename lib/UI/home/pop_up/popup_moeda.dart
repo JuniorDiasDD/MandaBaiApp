@@ -28,7 +28,7 @@ class _Popup_MoedaState extends State<Popup_Moeda> {
       body: Center(
         child: Container(
           width: Get.width,
-          height: Get.height * 0.35,
+          height: Get.height * 0.38,
           margin:
               EdgeInsets.only(left: Get.width * 0.12, right: Get.width * 0.12),
           decoration: BoxDecoration(

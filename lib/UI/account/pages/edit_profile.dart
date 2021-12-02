@@ -113,9 +113,10 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                     TextFormField(
                       controller: input_nome,
                       obscureText: false,
+                      style: Theme.of(context).textTheme.headline4,
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
                           borderRadius: new BorderRadius.circular(35.0),
                           borderSide: new BorderSide(),
@@ -128,9 +129,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                           ), // icon is 48px widget.
                         ),
                         labelText: 'Nome',
-                        labelStyle: TextStyle(
-                          color: Colors.grey,
-                        ),
+                        labelStyle: Theme.of(context).textTheme.headline4,
                       ),
                       validator: (value) =>
                           value!.isEmpty ? 'Insira o Nome' : null,
@@ -139,9 +138,10 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                     TextFormField(
                       controller: input_email,
                       obscureText: false,
+                      style: Theme.of(context).textTheme.headline4,
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
                           borderRadius: new BorderRadius.circular(35.0),
                           borderSide: new BorderSide(),
@@ -154,9 +154,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                           ), // icon is 48px widget.
                         ),
                         labelText: 'Email',
-                        labelStyle: TextStyle(
-                          color: Colors.grey,
-                        ),
+                        labelStyle: Theme.of(context).textTheme.headline4,
                       ),
                       validator: (value) =>
                           value!.isEmpty ? 'Insira o email' : null,
@@ -167,9 +165,10 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                       controller: input_numero,
                       autocorrect: false,
                       obscureText: false,
+                      style: Theme.of(context).textTheme.headline4,
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
                           borderRadius: new BorderRadius.circular(35.0),
                           borderSide: new BorderSide(),
@@ -182,9 +181,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                           ), // icon is 48px widget.
                         ),
                         labelText: 'Telefone',
-                        labelStyle: TextStyle(
-                          color: Colors.grey,
-                        ),
+                        labelStyle: Theme.of(context).textTheme.headline4,
                       ),
                       validator: (value) =>
                           value!.isEmpty ? 'Insira o Número' : null,
@@ -193,9 +190,10 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                     TextFormField(
                       controller: input_senha,
                       obscureText: true,
+                      style: Theme.of(context).textTheme.headline4,
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
                           borderRadius: new BorderRadius.circular(35.0),
                           borderSide: new BorderSide(),
@@ -208,9 +206,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                           ), // icon is 48px widget.
                         ),
                         labelText: 'Palavra-passe',
-                        labelStyle: TextStyle(
-                          color: Colors.grey,
-                        ),
+                        labelStyle: Theme.of(context).textTheme.headline4,
                       ),
                       validator: (value) =>
                           value!.isEmpty ? 'Insira a senha' : null,
@@ -219,12 +215,13 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                     TextFormField(
                       controller: input_senha_conf,
                       obscureText: true,
+                      style: Theme.of(context).textTheme.headline4,
                       decoration: InputDecoration(
                         errorText: checkPassword == false
                             ? 'Senha não corresponde'
                              : null,
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
                           borderRadius: new BorderRadius.circular(35.0),
                           borderSide: new BorderSide(),
@@ -237,9 +234,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                           ), // icon is 48px widget.
                         ),
                         labelText: 'Palavra-passe confirmar',
-                        labelStyle: TextStyle(
-                          color: Colors.grey,
-                        ),
+                        labelStyle: Theme.of(context).textTheme.headline4,
                       ),
                       validator: (value) =>
                           value!.isEmpty ? 'Campo vazio' : null,

@@ -6,7 +6,7 @@ import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/about/pages/info_page.dart';
 import 'package:manda_bai/UI/account/pages/edit_profile.dart';
-import 'package:manda_bai/UI/home/components/carrega_saldo.dart';
+import 'package:manda_bai/UI/home/pop_up/carrega_saldo.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_island.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_moeda.dart';
 

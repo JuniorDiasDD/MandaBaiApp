@@ -113,17 +113,16 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: TextFormField(
                             controller: input_nome,
                             obscureText: false,
+                            style: Theme.of(context).textTheme.headline4,
                             decoration: InputDecoration(
                               filled: false,
-                              fillColor: Colors.white,
+                              fillColor: Theme.of(context).backgroundColor,
                               border: OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(35.0),
                                 borderSide: new BorderSide(),
                               ),
                               labelText: 'Nome',
-                              labelStyle: TextStyle(
-                                color: Colors.grey,
-                              ),
+                              labelStyle: Theme.of(context).textTheme.headline4,
                             ),
                             validator: (value) =>
                                 value!.isEmpty ? 'Insira o Nome' : null,
@@ -135,17 +134,16 @@ class _RegisterPageState extends State<RegisterPage> {
                             controller: input_nickname,
                             autocorrect: false,
                             obscureText: false,
+                            style: Theme.of(context).textTheme.headline4,
                             decoration: InputDecoration(
                               filled: false,
-                              fillColor: Colors.white,
+                              fillColor: Theme.of(context).backgroundColor,
                               border: OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(35.0),
                                 borderSide: new BorderSide(),
                               ),
                               labelText: 'Apelido',
-                              labelStyle: TextStyle(
-                                color: Colors.grey,
-                              ),
+                              labelStyle: Theme.of(context).textTheme.headline4,
                             ),
                             validator: (value) =>
                                 value!.isEmpty ? 'Insira o Apelido' : null,
@@ -157,9 +155,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     TextFormField(
                       controller: input_email,
                       obscureText: false,
+                      style: Theme.of(context).textTheme.headline4,
                       decoration: InputDecoration(
                         filled: false,
-                        fillColor: Colors.white,
+                        fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
                           borderRadius: new BorderRadius.circular(35.0),
                           borderSide: new BorderSide(),
@@ -172,9 +171,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ), // icon is 48px widget.
                         ),
                         labelText: 'Email',
-                        labelStyle: TextStyle(
-                          color: Colors.grey,
-                        ),
+                        labelStyle: Theme.of(context).textTheme.headline4,
                       ),
                       validator: (value) =>
                           value!.isEmpty ? 'Insira o email' : null,
@@ -183,9 +180,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     TextFormField(
                       controller: input_username,
                       obscureText: false,
+                      style: Theme.of(context).textTheme.headline4,
                       decoration: InputDecoration(
                         filled: false,
-                        fillColor: Colors.white,
+                        fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
                           borderRadius: new BorderRadius.circular(35.0),
                           borderSide: new BorderSide(),
@@ -198,9 +196,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ), // icon is 48px widget.
                         ),
                         labelText: 'Utilizador',
-                        labelStyle: TextStyle(
-                          color: Colors.grey,
-                        ),
+                        labelStyle: Theme.of(context).textTheme.headline4,
                       ),
                       validator: (value) =>
                           value!.isEmpty ? 'Insira o Utilizador' : null,
@@ -209,9 +205,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     TextFormField(
                       controller: input_senha,
                       obscureText: true,
+                      style: Theme.of(context).textTheme.headline4,
                       decoration: InputDecoration(
                         filled: false,
-                        fillColor: Colors.white,
+                        fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
                           borderRadius: new BorderRadius.circular(35.0),
                           borderSide: new BorderSide(),
@@ -224,9 +221,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ), // icon is 48px widget.
                         ),
                         labelText: 'Palavra-passe',
-                        labelStyle: TextStyle(
-                          color: Colors.grey,
-                        ),
+                        labelStyle:Theme.of(context).textTheme.headline4,
                       ),
                       validator: (value) =>
                           value!.isEmpty ? 'Insira a senha' : null,

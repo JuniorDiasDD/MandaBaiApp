@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
       var check =
-      await ServiceRequest.login(input_username.text, input_senha.text);
+          await ServiceRequest.login(input_username.text, input_senha.text);
       if (check == true) {
         Navigator.pushReplacementNamed(context, '/home');
       } else {}
@@ -86,9 +86,10 @@ class _LoginPageState extends State<LoginPage> {
                       TextFormField(
                         controller: input_username,
                         obscureText: false,
+                        style: Theme.of(context).textTheme.headline4,
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: Colors.white,
+                          fillColor: Theme.of(context).backgroundColor,
                           border: OutlineInputBorder(
                             borderRadius: new BorderRadius.circular(35.0),
                             borderSide: new BorderSide(),
@@ -101,9 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                             ), // icon is 48px widget.
                           ),
                           labelText: 'Utilizador',
-                          labelStyle: TextStyle(
-                            color: Colors.grey,
-                          ),
+                          labelStyle: Theme.of(context).textTheme.headline4,
                         ),
                         validator: (value) =>
                             value!.isEmpty ? 'Insira o Utilizador' : null,
@@ -112,9 +111,10 @@ class _LoginPageState extends State<LoginPage> {
                       TextFormField(
                         controller: input_senha,
                         obscureText: true,
+                        style: Theme.of(context).textTheme.headline4,
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: Colors.white,
+                          fillColor: Theme.of(context).backgroundColor,
                           border: OutlineInputBorder(
                             borderRadius: new BorderRadius.circular(35.0),
                             borderSide: new BorderSide(),
@@ -127,9 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                             ), // icon is 48px widget.
                           ),
                           labelText: 'Palavra-passe',
-                          labelStyle: TextStyle(
-                            color: Colors.grey,
-                          ),
+                          labelStyle: Theme.of(context).textTheme.headline4,
                         ),
                         validator: (value) =>
                             value!.isEmpty ? 'Insira a senha' : null,
@@ -197,19 +195,17 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           Text(
                             "Não possui uma conta?",
-                            style: TextStyle(
-                                fontFamily: AppFonts.poppinsRegularFont,
-                                fontSize: Get.width * 0.03),
+                            style: Theme.of(context).textTheme.headline4,
                           ),
                           TextButton(
                             style: TextButton.styleFrom(
-                              primary: Colors.black,
+                              primary: AppColors.greenColor,
                               textStyle: TextStyle(fontSize: Get.width * 0.03),
                             ),
                             onPressed: () {
                               Navigator.pushNamed(context, '/register');
                             },
-                            child: const Text(
+                            child: Text(
                               'Registar agora',
                               style: TextStyle(
                                 decoration: TextDecoration.underline,

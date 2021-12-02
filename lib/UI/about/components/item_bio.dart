@@ -31,18 +31,12 @@ class _Item_BioState extends State<Item_Bio> {
               SizedBox(height: Get.height*0.01),
               Text(
                 'Carlos Pereira',
-                style: TextStyle(
-                    fontFamily: AppFonts.poppinsRegularFont,
-
-                    fontSize: Get.width * 0.03),
+                style: Theme.of(context).textTheme.headline4,
               ),
               SizedBox(height: Get.height * 0.002),
               Text(
                 'Fundador ',
-                style: TextStyle(
-                    fontFamily: AppFonts.poppinsBoldFont,
-
-                    fontSize: Get.width * 0.03),
+                  style: Theme.of(context).textTheme.headline5,
               ),
               SizedBox(height: Get.height * 0.01),
               Container(
@@ -73,10 +67,7 @@ class _Item_BioState extends State<Item_Bio> {
                       Text(
                         description_carlos,
                         textAlign: TextAlign.justify,
-                        style: TextStyle(
-                            fontFamily: AppFonts.poppinsRegularFont,
-
-                            fontSize: Get.width * 0.03),
+                        style: Theme.of(context).textTheme.headline4,
                       ),
                     ],
                   ),

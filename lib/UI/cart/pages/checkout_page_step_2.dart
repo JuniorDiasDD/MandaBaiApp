@@ -394,7 +394,9 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                     maxLines: 10,
                     controller: input_info,
                     keyboardType: TextInputType.text,
+                    style: Theme.of(context).textTheme.headline4,
                     decoration: InputDecoration(
+
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       border: OutlineInputBorder(

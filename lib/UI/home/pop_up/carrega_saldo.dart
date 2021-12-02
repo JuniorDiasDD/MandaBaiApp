@@ -94,9 +94,10 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                             controller: input_number,
                             keyboardType: TextInputType.number,
                             obscureText: false,
+                            style: Theme.of(context).textTheme.headline4,
                             decoration: InputDecoration(
                               filled: false,
-                              fillColor: Colors.white,
+                              fillColor: Theme.of(context).backgroundColor,
                               border: OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(35.0),
                                 borderSide: new BorderSide(),
@@ -129,9 +130,10 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                             controller: input_montante,
                             keyboardType: TextInputType.number,
                             obscureText: false,
+                            style: Theme.of(context).textTheme.headline4,
                             decoration: InputDecoration(
                               filled: false,
-                              fillColor: Colors.white,
+                              fillColor: Theme.of(context).backgroundColor,
                               border: OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(35.0),
                                 borderSide: new BorderSide(),

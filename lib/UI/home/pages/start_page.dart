@@ -221,6 +221,7 @@ class _StartPageState extends State<StartPage> {
                         );
                       } else {
                         return Container(
+                         margin: EdgeInsets.only(top:Get.height * 0.012),
                           height: Get.height * 0.5,
                           child: ListView.builder(
                             padding: EdgeInsets.only(
