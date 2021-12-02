@@ -5,6 +5,7 @@ import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/about/pages/info_page.dart';
+import 'package:manda_bai/UI/account/pages/destination_page.dart';
 import 'package:manda_bai/UI/account/pages/edit_profile.dart';
 import 'package:manda_bai/UI/home/pop_up/carrega_saldo.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_island.dart';
@@ -460,6 +461,69 @@ class _StartPageState extends State<ProfilePage> {
                                           );
                                         }
                                       }),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: Get.height * 0.01),
+                    Container(
+                      height: Get.height * 0.06,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Destination_Page(),
+                            ),
+                          );
+
+                        },
+                        child: Row(
+                          children: [
+                            Container(
+                              height: Get.height * 0.042,
+                              width: Get.height * 0.042,
+                              decoration: BoxDecoration(
+                                color: Colors.orangeAccent,
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(100),
+                                ),
+                                border: Border.all(color: Colors.orangeAccent),
+                              ),
+                              child: Icon(
+                                Icons.location_on_outlined,
+                                color: Colors.white,
+                                size: Get.height * 0.025,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: Get.width * 0.02,
+                              ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Locais de Entrega',
+                                    style: Theme.of(context).textTheme.headline3,
+                                  ),
+                                  /*FutureBuilder(
+                                      future: _carregarLanguage(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot snapshot) {
+                                        if (snapshot.data == null) {
+                                          return const Text(" ");
+                                        } else {
+                                          return Text(
+                                            ' (' + language + ')',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline3,
+                                          );
+                                        }
+                                      }),*/
                                 ],
                               ),
                             ),

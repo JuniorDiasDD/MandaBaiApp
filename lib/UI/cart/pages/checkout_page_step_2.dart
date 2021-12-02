@@ -99,10 +99,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                             ),
                                             Text(
                                               'Instruções',
-                                              style: TextStyle(
-                                                  fontFamily:
-                                                      AppFonts.poppinsBoldFont,
-                                                  fontSize: Get.width * 0.04),
+                                                style: Theme.of(context).textTheme.headline1,
+
                                             ),
                                             IconButton(
                                               icon: Icon(Icons.close),
@@ -125,103 +123,66 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                                   height: Get.height * 0.01),
                                               Text(
                                                 'Informações do Formulário',
-                                                style: TextStyle(
-                                                    fontFamily: AppFonts
-                                                        .poppinsBoldFont,
-                                                    fontSize:
-                                                        Get.width * 0.036),
+                                                style: Theme.of(context).textTheme.headline2,
                                               ),
                                               SizedBox(
                                                   height: Get.height * 0.01),
                                               Text(
                                                 'Neste formulário, deverá completar com os dados da pessoa receptora da encomenda (produtos).',
-                                                style: TextStyle(
-                                                    fontFamily: AppFonts
-                                                        .poppinsRegularFont,
-                                                    fontSize: Get.width * 0.03),
+                                                style: Theme.of(context).textTheme.headline4,
                                               ),
                                               SizedBox(
                                                   height: Get.height * 0.01),
                                               Text(
                                                 '1º "Nome"',
-                                                style: TextStyle(
-                                                    fontFamily: AppFonts
-                                                        .poppinsBoldFont,
-                                                    fontSize: Get.width * 0.03),
+
+                                                  style: Theme.of(context).textTheme.headline2,
                                               ),
                                               Text(
                                                 ' Escreva o Nome da Pessoa que irá receber a encomenda;',
-                                                style: TextStyle(
-                                                    fontFamily: AppFonts
-                                                        .poppinsRegularFont,
-                                                    fontSize: Get.width * 0.03),
+                                                style: Theme.of(context).textTheme.headline4,
                                               ),
                                               SizedBox(
                                                   height: Get.height * 0.01),
                                               Text(
                                                 '2º "Cidade"',
-                                                style: TextStyle(
-                                                    fontFamily: AppFonts
-                                                        .poppinsBoldFont,
-                                                    fontSize: Get.width * 0.03),
+                                                style: Theme.of(context).textTheme.headline2,
                                               ),
                                               Text(
                                                 'Escreva a Cidade onde reside essa Pessoa acima referida;',
-                                                style: TextStyle(
-                                                    fontFamily: AppFonts
-                                                        .poppinsRegularFont,
-                                                    fontSize: Get.width * 0.03),
+                                                style: Theme.of(context).textTheme.headline4,
                                               ),
                                               SizedBox(
                                                   height: Get.height * 0.01),
                                               Text(
                                                 '3º "Endereço"',
-                                                style: TextStyle(
-                                                    fontFamily: AppFonts
-                                                        .poppinsBoldFont,
-                                                    fontSize: Get.width * 0.03),
+                                                style: Theme.of(context).textTheme.headline2,
                                               ),
                                               Text(
                                                 'Escreva o Endereço onde deverá ser entregue a encomenda;',
-                                                style: TextStyle(
-                                                    fontFamily: AppFonts
-                                                        .poppinsRegularFont,
-                                                    fontSize: Get.width * 0.03),
+                                                style: Theme.of(context).textTheme.headline4,
                                               ),
                                               SizedBox(
                                                   height: Get.height * 0.01),
                                               Text(
                                                 '4º "Telemovel/Telefone"',
-                                                style: TextStyle(
-                                                    fontFamily: AppFonts
-                                                        .poppinsBoldFont,
-                                                    fontSize: Get.width * 0.03),
+                                                style: Theme.of(context).textTheme.headline2,
                                               ),
                                               Text(
                                                 'Introduza o Contacto do receptor para podermos lhe contactar.',
-                                                style: TextStyle(
-                                                    fontFamily: AppFonts
-                                                        .poppinsRegularFont,
-                                                    fontSize: Get.width * 0.03),
+                                                style: Theme.of(context).textTheme.headline4,
                                               ),
                                               SizedBox(
                                                   height: Get.height * 0.02),
                                               Text(
                                                 'Informação Adicional',
-                                                style: TextStyle(
-                                                    fontFamily: AppFonts
-                                                        .poppinsBoldFont,
-                                                    fontSize:
-                                                        Get.width * 0.036),
+                                                style: Theme.of(context).textTheme.headline2,
                                               ),
                                               SizedBox(
                                                   height: Get.height * 0.01),
                                               Text(
                                                 'Neste campo, poderá adicionar qualquer informação extra que deseja informar a Empresa. Exemplo: a data que deseja a ser entregue.',
-                                                style: TextStyle(
-                                                    fontFamily: AppFonts
-                                                        .poppinsRegularFont,
-                                                    fontSize: Get.width * 0.03),
+                                                style: Theme.of(context).textTheme.headline4,
                                               ),
                                               SizedBox(
                                                 height: Get.height * 0.02,
@@ -396,12 +357,11 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                     keyboardType: TextInputType.text,
                     style: Theme.of(context).textTheme.headline4,
                     decoration: InputDecoration(
-
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(width: 2, color: Colors.black54),
+                        borderSide: BorderSide(width: 2, color: Colors.black54),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(width: 2, color: Colors.black54),
