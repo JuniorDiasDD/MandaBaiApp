@@ -25,7 +25,6 @@ class _CategoryPageState extends State<CategoryPage> {
   TextEditingController pesquisa = TextEditingController();
   List<Product> list_product = [];
   List<Product> list_product_full = [];
-  late Product filteredProduct;
   String dropdownValue = 'Menos Preço';
   List<String> list_filter = [
     'Menos Preço',
@@ -109,25 +108,27 @@ class _CategoryPageState extends State<CategoryPage> {
                     ),
                   ),
                   SizedBox(
-                    width: 270,
+                    width: Get.width*0.7,
                     height: 40,
                     child: TextField(
                       cursorColor: AppColors.greenColor,
                       controller: pesquisa,
-                      decoration: const InputDecoration(
+                        style: Theme.of(context).textTheme.headline4,
+                      decoration:  InputDecoration(
                         focusedBorder: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(30.0)),
                             borderSide:
                                 BorderSide(color: AppColors.greenColor)),
                         hintText: 'Pesquisar Produto...',
+                          hintStyle: Theme.of(context).textTheme.headline4,
                         contentPadding: EdgeInsets.only(top: 10, left: 15),
                         suffixIcon: Icon(
                           Icons.search,
                           color: AppColors.greenColor,
                         ),
-                        filled: true,
-                        fillColor: Colors.white,
+                       filled: true,
+                        fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(30.0),
@@ -153,6 +154,7 @@ class _CategoryPageState extends State<CategoryPage> {
                       ),
 
                       isExpanded: true,
+                      underline: DropdownButtonHideUnderline(child: Container()),
                       items: list_filter.map((val) {
                         return DropdownMenuItem(
                           value: val,
