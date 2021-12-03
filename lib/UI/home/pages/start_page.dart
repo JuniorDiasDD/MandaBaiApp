@@ -31,7 +31,6 @@ class _StartPageState extends State<StartPage> {
     'https://www.sindcontsp.org.br/wp-content/uploads/2019/12/encomenda.jpg'
   ];
   List<Product> list_product = [];
-
   List<Category> list_category = [];
   List<Product> list_products = [];
   int categoryId = 0;
@@ -40,7 +39,6 @@ class _StartPageState extends State<StartPage> {
     if (list_products.isEmpty) {
       return null;
     }
-
     return list_products;
   }
 

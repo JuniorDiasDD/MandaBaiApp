@@ -22,24 +22,57 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
+  TextEditingController pesquisa = TextEditingController();
   List<Product> list_product = [];
+  List<Product> list_product_full = [];
+  late Product filteredProduct;
+  String dropdownValue = 'Menos Preço';
+  List<String> list_filter = [
+    'Menos Preço',
+    'Mais Preço',
+  ];
+  _search() {
+    // print("click");
+    list_product = [];
+    setState(() {
+      for (int i = 0; i < list_product_full.length; i++) {
+        if (list_product_full[i].name.contains(pesquisa.text)) {
+          list_product.add(list_product_full[i]);
+        }
+      }
+    });
+  }
+
+  _ordenar() {
+    list_product = [];
+    setState(() {
+      list_product = list_product_full;
+      Comparator<Product> pesagemComparator =
+          (a, b) => b.price.compareTo(a.price);
+      list_product.sort(pesagemComparator);
+    });
+  }
 
   Future _carregar() async {
-    list_product = await ServiceRequest.loadProduct(widget.category.id);
     if (list_product.isEmpty) {
-      return null;
-    } else {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      final String itemFavortiesString = prefs.getString('itens_favorites');
-
-      if (itemFavortiesString != null) {
-         List<Favorite> list = Favorite.decode(itemFavortiesString);
-        for(int i=0;i<list_product.length;i++){
-          for(int f=0;f<list.length;f++){
-            if(list_product[i].id==list[f].id){
-              list_product[i].favorite=true;
+      list_product = await ServiceRequest.loadProduct(widget.category.id);
+      if (list_product.isEmpty) {
+        return null;
+      } else {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        final String itemFavortiesString = prefs.getString('itens_favorites');
+        if (itemFavortiesString != null) {
+          List<Favorite> list = Favorite.decode(itemFavortiesString);
+          for (int i = 0; i < list_product.length; i++) {
+            for (int f = 0; f < list.length; f++) {
+              if (list_product[i].id == list[f].id) {
+                list_product[i].favorite = true;
+              }
             }
           }
+        }
+        if (list_product_full.isEmpty) {
+          list_product_full = list_product;
         }
       }
     }
@@ -50,159 +83,155 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(
-              top: Get.height * 0.045,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    // ignore: prefer_const_constructors
-                    icon: Icon(Icons.arrow_back),
-                  ),
-                ),
-                const SizedBox(
-                  width: 270,
-                  height: 40,
-                  child: TextField(
-                    cursorColor: AppColors.greenColor,
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                          borderSide: BorderSide(color: AppColors.greenColor)),
-                      hintText: 'Pesquisar Produto...',
-                      contentPadding: EdgeInsets.only(top: 10, left: 15),
-                      suffixIcon: Icon(
-                        Icons.search,
-                        color: AppColors.greenColor,
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30.0),
-                        ),
-                      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(
+                top: Get.height * 0.045,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(Icons.arrow_back),
                     ),
                   ),
-                ),
-                IconButton(
-                  padding: const EdgeInsets.all(0.0),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Scaffold(
-                          backgroundColor: Colors.transparent,
-                          body: Center(
-                            child: Container(
-                              width: Get.width,
-                              height: Get.height * 0.3,
-                              margin: EdgeInsets.only(left: 20, right: 20),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  IconButton(
-                                    icon: Icon(Icons.close),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
+                  SizedBox(
+                    width: 270,
+                    height: 40,
+                    child: TextField(
+                      cursorColor: AppColors.greenColor,
+                      controller: pesquisa,
+                      decoration: const InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30.0)),
+                            borderSide:
+                                BorderSide(color: AppColors.greenColor)),
+                        hintText: 'Pesquisar Produto...',
+                        contentPadding: EdgeInsets.only(top: 10, left: 15),
+                        suffixIcon: Icon(
+                          Icons.search,
+                          color: AppColors.greenColor,
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30.0),
                           ),
-                        );
+                        ),
+                      ),
+                      onChanged: (text) {
+                        _search();
                       },
-                    );
-                  },
-                  icon: WebsafeSvg.asset(AppImages.filter),
-                  color: AppColors.greenColor,
-                  iconSize: Get.width * 0.05,
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding:
-                EdgeInsets.only(top: Get.height * 0.01, left: Get.width * 0.04),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                widget.category.name,
-                style: Theme.of(context).textTheme.headline1,
+                    ),
+                  ),
+                  Container(
+                    width: Get.width * 0.1,
+                    height: Get.height * 0.06,
+                    child: DropdownButton(
+                      icon: Icon(
+                        Icons.person,
+                        color: Colors.redAccent,
+                        size: 20.09,
+                      ),
+                      isExpanded: true,
+                      items: list_filter.map((val) {
+                        return DropdownMenuItem(
+                          value: val,
+                          child: Text(val),
+                        );
+                      }).toList(),
+                      value: dropdownValue,
+                      onChanged: (String? value) {
+                        setState(() {
+                          dropdownValue = value!;
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-          FutureBuilder(
-            future: _carregar(),
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
-              if (!snapshot.hasData) {
-                return Container(
-                  height: Get.height * 0.2,
-                  width: Get.width,
-                  child: Center(
-                    child: Image.asset(
-                      AppImages.loading,
-                      width: Get.width * 0.2,
-                      height: Get.height * 0.2,
-                      alignment: Alignment.center,
-                    ),
-                  ),
-                );
-              } else {
-                if (snapshot.data == null) {
+            Container(
+              padding: EdgeInsets.only(
+                  top: Get.height * 0.01, left: Get.width * 0.04),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  widget.category.name,
+                  style: Theme.of(context).textTheme.headline1,
+                ),
+              ),
+            ),
+            FutureBuilder(
+              future: _carregar(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (!snapshot.hasData) {
                   return Container(
-                    height: Get.height * 0.85,
+                    height: Get.height * 0.2,
                     width: Get.width,
                     child: Center(
-                      child: Text(
-                        "Sem Produtos...",
-                        style: TextStyle(
-                          fontFamily: AppFonts.poppinsBoldFont,
-                          fontSize: Get.width * 0.035,
-                          color: Colors.grey,
-                        ),
+                      child: Image.asset(
+                        AppImages.loading,
+                        width: Get.width * 0.2,
+                        height: Get.height * 0.2,
+                        alignment: Alignment.center,
                       ),
                     ),
                   );
                 } else {
-                  return Container(
-                    height: Get.height * 0.85,
-                    margin: EdgeInsets.only(
-                      left: Get.width * 0.05,
-                      right: Get.width * 0.05,
-                    ),
-                    child: GridView.builder(
-                        padding: EdgeInsets.only(
-                          top: 0.0,
+                  if (snapshot.data == null) {
+                    return Container(
+                      height: Get.height * 0.85,
+                      width: Get.width,
+                      child: Center(
+                        child: Text(
+                          "Sem Produtos...",
+                          style: TextStyle(
+                            fontFamily: AppFonts.poppinsBoldFont,
+                            fontSize: Get.width * 0.035,
+                            color: Colors.grey,
+                          ),
                         ),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount:
-                                (Get.width == Orientation.portrait) ? 2 : 2),
-                        itemCount: list_product.length,
-                        itemBuilder: (BuildContext ctx, index) {
-                          var list = list_product[index];
-                          return ProductListComponent(product: list);
-                        }),
-                  );
+                      ),
+                    );
+                  } else {
+                    return Container(
+                      height: Get.height * 0.85,
+                      margin: EdgeInsets.only(
+                        left: Get.width * 0.05,
+                        right: Get.width * 0.05,
+                      ),
+                      child: GridView.builder(
+                          padding: EdgeInsets.only(
+                            top: 0.0,
+                          ),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount:
+                                      (Get.width == Orientation.portrait)
+                                          ? 2
+                                          : 2),
+                          itemCount: list_product.length,
+                          itemBuilder: (BuildContext ctx, index) {
+                            var list = list_product[index];
+                            return ProductListComponent(product: list);
+                          }),
+                    );
+                  }
                 }
-              }
-            },
-          ),
-        ],
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

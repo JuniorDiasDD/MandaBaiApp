@@ -23,7 +23,7 @@ class _StartPageState extends State<CartPage> {
   List<CartModel> list_cart = [];
   Future carregarCart() async {
     if (list_cart.isEmpty) {
-      list_cart = await ServiceRequest.loadCart();
+    //  list_cart = await ServiceRequest.loadCart();
       if (list_cart.isEmpty) {
         return null;
       } else {
