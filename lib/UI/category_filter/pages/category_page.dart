@@ -47,9 +47,15 @@ class _CategoryPageState extends State<CategoryPage> {
     list_product = [];
     setState(() {
       list_product = list_product_full;
-      Comparator<Product> pesagemComparator =
-          (a, b) => b.price.compareTo(a.price);
-      list_product.sort(pesagemComparator);
+      if (dropdownValue == "Menos Preço") {
+        Comparator<Product> pesagemComparator =
+            (a, b) => a.price.compareTo(b.price);
+        list_product.sort(pesagemComparator);
+      }else  if (dropdownValue == "Mais Preço") {
+        Comparator<Product> pesagemComparator =
+            (a, b) => b.price.compareTo(a.price);
+        list_product.sort(pesagemComparator);
+      }
     });
   }
 
@@ -136,12 +142,16 @@ class _CategoryPageState extends State<CategoryPage> {
                   Container(
                     width: Get.width * 0.1,
                     height: Get.height * 0.06,
+                    margin: EdgeInsets.only(
+                      right: Get.width * 0.04,
+                    ),
                     child: DropdownButton(
                       icon: Icon(
-                        Icons.person,
-                        color: Colors.redAccent,
+                        Icons.filter_alt_sharp,
+                        color: AppColors.greenColor,
                         size: 20.09,
                       ),
+
                       isExpanded: true,
                       items: list_filter.map((val) {
                         return DropdownMenuItem(
@@ -149,10 +159,11 @@ class _CategoryPageState extends State<CategoryPage> {
                           child: Text(val),
                         );
                       }).toList(),
-                      value: dropdownValue,
+                      //  value: dropdownValue,
                       onChanged: (String? value) {
                         setState(() {
                           dropdownValue = value!;
+                          _ordenar();
                         });
                       },
                     ),

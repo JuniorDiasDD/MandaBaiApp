@@ -103,7 +103,7 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                     child: Padding(
                       padding: EdgeInsets.only(right: Get.width * 0.04),
                       child: Text(
-                        widget.product.price,
+                        widget.product.price.toString(),
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.headline5,
                       ),

@@ -15,8 +15,9 @@ class ServiceRequest {
     List<Category> list = [];
     List<Category> list_final = [];
     var response = await http.get(Uri.parse(categorias));
-    var jsonResponse = json.decode(response.body);
+
     if (response.statusCode == 200) {
+      var jsonResponse = json.decode(response.body);
       var quantidade = response.headers['x-wp-total'];
       response = await http
           .get(Uri.parse(categorias + "&per_page=" + quantidade.toString()));
@@ -47,14 +48,38 @@ class ServiceRequest {
 
   //! Load Products
   static Future<List<Product>> loadProduct(id) async {
-    print(id);
+   
     List<Product> list = [];
+    List<Product> list_page = [];
     var response = await http.get(Uri.parse(productCategorias + id.toString()));
-    final jsonResponse = json.decode(response.body);
     //  print(response.body);
     if (response.statusCode == 200) {
-      final _cats = jsonResponse.cast<Map<String, dynamic>>();
-      list = _cats.map<Product>((cat) => Product.fromJson(cat)).toList();
+      final jsonResponse = json.decode(response.body);
+      var quantidade = response.headers['x-wp-total'];
+      int total_wp = int.parse(quantidade!);
+      if (total_wp < 100 || total_wp == 100) {
+        final _cats = jsonResponse.cast<Map<String, dynamic>>();
+        list = _cats.map<Product>((cat) => Product.fromJson(cat)).toList();
+      } else {
+        int cont = 2;
+        if (total_wp > 200 && total_wp < 300 || total_wp == 300) {
+          cont = 3;
+        }
+        for (int i = 1; i < cont; i++) {
+           response =
+              await http.get(Uri.parse(productCategorias + id.toString()+"&per_page=100&page="+i.toString()));
+              if(response.statusCode == 200){
+                final jsonResponse = json.decode(response.body);
+                 final _cats = jsonResponse.cast<Map<String, dynamic>>();
+                list_page = _cats.map<Product>((cat) => Product.fromJson(cat)).toList();
+                for(int d=0;d<list_page.length;d++){
+                  list.add(list_page[d]);
+                }
+              }else{
+                print("Erro em carregar products da page="+i.toString());
+              }
+        }
+      }
     } else if (response.statusCode == 503) {
       print("Erro de serviço");
     } else {
@@ -122,9 +147,10 @@ class ServiceRequest {
   static Future login(username, password) async {
     var response = await http.post(Uri.parse(request_login),
         body: {'username': username, 'password': password});
-    final jsonResponse = json.decode(response.body);
+   
     print(response.body);
     if (response.statusCode == 200) {
+       final jsonResponse = json.decode(response.body);
       var session = FlutterSession();
       await session.set('id', jsonResponse["user_id"]);
       GetUser();
@@ -145,9 +171,10 @@ class ServiceRequest {
     var response = await http.post(Uri.parse(
       getUser + id.toString() + "?" + key,
     ));
-    final jsonResponse = json.decode(response.body);
+
     // print(response.body);
     if (response.statusCode == 200) {
+          final jsonResponse = json.decode(response.body);
       user.name = jsonResponse["first_name"];
       user.email = jsonResponse["email"];
       user.nickname = jsonResponse["last_name"];
@@ -173,9 +200,10 @@ class ServiceRequest {
     var response = await http.get(Uri.parse(getCart),
         headers: <String, String>{'authorization': basicAuth});
 
-    final jsonResponse = json.decode(response.body);
-    print(response.body);
+   
+   // print(response.body);
     if (response.statusCode == 200) {
+       final jsonResponse = json.decode(response.body);
       final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();
       list = _cats.map<CartModel>((cat) => CartModel.fromJson(cat)).toList();
     } else if (response.statusCode == 503) {
@@ -258,7 +286,7 @@ class ServiceRequest {
                 id: jsonResponse['id'],
                 name: jsonResponse['name'].toString(),
                 description: jsonResponse['description'].toString(),
-                price: jsonResponse['price'].toString(),
+                price: double.parse(jsonResponse['price']),
                 rating_count: jsonResponse['rating_count'] ?? 0,
                 sale_price: jsonResponse['sale_price'].toString(),
                 in_stock: jsonResponse['manage_stock'].toString(),

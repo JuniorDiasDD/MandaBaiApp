@@ -1,10 +1,11 @@
 class Product {
-  final String name, description, price, sale_price, stock_quantity;
+  final String name, description, sale_price, stock_quantity;
   int rating_count;
   int id;
   String in_stock, on_sale;
   String image;
   bool favorite;
+  double price;
   Product({
     required this.id,
     required this.name,
@@ -23,7 +24,7 @@ class Product {
       id: json['id'],
       name: json['name'].toString(),
       description: json['description'].toString(),
-      price: json['price'].toString(),
+      price: double.parse(json['price']),
       rating_count: json['rating_count'] ?? 0,
       sale_price: json['sale_price'].toString(),
       in_stock: json['in_stock'].toString(),
