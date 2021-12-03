@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _onItemTapped(int index) async {
    
-      if (index == 3){
+      /*if (index == 3){
         var check = await FlutterSession().get('id');
         if (check == 'null' || check == null) {
           showDialog(
@@ -38,9 +38,9 @@ class _HomePageState extends State<HomePage> {
         }else {
           setState(()  { _selectedIndex = index;  });
         }
-      }else{
+      }else{*/
            setState(()  { _selectedIndex = index;  });
-     }
+    // }
 
   
   }

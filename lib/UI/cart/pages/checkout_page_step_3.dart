@@ -95,10 +95,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                             ),
                                             Text(
                                               'Instruções',
-                                              style: TextStyle(
-                                                  fontFamily:
-                                                      AppFonts.poppinsBoldFont,
-                                                  fontSize: Get.width * 0.04),
+                                              style: Theme.of(context).textTheme.headline1,
                                             ),
                                             IconButton(
                                               icon: Icon(Icons.close),
@@ -120,20 +117,13 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                               SizedBox(height: Get.height * 0.01),
                                               Text(
                                                 'Pagamento',
-                                                style: TextStyle(
-                                                    fontFamily: AppFonts
-                                                        .poppinsBoldFont,
-                                                    fontSize:
-                                                        Get.width * 0.036),
+                                                style: Theme.of(context).textTheme.headline2,
                                               ),
                                               SizedBox(
                                                   height: Get.height * 0.01),
                                               Text(
                                                 'Caso tiver um Cuppon de Desconto, clica na caixinha "Tenho um desconto", a seguir, introduza o código do desconto.',
-                                                style: TextStyle(
-                                                    fontFamily: AppFonts
-                                                        .poppinsRegularFont,
-                                                    fontSize: Get.width * 0.03),
+                                                style: Theme.of(context).textTheme.headline4,
                                               ),
                                             ],
                                           ),

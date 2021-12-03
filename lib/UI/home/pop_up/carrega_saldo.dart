@@ -57,9 +57,8 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                     ),
                     Text(
                       'Saldo CvMovel',
-                      style: TextStyle(
-                          fontFamily: AppFonts.poppinsBoldFont,
-                          fontSize: Get.width * 0.04),
+
+                          style: Theme.of(context).textTheme.headline1,
                     ),
                     IconButton(
                       icon: Icon(Icons.close),
@@ -83,9 +82,7 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                         SizedBox(height: Get.height * 0.01),
                         Text(
                           'Número de Telemóvel',
-                          style: TextStyle(
-                              fontFamily: AppFonts.poppinsBoldFont,
-                              fontSize: Get.width * 0.036),
+                            style: Theme.of(context).textTheme.headline2,
                         ),
                         SizedBox(height: Get.height * 0.02),
                         Container(
@@ -96,7 +93,7 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                             obscureText: false,
                             style: Theme.of(context).textTheme.headline4,
                             decoration: InputDecoration(
-                              filled: false,
+                              filled: true,
                               fillColor: Theme.of(context).backgroundColor,
                               border: OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(35.0),
@@ -119,9 +116,7 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                         SizedBox(height: Get.height * 0.01),
                         Text(
                           'Montante',
-                          style: TextStyle(
-                              fontFamily: AppFonts.poppinsBoldFont,
-                              fontSize: Get.width * 0.036),
+                            style: Theme.of(context).textTheme.headline2,
                         ),
                         SizedBox(height: Get.height * 0.01),
                         Container(
@@ -132,7 +127,7 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                             obscureText: false,
                             style: Theme.of(context).textTheme.headline4,
                             decoration: InputDecoration(
-                              filled: false,
+                              filled: true,
                               fillColor: Theme.of(context).backgroundColor,
                               border: OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(35.0),
