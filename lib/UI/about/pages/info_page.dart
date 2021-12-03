@@ -103,6 +103,7 @@ class InfoPage extends StatelessWidget {
                       ),
                       child: ExpansionTile(
                         backgroundColor:  Theme.of(context).cardColor,
+                        iconColor: AppColors.greenColor,
                         title: Text(
                           "Missão",
                             style: Theme.of(context).textTheme.headline5,
@@ -122,6 +123,7 @@ class InfoPage extends StatelessWidget {
                       ),
                     ),
                     Container(
+
                       margin: EdgeInsets.only(
                         left: Get.width * 0.01,
                         right: Get.width * 0.01,
@@ -136,6 +138,7 @@ class InfoPage extends StatelessWidget {
                       ),
                       child: ExpansionTile(
                         backgroundColor:  Theme.of(context).cardColor,
+                        iconColor: AppColors.greenColor,
                         title: Text(
                           "Visão",
                           style: Theme.of(context).textTheme.headline5,
@@ -169,6 +172,7 @@ class InfoPage extends StatelessWidget {
                       ),
                       child: ExpansionTile(
                         backgroundColor: Theme.of(context).cardColor,
+                        iconColor: AppColors.greenColor,
                         title: Text(
                           "Valores",
                           style: Theme.of(context).textTheme.headline5,
@@ -204,7 +208,9 @@ class InfoPage extends StatelessWidget {
                             left: Get.width * 0.05,
                             right: Get.width * 0.05,
                           ),
-                          child: Text("Sobre Aplicação"),
+                          child: Text("Sobre Aplicação",
+                              style: Theme.of(context).textTheme.headline4,
+                          ),
                         ),
                         Expanded(
                           child: Container(
