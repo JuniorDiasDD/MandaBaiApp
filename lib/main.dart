@@ -6,6 +6,7 @@ import 'UI/authention/pages/login_page.dart';
 import 'UI/authention/pages/register_page.dart';
 import 'UI/home/pages/home_page.dart';
 import 'UI/intro/splash_page.dart';
+import 'UI/location_destination/page/new_destination.dart';
 
 
 void main() {
@@ -34,7 +35,7 @@ class App extends StatelessWidget {
         '/register': (context) => RegisterPage(),
         '/home': (context) => HomePage(index:0),
        //// '/solicitacao': (context) => PageSolicitacao(),
-       // '/gestaoPagamentoo': (context) => PageStartPayments(),
+       '/newDestination': (context) => NewDestination(),
        // '/servicos': (context) => PageServicos(),
        // '/restaurePassword': (context) => PageRestaurePassword(),
        //  '/ativar': (context)=>PageAtivacaoCategoria(),
