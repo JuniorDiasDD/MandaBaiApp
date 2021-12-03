@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
+import 'package:manda_bai/UI/account/Componentes/item_data.dart';
 
 class Destination_Page extends StatefulWidget {
   const Destination_Page({Key? key}) : super(key: key);
@@ -110,7 +111,6 @@ class _Destination_PageState extends State<Destination_Page> {
                                           ),
                                           SizedBox(
                                               height: Get.height * 0.01),
-
                                           SizedBox(
                                             width: Get.width,
                                             child: TextFormField(
@@ -282,7 +282,17 @@ class _Destination_PageState extends State<Destination_Page> {
                   ),
                 ],
               ),
-              Container(),
+              Container(
+                color: Colors.red,
+                margin: EdgeInsets.only(top:Get.height * 0.05),
+                height: Get.height * 0.6,
+                child: ListView(
+                children: [
+                    Item_Data(),
+                ],
+
+                ),
+              ),
             ],
           ),
         ),

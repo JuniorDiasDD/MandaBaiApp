@@ -7,6 +7,7 @@ import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/about/pages/info_page.dart';
 import 'package:manda_bai/UI/account/pages/destination_page.dart';
 import 'package:manda_bai/UI/account/pages/edit_profile.dart';
+import 'package:manda_bai/UI/account/pages/pedido_page.dart';
 import 'package:manda_bai/UI/home/pop_up/carrega_saldo.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_island.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_moeda.dart';
@@ -20,18 +21,20 @@ class ProfilePage extends StatefulWidget {
 
 class _StartPageState extends State<ProfilePage> {
   String check = "";
-  
+
   String island = "";
-  String money="";
-  String language="";
+  String money = "";
+  String language = "";
   Future _carregarIsland() async {
     island = await FlutterSession().get('island');
     return island;
   }
+
   Future _carregarMoney() async {
     money = await FlutterSession().get('money');
     return money;
   }
+
   Future _carregarLanguage() async {
     language = await FlutterSession().get('language');
     return language;
@@ -383,9 +386,10 @@ class _StartPageState extends State<ProfilePage> {
                                 children: [
                                   Text(
                                     'Mudar de Idioma',
-                                    style: Theme.of(context).textTheme.headline3,
+                                    style:
+                                        Theme.of(context).textTheme.headline3,
                                   ),
-                                    FutureBuilder(
+                                  FutureBuilder(
                                       future: _carregarLanguage(),
                                       builder: (BuildContext context,
                                           AsyncSnapshot snapshot) {
@@ -444,9 +448,10 @@ class _StartPageState extends State<ProfilePage> {
                                 children: [
                                   Text(
                                     'Selecionar Moeda',
-                                    style: Theme.of(context).textTheme.headline3,
+                                    style:
+                                        Theme.of(context).textTheme.headline3,
                                   ),
-                                   FutureBuilder(
+                                  FutureBuilder(
                                       future: _carregarMoney(),
                                       builder: (BuildContext context,
                                           AsyncSnapshot snapshot) {
@@ -479,7 +484,6 @@ class _StartPageState extends State<ProfilePage> {
                               builder: (context) => Destination_Page(),
                             ),
                           );
-
                         },
                         child: Row(
                           children: [
@@ -507,7 +511,8 @@ class _StartPageState extends State<ProfilePage> {
                                 children: [
                                   Text(
                                     'Locais de Entrega',
-                                    style: Theme.of(context).textTheme.headline3,
+                                    style:
+                                        Theme.of(context).textTheme.headline3,
                                   ),
                                   /*FutureBuilder(
                                       future: _carregarLanguage(),
@@ -518,6 +523,69 @@ class _StartPageState extends State<ProfilePage> {
                                         } else {
                                           return Text(
                                             ' (' + language + ')',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline3,
+                                          );
+                                        }
+                                      }),*/
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: Get.height * 0.01),
+                    Container(
+                      height: Get.height * 0.06,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PedidoPage(),
+                            ),
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            Container(
+                              height: Get.height * 0.042,
+                              width: Get.height * 0.042,
+                              decoration: BoxDecoration(
+                                color: Colors.teal,
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(100),
+                                ),
+                                border: Border.all(color: Colors.teal),
+                              ),
+                              child: Icon(
+                                Icons.description_outlined,
+                                color: Colors.white,
+                                size: Get.height * 0.025,
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: Get.width * 0.02,
+                              ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'Meus Pedidos',
+                                    style:
+                                        Theme.of(context).textTheme.headline3,
+                                  ),
+                                  /*FutureBuilder(
+                                      future: _carregarIsland(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot snapshot) {
+                                        if (snapshot.data == null) {
+                                          return const Text(" ");
+                                        } else {
+                                          return Text(
+                                            ' (' + island + ')',
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline3,
