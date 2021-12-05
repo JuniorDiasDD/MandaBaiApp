@@ -148,12 +148,13 @@ class ServiceRequest {
     var response = await http.post(Uri.parse(request_login),
         body: {'username': username, 'password': password});
    
-    print(response.body);
+   
     if (response.statusCode == 200) {
        final jsonResponse = json.decode(response.body);
       var session = FlutterSession();
-      await session.set('id', jsonResponse["user_id"]);
-      GetUser();
+      await session.set('id', jsonResponse["ID"]);
+       print(jsonResponse["ID"]);
+     // GetUser();
       return true;
     } else if (response.statusCode == 503) {
       print("Erro de serviço");

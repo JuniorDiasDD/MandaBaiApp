@@ -29,8 +29,9 @@ const String description_valores =
 
 //! Configuração de serviços
 //?links- urls
-const String link = "https://www.mandabai.com/wp-json/wc/v3/";
-const String link_2 = "https://www.mandabai.com/wp-json/cocart/v2/";
+const String url_pricipal="https://www.mandabai.com/wp-json/";
+const String link =url_pricipal+ "wc/v3/";
+const String link_2 = url_pricipal+"cocart/v2/";
 //?key access
 const String consumer_key = "ck_99b6b6151e8db4d15190cd8fef823839f2595594";
 const String consumer_secret = "cs_2f6fd0fc9ff05307dada1a8104e6f27c39b6cd86";
@@ -47,7 +48,7 @@ const String get_Produto = link+"products/";
 //! register
 const String register_client = link + "customers?" + key;
 //! login
-const String request_login = link_2 + "login";
+const String request_login = url_pricipal + "custom-plugin/login";
 
 //! Get User
 const String getUser = link + "customers/";
