@@ -21,7 +21,7 @@ class _StartPageState extends State<CartPage> {
   final CartPageController cartPageController = Get.put(CartPageController());
 
   bool isChecked = false;
- String money = "";
+  String money = "";
   List<CartModel> list_cart = [];
   Future carregarCart() async {
     if (list_cart.isEmpty) {
@@ -39,10 +39,28 @@ class _StartPageState extends State<CartPage> {
 
     return list_cart;
   }
- 
+
   Future _carregarMoney() async {
     money = await FlutterSession().get('money');
     return money;
+  }
+
+  _remover() async {
+    print("chegou");
+    List<String> list_item = [];
+    bool check = false;
+    for (int i = 0; i < cartPageController.list.length; i++) {
+      if (cartPageController.list[i].checkout == true) {
+        list_item.add(cartPageController.list[i].item_key);
+        check = true;
+      }
+    }
+    if (check == true) {
+      list_cart = await ServiceRequest.removeCart(list_item);
+      setState(() {
+        list_cart;
+      });
+    } else {}
   }
 
   @override
@@ -50,8 +68,8 @@ class _StartPageState extends State<CartPage> {
     super.initState();
     //carregarCart();
     list_cart = [];
-    cartPageController.total=0;
-    cartPageController.subTotal=0;
+    cartPageController.total = 0;
+    cartPageController.subTotal = 0;
   }
 
   @override
@@ -81,7 +99,7 @@ class _StartPageState extends State<CartPage> {
                     Container(
                       child: IconButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          _remover();
                         },
                         icon: const Icon(
                           Icons.delete,
@@ -117,56 +135,56 @@ class _StartPageState extends State<CartPage> {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
                         return Container(
-                        height: Get.height * 0.2,
-                        width: Get.width,
-                        child: Center(
-                          child: Image.asset(
-                            AppImages.loading,
-                            width: Get.width * 0.2,
-                            height: Get.height * 0.2,
-                            alignment: Alignment.center,
-                          ),
-                        ),
-                      );
-                      default:
-                       if (snapshot.data == null) {
-                        return Container(
+                          height: Get.height * 0.2,
                           width: Get.width,
-                          height: Get.height,
-                          child: Column(
-                            children: [
-                              SizedBox(height: Get.height * 0.2),
-                              WebsafeSvg.asset(AppImages.cart_empyt),
-                              SizedBox(height: Get.height * 0.08),
-                              Text(
-                                "O seu carrinho está vazio...",
-                                style: Theme.of(context).textTheme.headline4,
-                              ),
-                            ],
+                          child: Center(
+                            child: Image.asset(
+                              AppImages.loading,
+                              width: Get.width * 0.2,
+                              height: Get.height * 0.2,
+                              alignment: Alignment.center,
+                            ),
                           ),
                         );
-                      } else {
-                        return Container(
-                          height: Get.height * 0.45,
-                          child: ListView.builder(
-                            padding: EdgeInsets.all(0.0),
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (BuildContext context, index) {
-                              var list = list_cart[index];
-                              cartPageController.price =
-                                  list.price * list.amount;
-                              return ItemCart(
-                                cartModel: list,
-                              );
-                            },
-                          ),
-                        );
-                      }
+                      default:
+                        if (snapshot.data == null) {
+                          return Container(
+                            width: Get.width,
+                            height: Get.height,
+                            child: Column(
+                              children: [
+                                SizedBox(height: Get.height * 0.2),
+                                WebsafeSvg.asset(AppImages.cart_empyt),
+                                SizedBox(height: Get.height * 0.08),
+                                Text(
+                                  "O seu carrinho está vazio...",
+                                  style: Theme.of(context).textTheme.headline4,
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return Container(
+                            height: Get.height * 0.45,
+                            child: ListView.builder(
+                              padding: EdgeInsets.all(0.0),
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (BuildContext context, index) {
+                                var list = list_cart[index];
+                                cartPageController.price =
+                                    list.price * list.amount;
+                                return ItemCart(
+                                  cartModel: list,
+                                );
+                              },
+                            ),
+                          );
+                        }
                     }
 
-                  /*  if (!snapshot.hasData) {
+                    /*  if (!snapshot.hasData) {
                       return Container(
                         height: Get.height * 0.2,
                         width: Get.width,
@@ -179,7 +197,7 @@ class _StartPageState extends State<CartPage> {
                           ),
                         ),
                       );*/
-                   /* } else {
+                    /* } else {
                       if (snapshot.data == null) {
                         return Container(
                           width: Get.width,
@@ -234,20 +252,19 @@ class _StartPageState extends State<CartPage> {
                             style: Theme.of(context).textTheme.headline2,
                           ),
                         ),
-                         FutureBuilder(
-                                future: _carregarMoney(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot snapshot) {
-                                  if (snapshot.data == null) {
-                                    return const Text(" ");
-                                  } else {
-                                    return Text(
-                                      " " + money,
-                                      style:
-                                          Theme.of(context).textTheme.headline3,
-                                    );
-                                  }
-                                }),
+                        FutureBuilder(
+                            future: _carregarMoney(),
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              if (snapshot.data == null) {
+                                return const Text(" ");
+                              } else {
+                                return Text(
+                                  " " + money,
+                                  style: Theme.of(context).textTheme.headline3,
+                                );
+                              }
+                            }),
                       ],
                     ),
                   ],
@@ -265,24 +282,22 @@ class _StartPageState extends State<CartPage> {
                         Obx(
                           () => Text(
                             cartPageController.taxa.toStringAsFixed(0),
-                            style:
-                                          Theme.of(context).textTheme.headline6,
+                            style: Theme.of(context).textTheme.headline6,
                           ),
                         ),
-                       FutureBuilder(
-                                future: _carregarMoney(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot snapshot) {
-                                  if (snapshot.data == null) {
-                                    return const Text(" ");
-                                  } else {
-                                    return Text(
-                                      " " + money,
-                                      style:
-                                          Theme.of(context).textTheme.headline6,
-                                    );
-                                  }
-                                }),
+                        FutureBuilder(
+                            future: _carregarMoney(),
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              if (snapshot.data == null) {
+                                return const Text(" ");
+                              } else {
+                                return Text(
+                                  " " + money,
+                                  style: Theme.of(context).textTheme.headline6,
+                                );
+                              }
+                            }),
                       ],
                     ),
                   ],
@@ -321,24 +336,26 @@ class _StartPageState extends State<CartPage> {
                           Obx(
                             () => Text(
                               cartPageController.total.toStringAsFixed(0),
-                              style:
-                                          Theme.of(context).textTheme.headline5!.copyWith(fontSize: 20),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline5!
+                                  .copyWith(fontSize: 20),
                             ),
                           ),
                           FutureBuilder(
-                                future: _carregarMoney(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot snapshot) {
-                                  if (snapshot.data == null) {
-                                    return const Text(" ");
-                                  } else {
-                                    return Text(
-                                      " " + money,
-                                      style:
-                                          Theme.of(context).textTheme.headline5,
-                                    );
-                                  }
-                                }),
+                              future: _carregarMoney(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot snapshot) {
+                                if (snapshot.data == null) {
+                                  return const Text(" ");
+                                } else {
+                                  return Text(
+                                    " " + money,
+                                    style:
+                                        Theme.of(context).textTheme.headline5,
+                                  );
+                                }
+                              }),
                         ],
                       ),
                     ),

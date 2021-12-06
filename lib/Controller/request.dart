@@ -48,7 +48,6 @@ class ServiceRequest {
 
   //! Load Products
   static Future<List<Product>> loadProduct(id) async {
-   
     List<Product> list = [];
     List<Product> list_page = [];
     var response = await http.get(Uri.parse(productCategorias + id.toString()));
@@ -66,18 +65,21 @@ class ServiceRequest {
           cont = 3;
         }
         for (int i = 1; i < cont; i++) {
-           response =
-              await http.get(Uri.parse(productCategorias + id.toString()+"&per_page=100&page="+i.toString()));
-              if(response.statusCode == 200){
-                final jsonResponse = json.decode(response.body);
-                 final _cats = jsonResponse.cast<Map<String, dynamic>>();
-                list_page = _cats.map<Product>((cat) => Product.fromJson(cat)).toList();
-                for(int d=0;d<list_page.length;d++){
-                  list.add(list_page[d]);
-                }
-              }else{
-                print("Erro em carregar products da page="+i.toString());
-              }
+          response = await http.get(Uri.parse(productCategorias +
+              id.toString() +
+              "&per_page=100&page=" +
+              i.toString()));
+          if (response.statusCode == 200) {
+            final jsonResponse = json.decode(response.body);
+            final _cats = jsonResponse.cast<Map<String, dynamic>>();
+            list_page =
+                _cats.map<Product>((cat) => Product.fromJson(cat)).toList();
+            for (int d = 0; d < list_page.length; d++) {
+              list.add(list_page[d]);
+            }
+          } else {
+            print("Erro em carregar products da page=" + i.toString());
+          }
         }
       }
     } else if (response.statusCode == 503) {
@@ -147,15 +149,14 @@ class ServiceRequest {
   static Future login(username, password) async {
     var response = await http.post(Uri.parse(request_login),
         body: {'username': username, 'password': password});
-   
-   
+
     if (response.statusCode == 200) {
-       final jsonResponse = json.decode(response.body);
+      final jsonResponse = json.decode(response.body);
       var session = FlutterSession();
       await session.set('id', jsonResponse["ID"]);
-      user.username=username;
-      user.senha=password;
-       print(jsonResponse["ID"]);
+      user.username = username;
+      user.senha = password;
+      print(jsonResponse["ID"]);
       GetUser();
       return true;
     } else if (response.statusCode == 503) {
@@ -177,7 +178,7 @@ class ServiceRequest {
 
     // print(response.body);
     if (response.statusCode == 200) {
-          final jsonResponse = json.decode(response.body);
+      final jsonResponse = json.decode(response.body);
       user.name = jsonResponse["first_name"];
       user.email = jsonResponse["email"];
       user.nickname = jsonResponse["last_name"];
@@ -199,13 +200,14 @@ class ServiceRequest {
   static Future<List<CartModel>> loadCart() async {
     List<CartModel> list = [];
 
-    String basicAuth = 'Basic ' + base64Encode(utf8.encode(user.username+':'+user.senha));
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode(user.username + ':' + user.senha));
     var response = await http.get(Uri.parse(getCart),
         headers: <String, String>{'authorization': basicAuth});
     print(response.body);
-  
+
     if (response.statusCode == 200) {
-       final jsonResponse = json.decode(response.body);
+      final jsonResponse = json.decode(response.body);
       final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();
       list = _cats.map<CartModel>((cat) => CartModel.fromJson(cat)).toList();
     } else if (response.statusCode == 503) {
@@ -213,6 +215,32 @@ class ServiceRequest {
     } else {
       print("Erro de authentiction");
     }
+    return list;
+  }
+
+  //! removeItemCart
+  static Future<List<CartModel>> removeCart(List<String> list_item) async {
+    List<CartModel> list = [];
+
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode(user.username + ':' + user.senha));
+
+    for (int i = 0; i < list_item.length; i++) {
+      var response = await http.delete(Uri.parse(removeItemCart + list_item[i]),
+          headers: <String, String>{'authorization': basicAuth});
+      print(response.body);
+
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+        final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();
+        list = _cats.map<CartModel>((cat) => CartModel.fromJson(cat)).toList();
+      } else if (response.statusCode == 503) {
+        print("Erro de serviço");
+      } else {
+        print("Erro em eliminar item "+list_item[i]);
+      }
+    }
+
     return list;
   }
 
