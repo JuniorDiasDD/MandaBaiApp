@@ -63,8 +63,6 @@ class _ContactPageState extends State<ContactPage> {
               padding: EdgeInsets.only(
                   left: Get.width * 0.04, right: Get.width * 0.04),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
                     width: Get.width,
@@ -78,7 +76,7 @@ class _ContactPageState extends State<ContactPage> {
                         filled: true,
                         fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(10.0),
+                          borderRadius: new BorderRadius.circular(15.0),
                           borderSide:
                               new BorderSide(color: Colors.red, width: 2.0),
                         ),
@@ -100,7 +98,7 @@ class _ContactPageState extends State<ContactPage> {
                         filled: true,
                         fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(10.0),
+                          borderRadius: new BorderRadius.circular(15.0),
                           borderSide: new BorderSide(),
                         ),
                       ),
@@ -121,7 +119,7 @@ class _ContactPageState extends State<ContactPage> {
                         filled: true,
                         fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(10.0),
+                          borderRadius: new BorderRadius.circular(15.0),
                           borderSide: new BorderSide(),
                         ),
                       ),
@@ -144,14 +142,14 @@ class _ContactPageState extends State<ContactPage> {
                         contentPadding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(15),
                           borderSide:
                               BorderSide(width: 2, color: Colors.black54),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
                               BorderSide(width: 2, color: Colors.black54),
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(15),
                         ),
                         hintText: 'escrever...',
                         hintStyle: Theme.of(context).textTheme.headline4,
@@ -166,7 +164,7 @@ class _ContactPageState extends State<ContactPage> {
                     decoration:  BoxDecoration(
                       color: AppColors.greenColor,
                       borderRadius: BorderRadius.all(
-                        Radius.circular(35),
+                        Radius.circular(15),
                       ),
                       boxShadow: [
                         BoxShadow(
@@ -196,7 +194,7 @@ class _ContactPageState extends State<ContactPage> {
                     decoration:  BoxDecoration(
                       color: AppColors.greenColor,
                       borderRadius: BorderRadius.all(
-                        Radius.circular(35),
+                        Radius.circular(15),
                       ),
                       boxShadow: [
                         BoxShadow(

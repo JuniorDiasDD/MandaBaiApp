@@ -97,7 +97,7 @@ class InfoPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Theme.of(context).cardColor,
                         borderRadius: BorderRadius.all(
-                          Radius.circular(Get.width * 0.04),
+                          Radius.circular(15),
                         ),
                         border: Border.all(color: Colors.black12, width: Get.width * 0.001),
                       ),
@@ -132,7 +132,7 @@ class InfoPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Theme.of(context).cardColor,
                         borderRadius: BorderRadius.all(
-                          Radius.circular(Get.width * 0.04),
+                          Radius.circular(15),
                         ),
                         border: Border.all(color: Colors.black12, width: Get.width * 0.001),
                       ),
@@ -166,7 +166,7 @@ class InfoPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Theme.of(context).cardColor,
                         borderRadius: BorderRadius.all(
-                          Radius.circular(Get.width * 0.04),
+                          Radius.circular(15),
                         ),
                         border: Border.all(color: Colors.black12, width: Get.width * 0.001),
                       ),
@@ -232,7 +232,7 @@ class InfoPage extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.all(
-                              Radius.circular(Get.width * 0.02)
+                              Radius.circular(15)
                           ),
                           border: Border.all(
                             color: Colors.black38,
@@ -275,7 +275,7 @@ class InfoPage extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.all(
-                              Radius.circular(Get.width * 0.02)
+                              Radius.circular(15)
                           ),
                           border: Border.all(
                             color: Colors.black38,
@@ -318,7 +318,7 @@ class InfoPage extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.all(
-                            Radius.circular(Get.width * 0.02),
+                            Radius.circular(15),
                           ),
                           border: Border.all(
                             color: Colors.black38,
@@ -361,7 +361,7 @@ class InfoPage extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.all(
-                            Radius.circular(Get.width * 0.02),
+                            Radius.circular(15),
                           ),
                           border: Border.all(
                             color: Colors.black38,
