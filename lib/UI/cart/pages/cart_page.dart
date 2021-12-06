@@ -46,21 +46,37 @@ class _StartPageState extends State<CartPage> {
   }
 
   _remover() async {
-    print("chegou");
     List<String> list_item = [];
-    bool check = false;
-    for (int i = 0; i < cartPageController.list.length; i++) {
-      if (cartPageController.list[i].checkout == true) {
-        list_item.add(cartPageController.list[i].item_key);
-        check = true;
+    if (isChecked == true) {
+      if (!cartPageController.list.isEmpty) {
+        for (int i = 0; i < cartPageController.list.length; i++) {
+          list_item.add(cartPageController.list[i].item_key);
+        }
+
+        list_cart = await ServiceRequest.removeCart(list_item);
+        setState(() {
+          list_cart;
+          cartPageController.list = list_cart;
+          cartPageController.calcule();
+        });
       }
+    } else {
+      bool check = false;
+      for (int i = 0; i < cartPageController.list.length; i++) {
+        if (cartPageController.list[i].checkout == true) {
+          list_item.add(cartPageController.list[i].item_key);
+          check = true;
+        }
+      }
+      if (check == true) {
+        list_cart = await ServiceRequest.removeCart(list_item);
+        setState(() {
+          list_cart;
+          cartPageController.list = list_cart;
+          cartPageController.calcule();
+        });
+      } else {}
     }
-    if (check == true) {
-      list_cart = await ServiceRequest.removeCart(list_item);
-      setState(() {
-        list_cart;
-      });
-    } else {}
   }
 
   @override
@@ -110,24 +126,26 @@ class _StartPageState extends State<CartPage> {
                   ],
                 ),
                 SizedBox(height: Get.height * 0.01),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      "Selecionar Todos",
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
-                    Checkbox(
-                      checkColor: Theme.of(context).cardColor,
-                      activeColor: AppColors.greenColor,
-                      value: isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          isChecked = value!;
-                        });
-                      },
-                    ),
-                  ],
+                SizedBox(
+                  child:list_cart.isEmpty? null: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        "Selecionar Todos",
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
+                      Checkbox(
+                        checkColor: Theme.of(context).cardColor,
+                        activeColor: AppColors.greenColor,
+                        value: isChecked,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isChecked = value!;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                 ),
                 FutureBuilder(
                   future: carregarCart(),

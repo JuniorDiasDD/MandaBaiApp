@@ -15,6 +15,10 @@ class ProductListComponent extends StatefulWidget {
 
 class _ProductListComponentState extends State<ProductListComponent> {
   bool checkFavorite = false;
+  _addCart(id) async {
+    bool check = await ServiceRequest.addCart(id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -114,24 +118,30 @@ class _ProductListComponentState extends State<ProductListComponent> {
                           onPressed: () {
                             if (widget.product.favorite == false) {
                               ServiceRequest.addFavrite(widget.product.id);
-                              setState((){
-                                widget.product.favorite=!widget.product.favorite;
+                              setState(() {
+                                widget.product.favorite =
+                                    !widget.product.favorite;
                               });
                             } else {
                               ServiceRequest.removeFavrite(widget.product.id);
-                               setState((){
-                                widget.product.favorite=!widget.product.favorite;
+                              setState(() {
+                                widget.product.favorite =
+                                    !widget.product.favorite;
                               });
                             }
                           },
                           icon: const Icon(Icons.favorite),
                           iconSize: Get.width * 0.05,
                           alignment: Alignment.centerRight,
-                          color: widget.product.favorite ? Colors.red : Colors.black54,
+                          color: widget.product.favorite
+                              ? Colors.red
+                              : Colors.black54,
                         ),
                         IconButton(
                           padding: const EdgeInsets.all(0.0),
-                          onPressed: () {},
+                          onPressed: () {
+                            _addCart(widget.product.id);
+                          },
                           icon: const Icon(Icons.shopping_cart_outlined),
                           iconSize: Get.width * 0.05,
                           alignment: Alignment.center,

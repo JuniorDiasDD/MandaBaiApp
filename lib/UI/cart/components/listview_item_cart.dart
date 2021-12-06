@@ -80,17 +80,21 @@ class _ItemCartState extends State<ItemCart> {
               width: Get.width * 0.62,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+               
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        widget.cartModel.name,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontFamily: AppFonts.poppinsBoldFont,
-                          fontSize: 15,
-                          color: Colors.black,
+                      SizedBox(
+                         width: Get.width*0.5,
+                        child: Text(
+                          widget.cartModel.name,
+                          textAlign: TextAlign.start,
+                          style: const TextStyle(
+                            fontFamily: AppFonts.poppinsBoldFont,
+                            fontSize: 15,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                       Checkbox(

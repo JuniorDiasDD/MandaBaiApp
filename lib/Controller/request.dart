@@ -237,11 +237,32 @@ class ServiceRequest {
       } else if (response.statusCode == 503) {
         print("Erro de serviço");
       } else {
-        print("Erro em eliminar item "+list_item[i]);
+        print("Erro em eliminar item " + list_item[i]);
       }
     }
 
     return list;
+  }
+
+  //! Cart
+  //? addCart
+  static Future addCart(item) async {
+    String basicAuth =
+        'Basic ' + base64Encode(utf8.encode(user.username + ':' + user.senha));
+    var response = await http.post(Uri.parse(addItemCart),
+        headers: <String, String>{'authorization': basicAuth},
+        body: {'id': item.toString(), 'quantity': "1"});
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      //  final jsonResponse = json.decode(response.body);
+      return true;
+    } else if (response.statusCode == 503) {
+      print("Erro de serviço");
+    } else {
+      print("Erro de authentiction");
+    }
+    return false;
   }
 
   //! Favorite

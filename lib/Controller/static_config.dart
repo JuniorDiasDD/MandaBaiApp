@@ -57,3 +57,6 @@ const String getUser = link + "customers/";
 const String getCart = link_2 + "cart";
 //! remove de cart
 const String removeItemCart=link_2+"cart/item/";
+
+//!addcart
+const String addItemCart=link_2+"cart/add-item";

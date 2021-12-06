@@ -85,6 +85,8 @@ class _CategoryPageState extends State<CategoryPage> {
     return list_product;
   }
 
+ 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
