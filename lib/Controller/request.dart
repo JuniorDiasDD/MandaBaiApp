@@ -5,6 +5,7 @@ import 'package:manda_bai/Model/cart_model.dart';
 import 'package:manda_bai/Model/category.dart';
 import 'package:http/http.dart' as http;
 import 'package:manda_bai/Model/favorite.dart';
+import 'package:manda_bai/Model/location.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/Model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -156,8 +157,8 @@ class ServiceRequest {
       await session.set('id', jsonResponse["ID"]);
       await session.set('username', username);
       await session.set('password', password);
-  
-    //  print(jsonResponse["ID"]);
+
+      //  print(jsonResponse["ID"]);
       GetUser();
       return true;
     } else if (response.statusCode == 503) {
@@ -355,5 +356,89 @@ class ServiceRequest {
       return list;
     }
     return list;
+  }
+
+  //!location delivery
+  static Future<List<Location>> loadLocation() async {
+    List<Location> list = [];
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // await prefs.remove('itens_location');
+    final String itemLocationString = prefs.getString('itens_location');
+    if (itemLocationString != null) {
+      //  print("nao vazio");
+      // decode and store data in SharedPreferencesSS
+      List<Location> list = Location.decode(itemLocationString);
+      return list;
+    } else {
+      print("vaziooo");
+    }
+    return list;
+  }
+
+  //?add location
+  static Future addLocation(Location location) async {
+    Location new_location = location;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String itemLocationString = prefs.getString('itens_location');
+
+    if (itemLocationString != null) {
+      // decode and store data in SharedPreferences
+      List<Location> list = Location.decode(itemLocationString);
+      new_location.id = list[list.length - 1].id + 1;
+
+      list.add(new_location);
+      // Encode and store data in SharedPreferences
+      final String encodedData = Location.encode(list);
+      await prefs.setString('itens_location', encodedData);
+    } else {
+      List<Location> list = [];
+      list.add(new_location);
+      // Encode and store data in SharedPreferences
+      final String encodedData = Location.encode(list);
+
+      await prefs.setString('itens_location', encodedData);
+    }
+
+    itemLocationString = prefs.getString('itens_location');
+    if (itemLocationString != null) {
+      List<Location> list = Location.decode(itemLocationString);
+      for (int i = 0; i < list.length; i++) {
+        print("-" + list[i].name);
+        if (list[i].id == new_location.id) {
+          return true;
+        }
+      }
+    } else {
+      return false;
+    }
+    return false;
+  }
+
+  //?remove location
+  static Future removeLocation(int id) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String itemLocationString = prefs.getString('itens_location');
+
+    if (itemLocationString != null) {
+      // decode and store data in SharedPreferences
+      List<Location> list = Location.decode(itemLocationString);
+      List<Location> list_new = [];
+      if (list.length < 2) {
+        prefs.remove('itens_location');
+      } else {
+        for (int i = 0; i < list.length; i++) {
+          if (list[i].id != id) {
+            list_new.add(list[i]);
+          }
+        }
+        // Encode and store data in SharedPreferences
+        prefs.remove('itens_location');
+        final String encodedData = Location.encode(list_new);
+
+        await prefs.setString('itens_location', encodedData);
+      }
+    }
   }
 }

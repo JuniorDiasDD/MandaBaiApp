@@ -1,5 +1,6 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 
 import 'Core/app_themes.dart';
 import 'UI/authention/pages/login_page.dart';
@@ -36,6 +37,7 @@ class App extends StatelessWidget {
         '/home': (context) => HomePage(index:0),
        //// '/solicitacao': (context) => PageSolicitacao(),
        '/newDestination': (context) => NewDestination(),
+         '/Destination': (context) => Destination_Page(),
        // '/servicos': (context) => PageServicos(),
        // '/restaurePassword': (context) => PageRestaurePassword(),
        //  '/ativar': (context)=>PageAtivacaoCategoria(),

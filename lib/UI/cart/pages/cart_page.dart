@@ -127,25 +127,27 @@ class _StartPageState extends State<CartPage> {
                 ),
                 SizedBox(height: Get.height * 0.01),
                 SizedBox(
-                  child:list_cart.isEmpty? null: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        "Selecionar Todos",
-                        style: Theme.of(context).textTheme.headline4,
-                      ),
-                      Checkbox(
-                        checkColor: Theme.of(context).cardColor,
-                        activeColor: AppColors.greenColor,
-                        value: isChecked,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            isChecked = value!;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
+                  child: list_cart.isEmpty
+                      ? null
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              "Selecionar Todos",
+                              style: Theme.of(context).textTheme.headline4,
+                            ),
+                            Checkbox(
+                              checkColor: Theme.of(context).cardColor,
+                              activeColor: AppColors.greenColor,
+                              value: isChecked,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  isChecked = value!;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
                 ),
                 FutureBuilder(
                   future: carregarCart(),
@@ -168,7 +170,7 @@ class _StartPageState extends State<CartPage> {
                         if (snapshot.data == null) {
                           return Container(
                             width: Get.width,
-                            height: Get.height,
+                            height: Get.height*0.7,
                             child: Column(
                               children: [
                                 SizedBox(height: Get.height * 0.2),
@@ -254,157 +256,177 @@ class _StartPageState extends State<CartPage> {
                     }*/
                   },
                 ),
-                SizedBox(height: Get.height * 0.01),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Sub Total: ",
-                      style: Theme.of(context).textTheme.headline2,
-                    ),
-                    Row(
-                      children: [
-                        Obx(
-                          () => Text(
-                            cartPageController.subTotal.toStringAsFixed(0),
-                            style: Theme.of(context).textTheme.headline2,
-                          ),
-                        ),
-                        FutureBuilder(
-                            future: _carregarMoney(),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
-                              if (snapshot.data == null) {
-                                return const Text(" ");
-                              } else {
-                                return Text(
-                                  " " + money,
-                                  style: Theme.of(context).textTheme.headline3,
-                                );
-                              }
-                            }),
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(height: Get.height * 0.01),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Taxa: ",
-                      style: Theme.of(context).textTheme.headline2,
-                    ),
-                    Row(
-                      children: [
-                        Obx(
-                          () => Text(
-                            cartPageController.taxa.toStringAsFixed(0),
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                        ),
-                        FutureBuilder(
-                            future: _carregarMoney(),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
-                              if (snapshot.data == null) {
-                                return const Text(" ");
-                              } else {
-                                return Text(
-                                  " " + money,
-                                  style: Theme.of(context).textTheme.headline6,
-                                );
-                              }
-                            }),
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(height: Get.height * 0.01),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Entrega: ",
-                      style: Theme.of(context).textTheme.headline2,
-                    ),
-                    Text(
-                      "Gratis ",
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                  ],
-                ),
-                SizedBox(height: Get.height * 0.01),
-                Text(
-                  "Envio totalmente Grátis. Cobramos apenas uma pequena taxa por utilização do site no valor de: € 5.00 ",
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-                SizedBox(height: Get.height * 0.01),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Total: ",
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Obx(
-                            () => Text(
-                              cartPageController.total.toStringAsFixed(0),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline5!
-                                  .copyWith(fontSize: 20),
+                SizedBox(
+                  child: list_cart.isEmpty
+                      ? null
+                      : Column(
+                          children: [
+                            SizedBox(height: Get.height * 0.01),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Sub Total: ",
+                                  style: Theme.of(context).textTheme.headline2,
+                                ),
+                                Row(
+                                  children: [
+                                    Obx(
+                                      () => Text(
+                                        cartPageController.subTotal
+                                            .toStringAsFixed(0),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline2,
+                                      ),
+                                    ),
+                                    FutureBuilder(
+                                        future: _carregarMoney(),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot snapshot) {
+                                          if (snapshot.data == null) {
+                                            return const Text(" ");
+                                          } else {
+                                            return Text(
+                                              " " + money,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline3,
+                                            );
+                                          }
+                                        }),
+                                  ],
+                                ),
+                              ],
                             ),
-                          ),
-                          FutureBuilder(
-                              future: _carregarMoney(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot snapshot) {
-                                if (snapshot.data == null) {
-                                  return const Text(" ");
-                                } else {
-                                  return Text(
-                                    " " + money,
-                                    style:
-                                        Theme.of(context).textTheme.headline5,
+                            SizedBox(height: Get.height * 0.01),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Taxa: ",
+                                  style: Theme.of(context).textTheme.headline2,
+                                ),
+                                Row(
+                                  children: [
+                                    Obx(
+                                      () => Text(
+                                        cartPageController.taxa
+                                            .toStringAsFixed(0),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6,
+                                      ),
+                                    ),
+                                    FutureBuilder(
+                                        future: _carregarMoney(),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot snapshot) {
+                                          if (snapshot.data == null) {
+                                            return const Text(" ");
+                                          } else {
+                                            return Text(
+                                              " " + money,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline6,
+                                            );
+                                          }
+                                        }),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: Get.height * 0.01),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Entrega: ",
+                                  style: Theme.of(context).textTheme.headline2,
+                                ),
+                                Text(
+                                  "Gratis ",
+                                  style: Theme.of(context).textTheme.headline1,
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: Get.height * 0.01),
+                            Text(
+                              "Envio totalmente Grátis. Cobramos apenas uma pequena taxa por utilização do site no valor de: € 5.00 ",
+                              style: Theme.of(context).textTheme.headline4,
+                            ),
+                            SizedBox(height: Get.height * 0.01),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Total: ",
+                                  style: Theme.of(context).textTheme.headline1,
+                                ),
+                                Container(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Obx(
+                                        () => Text(
+                                          cartPageController.total
+                                              .toStringAsFixed(0),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline5!
+                                              .copyWith(fontSize: 20),
+                                        ),
+                                      ),
+                                      FutureBuilder(
+                                          future: _carregarMoney(),
+                                          builder: (BuildContext context,
+                                              AsyncSnapshot snapshot) {
+                                            if (snapshot.data == null) {
+                                              return const Text(" ");
+                                            } else {
+                                              return Text(
+                                                " " + money,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline5,
+                                              );
+                                            }
+                                          }),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: Get.height * 0.02),
+                            Container(
+                              height: Get.height * 0.05,
+                              width: Get.width,
+                              child: FlatButton(
+                                padding: EdgeInsets.only(
+                                  left: Get.width * 0.05,
+                                  right: Get.height * 0.05,
+                                ),
+                                color: AppColors.greenColor,
+                                textColor: Colors.white,
+                                child: Text('Checkout'),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CheckoutPageStep2(),
+                                    ),
                                   );
-                                }
-                              }),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: Get.height * 0.02),
-                Container(
-                  height: Get.height * 0.05,
-                  width: Get.width,
-                  child: FlatButton(
-                    padding: EdgeInsets.only(
-                      left: Get.width * 0.05,
-                      right: Get.height * 0.05,
-                    ),
-                    color: AppColors.greenColor,
-                    textColor: Colors.white,
-                    child: Text('Checkout'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CheckoutPageStep2(),
+                                },
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(30.0),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: Get.height * 0.02),
+                          ],
                         ),
-                      );
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0),
-                    ),
-                  ),
                 ),
-                SizedBox(height: Get.height * 0.02),
               ],
             ),
           ),

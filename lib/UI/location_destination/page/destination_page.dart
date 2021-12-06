@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/location.dart';
+import 'package:manda_bai/UI/home/pages/home_page.dart';
 import 'package:manda_bai/UI/location_destination/components/item_location.dart';
 
 class Destination_Page extends StatefulWidget {
@@ -15,16 +17,15 @@ class Destination_Page extends StatefulWidget {
 
 class _Destination_PageState extends State<Destination_Page> {
   List<Location> list_location = [];
+
   Future _carregarLocation() async {
     if (list_location.isEmpty) {
-      list_location.add(new Location(
-          name: "Júnior de Jesus Dias",
-          island: "Santiago",
-          city: "Praia",
-          endereco: "Achada São Filipe",
-          phone: "9876543"));
-      // list_location = await ServiceRequest.loadFavorite();
+      list_location = await ServiceRequest.loadLocation();
+      /*  setState(() {
+         list_location;
+      });*/
       if (list_location.isEmpty) {
+        //print("entrou");
         return null;
       }
     }
@@ -47,7 +48,10 @@ class _Destination_PageState extends State<Destination_Page> {
                   Container(
                     child: IconButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomePage(index: 3)));
                       },
                       icon: const Icon(
                         Icons.arrow_back,
@@ -134,10 +138,6 @@ class _Destination_PageState extends State<Destination_Page> {
                         } else {
                           return Container(
                             height: Get.height * 0.85,
-                            /* margin: EdgeInsets.only(
-                                          left: Get.width * 0.05,
-                                          right: Get.width * 0.05,
-                                        ),*/
                             child: ListView.builder(
                               padding: EdgeInsets.only(
                                 top: 0.0,

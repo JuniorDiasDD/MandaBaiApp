@@ -75,7 +75,7 @@ class _StartPageState extends State<StartPage> {
     super.initState();
     validateMoney();
     validateLanguage();
-     validateDados();
+    validateDados();
   }
 
   @override
