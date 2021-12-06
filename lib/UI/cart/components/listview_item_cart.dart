@@ -77,118 +77,127 @@ class _ItemCartState extends State<ItemCart> {
                 margin: EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        Flexible(
-                          flex: 4,
-                          child: Text(
-                            widget.cartModel.name,
-                            textAlign: TextAlign.start,
-                            style: const TextStyle(
-                              fontFamily: AppFonts.poppinsBoldFont,
-                              fontSize: 15,
-                              color: Colors.black,
+                    Flexible(
+                      flex:2,
+                      child: Row(
+                        children: [
+                          Flexible(
+                            flex: 4,
+                            child: Text(
+                              widget.cartModel.name,
+                              textAlign: TextAlign.start,
+                              style: const TextStyle(
+                                fontFamily: AppFonts.poppinsBoldFont,
+                                fontSize: 15,
+                                color: Colors.black,
+                              ),
                             ),
                           ),
-                        ),
-                        Flexible(
-                          flex: 1,
-                          child: Checkbox(
-                            checkColor: Colors.white,
-                            activeColor: AppColors.greenColor,
-                            value: isChecked,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                isChecked = value!;
-                                widget.cartPageController
-                                    .checkBox(widget.cartModel.id, isChecked);
-                              });
-                            },
+                          Flexible(
+                            flex: 1,
+                            child: Checkbox(
+                              checkColor: Colors.white,
+                              activeColor: AppColors.greenColor,
+                              value: isChecked,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  isChecked = value!;
+                                  widget.cartPageController
+                                      .checkBox(widget.cartModel.id, isChecked);
+                                });
+                              },
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                    const Spacer(),
-                    Row(
-                      children: [
-                        Text(
-                          price.toStringAsFixed(0),
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline5,
-                        ),
-                        FutureBuilder(
-                            future: _carregarMoney(),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
-                              if (snapshot.data == null) {
-                                return const Text(" ");
-                              } else {
-                                return Text(
-                                  " " + money,
-                                  style: Theme.of(context).textTheme.headline5,
-                                );
-                              }
-                            }),
-                      ],
+        
+                    Flexible(
+                      flex:1,
+                      child: Row(
+                        children: [
+                          Text(
+                            price.toStringAsFixed(0),
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                          FutureBuilder(
+                              future: _carregarMoney(),
+                              builder:
+                                  (BuildContext context, AsyncSnapshot snapshot) {
+                                if (snapshot.data == null) {
+                                  return const Text(" ");
+                                } else {
+                                  return Text(
+                                    " " + money,
+                                    style: Theme.of(context).textTheme.headline5,
+                                  );
+                                }
+                              }),
+                        ],
+                      ),
                     ),
-                    const Spacer(),
-                    Row(
-                      children: <Widget>[
-                        Container(
-                          width: Get.width * 0.08,
-                          child: FloatingActionButton(
-                            onPressed: () {
-                              setState(
-                                () {
-                                  if (quant != 1) {
-                                    quant = quant - 1;
-                                    setState(() {
-                                      price = widget.cartModel.price * quant;
-                                    });
+                    
+                    Flexible(
+                      flex:2,
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            width: Get.width * 0.08,
+                            child: FloatingActionButton(
+                              onPressed: () {
+                                setState(
+                                  () {
+                                    if (quant != 1) {
+                                      quant = quant - 1;
+                                      setState(() {
+                                        price = widget.cartModel.price * quant;
+                                      });
 
-                                    widget.cartPageController
-                                        .decrementar(widget.cartModel.id);
-                                    widget.cartPageController.calcule();
-                                  }
-                                },
-                              );
-                            },
-                            child: Icon(
-                              Icons.remove,
-                              color: Colors.white,
+                                      widget.cartPageController
+                                          .decrementar(widget.cartModel.id);
+                                      widget.cartPageController.calcule();
+                                    }
+                                  },
+                                );
+                              },
+                              child: Icon(
+                                Icons.remove,
+                                color: Colors.white,
+                              ),
+                              backgroundColor: AppColors.greenColor,
+                              elevation: 0,
                             ),
-                            backgroundColor: AppColors.greenColor,
-                            elevation: 0,
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 10.0,
-                            right: 10.0,
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 10.0,
+                              right: 10.0,
+                            ),
+                            child: Text(
+                              quant.toString(),
+                              style: TextStyle(fontSize: 18.0),
+                            ),
                           ),
-                          child: Text(
-                            quant.toString(),
-                            style: TextStyle(fontSize: 18.0),
+                          Container(
+                            width: Get.width * 0.08,
+                            child: FloatingActionButton(
+                              child: Icon(Icons.add, color: Colors.white),
+                              backgroundColor: AppColors.greenColor,
+                              elevation: 0,
+                              onPressed: () {
+                                setState(() {
+                                  quant += 1;
+                                  price = widget.cartModel.price * quant;
+                                  widget.cartPageController
+                                      .incrementar(widget.cartModel.id);
+                                  widget.cartPageController.calcule();
+                                });
+                              },
+                            ),
                           ),
-                        ),
-                        Container(
-                          width: Get.width * 0.08,
-                          child: FloatingActionButton(
-                            child: Icon(Icons.add, color: Colors.white),
-                            backgroundColor: AppColors.greenColor,
-                            elevation: 0,
-                            onPressed: () {
-                              setState(() {
-                                quant += 1;
-                                price = widget.cartModel.price * quant;
-                                widget.cartPageController
-                                    .incrementar(widget.cartModel.id);
-                                widget.cartPageController.calcule();
-                              });
-                            },
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
