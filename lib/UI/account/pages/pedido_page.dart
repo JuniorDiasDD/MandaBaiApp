@@ -43,45 +43,27 @@ class _PedidoPageState extends State<PedidoPage> {
             ],
           ),
           Padding(
-            padding:EdgeInsets.only(top:Get.height* 0.1),
+            padding:EdgeInsets.only(top:Get.height* 0.1, left: Get.width *0.07, ),
             child: Row (
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Column(
-                  children: [
-                    Icon(
-                      Icons.circle,
-                      color: Colors.red,
-                      size: 10,
-                    ),
-                    Text('Efectuado',
-                      style: Theme.of(context).textTheme.headline4,
+                Icon(
+                  Icons.circle,
+                  color: Colors.orange,
+                  size: 10,
+                ),
+                Text('Em processo',
+                  style: Theme.of(context).textTheme.headline4,
 
-                        )
-                  ],
-                ),
-                Column(
-                  children: [
-                    Icon(
-                      Icons.circle,
-                      color: Colors.blue,
-                      size: 10,
                     ),
-                    Text('Em processo',
-                      style: Theme.of(context).textTheme.headline4, ),
-                  ],
+
+                Icon(
+                  Icons.circle,
+                  color: Colors.green,
+                  size: 10,
                 ),
-                Column(
-                  children: [
-                    Icon(
-                      Icons.circle,
-                      color: Colors.green,
-                      size: 10,
-                    ),
-                    Text('Recebido',
-                      style: Theme.of(context).textTheme.headline4,),
-                  ],
-                ),
+                Text('Recebido',
+                  style: Theme.of(context).textTheme.headline4,),
 
               ],
 

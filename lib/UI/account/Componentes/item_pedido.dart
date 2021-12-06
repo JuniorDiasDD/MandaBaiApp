@@ -12,7 +12,8 @@ class _Item_PedidoState extends State<Item_Pedido> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        left: Get.width * 0.023,
+        left: Get.width * 0.02,
+        right: Get.width * 0.02,
         //top: Get.height * 0.014,
         //bottom: Get.height * 0.005,
       ),
