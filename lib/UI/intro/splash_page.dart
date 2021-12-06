@@ -40,8 +40,8 @@ class _SplashPageState extends State<SplashPage> {
         children: [
           Container(
             width: Get.width,
-            height: Get.height * 0.1,
-            child: Image.asset(AppImages.appLogo),
+            height: Get.height * 0.14,
+            child: Image.asset(AppImages.appLogo2),
           ),
         ],
       ),

@@ -89,7 +89,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ],
             ),
             Image.asset(
-              AppImages.appLogo,
+              AppImages.appLogo2,
               width: Get.width * 0.6,
               height: Get.height * 0.1,
             ),
@@ -118,7 +118,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               filled: false,
                               fillColor: Theme.of(context).backgroundColor,
                               border: OutlineInputBorder(
-                                borderRadius: new BorderRadius.circular(35.0),
+                                borderRadius: new BorderRadius.circular(15.0),
                                 borderSide: new BorderSide(),
                               ),
                               labelText: 'Nome',
@@ -139,7 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               filled: false,
                               fillColor: Theme.of(context).backgroundColor,
                               border: OutlineInputBorder(
-                                borderRadius: new BorderRadius.circular(35.0),
+                                borderRadius: new BorderRadius.circular(15.0),
                                 borderSide: new BorderSide(),
                               ),
                               labelText: 'Apelido',
@@ -160,7 +160,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         filled: false,
                         fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(35.0),
+                          borderRadius: new BorderRadius.circular(15.0),
                           borderSide: new BorderSide(),
                         ),
                         prefixIcon: Padding(
@@ -185,7 +185,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         filled: false,
                         fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(35.0),
+                          borderRadius: new BorderRadius.circular(15.0),
                           borderSide: new BorderSide(),
                         ),
                         prefixIcon: Padding(
@@ -210,7 +210,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         filled: false,
                         fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(35.0),
+                          borderRadius: new BorderRadius.circular(15.0),
                           borderSide: new BorderSide(),
                         ),
                         prefixIcon: Padding(
@@ -251,11 +251,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       decoration: BoxDecoration(
                         color: AppColors.greenColor,
                         borderRadius: BorderRadius.all(
-                          Radius.circular(35),
+                          Radius.circular(15),
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey,
+                            color: Theme.of(context).cardColor,
                             blurRadius: 2.0,
                             spreadRadius: 0.0,
                             offset:

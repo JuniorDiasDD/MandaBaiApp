@@ -158,7 +158,7 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey,
+                                color: Theme.of(context).cardColor,
                                 blurRadius: 2.0,
                                 spreadRadius: 0.0,
                                 offset: Offset(

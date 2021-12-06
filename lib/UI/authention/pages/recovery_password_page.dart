@@ -83,7 +83,7 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                       obscureText: false,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(35),
+                          borderRadius: BorderRadius.circular(15),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
@@ -109,7 +109,7 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                       child: const Text('Enviar'),
                       onPressed: () {},
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
+                        borderRadius: BorderRadius.circular(15.0),
                       ),
                     ),
                   ),

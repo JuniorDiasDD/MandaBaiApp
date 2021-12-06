@@ -50,14 +50,14 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
               Container(
                 height: Get.height * 0.07,
                 width: Get.width * 0.3,
-                decoration: const BoxDecoration(
+                decoration:  BoxDecoration(
                   color: AppColors.greenColor,
                   borderRadius: BorderRadius.all(
                     Radius.circular(35),
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey,
+                      color: Theme.of(context).cardColor,
                       blurRadius: 2.0,
                       spreadRadius: 0.0,
                       offset: Offset(2.0, 2.0), 

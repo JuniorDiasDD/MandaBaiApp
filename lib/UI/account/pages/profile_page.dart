@@ -4,10 +4,11 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_images.dart';
+import 'package:manda_bai/UI/Contact/contact_page.dart';
 import 'package:manda_bai/UI/about/pages/info_page.dart';
 import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 import 'package:manda_bai/UI/account/pages/edit_profile.dart';
-import 'package:manda_bai/UI/account/pages/pedido_page.dart';
+import 'package:manda_bai/UI/Pedido/pedido_page.dart';
 import 'package:manda_bai/UI/home/pop_up/carrega_saldo.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_island.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_moeda.dart';
@@ -677,7 +678,14 @@ class _StartPageState extends State<ProfilePage> {
                     Container(
                       height: Get.height * 0.06,
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ContactPage(),
+                            ),
+                          );
+                        },
                         child: Row(
                           children: [
                             Container(

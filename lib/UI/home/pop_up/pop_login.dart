@@ -77,14 +77,14 @@ class _Pop_LoginState extends State<Pop_Login> {
                   child: Container(
                     height: Get.height * 0.06,
                     width: Get.width *0.4,
-                    decoration: const BoxDecoration(
+                    decoration:  BoxDecoration(
                       color: AppColors.greenColor,
                       borderRadius: BorderRadius.all(
                         Radius.circular(35),
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey,
+                          color: Theme.of(context).cardColor,
                           blurRadius: 2.0,
                           spreadRadius: 0.0,
                           offset: Offset(

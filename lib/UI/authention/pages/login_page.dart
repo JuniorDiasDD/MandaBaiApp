@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:get/get.dart';
@@ -67,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: Get.height * 0.02,
               ),
               Image.asset(
-                AppImages.appLogo,
+                AppImages.appLogo2,
                 width: Get.width * 0.6,
                 height: Get.height * 0.15,
               ),
@@ -91,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                           filled: true,
                           fillColor: Theme.of(context).backgroundColor,
                           border: OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(35.0),
+                            borderRadius: new BorderRadius.circular(15.0),
                             borderSide: new BorderSide(),
                           ),
                           prefixIcon: Padding(
@@ -116,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                           filled: true,
                           fillColor: Theme.of(context).backgroundColor,
                           border: OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(35.0),
+                            borderRadius: new BorderRadius.circular(15.0),
                             borderSide: new BorderSide(),
                           ),
                           prefixIcon: Padding(
@@ -146,12 +147,10 @@ class _LoginPageState extends State<LoginPage> {
                                   builder: (context) => RecoveryPassword()),
                             );
                           },
-                          child: const Text(
+                          child:  Text(
                             'Esqueceu sua senha?',
-                            style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                              fontFamily: AppFonts.poppinsRegularFont,
-                            ),
+                              style: Theme.of(context).textTheme.headline4!.copyWith(fontStyle: FontStyle.italic),
+
                           ),
                         ),
                       ),
@@ -164,11 +163,11 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: BoxDecoration(
                           color: AppColors.greenColor,
                           borderRadius: BorderRadius.all(
-                            Radius.circular(35),
+                            Radius.circular(15),
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey,
+                              color: Theme.of(context).cardColor,
                               blurRadius: 2.0,
                               spreadRadius: 0.0,
                               offset: Offset(
@@ -227,7 +226,7 @@ class _LoginPageState extends State<LoginPage> {
                                 child: new Container(
                                   width: Get.width * 0.4,
                                   child: Divider(
-                                    color: Colors.black,
+
                                     height: 36,
                                   ),
                                 ),
@@ -237,13 +236,16 @@ class _LoginPageState extends State<LoginPage> {
                                   left: Get.width * 0.05,
                                   right: Get.width * 0.05,
                                 ),
-                                child: Text("ou"),
+                                child: Text("ou",
+                                    style: Theme.of(context).textTheme.headline2,
+
+                                ),
                               ),
                               Expanded(
                                 child: Container(
                                   width: Get.width * 0.4,
                                   child: const Divider(
-                                    color: Colors.black,
+
                                     height: 36,
                                   ),
                                 ),
