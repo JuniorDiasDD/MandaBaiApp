@@ -2,9 +2,10 @@ import 'dart:ffi';
 
 class CartModel {
   final String name, image, item_key;
-  String price;
+  double  price;
   int amount;
   int id;
+  bool checkout;
 
   CartModel(
       {required this.id,
@@ -12,6 +13,7 @@ class CartModel {
       required this.image,
       required this.amount,
       required this.item_key,
+       required this.checkout,
       required this.price});
 
   factory CartModel.fromJson(Map<String, dynamic> json) {
@@ -20,8 +22,9 @@ class CartModel {
       name: json['name'],
       id: json['id'],
       amount: json['quantity']['value'],
-      price: json['price'],
+      price: double.parse(json['price']),
       image: json['featured_image'].toString(),
+      checkout:false,
     );
   }
 }

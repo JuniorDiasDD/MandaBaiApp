@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/cart_controller.dart';
 import 'package:manda_bai/Controller/request.dart';
@@ -20,11 +21,13 @@ class _StartPageState extends State<CartPage> {
   final CartPageController cartPageController = Get.put(CartPageController());
 
   bool isChecked = false;
+ String money = "";
   List<CartModel> list_cart = [];
   Future carregarCart() async {
     if (list_cart.isEmpty) {
-    //  list_cart = await ServiceRequest.loadCart();
+      list_cart = await ServiceRequest.loadCart();
       if (list_cart.isEmpty) {
+        print("entrou");
         return null;
       } else {
         setState(() {
@@ -36,11 +39,19 @@ class _StartPageState extends State<CartPage> {
 
     return list_cart;
   }
+ 
+  Future _carregarMoney() async {
+    money = await FlutterSession().get('money');
+    return money;
+  }
 
   @override
   void initState() {
     super.initState();
-    carregarCart();
+    //carregarCart();
+    list_cart = [];
+    cartPageController.total=0;
+    cartPageController.subTotal=0;
   }
 
   @override
@@ -86,7 +97,7 @@ class _StartPageState extends State<CartPage> {
                   children: [
                     Text(
                       "Selecionar Todos",
-                      style:Theme.of(context).textTheme.headline4,
+                      style: Theme.of(context).textTheme.headline4,
                     ),
                     Checkbox(
                       checkColor: Theme.of(context).cardColor,
@@ -103,8 +114,9 @@ class _StartPageState extends State<CartPage> {
                 FutureBuilder(
                   future: carregarCart(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (!snapshot.hasData) {
-                      return Container(
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return Container(
                         height: Get.height * 0.2,
                         width: Get.width,
                         child: Center(
@@ -116,7 +128,58 @@ class _StartPageState extends State<CartPage> {
                           ),
                         ),
                       );
-                    } else {
+                      default:
+                       if (snapshot.data == null) {
+                        return Container(
+                          width: Get.width,
+                          height: Get.height,
+                          child: Column(
+                            children: [
+                              SizedBox(height: Get.height * 0.2),
+                              WebsafeSvg.asset(AppImages.cart_empyt),
+                              SizedBox(height: Get.height * 0.08),
+                              Text(
+                                "O seu carrinho está vazio...",
+                                style: Theme.of(context).textTheme.headline4,
+                              ),
+                            ],
+                          ),
+                        );
+                      } else {
+                        return Container(
+                          height: Get.height * 0.45,
+                          child: ListView.builder(
+                            padding: EdgeInsets.all(0.0),
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (BuildContext context, index) {
+                              var list = list_cart[index];
+                              cartPageController.price =
+                                  list.price * list.amount;
+                              return ItemCart(
+                                cartModel: list,
+                              );
+                            },
+                          ),
+                        );
+                      }
+                    }
+
+                  /*  if (!snapshot.hasData) {
+                      return Container(
+                        height: Get.height * 0.2,
+                        width: Get.width,
+                        child: Center(
+                          child: Image.asset(
+                            AppImages.loading,
+                            width: Get.width * 0.2,
+                            height: Get.height * 0.2,
+                            alignment: Alignment.center,
+                          ),
+                        ),
+                      );*/
+                   /* } else {
                       if (snapshot.data == null) {
                         return Container(
                           width: Get.width,
@@ -143,9 +206,8 @@ class _StartPageState extends State<CartPage> {
                             itemCount: snapshot.data.length,
                             itemBuilder: (BuildContext context, index) {
                               var list = list_cart[index];
-
                               cartPageController.price =
-                                  double.parse(list.price) * list.amount;
+                                  list.price * list.amount;
                               return ItemCart(
                                 cartModel: list,
                               );
@@ -153,7 +215,7 @@ class _StartPageState extends State<CartPage> {
                           ),
                         );
                       }
-                    }
+                    }*/
                   },
                 ),
                 SizedBox(height: Get.height * 0.01),
@@ -164,11 +226,29 @@ class _StartPageState extends State<CartPage> {
                       "Sub Total: ",
                       style: Theme.of(context).textTheme.headline2,
                     ),
-                    Obx(
-                      () => Text(
-                        cartPageController.subTotal.toString(),
-                        style: Theme.of(context).textTheme.headline2,
-                      ),
+                    Row(
+                      children: [
+                        Obx(
+                          () => Text(
+                            cartPageController.subTotal.toStringAsFixed(0),
+                            style: Theme.of(context).textTheme.headline2,
+                          ),
+                        ),
+                         FutureBuilder(
+                                future: _carregarMoney(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot snapshot) {
+                                  if (snapshot.data == null) {
+                                    return const Text(" ");
+                                  } else {
+                                    return Text(
+                                      " " + money,
+                                      style:
+                                          Theme.of(context).textTheme.headline3,
+                                    );
+                                  }
+                                }),
+                      ],
                     ),
                   ],
                 ),
@@ -180,14 +260,30 @@ class _StartPageState extends State<CartPage> {
                       "Taxa: ",
                       style: Theme.of(context).textTheme.headline2,
                     ),
-                    Obx(
-                      () => Text(
-                        cartPageController.taxa.toString(),
-                        style: TextStyle(
-                          fontFamily: AppFonts.poppinsRegularFont,
-                          color: AppColors.greenColor,
+                    Row(
+                      children: [
+                        Obx(
+                          () => Text(
+                            cartPageController.taxa.toStringAsFixed(0),
+                            style:
+                                          Theme.of(context).textTheme.headline6,
+                          ),
                         ),
-                      ),
+                       FutureBuilder(
+                                future: _carregarMoney(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot snapshot) {
+                                  if (snapshot.data == null) {
+                                    return const Text(" ");
+                                  } else {
+                                    return Text(
+                                      " " + money,
+                                      style:
+                                          Theme.of(context).textTheme.headline6,
+                                    );
+                                  }
+                                }),
+                      ],
                     ),
                   ],
                 ),
@@ -224,18 +320,25 @@ class _StartPageState extends State<CartPage> {
                         children: [
                           Obx(
                             () => Text(
-                              cartPageController.total.toStringAsFixed(2),
-                              style: const TextStyle(
-                                fontFamily: AppFonts.poppinsBoldFont,
-                                color: AppColors.greenColor,
-                                fontSize: 18,
-                              ),
+                              cartPageController.total.toStringAsFixed(0),
+                              style:
+                                          Theme.of(context).textTheme.headline5!.copyWith(fontSize: 20),
                             ),
                           ),
-                          Text(
-                            "EUR",
-                            style: Theme.of(context).textTheme.headline4,
-                          )
+                          FutureBuilder(
+                                future: _carregarMoney(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot snapshot) {
+                                  if (snapshot.data == null) {
+                                    return const Text(" ");
+                                  } else {
+                                    return Text(
+                                      " " + money,
+                                      style:
+                                          Theme.of(context).textTheme.headline5,
+                                    );
+                                  }
+                                }),
                         ],
                       ),
                     ),

@@ -106,14 +106,28 @@ class CartPageController extends GetxController {
       }
     }
   }
-
+checkBox(int id,value) {
+    if (!_list.isEmpty) {
+      for (int i = 0; i < _list.length; i++) {
+        if (_list[i].id == id) {
+      
+            _list[i].checkout = value;
+         
+        }
+      }
+      calcule();
+    }
+  }
   calcule() {
     subTotal = 0;
     total = 0;
     // ignore: unused_local_variable
     if (!_list.isEmpty) {
       for (int i = 0; i < _list.length; i++) {
-        subTotal += double.parse(_list[i].price) * _list[i].amount;
+        if(_list[i].checkout==true){
+          subTotal += _list[i].price* _list[i].amount;
+        }
+        
       }
 
       total = subTotal + taxa;

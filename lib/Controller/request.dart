@@ -153,8 +153,10 @@ class ServiceRequest {
        final jsonResponse = json.decode(response.body);
       var session = FlutterSession();
       await session.set('id', jsonResponse["ID"]);
+      user.username=username;
+      user.senha=password;
        print(jsonResponse["ID"]);
-     // GetUser();
+      GetUser();
       return true;
     } else if (response.statusCode == 503) {
       print("Erro de serviço");
@@ -197,12 +199,11 @@ class ServiceRequest {
   static Future<List<CartModel>> loadCart() async {
     List<CartModel> list = [];
 
-    String basicAuth = 'Basic ' + base64Encode(utf8.encode('john.doe:123'));
+    String basicAuth = 'Basic ' + base64Encode(utf8.encode(user.username+':'+user.senha));
     var response = await http.get(Uri.parse(getCart),
         headers: <String, String>{'authorization': basicAuth});
-
-   
-   // print(response.body);
+    print(response.body);
+  
     if (response.statusCode == 200) {
        final jsonResponse = json.decode(response.body);
       final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();

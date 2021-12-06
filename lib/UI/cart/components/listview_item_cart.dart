@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/cart_controller.dart';
 import 'package:manda_bai/Core/app_colors.dart';
@@ -17,6 +18,23 @@ class ItemCart extends StatefulWidget {
 
 class _ItemCartState extends State<ItemCart> {
   bool isChecked = false;
+  int quant = 0;
+  double price = 0.0;
+  String money = "";
+  Future _carregarMoney() async {
+    money = await FlutterSession().get('money');
+    return money;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      quant = widget.cartModel.amount;
+      price = widget.cartModel.price;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,27 +43,35 @@ class _ItemCartState extends State<ItemCart> {
           const EdgeInsets.only(top: 4.0, left: 2.0, right: 2.0, bottom: 4.0),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(12),
-          boxShadow:[
+          boxShadow: [
             BoxShadow(
-             color: Theme.of(context).cardColor,
+              color: Theme.of(context).cardColor,
               blurRadius: 2.0,
-              offset: Offset(2.0, 2.0), 
+              offset: Offset(2.0, 2.0),
             )
           ],
         ),
         width: Get.width,
         height: Get.height * 0.15,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.network(
-              widget.cartModel.image,
-              width: Get.width * 0.2,
-              height: Get.height * 0.2,
-              alignment: Alignment.center,
+            Container(
+              width: Get.width * 0.23,
+              height: Get.height,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10.0),
+                    bottomLeft: Radius.circular(10.0)),
+                color: Colors.white,
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: NetworkImage(widget.cartModel.image),
+                ),
+              ),
             ),
             Container(
               margin: EdgeInsets.only(
@@ -74,6 +100,8 @@ class _ItemCartState extends State<ItemCart> {
                         onChanged: (bool? value) {
                           setState(() {
                             isChecked = value!;
+                            widget.cartPageController
+                                .checkBox(widget.cartModel.id, isChecked);
                           });
                         },
                       ),
@@ -94,15 +122,13 @@ class _ItemCartState extends State<ItemCart> {
                                 onPressed: () {
                                   setState(
                                     () {
-                                      if (widget.cartModel.amount != 1) {
-                                        widget.cartModel.amount =
-                                            widget.cartModel.amount - 1;
-                                        // widget.cartPageController.amount =
-                                        //      widget.amount;
-                                        widget.cartPageController.price =
-                                            widget.cartModel.amount *
-                                                double.parse(
-                                                    widget.cartModel.price);
+                                      if (quant != 1) {
+                                        quant = quant - 1;
+                                        setState(() {
+                                          price =
+                                              widget.cartModel.price * quant;
+                                        });
+
                                         widget.cartPageController
                                             .decrementar(widget.cartModel.id);
                                         widget.cartPageController.calcule();
@@ -119,7 +145,7 @@ class _ItemCartState extends State<ItemCart> {
                               ),
                             ),
                             Text(
-                              widget.cartModel.amount.toString(),
+                              quant.toString(),
                               style: TextStyle(fontSize: 18.0),
                             ),
                             Container(
@@ -130,11 +156,8 @@ class _ItemCartState extends State<ItemCart> {
                                 elevation: 0,
                                 onPressed: () {
                                   setState(() {
-                                    widget.cartModel.amount =
-                                        widget.cartModel.amount + 1;
-                                    widget.cartPageController.price = widget
-                                            .cartModel.amount *
-                                        double.parse(widget.cartModel.price);
+                                    quant += 1;
+                                    price = widget.cartModel.price * quant;
                                     widget.cartPageController
                                         .incrementar(widget.cartModel.id);
                                     widget.cartPageController.calcule();
@@ -147,14 +170,32 @@ class _ItemCartState extends State<ItemCart> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(right: Get.width * 0.02),
-                        child: Text(
-                          widget.cartPageController.price.toString(),
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontFamily: AppFonts.poppinsBoldFont,
-                            fontSize: 15,
-                            color: AppColors.greenColor,
-                          ),
+                        child: Row(
+                          children: [
+                            Text(
+                              price.toStringAsFixed(0),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontFamily: AppFonts.poppinsBoldFont,
+                                fontSize: 15,
+                                color: AppColors.greenColor,
+                              ),
+                            ),
+                            FutureBuilder(
+                                future: _carregarMoney(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot snapshot) {
+                                  if (snapshot.data == null) {
+                                    return const Text(" ");
+                                  } else {
+                                    return Text(
+                                      " " + money,
+                                      style:
+                                          Theme.of(context).textTheme.headline3,
+                                    );
+                                  }
+                                }),
+                          ],
                         ),
                       ),
                     ],
