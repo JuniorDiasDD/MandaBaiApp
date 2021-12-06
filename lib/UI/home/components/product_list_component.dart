@@ -50,103 +50,104 @@ class _ProductListComponentState extends State<ProductListComponent> {
             ],
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: Get.width,
-                height: Get.height * 0.11,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(10.0),
-                      topRight: Radius.circular(10.0)),
-                  color: Colors.white,
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: NetworkImage(widget.product.image),
+              Flexible(
+                flex: 2,
+                child: Container(
+                  width: Get.width,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(10.0),
+                        topRight: Radius.circular(10.0)),
+                    color: Colors.white,
+                    image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: NetworkImage(widget.product.image),
+                    ),
                   ),
                 ),
               ),
-              Padding(
-                child: Text(
-                  widget.product.name,
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-                padding: EdgeInsets.only(
-                  left: Get.width * 0.03,
-                  top: Get.width * 0.03,
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(
-                  left: Get.width * 0.01,
-                ),
-                width: Get.width,
-                height: Get.height * 0.03,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Flexible(
+                flex: 1,
+                child: Column(
                   children: [
-                    Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: Get.width * 0.02,
-                          ),
-                          child: Text(
-                            widget.product.price.toString(),
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: Get.width * 0.01,
-                          ),
-                          child: Text(
-                            '€',
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                        ),
-                      ],
+                    Flexible(
+                      flex: 1,
+                      child: Text(
+                        widget.product.name,
+                        maxLines: 1,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
                     ),
-                    Row(
-                      children: [
-                        IconButton(
-                          padding: const EdgeInsets.all(0.0),
-                          onPressed: () {
-                            if (widget.product.favorite == false) {
-                              ServiceRequest.addFavrite(widget.product.id);
-                              setState(() {
-                                widget.product.favorite =
-                                    !widget.product.favorite;
-                              });
-                            } else {
-                              ServiceRequest.removeFavrite(widget.product.id);
-                              setState(() {
-                                widget.product.favorite =
-                                    !widget.product.favorite;
-                              });
-                            }
-                          },
-                          icon: const Icon(Icons.favorite),
-                          iconSize: Get.width * 0.05,
-                          alignment: Alignment.centerRight,
-                          color: widget.product.favorite
-                              ? Colors.red
-                              : Colors.black54,
+                    Flexible(
+                      flex: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left:8.0,right:8.0),
+                        child: Row(
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  widget.product.price.toString(),
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.headline5,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 2.0,
+                                  ),
+                                  child: Text(
+                                    '€',
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context).textTheme.headline5,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Spacer(),
+                            Row(
+                              children: [
+                                IconButton(
+                                  padding: const EdgeInsets.all(0.0),
+                                  onPressed: () {
+                                    if (widget.product.favorite == false) {
+                                      ServiceRequest.addFavrite(
+                                          widget.product.id);
+                                      setState(() {
+                                        widget.product.favorite =
+                                            !widget.product.favorite;
+                                      });
+                                    } else {
+                                      ServiceRequest.removeFavrite(
+                                          widget.product.id);
+                                      setState(() {
+                                        widget.product.favorite =
+                                            !widget.product.favorite;
+                                      });
+                                    }
+                                  },
+                                  icon: const Icon(Icons.favorite),
+                                  iconSize: Get.width * 0.05,
+                                  alignment: Alignment.centerRight,
+                                  color: widget.product.favorite
+                                      ? Colors.red
+                                      : Colors.black54,
+                                ),
+                                IconButton(
+                                  padding: const EdgeInsets.all(0.0),
+                                  onPressed: () {
+                                    _addCart(widget.product.id);
+                                  },
+                                  icon: const Icon(Icons.shopping_cart_outlined),
+                                  iconSize: Get.width * 0.05,
+                                  alignment: Alignment.center,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                        IconButton(
-                          padding: const EdgeInsets.all(0.0),
-                          onPressed: () {
-                            _addCart(widget.product.id);
-                          },
-                          icon: const Icon(Icons.shopping_cart_outlined),
-                          iconSize: Get.width * 0.05,
-                          alignment: Alignment.center,
-                        ),
-                      ],
+                      ),
                     ),
                   ],
                 ),
