@@ -39,8 +39,7 @@ class _ItemCartState extends State<ItemCart> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-          const EdgeInsets.only(top: 4.0, left: 2.0, right: 2.0, bottom: 4.0),
+      padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
@@ -54,157 +53,145 @@ class _ItemCartState extends State<ItemCart> {
           ],
         ),
         width: Get.width,
-        height: Get.height * 0.15,
+        height: Get.height * 0.16,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              width: Get.width * 0.23,
-              height: Get.height,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10.0),
-                    bottomLeft: Radius.circular(10.0)),
-                color: Colors.white,
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: NetworkImage(widget.cartModel.image),
+            Flexible(
+              flex: 1,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(10.0),
+                      bottomLeft: Radius.circular(10.0)),
+                  color: Colors.white,
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: NetworkImage(widget.cartModel.image),
+                  ),
                 ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(
-                left: 10,
-              ),
-              width: Get.width * 0.62,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-               
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                         width: Get.width*0.5,
-                        child: Text(
-                          widget.cartModel.name,
-                          textAlign: TextAlign.start,
-                          style: const TextStyle(
-                            fontFamily: AppFonts.poppinsBoldFont,
-                            fontSize: 15,
-                            color: Colors.black,
+            Flexible(
+              flex: 3,
+              child: Container(
+                margin: EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Flexible(
+                          flex: 4,
+                          child: Text(
+                            widget.cartModel.name,
+                            textAlign: TextAlign.start,
+                            style: const TextStyle(
+                              fontFamily: AppFonts.poppinsBoldFont,
+                              fontSize: 15,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
-                      ),
-                      Checkbox(
-                        checkColor: Colors.white,
-                        activeColor: AppColors.greenColor,
-                        value: isChecked,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            isChecked = value!;
-                            widget.cartPageController
-                                .checkBox(widget.cartModel.id, isChecked);
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: Get.width * 0.3,
-                        height: Get.height * 0.06,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Container(
-                              width: Get.width * 0.08,
-                              child: FloatingActionButton(
-                                onPressed: () {
-                                  setState(
-                                    () {
-                                      if (quant != 1) {
-                                        quant = quant - 1;
-                                        setState(() {
-                                          price =
-                                              widget.cartModel.price * quant;
-                                        });
+                        Flexible(
+                          flex: 1,
+                          child: Checkbox(
+                            checkColor: Colors.white,
+                            activeColor: AppColors.greenColor,
+                            value: isChecked,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                isChecked = value!;
+                                widget.cartPageController
+                                    .checkBox(widget.cartModel.id, isChecked);
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    Row(
+                      children: [
+                        Text(
+                          price.toStringAsFixed(0),
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.headline5,
+                        ),
+                        FutureBuilder(
+                            future: _carregarMoney(),
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              if (snapshot.data == null) {
+                                return const Text(" ");
+                              } else {
+                                return Text(
+                                  " " + money,
+                                  style: Theme.of(context).textTheme.headline5,
+                                );
+                              }
+                            }),
+                      ],
+                    ),
+                    const Spacer(),
+                    Row(
+                      children: <Widget>[
+                        Container(
+                          width: Get.width * 0.08,
+                          child: FloatingActionButton(
+                            onPressed: () {
+                              setState(
+                                () {
+                                  if (quant != 1) {
+                                    quant = quant - 1;
+                                    setState(() {
+                                      price = widget.cartModel.price * quant;
+                                    });
 
-                                        widget.cartPageController
-                                            .decrementar(widget.cartModel.id);
-                                        widget.cartPageController.calcule();
-                                      }
-                                    },
-                                  );
-                                },
-                                child: Icon(
-                                  Icons.remove,
-                                  color: Colors.white,
-                                ),
-                                backgroundColor: AppColors.greenColor,
-                                elevation: 0,
-                              ),
-                            ),
-                            Text(
-                              quant.toString(),
-                              style: TextStyle(fontSize: 18.0),
-                            ),
-                            Container(
-                              width: Get.width * 0.08,
-                              child: FloatingActionButton(
-                                child: Icon(Icons.add, color: Colors.white),
-                                backgroundColor: AppColors.greenColor,
-                                elevation: 0,
-                                onPressed: () {
-                                  setState(() {
-                                    quant += 1;
-                                    price = widget.cartModel.price * quant;
                                     widget.cartPageController
-                                        .incrementar(widget.cartModel.id);
+                                        .decrementar(widget.cartModel.id);
                                     widget.cartPageController.calcule();
-                                  });
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: Get.width * 0.02),
-                        child: Row(
-                          children: [
-                            Text(
-                              price.toStringAsFixed(0),
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontFamily: AppFonts.poppinsBoldFont,
-                                fontSize: 15,
-                                color: AppColors.greenColor,
-                              ),
-                            ),
-                            FutureBuilder(
-                                future: _carregarMoney(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot snapshot) {
-                                  if (snapshot.data == null) {
-                                    return const Text(" ");
-                                  } else {
-                                    return Text(
-                                      " " + money,
-                                      style:
-                                          Theme.of(context).textTheme.headline3,
-                                    );
                                   }
-                                }),
-                          ],
+                                },
+                              );
+                            },
+                            child: Icon(
+                              Icons.remove,
+                              color: Colors.white,
+                            ),
+                            backgroundColor: AppColors.greenColor,
+                            elevation: 0,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 10.0,
+                            right: 10.0,
+                          ),
+                          child: Text(
+                            quant.toString(),
+                            style: TextStyle(fontSize: 18.0),
+                          ),
+                        ),
+                        Container(
+                          width: Get.width * 0.08,
+                          child: FloatingActionButton(
+                            child: Icon(Icons.add, color: Colors.white),
+                            backgroundColor: AppColors.greenColor,
+                            elevation: 0,
+                            onPressed: () {
+                              setState(() {
+                                quant += 1;
+                                price = widget.cartModel.price * quant;
+                                widget.cartPageController
+                                    .incrementar(widget.cartModel.id);
+                                widget.cartPageController.calcule();
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
