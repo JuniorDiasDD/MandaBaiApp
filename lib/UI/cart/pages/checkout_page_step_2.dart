@@ -260,7 +260,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                       filled: true,
                       fillColor: Theme.of(context).backgroundColor,
                       border: OutlineInputBorder(
-                        borderRadius: new BorderRadius.circular(35.0),
+                        borderRadius: new BorderRadius.circular(15.0),
                         borderSide:
                             new BorderSide(color: Colors.red, width: 2.0),
                       ),
@@ -281,7 +281,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                       filled: true,
                       fillColor: Theme.of(context).backgroundColor,
                       border: OutlineInputBorder(
-                        borderRadius: new BorderRadius.circular(35.0),
+                        borderRadius: new BorderRadius.circular(15.0),
                         borderSide: new BorderSide(),
                       ),
                     ),
@@ -301,7 +301,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                       filled: true,
                       fillColor: Theme.of(context).backgroundColor,
                       border: OutlineInputBorder(
-                        borderRadius: new BorderRadius.circular(35.0),
+                        borderRadius: new BorderRadius.circular(15.0),
                         borderSide: new BorderSide(),
                       ),
                     ),
@@ -322,7 +322,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                       filled: true,
                       fillColor: Theme.of(context).backgroundColor,
                       border: OutlineInputBorder(
-                        borderRadius: new BorderRadius.circular(35.0),
+                        borderRadius: new BorderRadius.circular(15.0),
                         borderSide: new BorderSide(
                           color: Colors.red,
                         ),
@@ -360,7 +360,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(15),
                         borderSide: BorderSide(width: 2, color: Colors.black54),
                       ),
                       focusedBorder: OutlineInputBorder(

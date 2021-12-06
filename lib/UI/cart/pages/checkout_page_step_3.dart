@@ -202,7 +202,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                 filled: false,
                                 fillColor: Colors.white,
                                 border: OutlineInputBorder(
-                                  borderRadius: new BorderRadius.circular(35.0),
+                                  borderRadius: new BorderRadius.circular(15.0),
                                   borderSide: new BorderSide(),
                                 ),
                               ),
@@ -517,7 +517,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                     filled: false,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
-                      borderRadius: new BorderRadius.circular(35.0),
+                      borderRadius: new BorderRadius.circular(15.0),
                       borderSide: new BorderSide(),
                     ),
                   ),
@@ -551,7 +551,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                               filled: false,
                               fillColor: Colors.white,
                               border: OutlineInputBorder(
-                                borderRadius: new BorderRadius.circular(35.0),
+                                borderRadius: new BorderRadius.circular(15.0),
                                 borderSide: new BorderSide(),
                               ),
                             ),
@@ -584,7 +584,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                               filled: false,
                               fillColor: Colors.white,
                               border: OutlineInputBorder(
-                                borderRadius: new BorderRadius.circular(35.0),
+                                borderRadius: new BorderRadius.circular(15.0),
                                 borderSide: new BorderSide(),
                               ),
                             ),
