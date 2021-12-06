@@ -81,32 +81,26 @@ class _ItemCartState extends State<ItemCart> {
                       flex:2,
                       child: Row(
                         children: [
-                          Flexible(
-                            flex: 4,
+                          SizedBox(
+                            width:Get.width*0.4,
                             child: Text(
                               widget.cartModel.name,
                               textAlign: TextAlign.start,
-                              style: const TextStyle(
-                                fontFamily: AppFonts.poppinsBoldFont,
-                                fontSize: 15,
-                                color: Colors.black,
-                              ),
+                              style: Theme.of(context).textTheme.headline2,
                             ),
                           ),
-                          Flexible(
-                            flex: 1,
-                            child: Checkbox(
-                              checkColor: Colors.white,
-                              activeColor: AppColors.greenColor,
-                              value: isChecked,
-                              onChanged: (bool? value) {
-                                setState(() {
-                                  isChecked = value!;
-                                  widget.cartPageController
-                                      .checkBox(widget.cartModel.id, isChecked);
-                                });
-                              },
-                            ),
+                          const Spacer(),
+                          Checkbox(
+                            checkColor: Colors.white,
+                            activeColor: AppColors.greenColor,
+                            value: isChecked,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                isChecked = value!;
+                                widget.cartPageController
+                                    .checkBox(widget.cartModel.id, isChecked);
+                              });
+                            },
                           ),
                         ],
                       ),
@@ -170,9 +164,9 @@ class _ItemCartState extends State<ItemCart> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(
-                              left: 10.0,
-                              right: 10.0,
+                            padding:  EdgeInsets.only(
+                              left: Get.width*0.05,
+                              right: Get.width*0.05,
                             ),
                             child: Text(
                               quant.toString(),
