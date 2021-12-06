@@ -33,7 +33,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
           if (input_numero.text != user.telefone) {
             user.telefone = input_numero.text;
           }
-           setState(() {
+          setState(() {
             checkPassword = true;
           });
         } else {
@@ -41,21 +41,21 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
             checkPassword = false;
           });
         }
-      }else{
-         setState(() {
-            checkPassword = true;
-          });
+      } else {
+        setState(() {
+          checkPassword = true;
+        });
         if (input_email.text != user.email) {
-            user.email = input_email.text;
-          }
-          if (input_nome.text != user.name) {
-            user.name = input_nome.text;
-          }
-          if (input_numero.text != user.telefone) {
-            user.telefone = input_numero.text;
-          }
+          user.email = input_email.text;
+        }
+        if (input_nome.text != user.name) {
+          user.name = input_nome.text;
+        }
+        if (input_numero.text != user.telefone) {
+          user.telefone = input_numero.text;
+        }
       }
-      if(checkPassword==true){
+      if (checkPassword == true) {
         Navigator.pop(context);
       }
       print('Form is valid');
@@ -92,14 +92,13 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                 alignment: Alignment.topLeft,
               ),
             ),
-            Image.asset(
-              AppImages.icone_user,
+            Image.network(
+              user.avatar,
               width: Get.width * 0.2,
-              height: Get.height * 0.2,
               alignment: Alignment.center,
             ),
             SizedBox(
-              height: Get.height * 0.01,
+              height: Get.height * 0.1,
             ),
             Padding(
               padding: EdgeInsets.only(
@@ -118,7 +117,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                         filled: true,
                         fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(35.0),
+                          borderRadius: new BorderRadius.circular(15.0),
                           borderSide: new BorderSide(),
                         ),
                         prefixIcon: Padding(
@@ -143,7 +142,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                         filled: true,
                         fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(35.0),
+                          borderRadius: new BorderRadius.circular(15.0),
                           borderSide: new BorderSide(),
                         ),
                         prefixIcon: Padding(
@@ -170,7 +169,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                         filled: true,
                         fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(35.0),
+                          borderRadius: new BorderRadius.circular(15.0),
                           borderSide: new BorderSide(),
                         ),
                         prefixIcon: Padding(
@@ -195,7 +194,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                         filled: true,
                         fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(35.0),
+                          borderRadius: new BorderRadius.circular(15.0),
                           borderSide: new BorderSide(),
                         ),
                         prefixIcon: Padding(
@@ -219,11 +218,11 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                       decoration: InputDecoration(
                         errorText: checkPassword == false
                             ? 'Senha não corresponde'
-                             : null,
+                            : null,
                         filled: true,
                         fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(35.0),
+                          borderRadius: new BorderRadius.circular(15.0),
                           borderSide: new BorderSide(),
                         ),
                         prefixIcon: Padding(
@@ -248,11 +247,11 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                       decoration: BoxDecoration(
                         color: AppColors.greenColor,
                         borderRadius: BorderRadius.all(
-                          Radius.circular(35),
+                          Radius.circular(15),
                         ),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey,
+                            color: Theme.of(context).cardColor,
                             blurRadius: 2.0,
                             spreadRadius: 0.0,
                             offset:

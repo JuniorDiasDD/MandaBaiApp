@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/static_config.dart';
-import 'package:manda_bai/Core/app_colors.dart';
-import 'package:manda_bai/Core/app_fonts.dart';
+import 'package:manda_bai/data/madaBaiData.dart';
 import 'package:readmore/readmore.dart';
 
 class Item_Bio extends StatefulWidget {

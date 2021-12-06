@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/UI/about/components/item_bio.dart';
+import 'package:manda_bai/data/madaBaiData.dart';
 import 'package:readmore/readmore.dart';
 
 class InfoPage extends StatelessWidget {
@@ -56,7 +56,7 @@ class InfoPage extends StatelessWidget {
                       child: Text(
                         'MandaBai, somos mais que uma Empresa!',
 
-                          style: Theme.of(context).textTheme.headline2,
+                          style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
                     SizedBox(height: Get.height * 0.02),
@@ -110,12 +110,10 @@ class InfoPage extends StatelessWidget {
                         ),
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.only(
-                                left: Get.width * 0.06,
-                                right: Get.width * 0.06),
+                            padding: EdgeInsets.all(15.0),
                             child: Text(
                               description_missao,
-                              textAlign: TextAlign.justify,
+                              textAlign: TextAlign.start,
                               style: Theme.of(context).textTheme.headline4,
                             ),
                           ),
@@ -145,12 +143,10 @@ class InfoPage extends StatelessWidget {
                         ),
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.only(
-                                left: Get.width * 0.06,
-                                right: Get.width * 0.06),
+                            padding: EdgeInsets.all(15.0),
                             child: Text(
                               description_visao,
-                              textAlign: TextAlign.justify,
+                              textAlign: TextAlign.start,
                               style: Theme.of(context).textTheme.headline4,
                             ),
                           ),
@@ -179,12 +175,10 @@ class InfoPage extends StatelessWidget {
                         ),
                         children: <Widget>[
                           Padding(
-                            padding: EdgeInsets.only(
-                                left: Get.width * 0.06,
-                                right: Get.width * 0.06),
+                            padding: EdgeInsets.all(15.0),
                             child: Text(
                               description_valores,
-                              textAlign: TextAlign.justify,
+                              textAlign: TextAlign.start,
                                 style: Theme.of(context).textTheme.headline4
                             ),
                           ),
