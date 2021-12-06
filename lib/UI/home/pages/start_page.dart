@@ -18,6 +18,7 @@ import 'package:manda_bai/UI/home/components/item_category.dart';
 import 'package:manda_bai/UI/home/components/item_new.dart';
 import 'package:manda_bai/UI/home/components/menu.dart';
 import 'package:manda_bai/UI/home/components/product_list_component.dart';
+import 'package:manda_bai/data/madaBaiData.dart';
 
 class StartPage extends StatefulWidget {
   @override
@@ -30,29 +31,6 @@ class _StartPageState extends State<StartPage> {
     'https://www.rastrearobjetos.com.br/blog/wp-content/uploads/2021/01/Como-rastrear-suas-encomendas-internacionais.png',
     'https://www.sindcontsp.org.br/wp-content/uploads/2019/12/encomenda.jpg'
   ];
-  List<Product> list_product = [];
-  List<Category> list_category = [];
-  List<Product> list_products = [];
-  int categoryId = 0;
-  Future carregarProdutos() async {
-    list_products = await ServiceRequest.loadProduct(categoryId);
-    if (list_products.isEmpty) {
-      return null;
-    }
-    return list_products;
-  }
-
-  Future _carregar() async {
-    if (list_product.isEmpty) {
-      list_product = await ServiceRequest.loadProduct(2299);
-
-      if (list_product.isEmpty) {
-        return null;
-      }
-    }
-
-    return list_product;
-  }
 
   Future _carregarCategory() async {
     if (list_category.isEmpty) {
@@ -60,13 +38,6 @@ class _StartPageState extends State<StartPage> {
 
       if (list_category.isEmpty) {
         return null;
-      } else {
-        setState(() {
-          if (list_products.isEmpty) {
-            categoryId = list_category[0].id;
-            carregarProdutos();
-          }
-        });
       }
     }
 
@@ -80,6 +51,7 @@ class _StartPageState extends State<StartPage> {
       await session.set('money', "EUR");
     }
   }
+
   validateLanguage() async {
     var language = await FlutterSession().get('language');
     var session = FlutterSession();
@@ -88,11 +60,22 @@ class _StartPageState extends State<StartPage> {
     }
   }
 
+  validateDados() async {
+    var username = await FlutterSession().get('username');
+    var password = await FlutterSession().get('password');
+
+    if (password != null && username != null) {
+      user.username = username.toString();
+      user.senha = password.toString();
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     validateMoney();
     validateLanguage();
+     validateDados();
   }
 
   @override
@@ -219,7 +202,7 @@ class _StartPageState extends State<StartPage> {
                         );
                       } else {
                         return Container(
-                         margin: EdgeInsets.only(top:Get.height * 0.012),
+                          margin: EdgeInsets.only(top: Get.height * 0.012),
                           height: Get.height * 0.5,
                           child: ListView.builder(
                             padding: EdgeInsets.only(

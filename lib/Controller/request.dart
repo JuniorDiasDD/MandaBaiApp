@@ -154,9 +154,10 @@ class ServiceRequest {
       final jsonResponse = json.decode(response.body);
       var session = FlutterSession();
       await session.set('id', jsonResponse["ID"]);
-      user.username = username;
-      user.senha = password;
-      print(jsonResponse["ID"]);
+      await session.set('username', username);
+      await session.set('password', password);
+  
+    //  print(jsonResponse["ID"]);
       GetUser();
       return true;
     } else if (response.statusCode == 503) {
