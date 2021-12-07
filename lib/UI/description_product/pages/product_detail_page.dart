@@ -177,14 +177,14 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
               child: Container(
                 height: Get.height * 0.06,
                 width: Get.width,
-                decoration: const BoxDecoration(
+                decoration:  BoxDecoration(
                   color: AppColors.greenColor,
                   borderRadius: BorderRadius.all(
-                    Radius.circular(35),
+                    Radius.circular(15),
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey,
+                      color: Theme.of(context).cardColor,
                       blurRadius: 2.0,
                       spreadRadius: 0.0,
                       offset: Offset(2.0, 2.0),
