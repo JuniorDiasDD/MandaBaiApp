@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
+import 'package:manda_bai/Core/app_images.dart';
 
 class ContactPage extends StatefulWidget {
   const ContactPage({Key? key}) : super(key: key);
@@ -206,15 +207,26 @@ class _ContactPageState extends State<ContactPage> {
                         ),
                       ],
                     ),
-                    child: TextButton(
-                      child: Text(
-                        'Conversar pelo WhatsApp',
-                        style: TextStyle(
-                            fontFamily: AppFonts.poppinsBoldFont,
-                            fontSize: Get.width * 0.035,
-                            color: Colors.white),
-                      ),
-                      onPressed: () {},
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Image.asset(
+                          AppImages.whatsapp,
+                          color: Colors.white,
+                          height: Get.height * 0.1,
+                          width: Get.width * 0.1,
+                        ),
+                        TextButton(
+                          child: Text(
+                            'Conversar pelo WhatsApp',
+                            style: TextStyle(
+                                fontFamily: AppFonts.poppinsBoldFont,
+                                fontSize: Get.width * 0.035,
+                                color: Colors.white),
+                          ),
+                          onPressed: () {},
+                        ),
+                      ],
                     ),
                   ),
                 ],

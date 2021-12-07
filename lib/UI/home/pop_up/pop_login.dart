@@ -80,7 +80,7 @@ class _Pop_LoginState extends State<Pop_Login> {
                     decoration:  BoxDecoration(
                       color: AppColors.greenColor,
                       borderRadius: BorderRadius.all(
-                        Radius.circular(35),
+                        Radius.circular(15),
                       ),
                       boxShadow: [
                         BoxShadow(

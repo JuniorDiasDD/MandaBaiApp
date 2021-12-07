@@ -96,7 +96,7 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                               filled: true,
                               fillColor: Theme.of(context).backgroundColor,
                               border: OutlineInputBorder(
-                                borderRadius: new BorderRadius.circular(35.0),
+                                borderRadius: new BorderRadius.circular(15.0),
                                 borderSide: new BorderSide(),
                               ),
                               prefixIcon: Padding(
@@ -130,7 +130,7 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                               filled: true,
                               fillColor: Theme.of(context).backgroundColor,
                               border: OutlineInputBorder(
-                                borderRadius: new BorderRadius.circular(35.0),
+                                borderRadius: new BorderRadius.circular(15.0),
                                 borderSide: new BorderSide(),
                               ),
                               prefixIcon: Padding(
@@ -154,7 +154,7 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                           decoration: BoxDecoration(
                             color: AppColors.greenColor,
                             borderRadius: BorderRadius.all(
-                              Radius.circular(35),
+                              Radius.circular(15),
                             ),
                             boxShadow: [
                               BoxShadow(

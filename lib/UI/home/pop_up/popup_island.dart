@@ -286,7 +286,7 @@ class _Popup_IslandState extends State<Popup_Island> {
                             decoration:  BoxDecoration(
                               color: AppColors.greenColor,
                               borderRadius: BorderRadius.all(
-                                Radius.circular(35),
+                                Radius.circular(15),
                               ),
                               boxShadow: [
                                 BoxShadow(

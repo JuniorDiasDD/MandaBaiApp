@@ -125,7 +125,7 @@ class _Popup_MoedaState extends State<Popup_Moeda> {
                             decoration: BoxDecoration(
                               color: AppColors.greenColor,
                               borderRadius: BorderRadius.all(
-                                Radius.circular(35),
+                                Radius.circular(15),
                               ),
                               boxShadow: [
                                 BoxShadow(

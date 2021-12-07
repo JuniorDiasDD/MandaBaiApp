@@ -53,7 +53,7 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
                 decoration:  BoxDecoration(
                   color: AppColors.greenColor,
                   borderRadius: BorderRadius.all(
-                    Radius.circular(35),
+                    Radius.circular(15),
                   ),
                   boxShadow: [
                     BoxShadow(
