@@ -1,14 +1,30 @@
 class Category {
-  int id, count;
-  String name,image;
+  int? _id, _count;
+  String? _name, _image;
 
-  Category({required this.id, required this.count, required this.name,required this.image});
-  factory Category.fromJson(Map<String, dynamic> json) {
-    return Category(
-      name: json['name'],
-      id: json['id'],
-      count: json['count'],
-      image: json['image']!=null ? json['image']['src']: json['image'].toString(),
-    );
+  Category({int? id, int? count, String? name, String? image}) {
+    _id = id;
+    _count = count;
+    _name = name;
+    _image = image;
+  }
+  int? get id => _id;
+  int? get count => _count;
+  String? get name => _name;
+  String? get image => _image;
+  set Name(String val) => _name = val;
+  set Imagem(String val) => _image = val;
+  set Id(int val) => _id = val;
+  set Count(int val) => _count = val;
+
+  Category.fromJson(dynamic json) {
+    _name:
+    json['name'];
+    _id:
+    json['id'];
+    _count:
+    json['count'];
+    _image:
+    json['image'] != null ? json['image']['src'] : json['image'].toString();
   }
 }
