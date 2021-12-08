@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/request.dart';
+import 'package:manda_bai/Controller/mandaBaiController.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Model/location.dart';
@@ -18,7 +18,7 @@ class _NewDestinationState extends State<NewDestination> {
   final input_cidade = TextEditingController();
   final input_endereco = TextEditingController();
   final input_tel = TextEditingController();
-
+  final MandaBaiController mandaBaiController = Get.find();
   String dropdownValue = 'Santiago';
   List<String> list_island = [
     'Santo Antão',
@@ -41,7 +41,7 @@ class _NewDestinationState extends State<NewDestination> {
           endereco: input_endereco.text,
           island: dropdownValue,
           phone: input_tel.text);
-      bool check = await ServiceRequest.addLocation(novo);
+      bool check = await mandaBaiController.addLocation(novo);
       if (check == true) {
         Navigator.pushReplacementNamed(context, '/Destination');
       }

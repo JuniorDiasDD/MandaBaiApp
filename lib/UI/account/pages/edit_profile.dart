@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Controller/mandaBaiController.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
-import 'package:manda_bai/Core/app_images.dart';
 
 class EditPorfilePage extends StatefulWidget {
   @override
@@ -11,6 +11,7 @@ class EditPorfilePage extends StatefulWidget {
 }
 
 class _EditPorfilePageState extends State<EditPorfilePage> {
+   final MandaBaiController mandaBaiController = Get.find();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final input_email = TextEditingController();
   final input_numero = TextEditingController();
@@ -21,17 +22,17 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
-      if (input_senha.text != user.senha) {
+      if (input_senha.text != mandaBaiController.user.value.senha) {
         if (input_senha == input_senha_conf) {
-          user.senha = input_senha.text;
-          if (input_email.text != user.email) {
-            user.email = input_email.text;
+          mandaBaiController.user.value.Senha = input_senha.text;
+          if (input_email.text != mandaBaiController.user.value.email) {
+            mandaBaiController.user.value.Email = input_email.text;
           }
-          if (input_nome.text != user.name) {
-            user.name = input_nome.text;
+          if (input_nome.text != mandaBaiController.user.value.name) {
+            mandaBaiController.user.value.Name = input_nome.text;
           }
-          if (input_numero.text != user.telefone) {
-            user.telefone = input_numero.text;
+          if (input_numero.text != mandaBaiController.user.value.telefone) {
+            mandaBaiController.user.value.Telefone = input_numero.text;
           }
           setState(() {
             checkPassword = true;
@@ -45,14 +46,14 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
         setState(() {
           checkPassword = true;
         });
-        if (input_email.text != user.email) {
-          user.email = input_email.text;
+        if (input_email.text != mandaBaiController.user.value.email) {
+          mandaBaiController.user.value.Email = input_email.text;
         }
-        if (input_nome.text != user.name) {
-          user.name = input_nome.text;
+        if (input_nome.text != mandaBaiController.user.value.name) {
+          mandaBaiController.user.value.Name = input_nome.text;
         }
-        if (input_numero.text != user.telefone) {
-          user.telefone = input_numero.text;
+        if (input_numero.text !=mandaBaiController.user.value.telefone) {
+         mandaBaiController.user.value.Telefone = input_numero.text;
         }
       }
       if (checkPassword == true) {
@@ -67,11 +68,11 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
   @override
   void initState() {
     super.initState();
-    input_email.text = user.email;
-    input_numero.text = user.telefone;
-    input_senha.text = user.senha;
-    input_senha_conf.text = user.senha;
-    input_nome.text = user.name;
+    input_email.text = mandaBaiController.user.value.email!;
+    input_numero.text = mandaBaiController.user.value.telefone!;
+    input_senha.text =mandaBaiController.user.value.senha!;
+    input_senha_conf.text = mandaBaiController.user.value.senha!;
+    input_nome.text = mandaBaiController.user.value.name!;
   }
 
   @override
@@ -93,7 +94,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
               ),
             ),
             Image.network(
-              user.avatar,
+              mandaBaiController.user.value.avatar!,
               width: Get.width * 0.2,
               alignment: Alignment.center,
             ),

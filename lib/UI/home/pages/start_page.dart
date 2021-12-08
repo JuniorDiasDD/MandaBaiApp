@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/request.dart';
+import 'package:manda_bai/Controller/mandaBaiController.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
@@ -12,12 +12,14 @@ import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/category.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/Model/user.dart';
+import 'package:manda_bai/UI/category_filter/controller/mandaBaiProductController.dart';
 import 'package:manda_bai/UI/category_filter/pages/category_page.dart';
 import 'package:manda_bai/UI/home/components/header.dart';
 import 'package:manda_bai/UI/home/components/item_category.dart';
 import 'package:manda_bai/UI/home/components/item_new.dart';
 import 'package:manda_bai/UI/home/components/menu.dart';
-import 'package:manda_bai/UI/home/components/product_list_component.dart';
+import 'package:manda_bai/UI/category_filter/components/product_list_component.dart';
+import 'package:manda_bai/UI/home/controller/mandaBaiCategoryController.dart';
 import 'package:manda_bai/data/madaBaiData.dart';
 
 class StartPage extends StatefulWidget {
@@ -32,50 +34,15 @@ class _StartPageState extends State<StartPage> {
     'https://www.sindcontsp.org.br/wp-content/uploads/2019/12/encomenda.jpg'
   ];
 
-  Future _carregarCategory() async {
-    if (list_category.isEmpty) {
-      list_category = await ServiceRequest.loadCategory();
-
-      if (list_category.isEmpty) {
-        return null;
-      }
-    }
-
-    return list_category;
-  }
-
-  validateMoney() async {
-    var money = await FlutterSession().get('money');
-    var session = FlutterSession();
-    if (money == "null" || money == null) {
-      await session.set('money', "EUR");
-    }
-  }
-
-  validateLanguage() async {
-    var language = await FlutterSession().get('language');
-    var session = FlutterSession();
-    if (language == "null" || language == null) {
-      await session.set('language', "pt");
-    }
-  }
-
-  validateDados() async {
-    var username = await FlutterSession().get('username');
-    var password = await FlutterSession().get('password');
-
-    if (password != null && username != null) {
-      user.username = username.toString();
-      user.senha = password.toString();
-    }
-  }
+  final MandaBaiCategoryController mandaBaiCategoryController =
+      Get.put(MandaBaiCategoryController());
+  final MandaBaiController mandaBaiController = Get.put(MandaBaiController());
+  final MandaBaiProductController mandaBaiProductController = Get.put(MandaBaiProductController());
 
   @override
   void initState() {
     super.initState();
-    validateMoney();
-    validateLanguage();
-    validateDados();
+    mandaBaiController.loadSessao();
   }
 
   @override
@@ -87,11 +54,6 @@ class _StartPageState extends State<StartPage> {
           return new Future(() => false);
         },
         child: Scaffold(
-          /* appBar: AppBar(
-
-            title: Header(title: 'MandaBai'),
-          ),*/
-          //  drawer: Menu(),
           body: SingleChildScrollView(
             child: Column(
               children: [
@@ -159,7 +121,7 @@ class _StartPageState extends State<StartPage> {
                   ],
                 ),
                 FutureBuilder(
-                  future: _carregarCategory(),
+                  future: mandaBaiCategoryController.loadCategory(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (!snapshot.hasData) {
                       return Container(
@@ -212,7 +174,8 @@ class _StartPageState extends State<StartPage> {
                             scrollDirection: Axis.vertical,
                             itemCount: snapshot.data.length,
                             itemBuilder: (BuildContext context, index) {
-                              var list = list_category[index];
+                              var list = mandaBaiCategoryController
+                                  .ListCategoria[index];
                               return ListViewItemComponent(category: list);
                             },
                           ),
@@ -221,76 +184,6 @@ class _StartPageState extends State<StartPage> {
                     }
                   },
                 ),
-
-                /*Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        top: Get.height * 0.01, left: Get.width * 0.02),
-                    child: const Text(
-                      'Produtos',
-                      style: TextStyle(
-                        fontFamily: AppFonts.poppinsBoldFont,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                ),
-                // ignore: sized_box_for_whitespace
-                FutureBuilder(
-                  future: carregarProdutos(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.data == null) {
-                      return Container();
-                    } else {
-                      return Container(
-                        height: Get.height * 0.2,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (BuildContext context, index) {
-                            var list = list_products[index];
-                            return ProductListComponent(product: list);
-                          },
-                        ),
-                      );
-                    }
-                  },
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        top: Get.height * 0.01, left: Get.width * 0.02),
-                    child: const Text(
-                      'Produtos mais Vendidos',
-                      style: TextStyle(
-                        fontFamily: AppFonts.poppinsBoldFont,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                ),
-                FutureBuilder(
-                  future: _carregar(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.data == null) {
-                      return Container();
-                    } else {
-                      return Container(
-                        height: Get.height * 0.2,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (BuildContext context, index) {
-                            var list = list_product[index];
-                            return ProductListComponent(product: list);
-                          },
-                        ),
-                      );
-                    }
-                  },
-                ),*/
               ],
             ),
           ),

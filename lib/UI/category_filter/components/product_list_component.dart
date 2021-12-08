@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Model/product.dart';
+import 'package:manda_bai/UI/category_filter/controller/mandaBaiProductController.dart';
 import 'package:manda_bai/UI/description_product/pages/product_detail_page.dart';
 
 class ProductListComponent extends StatefulWidget {
@@ -15,9 +15,7 @@ class ProductListComponent extends StatefulWidget {
 
 class _ProductListComponentState extends State<ProductListComponent> {
   bool checkFavorite = false;
-  _addCart(id) async {
-    bool check = await ServiceRequest.addCart(id);
-  }
+  final MandaBaiProductController mandaBaiProductController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +60,7 @@ class _ProductListComponentState extends State<ProductListComponent> {
                     color: Colors.white,
                     image: DecorationImage(
                       fit: BoxFit.fill,
-                      image: NetworkImage(widget.product.image),
+                      image: NetworkImage(widget.product.image!),
                     ),
                   ),
                 ),
@@ -74,7 +72,7 @@ class _ProductListComponentState extends State<ProductListComponent> {
                     Flexible(
                       flex: 1,
                       child: Text(
-                        widget.product.name,
+                        widget.product.name!,
                         maxLines: 1,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.headline4,
@@ -104,39 +102,39 @@ class _ProductListComponentState extends State<ProductListComponent> {
                               ),
                             ],
                           ),
-                         
                           Row(
                             children: [
                               IconButton(
                                 padding: const EdgeInsets.all(0.0),
                                 onPressed: () {
                                   if (widget.product.favorite == false) {
-                                    ServiceRequest.addFavrite(
-                                        widget.product.id);
+                                    mandaBaiProductController
+                                        .addFavrite(widget.product.id!);
                                     setState(() {
-                                      widget.product.favorite =
-                                          !widget.product.favorite;
+                                      widget.product.Favorite =
+                                          !widget.product.favorite!;
                                     });
                                   } else {
-                                    ServiceRequest.removeFavrite(
-                                        widget.product.id);
+                                    mandaBaiProductController
+                                        .removeFavrite(widget.product.id!);
                                     setState(() {
-                                      widget.product.favorite =
-                                          !widget.product.favorite;
+                                      widget.product.Favorite =
+                                          !widget.product.favorite!;
                                     });
                                   }
                                 },
                                 icon: const Icon(Icons.favorite),
                                 iconSize: Get.width * 0.05,
                                 alignment: Alignment.centerRight,
-                                color: widget.product.favorite
+                                color: widget.product.favorite!
                                     ? Colors.red
                                     : Colors.black54,
                               ),
                               IconButton(
                                 padding: const EdgeInsets.all(0.0),
                                 onPressed: () {
-                                  _addCart(widget.product.id);
+                                  var check = mandaBaiProductController
+                                      .addCart(widget.product.id);
                                 },
                                 icon: const Icon(Icons.shopping_cart_outlined),
                                 iconSize: Get.width * 0.05,

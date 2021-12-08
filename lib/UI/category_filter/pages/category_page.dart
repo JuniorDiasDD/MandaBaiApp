@@ -1,21 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/request.dart';
+import 'package:manda_bai/Controller/mandaBaiController.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
-import 'package:manda_bai/Model/category.dart';
-import 'package:manda_bai/Model/favorite.dart';
 import 'package:manda_bai/Model/product.dart';
-import 'package:manda_bai/UI/home/components/item_category.dart';
-import 'package:manda_bai/UI/home/components/product_list_component.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:manda_bai/UI/category_filter/controller/mandaBaiProductController.dart';
+import 'package:manda_bai/UI/category_filter/components/product_list_component.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 class CategoryPage extends StatefulWidget {
-  Category category;
-  CategoryPage({required this.category});
+  const CategoryPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<CategoryPage> createState() => _CategoryPageState();
@@ -23,69 +21,19 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage> {
   TextEditingController pesquisa = TextEditingController();
-  List<Product> list_product = [];
-  List<Product> list_product_full = [];
-  String dropdownValue = 'Menos Preço';
+
+  final MandaBaiProductController mandaBaiProductController = Get.find();
+
   List<String> list_filter = [
     'Menos Preço',
     'Mais Preço',
   ];
-  _search() {
-    // print("click");
-    list_product = [];
-    setState(() {
-      for (int i = 0; i < list_product_full.length; i++) {
-        if (list_product_full[i].name.contains(pesquisa.text)) {
-          list_product.add(list_product_full[i]);
-        }
-      }
-    });
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    mandaBaiProductController.filter.value = "Menos Preço";
   }
-
-  _ordenar() {
-    list_product = [];
-    setState(() {
-      list_product = list_product_full;
-      if (dropdownValue == "Menos Preço") {
-        Comparator<Product> pesagemComparator =
-            (a, b) => a.price.compareTo(b.price);
-        list_product.sort(pesagemComparator);
-      }else  if (dropdownValue == "Mais Preço") {
-        Comparator<Product> pesagemComparator =
-            (a, b) => b.price.compareTo(a.price);
-        list_product.sort(pesagemComparator);
-      }
-    });
-  }
-
-  Future _carregar() async {
-    if (list_product.isEmpty) {
-      list_product = await ServiceRequest.loadProduct(widget.category.id);
-      if (list_product.isEmpty) {
-        return null;
-      } else {
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        final String itemFavortiesString = prefs.getString('itens_favorites');
-        if (itemFavortiesString != null) {
-          List<Favorite> list = Favorite.decode(itemFavortiesString);
-          for (int i = 0; i < list_product.length; i++) {
-            for (int f = 0; f < list.length; f++) {
-              if (list_product[i].id == list[f].id) {
-                list_product[i].favorite = true;
-              }
-            }
-          }
-        }
-        if (list_product_full.isEmpty) {
-          list_product_full = list_product;
-        }
-      }
-    }
-
-    return list_product;
-  }
-
- 
 
   @override
   Widget build(BuildContext context) {
@@ -110,26 +58,26 @@ class _CategoryPageState extends State<CategoryPage> {
                     ),
                   ),
                   SizedBox(
-                    width: Get.width*0.7,
+                    width: Get.width * 0.7,
                     height: 40,
                     child: TextField(
                       cursorColor: AppColors.greenColor,
                       controller: pesquisa,
-                        style: Theme.of(context).textTheme.headline4,
-                      decoration:  InputDecoration(
+                      style: Theme.of(context).textTheme.headline4,
+                      decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(30.0)),
                             borderSide:
                                 BorderSide(color: AppColors.greenColor)),
                         hintText: 'Pesquisar Produto...',
-                          hintStyle: Theme.of(context).textTheme.headline4,
+                        hintStyle: Theme.of(context).textTheme.headline4,
                         contentPadding: EdgeInsets.only(top: 10, left: 15),
                         suffixIcon: Icon(
                           Icons.search,
                           color: AppColors.greenColor,
                         ),
-                       filled: true,
+                        filled: true,
                         fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
@@ -138,7 +86,9 @@ class _CategoryPageState extends State<CategoryPage> {
                         ),
                       ),
                       onChanged: (text) {
-                        _search();
+                        mandaBaiProductController.text_pesquisa.value =
+                            pesquisa.text;
+                        mandaBaiProductController.search();
                       },
                     ),
                   ),
@@ -156,7 +106,8 @@ class _CategoryPageState extends State<CategoryPage> {
                       ),
 
                       isExpanded: true,
-                      underline: DropdownButtonHideUnderline(child: Container()),
+                      underline:
+                          DropdownButtonHideUnderline(child: Container()),
                       items: list_filter.map((val) {
                         return DropdownMenuItem(
                           value: val,
@@ -166,8 +117,8 @@ class _CategoryPageState extends State<CategoryPage> {
                       //  value: dropdownValue,
                       onChanged: (String? value) {
                         setState(() {
-                          dropdownValue = value!;
-                          _ordenar();
+                          mandaBaiProductController.filter.value = value!;
+                          mandaBaiProductController.ordenar();
                         });
                       },
                     ),
@@ -181,13 +132,13 @@ class _CategoryPageState extends State<CategoryPage> {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  widget.category.name,
+                  mandaBaiProductController.category.value.name.toString(),
                   style: Theme.of(context).textTheme.headline1,
                 ),
               ),
             ),
             FutureBuilder(
-              future: _carregar(),
+              future: mandaBaiProductController.loadProduct(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (!snapshot.hasData) {
                   return Container(
@@ -226,7 +177,7 @@ class _CategoryPageState extends State<CategoryPage> {
                         right: Get.width * 0.05,
                       ),
                       child: GridView.builder(
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                             top: 0.0,
                           ),
                           gridDelegate:
@@ -235,9 +186,11 @@ class _CategoryPageState extends State<CategoryPage> {
                                       (Get.width == Orientation.portrait)
                                           ? 2
                                           : 2),
-                          itemCount: list_product.length,
+                          itemCount:
+                              mandaBaiProductController.list_product.length,
                           itemBuilder: (BuildContext ctx, index) {
-                            var list = list_product[index];
+                            var list =
+                                mandaBaiProductController.list_product[index];
                             return ProductListComponent(product: list);
                           }),
                     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/request.dart';
+import 'package:manda_bai/Controller/mandaBaiController.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/Contact/contact_page.dart';
@@ -21,35 +21,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _StartPageState extends State<ProfilePage> {
-  String check = "";
-
-  String island = "";
-  String money = "";
-  String language = "";
-  Future _carregarIsland() async {
-    island = await FlutterSession().get('island');
-    return island;
-  }
-
-  Future _carregarMoney() async {
-    money = await FlutterSession().get('money');
-    return money;
-  }
-
-  Future _carregarLanguage() async {
-    language = await FlutterSession().get('language');
-    return language;
-  }
-
-  Future _carregarUser() async {
-    bool check = await ServiceRequest.GetUser();
-
-    if (check == false) {
-      return null;
-    }
-    return check;
-  }
-
+  final MandaBaiController mandaBaiController = Get.find();
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -68,7 +40,7 @@ class _StartPageState extends State<ProfilePage> {
               children: [
                 SizedBox(height: Get.height * 0.1),
                 FutureBuilder(
-                  future: _carregarUser(),
+                  future: mandaBaiController.GetUser(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (!snapshot.hasData) {
                       return Container(
@@ -87,17 +59,17 @@ class _StartPageState extends State<ProfilePage> {
                       return Column(
                         children: [
                           Image.network(
-                            user.avatar,
+                            mandaBaiController.user.value.avatar!,
                             width: Get.width * 0.2,
                             alignment: Alignment.center,
                           ),
                           SizedBox(height: Get.height * 0.03),
                           Text(
-                            user.name,
+                             mandaBaiController.user.value.name!,
                             style: Theme.of(context).textTheme.headline2,
                           ),
                           Text(
-                            user.email,
+                             mandaBaiController.user.value.email!,
                             style: Theme.of(context).textTheme.headline4,
                           ),
                         ],
@@ -327,29 +299,10 @@ class _StartPageState extends State<ProfilePage> {
                               padding: EdgeInsets.only(
                                 left: Get.width * 0.02,
                               ),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    'Mudar de ILha',
-                                    style:
-                                        Theme.of(context).textTheme.headline3,
-                                  ),
-                                  FutureBuilder(
-                                      future: _carregarIsland(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot snapshot) {
-                                        if (snapshot.data == null) {
-                                          return const Text(" ");
-                                        } else {
-                                          return Text(
-                                            ' (' + island + ')',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline3,
-                                          );
-                                        }
-                                      }),
-                                ],
+                              child: Text(
+                                'Mudar de ILha ('+mandaBaiController.island.value+")",
+                                style:
+                                    Theme.of(context).textTheme.headline3,
                               ),
                             ),
                           ],
@@ -383,29 +336,10 @@ class _StartPageState extends State<ProfilePage> {
                               padding: EdgeInsets.only(
                                 left: Get.width * 0.02,
                               ),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    'Mudar de Idioma',
-                                    style:
-                                        Theme.of(context).textTheme.headline3,
-                                  ),
-                                  FutureBuilder(
-                                      future: _carregarLanguage(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot snapshot) {
-                                        if (snapshot.data == null) {
-                                          return const Text(" ");
-                                        } else {
-                                          return Text(
-                                            ' (' + language + ')',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline3,
-                                          );
-                                        }
-                                      }),
-                                ],
+                              child: Text(
+                                'Mudar de Idioma ('+mandaBaiController.language.value+')',
+                                style:
+                                    Theme.of(context).textTheme.headline3,
                               ),
                             ),
                           ],
@@ -445,29 +379,10 @@ class _StartPageState extends State<ProfilePage> {
                               padding: EdgeInsets.only(
                                 left: Get.width * 0.02,
                               ),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    'Selecionar Moeda',
-                                    style:
-                                        Theme.of(context).textTheme.headline3,
-                                  ),
-                                  FutureBuilder(
-                                      future: _carregarMoney(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot snapshot) {
-                                        if (snapshot.data == null) {
-                                          return const Text(" ");
-                                        } else {
-                                          return Text(
-                                            ' (' + money + ')',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline3,
-                                          );
-                                        }
-                                      }),
-                                ],
+                              child: Text(
+                                'Selecionar Moeda ('+mandaBaiController.money.value+')',
+                                style:
+                                    Theme.of(context).textTheme.headline3,
                               ),
                             ),
                           ],
@@ -515,21 +430,7 @@ class _StartPageState extends State<ProfilePage> {
                                     style:
                                         Theme.of(context).textTheme.headline3,
                                   ),
-                                  /*FutureBuilder(
-                                      future: _carregarLanguage(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot snapshot) {
-                                        if (snapshot.data == null) {
-                                          return const Text(" ");
-                                        } else {
-                                          return Text(
-                                            ' (' + language + ')',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline3,
-                                          );
-                                        }
-                                      }),*/
+                                 
                                 ],
                               ),
                             ),
@@ -578,21 +479,7 @@ class _StartPageState extends State<ProfilePage> {
                                     style:
                                         Theme.of(context).textTheme.headline3,
                                   ),
-                                  /*FutureBuilder(
-                                      future: _carregarIsland(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot snapshot) {
-                                        if (snapshot.data == null) {
-                                          return const Text(" ");
-                                        } else {
-                                          return Text(
-                                            ' (' + island + ')',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline3,
-                                          );
-                                        }
-                                      }),*/
+                                
                                 ],
                               ),
                             ),

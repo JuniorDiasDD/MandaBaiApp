@@ -3,34 +3,38 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Model/category.dart';
+import 'package:manda_bai/UI/category_filter/controller/mandaBaiProductController.dart';
 import 'package:manda_bai/UI/category_filter/pages/category_page.dart';
-import 'package:manda_bai/UI/home/pages/start_page.dart';
 
 class ListViewItemComponent extends StatefulWidget {
   Category category;
-  ListViewItemComponent({required this.category});
+  ListViewItemComponent({Key? key, required this.category}) : super(key: key);
   @override
   State<ListViewItemComponent> createState() => _ListViewItemComponentState();
 }
 
 class _ListViewItemComponentState extends State<ListViewItemComponent> {
+  final MandaBaiProductController mandaBaiProductController = Get.find();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => CategoryPage(category: widget.category),
-        ),
-      ),
+      onTap: () {
+        mandaBaiProductController.category.value = widget.category;
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const CategoryPage(),
+          ),
+        );
+      },
       child: Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         child: Container(
           alignment: Alignment.topLeft,
           decoration: BoxDecoration(
             color: Theme.of(context).dialogBackgroundColor,
             borderRadius: BorderRadius.circular(10),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.grey,
                 blurRadius: 1.0,
@@ -38,10 +42,10 @@ class _ListViewItemComponentState extends State<ListViewItemComponent> {
                 offset: Offset(0.5, 0.5), // changes position of shadow
               ),
             ],
-            image: new DecorationImage(
+            image: DecorationImage(
               fit: BoxFit.fill,
               image: widget.category.image != 'null'
-                  ? NetworkImage(widget.category.image)
+                  ? NetworkImage(widget.category.image.toString())
                   : NetworkImage(
                       'https://static.expressodasilhas.cv/media/2020/10/09324151.normal.jpg'),
             ),
@@ -49,10 +53,10 @@ class _ListViewItemComponentState extends State<ListViewItemComponent> {
           width: Get.width,
           height: Get.height * 0.2,
           child: Padding(
-            padding: EdgeInsets.only(
-                left: Get.width * 0.01, top: Get.height * 0.15),
+            padding:
+                EdgeInsets.only(left: Get.width * 0.01, top: Get.height * 0.15),
             child: Text(
-              widget.category.name,
+              widget.category.name.toString(),
               textAlign: TextAlign.start,
               style: TextStyle(
                 fontFamily: AppFonts.poppinsBoldFont,

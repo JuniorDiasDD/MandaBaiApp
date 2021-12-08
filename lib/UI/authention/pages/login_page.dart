@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/request.dart';
+import 'package:manda_bai/Controller/mandaBaiController.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
@@ -21,17 +21,15 @@ class _LoginPageState extends State<LoginPage> {
 
   final input_username = TextEditingController();
   final input_senha = TextEditingController();
-
+  final MandaBaiController mandaBaiController = Get.find();
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
       var check =
-          await ServiceRequest.login(input_username.text, input_senha.text);
+          await mandaBaiController.login(input_username.text, input_senha.text);
       if (check == true) {
         Navigator.pushReplacementNamed(context, '/home');
       } else {}
-
-      //print('Form is valid');
     } else {
       print('Form is invalid');
     }
@@ -147,10 +145,12 @@ class _LoginPageState extends State<LoginPage> {
                                   builder: (context) => RecoveryPassword()),
                             );
                           },
-                          child:  Text(
+                          child: Text(
                             'Esqueceu sua senha?',
-                              style: Theme.of(context).textTheme.headline4!.copyWith(fontStyle: FontStyle.italic),
-
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline4!
+                                .copyWith(fontStyle: FontStyle.italic),
                           ),
                         ),
                       ),
@@ -226,7 +226,6 @@ class _LoginPageState extends State<LoginPage> {
                                 child: new Container(
                                   width: Get.width * 0.4,
                                   child: Divider(
-
                                     height: 36,
                                   ),
                                 ),
@@ -236,16 +235,15 @@ class _LoginPageState extends State<LoginPage> {
                                   left: Get.width * 0.05,
                                   right: Get.width * 0.05,
                                 ),
-                                child: Text("ou",
-                                    style: Theme.of(context).textTheme.headline2,
-
+                                child: Text(
+                                  "ou",
+                                  style: Theme.of(context).textTheme.headline2,
                                 ),
                               ),
                               Expanded(
                                 child: Container(
                                   width: Get.width * 0.4,
                                   child: const Divider(
-
                                     height: 36,
                                   ),
                                 ),

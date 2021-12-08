@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/request.dart';
+import 'package:manda_bai/Controller/mandaBaiController.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
@@ -16,21 +16,7 @@ class Destination_Page extends StatefulWidget {
 }
 
 class _Destination_PageState extends State<Destination_Page> {
-  List<Location> list_location = [];
-
-  Future _carregarLocation() async {
-    if (list_location.isEmpty) {
-      list_location = await ServiceRequest.loadLocation();
-      /*  setState(() {
-         list_location;
-      });*/
-      if (list_location.isEmpty) {
-        //print("entrou");
-        return null;
-      }
-    }
-    return list_location;
-  }
+  final MandaBaiController mandaBaiController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +65,7 @@ class _Destination_PageState extends State<Destination_Page> {
               Container(
                 height: Get.height * 0.8,
                 child: FutureBuilder(
-                  future: _carregarLocation(),
+                  future: mandaBaiController.loadLocation(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
@@ -144,9 +130,11 @@ class _Destination_PageState extends State<Destination_Page> {
                                 bottom: Get.height * 0.03,
                               ),
                               scrollDirection: Axis.vertical,
-                              itemCount: list_location.length,
+                              itemCount:
+                                  mandaBaiController.list_location.length,
                               itemBuilder: (BuildContext context, index) {
-                                var list = list_location[index];
+                                var list =
+                                    mandaBaiController.list_location[index];
                                 return ItemLocation(location: list);
                               },
                             ),

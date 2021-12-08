@@ -1,21 +1,14 @@
 import 'package:manda_bai/Model/user.dart';
 
-User user = new User(
-    name: " ",
-    nickname: " ",
-    telefone: " ",
-    senha: "",
-    email: "",
-    avatar: "",
-    username: "");
 
-String ver_dados_pessoais = "Dados Pessoais \n Nome: " +
+
+String ver_dados_pessoais = "Dados Pessoais \n Nome: ";/* +
     user.name +
     "\n Email: " +
     user.email +
     "\n Telefone: " +
     user.telefone +
-    "\n Morada: \n";
+    "\n Morada: \n";*/
 
 //! Configuração de serviços
 //?links- urls

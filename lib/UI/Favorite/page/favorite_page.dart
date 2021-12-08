@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/request.dart';
+import 'package:manda_bai/Controller/mandaBaiController.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/Favorite/components/listview_item_favorite.dart';
+import 'package:manda_bai/UI/category_filter/controller/mandaBaiProductController.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 class FavoritePage extends StatefulWidget {
@@ -18,31 +19,14 @@ class FavoritePage extends StatefulWidget {
 class _FavoritePageState extends State<FavoritePage> {
   bool isChecked = false;
   TextEditingController pesquisa = TextEditingController();
-  List<Product> list_product = [];
-  List<Product> list_product_full = [];
 
-  Future _carregar() async {
-    if (list_product.isEmpty && pesquisa.text == "") {
-      list_product = await ServiceRequest.loadFavorite();
-      if (list_product.isEmpty) {
-        return null;
-      } else {
-        list_product_full = list_product;
-      }
-    }
+  final MandaBaiProductController mandaBaiProductController = Get.find();
 
-    return list_product;
-  }
-
-  _search() {
-    list_product = [];
-    setState(() {
-      for (int i = 0; i < list_product_full.length; i++) {
-        if (list_product_full[i].name.contains(pesquisa.text)) {
-          list_product.add(list_product_full[i]);
-        }
-      }
-    });
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    mandaBaiProductController.text_pesquisa.value = "";
   }
 
   @override
@@ -69,7 +53,9 @@ class _FavoritePageState extends State<FavoritePage> {
                   child: Container(
                     width: Get.width * 0.4,
                     height: Get.width * 0.1,
-                    margin:EdgeInsets.only(right:Get.width*0.02,),
+                    margin: EdgeInsets.only(
+                      right: Get.width * 0.02,
+                    ),
                     child: TextField(
                       cursorColor: AppColors.greenColor,
                       controller: pesquisa,
@@ -96,13 +82,15 @@ class _FavoritePageState extends State<FavoritePage> {
                         ),
                       ),
                       onChanged: (text) {
-                        _search();
+                        mandaBaiProductController.text_pesquisa.value =
+                            pesquisa.text;
+                        mandaBaiProductController.search();
                       },
                     ),
                   ),
                 ),
                 FutureBuilder(
-                  future: _carregar(),
+                  future: mandaBaiProductController.loadFavorite(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (!snapshot.hasData) {
                       return Container(
@@ -156,9 +144,11 @@ class _FavoritePageState extends State<FavoritePage> {
                               bottom: Get.height * 0.03,
                             ),
                             scrollDirection: Axis.vertical,
-                            itemCount: list_product.length,
+                            itemCount:
+                                mandaBaiProductController.list_product.length,
                             itemBuilder: (BuildContext context, index) {
-                              var list = list_product[index];
+                              var list =
+                                  mandaBaiProductController.list_product[index];
                               return ItemFavoriteComponent(product: list);
                             },
                           ),

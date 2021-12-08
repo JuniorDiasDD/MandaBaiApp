@@ -31,8 +31,8 @@ class _ItemCartState extends State<ItemCart> {
     // TODO: implement initState
     super.initState();
     setState(() {
-      quant = widget.cartModel.amount;
-      price = widget.cartModel.price;
+      quant = widget.cartModel.amount!;
+      price = widget.cartModel.price!;
     });
   }
 
@@ -66,7 +66,7 @@ class _ItemCartState extends State<ItemCart> {
                   color: Colors.white,
                   image: DecorationImage(
                     fit: BoxFit.fill,
-                    image: NetworkImage(widget.cartModel.image),
+                    image: NetworkImage(widget.cartModel.image!),
                   ),
                 ),
               ),
@@ -84,7 +84,7 @@ class _ItemCartState extends State<ItemCart> {
                           SizedBox(
                             width:Get.width*0.4,
                             child: Text(
-                              widget.cartModel.name,
+                              widget.cartModel.name!,
                               textAlign: TextAlign.start,
                               style: Theme.of(context).textTheme.headline2,
                             ),
@@ -98,7 +98,7 @@ class _ItemCartState extends State<ItemCart> {
                               setState(() {
                                 isChecked = value!;
                                 widget.cartPageController
-                                    .checkBox(widget.cartModel.id, isChecked);
+                                    .checkBox(widget.cartModel.id!, isChecked);
                               });
                             },
                           ),
@@ -145,11 +145,11 @@ class _ItemCartState extends State<ItemCart> {
                                     if (quant != 1) {
                                       quant = quant - 1;
                                       setState(() {
-                                        price = widget.cartModel.price * quant;
+                                        price = widget.cartModel.price! * quant;
                                       });
 
                                       widget.cartPageController
-                                          .decrementar(widget.cartModel.id);
+                                          .decrementar(widget.cartModel.id!);
                                       widget.cartPageController.calcule();
                                     }
                                   },
@@ -182,9 +182,9 @@ class _ItemCartState extends State<ItemCart> {
                               onPressed: () {
                                 setState(() {
                                   quant += 1;
-                                  price = widget.cartModel.price * quant;
+                                  price = widget.cartModel.price! * quant;
                                   widget.cartPageController
-                                      .incrementar(widget.cartModel.id);
+                                      .incrementar(widget.cartModel.id!);
                                   widget.cartPageController.calcule();
                                 });
                               },

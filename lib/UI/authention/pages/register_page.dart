@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_pw_validator/Resource/Strings.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/request.dart';
+import 'package:manda_bai/Controller/mandaBaiController.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
@@ -25,6 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final input_username = TextEditingController();
   final input_senha = TextEditingController();
   final input_nome = TextEditingController();
+   final MandaBaiController mandaBaiController = Get.find();
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
@@ -37,7 +38,7 @@ class _RegisterPageState extends State<RegisterPage> {
           nickname: input_nickname.text,
           avatar: "");
 
-      bool check = await ServiceRequest.createAccount(new_user);
+      bool check = await mandaBaiController.createAccount(new_user);
       if (check == true) {
         return showDialog(
             context: context,

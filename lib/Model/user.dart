@@ -1,4 +1,3 @@
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 
 class User {
   String?  _name, _nickname, _email, _telefone, _senha, _username,_avatar;

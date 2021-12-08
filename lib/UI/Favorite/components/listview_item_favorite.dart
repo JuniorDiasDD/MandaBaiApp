@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/request.dart';
+import 'package:manda_bai/Controller/mandaBaiController.dart';
 import 'package:manda_bai/Model/product.dart';
+import 'package:manda_bai/UI/category_filter/controller/mandaBaiProductController.dart';
 import 'package:manda_bai/UI/home/pages/home_page.dart';
 
 class ItemFavoriteComponent extends StatefulWidget {
@@ -15,7 +16,7 @@ class ItemFavoriteComponent extends StatefulWidget {
 
 class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
   bool isChecked = false;
-
+final MandaBaiProductController mandaBaiProductController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -44,7 +45,7 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.network(
-              widget.product.image,
+              widget.product.image!,
               width: Get.width * 0.2,
               height: Get.height * 0.2,
               alignment: Alignment.center,
@@ -63,7 +64,7 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                       SizedBox(
                         width: Get.width * 0.35,
                         child: Text(
-                          widget.product.name,
+                          widget.product.name!,
                           style: Theme.of(context).textTheme.headline4,
                         ),
                       ),
@@ -81,7 +82,7 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                             padding: const EdgeInsets.all(0.0),
                             onPressed: () {
                               setState(() {
-                                ServiceRequest.removeFavrite(widget.product.id);
+                                mandaBaiProductController.removeFavrite(widget.product.id!);
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/request.dart';
+import 'package:manda_bai/Controller/mandaBaiController.dart';
 import 'package:manda_bai/Model/location.dart';
 
 class ItemLocation extends StatefulWidget {
@@ -11,6 +11,7 @@ class ItemLocation extends StatefulWidget {
 }
 
 class _ItemLocationState extends State<ItemLocation> {
+   final MandaBaiController mandaBaiController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -43,14 +44,14 @@ class _ItemLocationState extends State<ItemLocation> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    widget.location.name,
+                    widget.location.name!,
                     style: Theme.of(context).textTheme.headline2,
                   ),
                   IconButton(
                     padding: const EdgeInsets.all(0.0),
                     onPressed: () {
                       setState(() {
-                        ServiceRequest.removeLocation(widget.location.id);
+                        mandaBaiController.removeLocation(widget.location.id!);
                         Navigator.pushReplacementNamed(context, '/Destination');
                       });
                     },
@@ -69,7 +70,7 @@ class _ItemLocationState extends State<ItemLocation> {
                     Icons.location_on_outlined,
                   ),
                   Text(
-                    widget.location.island,
+                    widget.location.island!,
                     style: Theme.of(context).textTheme.headline3,
                   ),
                 ],
@@ -80,7 +81,7 @@ class _ItemLocationState extends State<ItemLocation> {
               Padding(
                 padding: const EdgeInsets.only(left: 15.0),
                 child: Text(
-                  widget.location.city + ',' + widget.location.endereco,
+                  widget.location.city! + ',' + widget.location.endereco!,
                   style: Theme.of(context).textTheme.headline4,
                 ),
               ),
@@ -93,7 +94,7 @@ class _ItemLocationState extends State<ItemLocation> {
                     Icons.phone,
                   ),
                   Text(
-                    widget.location.phone,
+                    widget.location.phone!,
                     style: Theme.of(context).textTheme.headline4,
                   ),
                 ],

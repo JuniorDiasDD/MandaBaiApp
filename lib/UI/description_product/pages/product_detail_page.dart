@@ -27,7 +27,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                 Container(
                   height: Get.height * 0.5,
                   child: Image.network(
-                    widget.product.image,
+                    widget.product.image!,
                     width: Get.width,
                     fit: BoxFit.cover,
                   ),
@@ -55,7 +55,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                   Column(
                     children: [
                       Text(
-                        widget.product.name,
+                        widget.product.name!,
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ],
@@ -89,7 +89,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                 alignment: Alignment.topLeft,
                 child: RatingBar.builder(
                   unratedColor: Colors.grey,
-                  initialRating: widget.product.rating_count.toDouble(),
+                  initialRating: widget.product.rating_count!.toDouble(),
                   minRating: 0,
                   direction: Axis.horizontal,
                   allowHalfRating: true,
@@ -116,7 +116,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                 height: Get.height * 0.08,
                 child: SingleChildScrollView(
                   child: Text(
-                    widget.product.description,
+                    widget.product.description!,
                     style: Theme.of(context).textTheme.headline4,
                   ),
                 ),
