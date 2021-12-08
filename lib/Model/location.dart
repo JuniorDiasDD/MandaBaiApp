@@ -4,7 +4,7 @@ class Location{
   String? _name,_island,_city,_endereco,_phone;
     int? _id;
 
-  Product(
+  Location(
       {String? name,
         String? island,
         String? city,
