@@ -17,7 +17,7 @@ class MandaBaiProductController extends GetxController {
   late List<CartModel> list_cart;
   late List<Favorite> list_favorite;
   final MandaBaiController mandaBaiController = Get.find();
-  final CartPageController cartPageController = Get.find();
+  final CartPageController cartPageController = Get.put(CartPageController());
   var category = Category().obs;
   var filter = ''.obs;
   var text_pesquisa = ''.obs;

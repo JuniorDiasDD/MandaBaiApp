@@ -20,14 +20,14 @@ class MandaBaiController extends GetxController {
   //!Carregar sessão
 
   Future loadSessao() async {
-    island = await FlutterSession().get('island');
-    money = await FlutterSession().get('money');
-    language = await FlutterSession().get('language');
+    island.value = await FlutterSession().get('island');
+    money.value = await FlutterSession().get('money');
+    language.value = await FlutterSession().get('language');
     var session = FlutterSession();
-    if (language == "null" || language == null) {
+    if (language.value == "null" || language.value == null) {
       await session.set('language', "pt");
     }
-    if (money == "null" || money == null) {
+    if (money.value == "null" || money.value == null) {
       await session.set('money', "EUR");
     }
   }

@@ -8,19 +8,34 @@ import 'package:http/http.dart' as http;
 class MandaBaiCategoryController extends GetxController {
   late List<Category> ListCategoria;
   // ! Load Category
-  Future<List<Category>> loadCategory() async {
+  Future loadCategory() async {
+    print("aqui");
     List<Category> list = [];
+    ListCategoria = [];
     var response = await http.get(Uri.parse(categorias));
     if (response.statusCode == 200) {
       var jsonResponse = json.decode(response.body);
       var quantidade = response.headers['x-wp-total'];
       response = await http
           .get(Uri.parse(categorias + "&per_page=" + quantidade.toString()));
-      jsonResponse = json.decode(response.body);
+      print(response.body);
       if (response.statusCode == 200) {
-        final _cats = jsonResponse.cast<Map<String, dynamic>>();
-        list = _cats.map<Category>((cat) => Category.fromJson(cat)).toList();
+        list=(json.decode(response.body) as List).map((i) =>
+              Category.fromJson(i)).toList();
+       /* jsonResponse = json.decode(response.body);
+         jsonResponse.forEach((v) {
+          list.add(Category.fromJson(v));
+        });*/
+        // list =
+        // CategoryRequestResponse.fromJson(json.decode(response.body)).result!;
+        //// final _cats = jsonResponse.cast<Map<String, dynamic>>();
+        // list = _cats.map<Category>((cat) => Category.fromJson(cat)).toList();
+       
+        for (int i = 0; i < list.length; i++) {
+          print(list[i].name);
+        }
         var island = await FlutterSession().get('island');
+        print(island);
         for (var i = 0; i < list.length; i++) {
           if (list[i].name!.contains(island) == true) {
             var name = list[i].name!.split(" / ");
@@ -38,7 +53,7 @@ class MandaBaiCategoryController extends GetxController {
     } else {
       print("Erro de authentiction");
     }
-    
+
     return ListCategoria;
   }
 }

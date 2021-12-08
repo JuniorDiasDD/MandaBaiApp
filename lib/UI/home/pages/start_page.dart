@@ -12,7 +12,6 @@ import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/category.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/Model/user.dart';
-import 'package:manda_bai/UI/category_filter/controller/mandaBaiProductController.dart';
 import 'package:manda_bai/UI/category_filter/pages/category_page.dart';
 import 'package:manda_bai/UI/home/components/header.dart';
 import 'package:manda_bai/UI/home/components/item_category.dart';
@@ -34,10 +33,9 @@ class _StartPageState extends State<StartPage> {
     'https://www.sindcontsp.org.br/wp-content/uploads/2019/12/encomenda.jpg'
   ];
 
-  final MandaBaiCategoryController mandaBaiCategoryController =
-      Get.put(MandaBaiCategoryController());
-  final MandaBaiController mandaBaiController = Get.put(MandaBaiController());
-  final MandaBaiProductController mandaBaiProductController = Get.put(MandaBaiProductController());
+ final MandaBaiCategoryController mandaBaiCategoryController =
+      Get.find();
+  final MandaBaiController mandaBaiController = Get.find();
 
   @override
   void initState() {

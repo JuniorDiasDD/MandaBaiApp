@@ -19,11 +19,10 @@ class CartPage extends StatefulWidget {
 }
 
 class _StartPageState extends State<CartPage> {
-  final CartPageController cartPageController = Get.put(CartPageController());
-MandaBaiProductController mandaBaiProductController=Get.find();
-MandaBaiController mandaBaiController=Get.find();
+  CartPageController cartPageController = Get.find();
+  MandaBaiProductController mandaBaiProductController = Get.find();
+  MandaBaiController mandaBaiController = Get.find();
   bool isChecked = false;
-
 
   @override
   void initState() {
@@ -136,7 +135,8 @@ MandaBaiController mandaBaiController=Get.find();
                               scrollDirection: Axis.vertical,
                               itemCount: snapshot.data.length,
                               itemBuilder: (BuildContext context, index) {
-                                var list = mandaBaiProductController.list_cart[index];
+                                var list =
+                                    mandaBaiProductController.list_cart[index];
                                 cartPageController.price =
                                     list.price! * list.amount!;
                                 return ItemCart(
@@ -147,8 +147,6 @@ MandaBaiController mandaBaiController=Get.find();
                           );
                         }
                     }
-
-                  
                   },
                 ),
                 SizedBox(
@@ -167,10 +165,11 @@ MandaBaiController mandaBaiController=Get.find();
                                 Obx(
                                   () => Text(
                                     cartPageController.subTotal
-                                        .toStringAsFixed(0)+" "+mandaBaiController.money.value,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline2,
+                                            .toStringAsFixed(0) +
+                                        " " +
+                                        mandaBaiController.money.value,
+                                    style:
+                                        Theme.of(context).textTheme.headline2,
                                   ),
                                 ),
                               ],
@@ -185,11 +184,11 @@ MandaBaiController mandaBaiController=Get.find();
                                 ),
                                 Obx(
                                   () => Text(
-                                    cartPageController.taxa
-                                        .toStringAsFixed(0)+" "+mandaBaiController.money.value,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headline6,
+                                    cartPageController.taxa.toStringAsFixed(0) +
+                                        " " +
+                                        mandaBaiController.money.value,
+                                    style:
+                                        Theme.of(context).textTheme.headline6,
                                   ),
                                 ),
                               ],
@@ -224,7 +223,9 @@ MandaBaiController mandaBaiController=Get.find();
                                 Obx(
                                   () => Text(
                                     cartPageController.total
-                                        .toStringAsFixed(0)+" "+mandaBaiController.money.value,
+                                            .toStringAsFixed(0) +
+                                        " " +
+                                        mandaBaiController.money.value,
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline5!
