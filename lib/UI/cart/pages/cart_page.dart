@@ -138,7 +138,7 @@ class _StartPageState extends State<CartPage> {
                                 var list =
                                     mandaBaiProductController.list_cart[index];
                                 cartPageController.price =
-                                    list.price! * list.amount!;
+                                    list.price * list.amount;
                                 return ItemCart(
                                   cartModel: list,
                                 );

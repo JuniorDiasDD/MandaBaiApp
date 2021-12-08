@@ -1,26 +1,17 @@
 import 'dart:convert';
 
-class Location{
-  String? _name,_island,_city,_endereco,_phone;
-    int? _id;
+class Location {
+  String name, island, city, endereco, phone;
+  int id;
 
   Location(
-      {String? name,
-        String? island,
-        String? city,
-        String? endereco,
-        String? phone,
-        int? id,
-        }) {
-    _name = name;
-    _island = island;
-    _city = city;
-    _endereco = endereco;
-    _phone = phone;
-    _id = id;
-
-  }
-  String? get name => _name;
+      {required this.name,
+      required this.island,
+      required this.city,
+      required this.endereco,
+      required this.phone,
+      required this.id});
+  /* String? get name => _name;
   String? get island => _island;
   String? get city => _city;
   String? get endereco => _endereco;
@@ -34,26 +25,25 @@ class Location{
   set Endereco(String val) => _endereco = val;
   set Phone(String val) => _phone = val;
   set Id(int val) => _id = val;
+*/
 
-
-  Location.fromJson( dynamic jsonData) {
-
-      id: jsonData['id'];
-      name: jsonData['name'];
-      island: jsonData['island'];
-      city: jsonData['city'];
-      endereco: jsonData['endereco'];
-       phone: jsonData['phone'];
-
+  factory Location.fromJson(Map<String, dynamic> json) {
+    return Location(
+      id: json['id'],
+      name: json['name'],
+      island: json['island'],
+      city: json['city'],
+      endereco: json['endereco'],
+      phone: json['phone'],
+    );
   }
   static Map<String, dynamic> toMap(Location item) => {
         'id': item.id,
-        'name':item.name,
-        'island':item.island,
-        'city':item.city,
-        'endereco':item.endereco,
-        'phone':item.phone,
-
+        'name': item.name,
+        'island': item.island,
+        'city': item.city,
+        'endereco': item.endereco,
+        'phone': item.phone,
       };
 
   static String encode(List<Location> items) => json.encode(

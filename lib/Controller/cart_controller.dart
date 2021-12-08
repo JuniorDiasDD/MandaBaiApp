@@ -90,7 +90,7 @@ class CartPageController extends GetxController {
       for (int i = 0; i < _list.length; i++) {
         if (_list[i].id == id) {
           if (_list[i].amount != 1) {
-            _list[i].Amount = _list[i].amount! - 1;
+            _list[i].amount = _list[i].amount! - 1;
           }
         }
       }
@@ -101,7 +101,7 @@ class CartPageController extends GetxController {
     if (!_list.isEmpty) {
       for (int i = 0; i < _list.length; i++) {
         if (_list[i].id == id) {
-          _list[i].Amount = _list[i].amount! + 1;
+          _list[i].amount = _list[i].amount! + 1;
         }
       }
     }
@@ -111,7 +111,7 @@ class CartPageController extends GetxController {
     if (!_list.isEmpty) {
       for (int i = 0; i < _list.length; i++) {
         if (_list[i].id == id) {
-          _list[i].Checkout = value;
+          _list[i].checkout = value;
         }
       }
       calcule();

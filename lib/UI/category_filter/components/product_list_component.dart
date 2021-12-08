@@ -60,7 +60,7 @@ class _ProductListComponentState extends State<ProductListComponent> {
                     color: Colors.white,
                     image: DecorationImage(
                       fit: BoxFit.fill,
-                      image: NetworkImage(widget.product.image!),
+                      image: NetworkImage(widget.product.image),
                     ),
                   ),
                 ),
@@ -109,25 +109,24 @@ class _ProductListComponentState extends State<ProductListComponent> {
                                 onPressed: () {
                                   if (widget.product.favorite == false) {
                                     mandaBaiProductController
-                                        .addFavrite(widget.product.id!);
+                                        .addFavrite(widget.product.id);
                                     setState(() {
-                                      widget.product.Favorite =
-                                          !widget.product.favorite!;
+                                      widget.product.favorite =
+                                          !widget.product.favorite;
                                     });
                                   } else {
                                     mandaBaiProductController
-                                        .removeFavrite(widget.product.id!);
+                                        .removeFavrite(widget.product.id);
                                     setState(() {
-                                      widget.product.Favorite =
-                                          !widget.product.favorite!;
+                                      widget.product.favorite =
+                                          !widget.product.favorite;
                                     });
                                   }
                                 },
                                 icon: const Icon(Icons.favorite),
                                 iconSize: Get.width * 0.05,
                                 alignment: Alignment.centerRight,
-                                color: widget.product.favorite!
-                                    ? Colors.red
+                                color: widget.product.favorite                                    ? Colors.red
                                     : Colors.black54,
                               ),
                               IconButton(

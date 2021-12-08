@@ -59,17 +59,17 @@ class _StartPageState extends State<ProfilePage> {
                       return Column(
                         children: [
                           Image.network(
-                            mandaBaiController.user.value.avatar!,
+                            user.avatar,
                             width: Get.width * 0.2,
                             alignment: Alignment.center,
                           ),
                           SizedBox(height: Get.height * 0.03),
                           Text(
-                             mandaBaiController.user.value.name!,
+                             user.name,
                             style: Theme.of(context).textTheme.headline2,
                           ),
                           Text(
-                             mandaBaiController.user.value.email!,
+                             user.email,
                             style: Theme.of(context).textTheme.headline4,
                           ),
                         ],

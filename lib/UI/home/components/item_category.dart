@@ -19,7 +19,7 @@ class _ListViewItemComponentState extends State<ListViewItemComponent> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        mandaBaiProductController.category.value = widget.category;
+       // mandaBaiProductController.category.value = widget.category;
         Navigator.push(
           context,
           MaterialPageRoute(

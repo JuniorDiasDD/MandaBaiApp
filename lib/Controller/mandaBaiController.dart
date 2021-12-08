@@ -2,11 +2,8 @@ import 'dart:convert';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/static_config.dart';
-import 'package:manda_bai/Model/cart_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:manda_bai/Model/favorite.dart';
 import 'package:manda_bai/Model/location.dart';
-import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/Model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,7 +12,7 @@ class MandaBaiController extends GetxController {
   var money = "".obs;
   var language = "".obs;
 
-  var user = User().obs;
+  //var user = User().obs;
   late List<Location> list_location;
   //!Carregar sessão
 
@@ -116,8 +113,8 @@ class MandaBaiController extends GetxController {
     var password = await FlutterSession().get('password');
 
     if (password != null && username != null) {
-      user.value.Username = username.toString();
-      user.value.Senha = password.toString();
+      user.username = username.toString();
+      user.senha = password.toString();
     }
   }
 
@@ -132,12 +129,12 @@ class MandaBaiController extends GetxController {
     // print(response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
-      user.value.Name = jsonResponse["first_name"];
-      user.value.Email = jsonResponse["email"];
-      user.value.Nickname = jsonResponse["last_name"];
-      user.value.Username = jsonResponse["username"];
-      user.value.Avatar = jsonResponse["avatar_url"];
-      user.value.Telefone = jsonResponse["billing"]["phone"];
+      user.name = jsonResponse["first_name"];
+      user.email = jsonResponse["email"];
+      user.nickname = jsonResponse["last_name"];
+      user.username = jsonResponse["username"];
+      user.avatar = jsonResponse["avatar_url"];
+      user.telefone = jsonResponse["billing"]["phone"];
       return true;
     } else if (response.statusCode == 503) {
       print("Erro de serviço");
@@ -174,7 +171,7 @@ class MandaBaiController extends GetxController {
     if (itemLocationString != null) {
       // decode and store data in SharedPreferences
       list_location = Location.decode(itemLocationString);
-      new_location.Id = list_location[list_location.length - 1].id! + 1;
+      new_location.id = list_location[list_location.length - 1].id! + 1;
 
       list_location.add(new_location);
       // Encode and store data in SharedPreferences

@@ -132,7 +132,7 @@ class _CategoryPageState extends State<CategoryPage> {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  mandaBaiProductController.category.value.name.toString(),
+                 ' mandaBaiProductController.category.value.name.toString()',
                   style: Theme.of(context).textTheme.headline1,
                 ),
               ),

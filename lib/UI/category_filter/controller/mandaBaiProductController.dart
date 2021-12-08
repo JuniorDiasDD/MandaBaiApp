@@ -18,14 +18,14 @@ class MandaBaiProductController extends GetxController {
   late List<Favorite> list_favorite;
   final MandaBaiController mandaBaiController = Get.find();
   final CartPageController cartPageController = Get.put(CartPageController());
-  var category = Category().obs;
+ // var category = Category().obs;
   var filter = ''.obs;
   var text_pesquisa = ''.obs;
   //! Load Products
   Future<List<Product>> loadProduct() async {
     List<Product> list_page = [];
     var response = await http
-        .get(Uri.parse(productCategorias + category.value.id.toString()));
+        .get(Uri.parse(productCategorias + 'category.value.id.toString()'));
     //  print(response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
@@ -42,7 +42,7 @@ class MandaBaiProductController extends GetxController {
         }
         for (int i = 1; i < cont; i++) {
           response = await http.get(Uri.parse(productCategorias +
-              category.value.id.toString() +
+              'category.value.id.toString()' +
               "&per_page=100&page=" +
               i.toString()));
           if (response.statusCode == 200) {
@@ -64,7 +64,7 @@ class MandaBaiProductController extends GetxController {
       print("Erro de authentiction");
     }
 
-    if (!list_product.isEmpty) {
+    if (list_product.isNotEmpty) {
       getFavorite();
     }
     return list_product;
@@ -78,7 +78,7 @@ class MandaBaiProductController extends GetxController {
       for (int i = 0; i < list_product.length; i++) {
         for (int f = 0; f < list.length; f++) {
           if (list_product[i].id == list[f].id) {
-            list_product[i].Favorite = true;
+            list_product[i].favorite = true;
           }
         }
       }
@@ -118,9 +118,9 @@ class MandaBaiProductController extends GetxController {
   //? getCart
   Future<List<CartModel>> loadCart() async {
     String basicAuth = 'Basic ' +
-        base64Encode(utf8.encode(mandaBaiController.user.value.username! +
+        base64Encode(utf8.encode(user.username +
             ':' +
-            mandaBaiController.user.value.senha!));
+            user.senha));
     var response = await http.get(Uri.parse(getCart),
         headers: <String, String>{'authorization': basicAuth});
     print(response.body);
@@ -146,9 +146,9 @@ class MandaBaiProductController extends GetxController {
   //! removeItemCart
   Future removeCart(ischeck) async {
     String basicAuth = 'Basic ' +
-        base64Encode(utf8.encode(mandaBaiController.user.value.username! +
+        base64Encode(utf8.encode(user.username +
             ':' +
-            mandaBaiController.user.value.senha!));
+            user.senha));
 
     if (ischeck == true) {
       for (int i = 0; i < cartPageController.list.length; i++) {
@@ -201,9 +201,9 @@ class MandaBaiProductController extends GetxController {
   //? addCart
   Future addCart(item) async {
     String basicAuth = 'Basic ' +
-        base64Encode(utf8.encode(mandaBaiController.user.value.username! +
+        base64Encode(utf8.encode(user.username +
             ':' +
-            mandaBaiController.user.value.senha!));
+            user.senha));
     var response = await http.post(Uri.parse(addItemCart),
         headers: <String, String>{'authorization': basicAuth},
         body: {'id': item.toString(), 'quantity': "1"});

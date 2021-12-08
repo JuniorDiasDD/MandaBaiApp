@@ -27,16 +27,11 @@ class CategoryRequestResponse {
 }
 
 class Category {
-  int? _id, _count;
-  String? _name, _image;
+  int id, count;
+  String name, image;
 
-  Category({int? id, int? count, String? name, String? image}) {
-    _id = id;
-    _count = count;
-    _name = name;
-    _image = image;
-  }
-  int? get id => _id;
+  Category({required this.id, required this.count, required this.name, required this.image});
+/* int? get id => _id;
   int? get count => _count;
   String? get name => _name;
   String? get image => _image;
@@ -54,13 +49,13 @@ class Category {
     json['count'];
     _image:
     json['image'] != null ? json['image']['src'] : json['image'].toString();
-  }
- /* factory Category.fromJson(Map<String, dynamic> json) {
+  }*/
+ factory Category.fromJson(Map<String, dynamic> json) {
     return Category(
       name: json['name'],
       id: json['id'],
       count: json['count'],
       image:  json['image'] != null ? json['image']['src'] : json['image'].toString(),
     );
-  }*/
+  }
 }

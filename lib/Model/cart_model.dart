@@ -1,29 +1,33 @@
 import 'dart:ffi';
 
 class CartModel {
-  String? _name, _image, _item_key;
-  double? _price;
-  int? _amount;
-  int? _id;
-  bool? _checkout;
+  String name, image, item_key;
+  double price;
+  int amount;
+  int id;
+  bool checkout;
 
   CartModel({
-    String? name,
-    String? image,
-    String? item_key,
-    double? price,
-    int? id,
-    int? amount,
-    bool? checkout,
-  }) {
-    _name = name;
-    _item_key = item_key;
-    _price = price;
-    _id = id;
-    _amount = amount;
-    _checkout = checkout;
+    required this.name,
+    required this.image,
+    required this.item_key,
+    required this.price,
+    required this.id,
+    required this.amount,
+    required this.checkout,
+  });
+  factory CartModel.fromJson(Map<String, dynamic> json) {
+    return CartModel(
+      name: json['name'],
+      id: json['id'],
+      item_key: json['item_key'],
+      amount: json['quantity']['value'],
+      price: double.parse(json['price']),
+      image: json['featured_image'].toString(),
+      checkout: false,
+    );
   }
-  String? get name => _name;
+  /* String? get name => _name;
   String? get image => _image;
   String? get item_key => _item_key;
   double? get price => _price;
@@ -54,5 +58,6 @@ class CartModel {
     json['featured_image'].toString();
     checkout:
     false;
-  }
+  }*/
+
 }
