@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactPage extends StatefulWidget {
   const ContactPage({Key? key}) : super(key: key);
@@ -13,6 +14,20 @@ class ContactPage extends StatefulWidget {
 }
 
 class _ContactPageState extends State<ContactPage> {
+  openwhatsapp() async {
+    var whatsapp = "+2389724140";
+    var whatsappURl_android =
+        "whatsapp://send?phone=" + whatsapp + "&text=hello";
+    var whatappURL_ios = "https://wa.me/$whatsapp?text=${Uri.parse("hello")}";
+
+    if (await canLaunch(whatsappURl_android)) {
+      await launch(whatsappURl_android);
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: new Text("whatsapp no installed")));
+    }
+  }
+
   final input_nome = TextEditingController();
   final input_email = TextEditingController();
   final input_assunto = TextEditingController();
@@ -162,7 +177,7 @@ class _ContactPageState extends State<ContactPage> {
                   Container(
                     height: Get.height * 0.07,
                     width: Get.width * 0.7,
-                    decoration:  BoxDecoration(
+                    decoration: BoxDecoration(
                       color: AppColors.greenColor,
                       borderRadius: BorderRadius.all(
                         Radius.circular(15),
@@ -192,7 +207,7 @@ class _ContactPageState extends State<ContactPage> {
                   Container(
                     height: Get.height * 0.07,
                     width: Get.width * 0.7,
-                    decoration:  BoxDecoration(
+                    decoration: BoxDecoration(
                       color: AppColors.greenColor,
                       borderRadius: BorderRadius.all(
                         Radius.circular(15),
@@ -224,7 +239,9 @@ class _ContactPageState extends State<ContactPage> {
                                 fontSize: Get.width * 0.035,
                                 color: Colors.white),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            openwhatsapp();
+                          },
                         ),
                       ],
                     ),
