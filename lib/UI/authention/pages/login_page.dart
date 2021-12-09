@@ -7,6 +7,7 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/authention/pages/recovery_password_page.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
 
 class LoginPage extends StatefulWidget {
@@ -18,7 +19,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  bool statePassword = true;
   final input_username = TextEditingController();
   final input_senha = TextEditingController();
 
@@ -29,7 +30,16 @@ class _LoginPageState extends State<LoginPage> {
           await ServiceRequest.login(input_username.text, input_senha.text);
       if (check == true) {
         Navigator.pushReplacementNamed(context, '/home');
-      } else {}
+      } else {
+        return showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Pop_up_Message(
+                  mensagem: "Credências Inválidos",
+                  icon: Icons.error,
+                  caminho: "erro");
+            });
+      }
 
       //print('Form is valid');
     } else {
@@ -111,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(height: Get.height * 0.01),
                       TextFormField(
                         controller: input_senha,
-                        obscureText: true,
+                        obscureText: statePassword,
                         style: Theme.of(context).textTheme.headline4,
                         decoration: InputDecoration(
                           filled: true,
@@ -126,6 +136,18 @@ class _LoginPageState extends State<LoginPage> {
                               Icons.lock,
                               color: Colors.grey,
                             ), // icon is 48px widget.
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                statePassword = !statePassword;
+                              });
+                            },
+                            icon: Icon(
+                              statePassword
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
                           ),
                           labelText: 'Palavra-passe',
                           labelStyle: Theme.of(context).textTheme.headline4,
@@ -147,10 +169,12 @@ class _LoginPageState extends State<LoginPage> {
                                   builder: (context) => RecoveryPassword()),
                             );
                           },
-                          child:  Text(
+                          child: Text(
                             'Esqueceu sua senha?',
-                              style: Theme.of(context).textTheme.headline4!.copyWith(fontStyle: FontStyle.italic),
-
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline4!
+                                .copyWith(fontStyle: FontStyle.italic),
                           ),
                         ),
                       ),
@@ -226,7 +250,6 @@ class _LoginPageState extends State<LoginPage> {
                                 child: new Container(
                                   width: Get.width * 0.4,
                                   child: Divider(
-
                                     height: 36,
                                   ),
                                 ),
@@ -236,16 +259,15 @@ class _LoginPageState extends State<LoginPage> {
                                   left: Get.width * 0.05,
                                   right: Get.width * 0.05,
                                 ),
-                                child: Text("ou",
-                                    style: Theme.of(context).textTheme.headline2,
-
+                                child: Text(
+                                  "ou",
+                                  style: Theme.of(context).textTheme.headline2,
                                 ),
                               ),
                               Expanded(
                                 child: Container(
                                   width: Get.width * 0.4,
                                   child: const Divider(
-
                                     height: 36,
                                   ),
                                 ),

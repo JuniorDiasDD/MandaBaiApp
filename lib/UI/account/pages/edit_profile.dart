@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 
 class EditPorfilePage extends StatefulWidget {
   @override
@@ -17,12 +19,15 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
   final input_senha = TextEditingController();
   final input_senha_conf = TextEditingController();
   final input_nome = TextEditingController();
-  bool checkPassword = true;
+  bool statePassword = true;
+  bool statePasswordconf = true;
+  bool checkPassword = true, alterado = false;
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
       if (input_senha.text != user.senha) {
         if (input_senha == input_senha_conf) {
+          alterado = true;
           user.senha = input_senha.text;
           if (input_email.text != user.email) {
             user.email = input_email.text;
@@ -56,9 +61,28 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
         }
       }
       if (checkPassword == true) {
-        Navigator.pop(context);
+        bool check = await ServiceRequest.updateAccount();
+        if (check) {
+          return showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Pop_up_Message(
+                    mensagem: "Atualizado com sucesso",
+                    icon: Icons.check,
+                    caminho: "atualizar");
+              });
+        } else {
+          return showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Pop_up_Message(
+                    mensagem: "Falha na Atualização",
+                    icon: Icons.error,
+                    caminho: "erro");
+              });
+        }
       }
-      print('Form is valid');
+      // print('Form is valid');
     } else {
       print('Form is invalid');
     }
@@ -182,13 +206,11 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                         labelText: 'Telefone',
                         labelStyle: Theme.of(context).textTheme.headline4,
                       ),
-                      validator: (value) =>
-                          value!.isEmpty ? 'Insira o Número' : null,
                     ),
                     SizedBox(height: Get.height * 0.01),
                     TextFormField(
                       controller: input_senha,
-                      obscureText: true,
+                      obscureText: statePassword,
                       style: Theme.of(context).textTheme.headline4,
                       decoration: InputDecoration(
                         filled: true,
@@ -197,12 +219,25 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                           borderRadius: new BorderRadius.circular(15.0),
                           borderSide: new BorderSide(),
                         ),
-                        prefixIcon: Padding(
+                        prefixIcon: const Padding(
                           padding: EdgeInsets.all(0.0),
                           child: Icon(
                             Icons.lock,
                             color: Colors.grey,
                           ), // icon is 48px widget.
+                        ),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              statePassword = !statePassword;
+                            });
+                          },
+                          icon: Icon(
+                            statePassword
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Colors.grey,
+                          ),
                         ),
                         labelText: 'Palavra-passe',
                         labelStyle: Theme.of(context).textTheme.headline4,
@@ -213,7 +248,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                     SizedBox(height: Get.height * 0.01),
                     TextFormField(
                       controller: input_senha_conf,
-                      obscureText: true,
+                      obscureText: statePasswordconf,
                       style: Theme.of(context).textTheme.headline4,
                       decoration: InputDecoration(
                         errorText: checkPassword == false
@@ -231,6 +266,19 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                             Icons.lock,
                             color: Colors.grey,
                           ), // icon is 48px widget.
+                        ),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              statePasswordconf = !statePasswordconf;
+                            });
+                          },
+                          icon: Icon(
+                            statePasswordconf
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Colors.grey,
+                          ),
                         ),
                         labelText: 'Palavra-passe confirmar',
                         labelStyle: Theme.of(context).textTheme.headline4,

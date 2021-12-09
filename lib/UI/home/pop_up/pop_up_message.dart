@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
+import 'package:manda_bai/UI/home/pages/home_page.dart';
 
 class Pop_up_Message extends StatefulWidget {
   String mensagem;
   String caminho;
   IconData icon;
   Pop_up_Message(
-      {Key? key, required this.mensagem, required this.icon, required this.caminho}) : super(key: key);
+      {Key? key,
+      required this.mensagem,
+      required this.icon,
+      required this.caminho})
+      : super(key: key);
 
   @override
   _Pop_up_MessageState createState() => _Pop_up_MessageState();
@@ -37,7 +42,7 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
                 ),
                 child: Icon(
                   widget.icon,
-                  color: widget.caminho!="erro" ? Colors.green : Colors.red,
+                  color: widget.caminho != "erro" ? Colors.green : Colors.red,
                   size: Get.height * 0.09,
                 ),
               ),
@@ -50,7 +55,7 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
               Container(
                 height: Get.height * 0.07,
                 width: Get.width * 0.3,
-                decoration:  BoxDecoration(
+                decoration: BoxDecoration(
                   color: AppColors.greenColor,
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
@@ -60,7 +65,7 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
                       color: Theme.of(context).cardColor,
                       blurRadius: 2.0,
                       spreadRadius: 0.0,
-                      offset: Offset(2.0, 2.0), 
+                      offset: Offset(2.0, 2.0),
                     ),
                   ],
                 ),
@@ -77,6 +82,11 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
                         Navigator.pushReplacementNamed(context, '/home');
                       } else if (widget.caminho == "erro") {
                         Navigator.pop(context);
+                      } else if (widget.caminho == "atualizar") {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomePage(index: 3)));
                       }
                     }),
               ),

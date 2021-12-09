@@ -13,7 +13,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ServiceRequest {
   // ! Load Category
   static Future<List<Category>> loadCategory() async {
-    
     List<Category> list = [];
     List<Category> list_final = [];
     var response = await http.get(Uri.parse(categorias));
@@ -147,6 +146,63 @@ class ServiceRequest {
     }
   }
 
+  //! registar
+  static Future updateAccount() async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+
+    var data = json.encode({
+      "email": user.email,
+      "first_name": user.name,
+      "last_name": user.nickname,
+      "password": user.senha,
+      "billing": {
+        "first_name": user.name,
+        "last_name": user.nickname,
+        "company": "",
+        "address_1": "",
+        "address_2": "",
+        "city": "",
+        "state": "",
+        "postcode": "",
+        "country": "",
+        "email": user.email,
+        "phone": user.telefone,
+      },
+      "shipping": {
+        "first_name": "",
+        "last_name": "",
+        "company": "",
+        "address_1": "",
+        "address_2": "",
+        "city": "",
+        "state": "",
+        "postcode": "",
+        "country": ""
+      }
+    });
+    var id = await FlutterSession().get('id');
+    var response = await http.put(
+        Uri.parse(updateUser + id.toString() + "?" + key),
+        headers: headers,
+        body: data);
+
+    //  print(response.body);
+    if (response.statusCode == 200) {
+      /* final jsonResponse = json.decode(response.body);
+      var session = FlutterSession();
+      await session.set('id', jsonResponse["id"]);*/
+      return true;
+    } else if (response.statusCode == 503) {
+      print("Erro de serviço");
+      return false;
+    } else {
+      print("Erro de authentiction");
+      return false;
+    }
+  }
+
   //! Login
   static Future login(username, password) async {
     var response = await http.post(Uri.parse(request_login),
@@ -159,7 +215,7 @@ class ServiceRequest {
       await session.set('username', username);
       await session.set('password', password);
 
-    // print(jsonResponse["ID"]);
+      // print(jsonResponse["ID"]);
       GetUser();
       return true;
     } else if (response.statusCode == 503) {

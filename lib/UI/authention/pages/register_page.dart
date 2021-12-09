@@ -25,6 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final input_username = TextEditingController();
   final input_senha = TextEditingController();
   final input_nome = TextEditingController();
+    bool statePassword = false;
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
@@ -115,7 +116,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             obscureText: false,
                             style: Theme.of(context).textTheme.headline4,
                             decoration: InputDecoration(
-                              filled: false,
+                              filled: true,
                               fillColor: Theme.of(context).backgroundColor,
                               border: OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(15.0),
@@ -136,7 +137,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             obscureText: false,
                             style: Theme.of(context).textTheme.headline4,
                             decoration: InputDecoration(
-                              filled: false,
+                              filled: true,
                               fillColor: Theme.of(context).backgroundColor,
                               border: OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(15.0),
@@ -157,7 +158,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       obscureText: false,
                       style: Theme.of(context).textTheme.headline4,
                       decoration: InputDecoration(
-                        filled: false,
+                        filled: true,
                         fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
                           borderRadius: new BorderRadius.circular(15.0),
@@ -182,7 +183,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       obscureText: false,
                       style: Theme.of(context).textTheme.headline4,
                       decoration: InputDecoration(
-                        filled: false,
+                        filled: true,
                         fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
                           borderRadius: new BorderRadius.circular(15.0),
@@ -204,11 +205,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     SizedBox(height: Get.height * 0.01),
                     TextFormField(
                       controller: input_senha,
-                      obscureText: true,
+                      obscureText: statePassword,
                       style: Theme.of(context).textTheme.headline4,
                       decoration: InputDecoration(
-                        filled: false,
-                        fillColor: Theme.of(context).backgroundColor,
+                        filled: true,
+                    fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
                           borderRadius: new BorderRadius.circular(15.0),
                           borderSide: new BorderSide(),
@@ -219,6 +220,18 @@ class _RegisterPageState extends State<RegisterPage> {
                             Icons.lock,
                             color: Colors.grey,
                           ), // icon is 48px widget.
+                        ),
+                         suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              statePassword = !statePassword;
+                            });
+                          },
+                          icon: Icon(
+                            statePassword
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
                         ),
                         labelText: 'Palavra-passe',
                         labelStyle:Theme.of(context).textTheme.headline4,
