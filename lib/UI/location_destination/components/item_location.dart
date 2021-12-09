@@ -5,7 +5,9 @@ import 'package:manda_bai/Model/location.dart';
 
 class ItemLocation extends StatefulWidget {
   Location location;
-  ItemLocation({Key? key, required this.location}) : super(key: key);
+  String route;
+  ItemLocation({Key? key, required this.location, required this.route})
+      : super(key: key);
   @override
   _ItemLocationState createState() => _ItemLocationState();
 }
@@ -46,17 +48,23 @@ class _ItemLocationState extends State<ItemLocation> {
                     widget.location.name,
                     style: Theme.of(context).textTheme.headline2,
                   ),
-                  IconButton(
-                    padding: const EdgeInsets.all(0.0),
-                    onPressed: () {
-                      setState(() {
-                        ServiceRequest.removeLocation(widget.location.id);
-                        Navigator.pushReplacementNamed(context, '/Destination');
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.delete,
-                    ),
+                  SizedBox(
+                    child: widget.route == "checkout"
+                        ? null
+                        : IconButton(
+                            padding: const EdgeInsets.all(0.0),
+                            onPressed: () {
+                              setState(() {
+                                ServiceRequest.removeLocation(
+                                    widget.location.id);
+                                Navigator.pushReplacementNamed(
+                                    context, '/Destination');
+                              });
+                            },
+                            icon: const Icon(
+                              Icons.delete,
+                            ),
+                          ),
                   ),
                 ],
               ),

@@ -27,7 +27,6 @@ class _StartPageState extends State<CartPage> {
     if (list_cart.isEmpty) {
       list_cart = await ServiceRequest.loadCart();
       if (list_cart.isEmpty) {
-        print("entrou");
         return null;
       } else {
         setState(() {
@@ -82,7 +81,7 @@ class _StartPageState extends State<CartPage> {
   @override
   void initState() {
     super.initState();
-    //carregarCart();
+  
     list_cart = [];
     cartPageController.total = 0;
     cartPageController.subTotal = 0;
@@ -389,7 +388,7 @@ class _StartPageState extends State<CartPage> {
                                                 " " + money,
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .headline5,
+                                                    .headline5!.copyWith(fontSize: 20),
                                               );
                                             }
                                           }),

@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ServiceRequest {
   // ! Load Category
   static Future<List<Category>> loadCategory() async {
+    
     List<Category> list = [];
     List<Category> list_final = [];
     var response = await http.get(Uri.parse(categorias));
@@ -158,7 +159,7 @@ class ServiceRequest {
       await session.set('username', username);
       await session.set('password', password);
 
-      //  print(jsonResponse["ID"]);
+    // print(jsonResponse["ID"]);
       GetUser();
       return true;
     } else if (response.statusCode == 503) {

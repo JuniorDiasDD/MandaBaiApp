@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Model/product.dart';
@@ -17,6 +18,29 @@ class _ProductListComponentState extends State<ProductListComponent> {
   bool checkFavorite = false;
   _addCart(id) async {
     bool check = await ServiceRequest.addCart(id);
+  }
+
+  var money;
+  Future _carregarMoney() async {
+    money = await FlutterSession().get('money');
+    switch (money) {
+      case 'EUR':
+        {
+          money = "€";
+          break;
+        }
+        case 'ECV':
+        {
+          money = "\$";
+          break;
+        }
+        case 'USD':
+        {
+          money = "\$";
+          break;
+        }
+    }
+    return money;
   }
 
   @override
@@ -96,15 +120,22 @@ class _ProductListComponentState extends State<ProductListComponent> {
                                 padding: EdgeInsets.only(
                                   left: 2.0,
                                 ),
-                                child: Text(
-                                  '€',
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.headline5,
-                                ),
+                                child: FutureBuilder(
+                                    future: _carregarMoney(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot snapshot) {
+                                      if (snapshot.data == null) {
+                                        return const Text(" ");
+                                      } else {
+                                        return Text(
+                                           money ,
+                                          style:  Theme.of(context).textTheme.headline5,
+                                        );
+                                      }
+                                    }),
                               ),
                             ],
                           ),
-                         
                           Row(
                             children: [
                               IconButton(

@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
+import 'package:manda_bai/Core/app_images.dart';
+import 'package:manda_bai/Model/location.dart';
+import 'package:manda_bai/UI/location_destination/components/item_location.dart';
+import 'package:manda_bai/UI/location_destination/page/new_destination.dart';
 import 'package:readmore/readmore.dart';
 import 'checkout_page_step_3.dart';
 
@@ -16,12 +22,8 @@ class CheckoutPageStep2 extends StatefulWidget {
 
 class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final input_nome = TextEditingController();
-  final input_cidade = TextEditingController();
-  final input_endereco = TextEditingController();
-  final input_tel = TextEditingController();
+
   final input_info = TextEditingController();
-  final input_ilha = TextEditingController();
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
@@ -35,6 +37,24 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
     } else {
       print('Form is invalid');
     }
+  }
+
+  List<Location> list_location = [];
+  Future _carregarLocation() async {
+    if (list_location.isEmpty) {
+      list_location = await ServiceRequest.loadLocation();
+
+      if (list_location.isEmpty) {
+        return null;
+      }
+    }
+    return list_location;
+  }
+
+  String island = "";
+  Future _carregarIsland() async {
+    island = await FlutterSession().get('island');
+    return island;
   }
 
   @override
@@ -99,8 +119,9 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                             ),
                                             Text(
                                               'Instruções',
-                                                style: Theme.of(context).textTheme.headline1,
-
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline1,
                                             ),
                                             IconButton(
                                               icon: Icon(Icons.close),
@@ -123,66 +144,89 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                                   height: Get.height * 0.01),
                                               Text(
                                                 'Informações do Formulário',
-                                                style: Theme.of(context).textTheme.headline2,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline2,
                                               ),
                                               SizedBox(
                                                   height: Get.height * 0.01),
                                               Text(
                                                 'Neste formulário, deverá completar com os dados da pessoa receptora da encomenda (produtos).',
-                                                style: Theme.of(context).textTheme.headline4,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline4,
                                               ),
                                               SizedBox(
                                                   height: Get.height * 0.01),
                                               Text(
                                                 '1º "Nome"',
-
-                                                  style: Theme.of(context).textTheme.headline2,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline2,
                                               ),
                                               Text(
                                                 ' Escreva o Nome da Pessoa que irá receber a encomenda;',
-                                                style: Theme.of(context).textTheme.headline4,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline4,
                                               ),
                                               SizedBox(
                                                   height: Get.height * 0.01),
                                               Text(
                                                 '2º "Cidade"',
-                                                style: Theme.of(context).textTheme.headline2,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline2,
                                               ),
                                               Text(
                                                 'Escreva a Cidade onde reside essa Pessoa acima referida;',
-                                                style: Theme.of(context).textTheme.headline4,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline4,
                                               ),
                                               SizedBox(
                                                   height: Get.height * 0.01),
                                               Text(
                                                 '3º "Endereço"',
-                                                style: Theme.of(context).textTheme.headline2,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline2,
                                               ),
                                               Text(
                                                 'Escreva o Endereço onde deverá ser entregue a encomenda;',
-                                                style: Theme.of(context).textTheme.headline4,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline4,
                                               ),
                                               SizedBox(
                                                   height: Get.height * 0.01),
                                               Text(
                                                 '4º "Telemovel/Telefone"',
-                                                style: Theme.of(context).textTheme.headline2,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline2,
                                               ),
                                               Text(
                                                 'Introduza o Contacto do receptor para podermos lhe contactar.',
-                                                style: Theme.of(context).textTheme.headline4,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline4,
                                               ),
                                               SizedBox(
                                                   height: Get.height * 0.02),
                                               Text(
                                                 'Informação Adicional',
-                                                style: Theme.of(context).textTheme.headline2,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline2,
                                               ),
                                               SizedBox(
                                                   height: Get.height * 0.01),
                                               Text(
                                                 'Neste campo, poderá adicionar qualquer informação extra que deseja informar a Empresa. Exemplo: a data que deseja a ser entregue.',
-                                                style: Theme.of(context).textTheme.headline4,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline4,
                                               ),
                                               SizedBox(
                                                 height: Get.height * 0.02,
@@ -241,95 +285,139 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                         style: Theme.of(context).textTheme.headline1,
                       ),
                       SizedBox(height: Get.height * 0.01),
-                      Text(
-                        "Ilha: " + "Santiago",
-                        style: Theme.of(context).textTheme.headline2,
+                      Row(
+                        children: [
+                          Text(
+                            "Ilha: ",
+                            style: Theme.of(context).textTheme.headline2,
+                          ),
+                          FutureBuilder(
+                              future: _carregarIsland(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot snapshot) {
+                                if (snapshot.data == null) {
+                                  return const Text(" ");
+                                } else {
+                                  return Text(
+                                    island,
+                                    style:
+                                        Theme.of(context).textTheme.headline2,
+                                  );
+                                }
+                              }),
+                        ],
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: Get.height * 0.02),
-                SizedBox(
-                  width: Get.width,
-                  child: TextFormField(
-                    controller: input_nome,
-                    style: Theme.of(context).textTheme.headline4,
-                    decoration: InputDecoration(
-                      labelText: "Nome do destinatário",
-                      labelStyle: Theme.of(context).textTheme.headline4,
-                      filled: true,
-                      fillColor: Theme.of(context).backgroundColor,
-                      border: OutlineInputBorder(
-                        borderRadius: new BorderRadius.circular(15.0),
-                        borderSide:
-                            new BorderSide(color: Colors.red, width: 2.0),
-                      ),
-                    ),
-                    validator: (value) =>
-                        value!.isEmpty ? 'Insira o nome' : null,
-                  ),
-                ),
-                SizedBox(height: Get.height * 0.01),
-                SizedBox(
-                  width: Get.width,
-                  child: TextFormField(
-                    controller: input_cidade,
-                    style: Theme.of(context).textTheme.headline4,
-                    decoration: InputDecoration(
-                      labelText: "Cidade",
-                      labelStyle: Theme.of(context).textTheme.headline4,
-                      filled: true,
-                      fillColor: Theme.of(context).backgroundColor,
-                      border: OutlineInputBorder(
-                        borderRadius: new BorderRadius.circular(15.0),
-                        borderSide: new BorderSide(),
-                      ),
-                    ),
-                    validator: (value) =>
-                        value!.isEmpty ? 'Insira a cidade' : null,
-                  ),
-                ),
-                SizedBox(height: Get.height * 0.01),
-                SizedBox(
-                  width: Get.width,
-                  child: TextFormField(
-                    controller: input_endereco,
-                    style: Theme.of(context).textTheme.headline4,
-                    decoration: InputDecoration(
-                      labelText: "Endereço",
-                      labelStyle: Theme.of(context).textTheme.headline4,
-                      filled: true,
-                      fillColor: Theme.of(context).backgroundColor,
-                      border: OutlineInputBorder(
-                        borderRadius: new BorderRadius.circular(15.0),
-                        borderSide: new BorderSide(),
-                      ),
-                    ),
-                    validator: (value) =>
-                        value!.isEmpty ? 'Insira o Endereço' : null,
-                  ),
-                ),
-                SizedBox(height: Get.height * 0.01),
-                SizedBox(
-                  width: Get.width,
-                  child: TextFormField(
-                    controller: input_tel,
-                    keyboardType: TextInputType.number,
-                    style: Theme.of(context).textTheme.headline4,
-                    decoration: InputDecoration(
-                      labelText: "Telefone ou Telemovel",
-                      labelStyle: Theme.of(context).textTheme.headline4,
-                      filled: true,
-                      fillColor: Theme.of(context).backgroundColor,
-                      border: OutlineInputBorder(
-                        borderRadius: new BorderRadius.circular(15.0),
-                        borderSide: new BorderSide(
-                          color: Colors.red,
-                        ),
-                      ),
-                    ),
-                    validator: (value) =>
-                        value!.isEmpty ? 'Insira o número' : null,
+                Container(
+                  height: Get.height * 0.35,
+                  child: FutureBuilder(
+                    future: _carregarLocation(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return Container(
+                            height: Get.height * 0.2,
+                            width: Get.width,
+                            child: Center(
+                              child: Image.asset(
+                                AppImages.loading,
+                                width: Get.width * 0.2,
+                                height: Get.height * 0.2,
+                                alignment: Alignment.center,
+                              ),
+                            ),
+                          );
+                        default:
+                          if (snapshot.data == null) {
+                            return TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            NewDestination(route: "checkout")));
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Sem localizações de entrega...",
+                                    style:
+                                        Theme.of(context).textTheme.headline3,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Por Favor insera o destino de entrega",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline3,
+                                      ),
+                                      Icon(
+                                        Icons.add,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else {
+                            return Container(
+                              height: Get.height * 0.35,
+                              child: Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: TextButton(
+                                      onPressed: (){
+                                         Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            NewDestination(route: "checkout")));
+                                      },
+                                      child:Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          "Adicionar outro endereço",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline4,
+                                        ),
+                                        Icon(
+                                          Icons.add,
+                                        ),
+                                      ],
+                                    ),
+                                    ),
+                                  ),
+                                  Container(
+                                     height: Get.height * 0.28,
+                                    child: ListView.builder(
+                                      padding: EdgeInsets.only(
+                                        top: 0.0,
+                                        bottom: Get.height * 0.03,
+                                      ),
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: list_location.length,
+                                      itemBuilder: (BuildContext context, index) {
+                                        var list = list_location[index];
+                                        return ItemLocation(
+                                            location: list, route: "checkout");
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                        // }
+                      }
+                    },
                   ),
                 ),
                 SizedBox(height: Get.height * 0.02),

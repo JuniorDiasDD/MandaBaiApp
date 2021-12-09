@@ -147,7 +147,7 @@ class _Destination_PageState extends State<Destination_Page> {
                               itemCount: list_location.length,
                               itemBuilder: (BuildContext context, index) {
                                 var list = list_location[index];
-                                return ItemLocation(location: list);
+                                return ItemLocation(location: list, route: "");
                               },
                             ),
                           );

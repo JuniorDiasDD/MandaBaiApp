@@ -37,7 +37,7 @@ class _ChooseIslandState extends State<ChooseIsland> {
     var child;
     return Scaffold(
       body: Column(
-        //  mainAxisAlignment: MainAxisAlignment.center,
+       
         children: [
           Align(
             alignment: Alignment.bottomLeft,
@@ -85,7 +85,7 @@ class _ChooseIslandState extends State<ChooseIsland> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.0),
               border: Border.all(
-                  color: Colors.black38, style: BorderStyle.solid, width: 0.80),
+                  color: Theme.of(context).indicatorColor, style: BorderStyle.solid, width: 0.80),
             ),
             child: DropdownButton<String>(
               value: dropdownValue,
@@ -94,10 +94,7 @@ class _ChooseIslandState extends State<ChooseIsland> {
               ),
               iconSize: Get.width * 0.05,
               elevation: 16,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: Get.width * 0.04,
-              ),
+              style: Theme.of(context).textTheme.headline4,
               borderRadius: BorderRadius.circular(15.0),
               underline: Container(
                 height: 0,
@@ -113,11 +110,7 @@ class _ChooseIslandState extends State<ChooseIsland> {
                   value: value,
                   child: Text(
                     value,
-                    style: TextStyle(
-                      fontFamily: AppFonts.poppinsRegularFont,
-                      color: Colors.black,
-                      fontSize: Get.width * 0.04,
-                    ),
+                    style: Theme.of(context).textTheme.headline4,
                   ),
                 );
               }).toList(),
@@ -141,9 +134,7 @@ class _ChooseIslandState extends State<ChooseIsland> {
               },
               child: Text(
                 "seguinte >",
-                style: TextStyle(
-                    fontFamily: AppFonts.poppinsRegularFont,
-                    color: AppColors.greenColor),
+                style: Theme.of(context).textTheme.headline5,
               ),
             ),
           ),

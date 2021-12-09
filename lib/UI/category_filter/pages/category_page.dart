@@ -8,7 +8,6 @@ import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/category.dart';
 import 'package:manda_bai/Model/favorite.dart';
 import 'package:manda_bai/Model/product.dart';
-import 'package:manda_bai/UI/home/components/item_category.dart';
 import 'package:manda_bai/UI/home/components/product_list_component.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:websafe_svg/websafe_svg.dart';
@@ -50,7 +49,7 @@ class _CategoryPageState extends State<CategoryPage> {
         Comparator<Product> pesagemComparator =
             (a, b) => a.price.compareTo(b.price);
         list_product.sort(pesagemComparator);
-      }else  if (dropdownValue == "Mais Preço") {
+      } else if (dropdownValue == "Mais Preço") {
         Comparator<Product> pesagemComparator =
             (a, b) => b.price.compareTo(a.price);
         list_product.sort(pesagemComparator);
@@ -85,7 +84,7 @@ class _CategoryPageState extends State<CategoryPage> {
     return list_product;
   }
 
- 
+  
 
   @override
   Widget build(BuildContext context) {
@@ -110,26 +109,26 @@ class _CategoryPageState extends State<CategoryPage> {
                     ),
                   ),
                   SizedBox(
-                    width: Get.width*0.7,
+                    width: Get.width * 0.7,
                     height: 40,
                     child: TextField(
                       cursorColor: AppColors.greenColor,
                       controller: pesquisa,
-                        style: Theme.of(context).textTheme.headline4,
-                      decoration:  InputDecoration(
+                      style: Theme.of(context).textTheme.headline4,
+                      decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(30.0)),
                             borderSide:
                                 BorderSide(color: AppColors.greenColor)),
                         hintText: 'Pesquisar Produto...',
-                          hintStyle: Theme.of(context).textTheme.headline4,
+                        hintStyle: Theme.of(context).textTheme.headline4,
                         contentPadding: EdgeInsets.only(top: 10, left: 15),
                         suffixIcon: Icon(
                           Icons.search,
                           color: AppColors.greenColor,
                         ),
-                       filled: true,
+                        filled: true,
                         fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
@@ -156,7 +155,8 @@ class _CategoryPageState extends State<CategoryPage> {
                       ),
 
                       isExpanded: true,
-                      underline: DropdownButtonHideUnderline(child: Container()),
+                      underline:
+                          DropdownButtonHideUnderline(child: Container()),
                       items: list_filter.map((val) {
                         return DropdownMenuItem(
                           value: val,

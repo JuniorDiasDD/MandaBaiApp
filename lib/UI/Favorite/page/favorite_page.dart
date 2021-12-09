@@ -69,7 +69,9 @@ class _FavoritePageState extends State<FavoritePage> {
                   child: Container(
                     width: Get.width * 0.4,
                     height: Get.width * 0.1,
-                    margin:EdgeInsets.only(right:Get.width*0.02,),
+                    margin: EdgeInsets.only(
+                      right: Get.width * 0.02,
+                    ),
                     child: TextField(
                       cursorColor: AppColors.greenColor,
                       controller: pesquisa,
@@ -104,7 +106,23 @@ class _FavoritePageState extends State<FavoritePage> {
                 FutureBuilder(
                   future: _carregar(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (!snapshot.hasData) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return Container(
+                          height: Get.height * 0.2,
+                          width: Get.width,
+                          child: Center(
+                            child: Image.asset(
+                              AppImages.loading,
+                              width: Get.width * 0.2,
+                              height: Get.height * 0.2,
+                              alignment: Alignment.center,
+                            ),
+                          ),
+                        );
+                      default:
+                      
+                   /* if (!snapshot.hasData) {
                       return Container(
                         height: Get.height * 0.2,
                         width: Get.width,
@@ -117,31 +135,24 @@ class _FavoritePageState extends State<FavoritePage> {
                           ),
                         ),
                       );
-                    } else {
+                    } else {*/
                       if (snapshot.data == null) {
                         return Container(
-                          height: Get.height * 0.85,
+                          height: Get.height * 0.5,
                           width: Get.width,
-                          child: Column(children: [
-                            SizedBox(height: Get.height * 0.08),
-                            Container(
-                              alignment: Alignment.center,
-                              height: Get.height * 0.8,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  WebsafeSvg.asset(AppImages.favorite_empyt),
-                                  SizedBox(height: Get.height * 0.08),
-                                  Text(
-                                    "Sem produto marcado como favorito...",
-                                    style:
-                                        Theme.of(context).textTheme.headline3,
-                                  ),
-                                ],
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              WebsafeSvg.asset(AppImages.favorite_empyt),
+                              SizedBox(height: Get.height * 0.08),
+                              Text(
+                                "Sem produto marcado como favorito...",
+                                style:
+                                    Theme.of(context).textTheme.headline3,
                               ),
-                            ),
-                          ]),
+                            ],
+                          ),
                         );
                       } else {
                         return Container(

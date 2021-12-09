@@ -33,11 +33,24 @@ class _StartPageState extends State<StartPage> {
   ];
 
   Future _carregarCategory() async {
-    if (list_category.isEmpty) {
+    var island_atualizar = await FlutterSession().get('island_atualizar');
+    print(island_atualizar);
+    if (island_atualizar != null && island_atualizar != false) {
       list_category = await ServiceRequest.loadCategory();
 
       if (list_category.isEmpty) {
         return null;
+      }
+      var session = FlutterSession();
+      await session.set('island_atualizar', "false");
+    } else {
+      if (list_category.isEmpty) {
+        // print("entrou");
+        list_category = await ServiceRequest.loadCategory();
+
+        if (list_category.isEmpty) {
+          return null;
+        }
       }
     }
 

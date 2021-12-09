@@ -4,9 +4,11 @@ import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Model/location.dart';
+import 'package:manda_bai/UI/cart/pages/checkout_page_step_2.dart';
 
 class NewDestination extends StatefulWidget {
-  const NewDestination({Key? key}) : super(key: key);
+  String route;
+  NewDestination({Key? key, required this.route}) : super(key: key);
 
   @override
   State<NewDestination> createState() => _NewDestinationState();
@@ -43,7 +45,16 @@ class _NewDestinationState extends State<NewDestination> {
           phone: input_tel.text);
       bool check = await ServiceRequest.addLocation(novo);
       if (check == true) {
-        Navigator.pushReplacementNamed(context, '/Destination');
+        if (widget.route == "checkout") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CheckoutPageStep2(),
+            ),
+          );
+        } else {
+          Navigator.pushReplacementNamed(context, '/Destination');
+        }
       }
       print('Form is valid');
     } else {
