@@ -48,6 +48,7 @@ class _ItemLocationState extends State<ItemLocation> {
                     widget.location.name,
                     style: Theme.of(context).textTheme.headline2,
                   ),
+                  
                   SizedBox(
                     child: widget.route == "checkout"
                         ? null
