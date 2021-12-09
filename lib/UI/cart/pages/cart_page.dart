@@ -413,7 +413,7 @@ class _StartPageState extends State<CartPage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => CheckoutPageStep2(),
+                                      builder: (context) => CheckoutPageStep2(location:null),
                                     ),
                                   );
                                 },

@@ -8,13 +8,16 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/location.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/location_destination/components/item_location.dart';
+import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 import 'package:manda_bai/UI/location_destination/page/new_destination.dart';
 import 'package:readmore/readmore.dart';
 import 'checkout_page_step_3.dart';
 
 class CheckoutPageStep2 extends StatefulWidget {
-  const CheckoutPageStep2({Key? key}) : super(key: key);
+  var location;
+  CheckoutPageStep2({Key? key, required this.location}) : super(key: key);
 
   @override
   _CheckoutPageStep2State createState() => _CheckoutPageStep2State();
@@ -27,13 +30,24 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
+      if (widget.location != null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CheckoutPageStep3(),
+          ),
+        );
+      }else{
+        return showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Pop_up_Message(
+                    mensagem: "Destino de entrega não selecionado",
+                    icon: Icons.error,
+                    caminho: "erro");
+              });
+      }
       print('Form is valid');
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => CheckoutPageStep3(),
-        ),
-      );
     } else {
       print('Form is invalid');
     }
@@ -311,114 +325,153 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                   ),
                 ),
                 Container(
-                  height: Get.height * 0.35,
-                  child: FutureBuilder(
-                    future: _carregarLocation(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.waiting:
-                          return Container(
-                            height: Get.height * 0.2,
-                            width: Get.width,
-                            child: Center(
-                              child: Image.asset(
-                                AppImages.loading,
-                                width: Get.width * 0.2,
-                                height: Get.height * 0.2,
-                                alignment: Alignment.center,
+                  height: Get.height * 0.3,
+                  child: widget.location == null
+                      ? TextButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Destination_Page(route: "checkout")));
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Sem localizações de entrega...",
+                                style: Theme.of(context).textTheme.headline3,
                               ),
-                            ),
-                          );
-                        default:
-                          if (snapshot.data == null) {
-                            return TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            NewDestination(route: "checkout")));
-                              },
-                              child: Column(
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Sem localizações de entrega...",
+                                    "Por Favor insera o destino de entrega",
                                     style:
                                         Theme.of(context).textTheme.headline3,
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "Por Favor insera o destino de entrega",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline3,
-                                      ),
-                                      Icon(
-                                        Icons.add,
-                                      ),
-                                    ],
+                                  Icon(
+                                    Icons.add,
                                   ),
                                 ],
                               ),
-                            );
-                          } else {
-                            return Container(
-                              height: Get.height * 0.35,
-                              child: Column(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.topRight,
-                                    child: TextButton(
-                                      onPressed: (){
-                                         Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            NewDestination(route: "checkout")));
-                                      },
-                                      child:Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          "Adicionar outro endereço",
+                            ],
+                          ),
+                        )
+                      : Padding(
+                          padding: EdgeInsets.all(
+                            Get.width * 0.03,
+                          ),
+                          child: Column(
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Destination_Page(
+                                                  route: "checkout")));
+                                },
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Endereço de Entrega",
+                                      style:
+                                          Theme.of(context).textTheme.headline1,
+                                    ),
+                                    const Spacer(),
+                                    Text(
+                                      "Trocar",
+                                      style:
+                                          Theme.of(context).textTheme.headline3,
+                                    ),
+                                    Icon(
+                                      Icons.add,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).dialogBackgroundColor,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Theme.of(context).cardColor,
+                                      blurRadius: 1.0,
+                                      spreadRadius: 0.0,
+                                      offset: Offset(0.5, 0.5),
+                                    ),
+                                  ],
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        widget.location.name,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline2,
+                                      ),
+                                      SizedBox(
+                                        height: Get.height * 0.01,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.location_on_outlined,
+                                          ),
+                                          Text(
+                                            widget.location.island,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline3,
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: Get.height * 0.01,
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 15.0),
+                                        child: Text(
+                                          widget.location.city +
+                                              ',' +
+                                              widget.location.endereco,
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline4,
                                         ),
-                                        Icon(
-                                          Icons.add,
-                                        ),
-                                      ],
-                                    ),
-                                    ),
-                                  ),
-                                  Container(
-                                     height: Get.height * 0.28,
-                                    child: ListView.builder(
-                                      padding: EdgeInsets.only(
-                                        top: 0.0,
-                                        bottom: Get.height * 0.03,
                                       ),
-                                      scrollDirection: Axis.vertical,
-                                      itemCount: list_location.length,
-                                      itemBuilder: (BuildContext context, index) {
-                                        var list = list_location[index];
-                                        return ItemLocation(
-                                            location: list, route: "checkout");
-                                      },
-                                    ),
+                                      SizedBox(
+                                        height: Get.height * 0.01,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.phone,
+                                          ),
+                                          Text(
+                                            widget.location.phone,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline4,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
-                            );
-                          }
-                        // }
-                      }
-                    },
-                  ),
+                            ],
+                          ),
+                        ),
                 ),
                 SizedBox(height: Get.height * 0.02),
                 Align(
@@ -445,18 +498,26 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                     keyboardType: TextInputType.text,
                     style: Theme.of(context).textTheme.headline4,
                     decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Theme.of(context).backgroundColor,
                       contentPadding:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
-                        borderSide: BorderSide(width: 2, color: Colors.black54),
+                        borderSide: BorderSide(
+                          width: 2,
+                          color: Theme.of(context).backgroundColor,
+                        ),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 2, color: Colors.black54),
+                        borderSide: BorderSide(
+                          width: 2,
+                          color: Theme.of(context).backgroundColor,
+                        ),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       hintText: 'escrever...',
-                      labelStyle: Theme.of(context).textTheme.headline4,
+                      hintStyle: Theme.of(context).textTheme.headline4,
                     ),
                   ),
                 ),

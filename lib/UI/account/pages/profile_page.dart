@@ -482,7 +482,7 @@ class _StartPageState extends State<ProfilePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Destination_Page(),
+                              builder: (context) => Destination_Page(route:""),
                             ),
                           );
                         },

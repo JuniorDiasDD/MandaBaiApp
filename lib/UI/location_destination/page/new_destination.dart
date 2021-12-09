@@ -5,6 +5,7 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Model/location.dart';
 import 'package:manda_bai/UI/cart/pages/checkout_page_step_2.dart';
+import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 
 class NewDestination extends StatefulWidget {
   String route;
@@ -45,16 +46,10 @@ class _NewDestinationState extends State<NewDestination> {
           phone: input_tel.text);
       bool check = await ServiceRequest.addLocation(novo);
       if (check == true) {
-        if (widget.route == "checkout") {
-          Navigator.push(
+        Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => CheckoutPageStep2(),
-            ),
-          );
-        } else {
-          Navigator.pushReplacementNamed(context, '/Destination');
-        }
+                builder: (context) => Destination_Page(route: widget.route)));
       }
       print('Form is valid');
     } else {
@@ -77,7 +72,11 @@ class _NewDestinationState extends State<NewDestination> {
                 Container(
                   child: IconButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Destination_Page(route: widget.route)));
                     },
                     icon: const Icon(
                       Icons.arrow_back,

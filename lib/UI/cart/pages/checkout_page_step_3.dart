@@ -53,16 +53,13 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                         },
                         icon: const Icon(
                           Icons.arrow_back,
-                          
                         ),
                         alignment: Alignment.centerRight,
                       ),
                     ),
                     Text(
                       'Checkout',
-                      style: TextStyle(
-                          fontFamily: AppFonts.poppinsBoldFont,
-                          fontSize: Get.width * 0.05),
+                      style: Theme.of(context).textTheme.headline1,
                     ),
                     IconButton(
                       padding: const EdgeInsets.all(0.0),
@@ -78,7 +75,8 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                   height: Get.height * 0.3,
                                   margin: EdgeInsets.only(left: 20, right: 20),
                                   decoration: BoxDecoration(
-                                    color:Theme.of(context).scaffoldBackgroundColor,
+                                    color: Theme.of(context)
+                                        .scaffoldBackgroundColor,
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: SingleChildScrollView(
@@ -95,7 +93,9 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                             ),
                                             Text(
                                               'Instruções',
-                                              style: Theme.of(context).textTheme.headline1,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline1,
                                             ),
                                             IconButton(
                                               icon: Icon(Icons.close),
@@ -114,16 +114,21 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.stretch,
                                             children: [
-                                              SizedBox(height: Get.height * 0.01),
+                                              SizedBox(
+                                                  height: Get.height * 0.01),
                                               Text(
                                                 'Pagamento',
-                                                style: Theme.of(context).textTheme.headline2,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline2,
                                               ),
                                               SizedBox(
                                                   height: Get.height * 0.01),
                                               Text(
                                                 'Caso tiver um Cuppon de Desconto, clica na caixinha "Tenho um desconto", a seguir, introduza o código do desconto.',
-                                                style: Theme.of(context).textTheme.headline4,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline4,
                                               ),
                                             ],
                                           ),
@@ -150,9 +155,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                   alignment: Alignment.topLeft,
                   child: Text(
                     "Pagamento",
-                    style: TextStyle(
-                        fontFamily: AppFonts.poppinsBoldFont,
-                        fontSize: Get.width * 0.045),
+                    style: Theme.of(context).textTheme.headline1,
                   ),
                 ),
                 Row(
@@ -169,10 +172,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                     ),
                     Text(
                       "Tenho um desconto",
-                      style: TextStyle(
-                        fontFamily: AppFonts.poppinsRegularFont,
-                        fontSize: Get.width * 0.035,
-                      ),
+                      style:Theme.of(context).textTheme.headline6,
                     ),
                   ],
                 ),
@@ -184,10 +184,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                               alignment: Alignment.topLeft,
                               child: Text(
                                 "Codigo de Desconto",
-                                style: TextStyle(
-                                  fontFamily: AppFonts.poppinsRegularFont,
-                                  fontSize: Get.width * 0.035,
-                                ),
+                                style: Theme.of(context).textTheme.headline2,
                               ),
                             ),
                             SizedBox(
@@ -195,12 +192,10 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                             ),
                             TextFormField(
                               controller: input_codigo,
-                              style: TextStyle(
-                                fontFamily: AppFonts.poppinsRegularFont,
-                              ),
+                              style: Theme.of(context).textTheme.headline4,
                               decoration: InputDecoration(
-                                filled: false,
-                                fillColor: Colors.white,
+                               filled: true,
+                    fillColor: Theme.of(context).backgroundColor,
                                 border: OutlineInputBorder(
                                   borderRadius: new BorderRadius.circular(15.0),
                                   borderSide: new BorderSide(),
@@ -217,7 +212,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                         )
                       : Container(),
                 ),
-                  Container(
+                Container(
                   height: Get.height * 0.3,
                   child: ListView(
                     padding: EdgeInsets.all(0.0),
@@ -233,9 +228,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                 padding: const EdgeInsets.only(left: 10.0),
                                 child: Text(
                                   "Credit Card",
-                                  style: TextStyle(
-                                    fontFamily: AppFonts.poppinsBoldFont,
-                                  ),
+                                  style: Theme.of(context).textTheme.headline4,
                                 ),
                               )
                             ],
@@ -263,9 +256,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                 padding: const EdgeInsets.only(left: 10.0),
                                 child: Text(
                                   "PayPal",
-                                  style: TextStyle(
-                                    fontFamily: AppFonts.poppinsBoldFont,
-                                  ),
+                                  style: Theme.of(context).textTheme.headline4,
                                 ),
                               )
                             ],
@@ -293,9 +284,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                 padding: const EdgeInsets.only(left: 10.0),
                                 child: Text(
                                   "iDEAL",
-                                  style: TextStyle(
-                                    fontFamily: AppFonts.poppinsBoldFont,
-                                  ),
+                                  style: Theme.of(context).textTheme.headline4,
                                 ),
                               )
                             ],
@@ -323,9 +312,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                 padding: const EdgeInsets.only(left: 10.0),
                                 child: Text(
                                   "KBC/CBC Payment Button",
-                                  style: TextStyle(
-                                    fontFamily: AppFonts.poppinsBoldFont,
-                                  ),
+                                  style: Theme.of(context).textTheme.headline4,
                                 ),
                               )
                             ],
@@ -353,9 +340,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                 padding: const EdgeInsets.only(left: 10.0),
                                 child: Text(
                                   "Giropay",
-                                  style: TextStyle(
-                                    fontFamily: AppFonts.poppinsBoldFont,
-                                  ),
+                                  style:Theme.of(context).textTheme.headline4,
                                 ),
                               )
                             ],
@@ -383,9 +368,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                 padding: const EdgeInsets.only(left: 10.0),
                                 child: Text(
                                   "SOFORT Banking",
-                                  style: TextStyle(
-                                    fontFamily: AppFonts.poppinsBoldFont,
-                                  ),
+                                  style: Theme.of(context).textTheme.headline4,
                                 ),
                               )
                             ],
@@ -413,9 +396,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                 padding: const EdgeInsets.only(left: 10.0),
                                 child: Text(
                                   "Belfius Direct Net",
-                                  style: TextStyle(
-                                    fontFamily: AppFonts.poppinsBoldFont,
-                                  ),
+                                  style: Theme.of(context).textTheme.headline4,
                                 ),
                               )
                             ],
@@ -443,9 +424,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                 padding: const EdgeInsets.only(left: 10.0),
                                 child: Text(
                                   "Bancontact",
-                                  style: TextStyle(
-                                    fontFamily: AppFonts.poppinsBoldFont,
-                                  ),
+                                  style:Theme.of(context).textTheme.headline4,
                                 ),
                               )
                             ],
@@ -473,9 +452,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                 padding: const EdgeInsets.only(left: 10.0),
                                 child: Text(
                                   "Przelewy24",
-                                  style: TextStyle(
-                                    fontFamily: AppFonts.poppinsBoldFont,
-                                  ),
+                                  style: Theme.of(context).textTheme.headline4,
                                 ),
                               )
                             ],
@@ -500,10 +477,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                   alignment: Alignment.topLeft,
                   child: Text(
                     "Número de Cartão",
-                    style: TextStyle(
-                      fontFamily: AppFonts.poppinsRegularFont,
-                      fontSize: Get.width * 0.035,
-                    ),
+                    style: Theme.of(context).textTheme.headline2,
                   ),
                 ),
                 SizedBox(height: Get.height * 0.01),
@@ -514,8 +488,8 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                     fontFamily: AppFonts.poppinsRegularFont,
                   ),
                   decoration: InputDecoration(
-                    filled: false,
-                    fillColor: Colors.white,
+                    filled: true,
+                    fillColor: Theme.of(context).backgroundColor,
                     border: OutlineInputBorder(
                       borderRadius: new BorderRadius.circular(15.0),
                       borderSide: new BorderSide(),
@@ -533,23 +507,18 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                       children: [
                         Text(
                           "Expiração",
-                          style: TextStyle(
-                            fontFamily: AppFonts.poppinsRegularFont,
-                            fontSize: Get.width * 0.035,
-                          ),
+                          style: Theme.of(context).textTheme.headline2,
                         ),
                         SizedBox(height: Get.height * 0.01),
                         Container(
                           width: Get.width * 0.3,
                           child: TextFormField(
                             controller: input_data_expiracao,
-                             keyboardType: TextInputType.number,
-                            style: TextStyle(
-                              fontFamily: AppFonts.poppinsRegularFont,
-                            ),
+                            keyboardType: TextInputType.number,
+                            style: Theme.of(context).textTheme.headline4,
                             decoration: InputDecoration(
-                              filled: false,
-                              fillColor: Colors.white,
+                             filled: true,
+                          fillColor: Theme.of(context).backgroundColor,
                               border: OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(15.0),
                                 borderSide: new BorderSide(),
@@ -566,23 +535,18 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                       children: [
                         Text(
                           "CVV2",
-                          style: TextStyle(
-                            fontFamily: AppFonts.poppinsRegularFont,
-                            fontSize: Get.width * 0.035,
-                          ),
+                          style: Theme.of(context).textTheme.headline2,
                         ),
                         SizedBox(height: Get.height * 0.01),
                         Container(
                           width: Get.width * 0.3,
                           child: TextFormField(
-                             keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.number,
                             controller: input_ccv,
-                            style: TextStyle(
-                              fontFamily: AppFonts.poppinsRegularFont,
-                            ),
+                            style:Theme.of(context).textTheme.headline4,
                             decoration: InputDecoration(
-                              filled: false,
-                              fillColor: Colors.white,
+                              filled: true,
+                          fillColor: Theme.of(context).backgroundColor,
                               border: OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(15.0),
                                 borderSide: new BorderSide(),
@@ -602,16 +566,11 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                   children: [
                     Text(
                       "Total",
-                      style: TextStyle(
-                          fontFamily: AppFonts.poppinsBoldFont,
-                          fontSize: Get.width * 0.045),
+                      style:Theme.of(context).textTheme.headline5,
                     ),
                     Text(
                       "99",
-                      style: TextStyle(
-                          fontFamily: AppFonts.poppinsBoldFont,
-                          color: AppColors.greenColor,
-                          fontSize: Get.width * 0.045),
+                      style: Theme.of(context).textTheme.headline5,
                     ),
                   ],
                 ),

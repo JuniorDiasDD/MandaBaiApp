@@ -5,11 +5,14 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/location.dart';
+import 'package:manda_bai/UI/cart/pages/checkout_page_step_2.dart';
 import 'package:manda_bai/UI/home/pages/home_page.dart';
 import 'package:manda_bai/UI/location_destination/components/item_location.dart';
+import 'package:manda_bai/UI/location_destination/page/new_destination.dart';
 
 class Destination_Page extends StatefulWidget {
-  const Destination_Page({Key? key}) : super(key: key);
+  String route;
+  Destination_Page({Key? key, required this.route}) : super(key: key);
 
   @override
   _Destination_PageState createState() => _Destination_PageState();
@@ -48,10 +51,22 @@ class _Destination_PageState extends State<Destination_Page> {
                   Container(
                     child: IconButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
+                        if (widget.route == "checkout") {
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HomePage(index: 3)));
+                              builder: (context) =>
+                                  CheckoutPageStep2(location: null),
+                            ),
+                          );
+                        } else {
+                          Navigator.pop(context);
+                        }
+
+                        /* Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomePage(index: 3)));*/
                       },
                       icon: const Icon(
                         Icons.arrow_back,
@@ -66,7 +81,11 @@ class _Destination_PageState extends State<Destination_Page> {
                   IconButton(
                     padding: const EdgeInsets.all(0.0),
                     onPressed: () {
-                      Navigator.pushNamed(context, '/newDestination');
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  NewDestination(route: widget.route)));
                     },
                     icon: const Icon(
                       Icons.add,
@@ -147,7 +166,8 @@ class _Destination_PageState extends State<Destination_Page> {
                               itemCount: list_location.length,
                               itemBuilder: (BuildContext context, index) {
                                 var list = list_location[index];
-                                return ItemLocation(location: list, route: "");
+                                return ItemLocation(
+                                    location: list, route: widget.route);
                               },
                             ),
                           );
