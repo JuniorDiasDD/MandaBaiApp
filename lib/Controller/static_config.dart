@@ -19,6 +19,7 @@ String ver_dados_pessoais = "Dados Pessoais \n Nome: " +
 
 //! Configuração de serviços
 //?links- urls
+const String url_consulta_Dolar="https://economia.awesomeapi.com.br/all/USD-EUR";
 const String url_pricipal="https://www.mandabai.com/wp-json/";
 const String link =url_pricipal+ "wc/v3/";
 const String link_2 = url_pricipal+"cocart/v2/";

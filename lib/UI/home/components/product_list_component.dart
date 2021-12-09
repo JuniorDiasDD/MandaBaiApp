@@ -20,27 +20,11 @@ class _ProductListComponentState extends State<ProductListComponent> {
     bool check = await ServiceRequest.addCart(id);
   }
 
-  var money;
+  var money_txt;
   Future _carregarMoney() async {
-    money = await FlutterSession().get('money');
-    switch (money) {
-      case 'EUR':
-        {
-          money = "€";
-          break;
-        }
-        case 'ECV':
-        {
-          money = "\$";
-          break;
-        }
-        case 'USD':
-        {
-          money = "\$";
-          break;
-        }
-    }
-    return money;
+    money_txt = await FlutterSession().get('money');
+
+    return money_txt;
   }
 
   @override
@@ -109,32 +93,57 @@ class _ProductListComponentState extends State<ProductListComponent> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Row(
-                            children: [
-                              Text(
-                                widget.product.price.toString(),
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.headline5,
+                          SizedBox(
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                left: 2.0,
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: 2.0,
-                                ),
-                                child: FutureBuilder(
-                                    future: _carregarMoney(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot snapshot) {
-                                      if (snapshot.data == null) {
-                                        return const Text(" ");
-                                      } else {
-                                        return Text(
-                                           money ,
-                                          style:  Theme.of(context).textTheme.headline5,
-                                        );
+                              child: FutureBuilder(
+                                  future: _carregarMoney(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot snapshot) {
+                                    if (snapshot.data == null) {
+                                      return const Text(" ");
+                                    } else {
+                                      switch (money_txt) {
+                                        case 'EUR':
+                                          {
+                                            return Text(
+                                              widget.product.price
+                                                      .toStringAsFixed(2) +
+                                                  " €",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline5,
+                                            );
+                                          }
+                                        case 'ECV':
+                                          {
+                                            return Text(
+                                              widget.product.price
+                                                      .toStringAsFixed(0) +
+                                                  " \$",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline5,
+                                            );
+                                          }
+                                        case 'USD':
+                                          {
+                                            return Text(
+                                              "\$ " +
+                                                  widget.product.price
+                                                      .toStringAsFixed(2),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline5,
+                                            );
+                                          }
                                       }
-                                    }),
-                              ),
-                            ],
+                                      return Container();
+                                    }
+                                  }),
+                            ),
                           ),
                           Row(
                             children: [

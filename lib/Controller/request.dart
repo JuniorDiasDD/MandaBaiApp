@@ -498,4 +498,22 @@ class ServiceRequest {
       }
     }
   }
+
+  //! load Dolar
+  static Future loadDolar() async {
+    var response = await http.get(Uri.parse(url_consulta_Dolar));
+
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      String dolar = jsonResponse['USD']['bid'];
+      print(dolar);
+      return dolar;
+    } else if (response.statusCode == 503) {
+      print("Erro de serviço");
+      return false;
+    } else {
+      print("Erro de authentiction");
+      return false;
+    }
+  }
 }

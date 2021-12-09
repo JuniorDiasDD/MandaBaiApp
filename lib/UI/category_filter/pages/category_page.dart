@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
@@ -65,6 +66,7 @@ class _CategoryPageState extends State<CategoryPage> {
       } else {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         final String itemFavortiesString = prefs.getString('itens_favorites');
+        var money = await FlutterSession().get('money');
         if (itemFavortiesString != null) {
           List<Favorite> list = Favorite.decode(itemFavortiesString);
           for (int i = 0; i < list_product.length; i++) {
@@ -75,6 +77,27 @@ class _CategoryPageState extends State<CategoryPage> {
             }
           }
         }
+        var value;
+        if (money == "USD") {
+          value = await ServiceRequest.loadDolar();
+        }
+        for (int m = 0; m < list_product.length; m++) {
+          switch (money) {
+            case 'USD':
+              {
+                if (value != false) {
+                  double dolar = double.parse(value);
+                  list_product[m].price = list_product[m].price / dolar;
+                }
+                break;
+              }
+            case 'ECV':
+              {
+                list_product[m].price = list_product[m].price * 110.87;
+                break;
+              }
+          }
+        }
         if (list_product_full.isEmpty) {
           list_product_full = list_product;
         }
@@ -83,8 +106,6 @@ class _CategoryPageState extends State<CategoryPage> {
 
     return list_product;
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
