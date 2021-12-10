@@ -15,39 +15,34 @@ class _ItemListOrderState extends State<ItemListOrder> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left:20.0,top:5.0,bottom: 5.0,right:20.0),
+      padding: EdgeInsets.only(left: 20.0,right: 20.0),
       child: Container(
         width: Get.width,
-        height: Get.height * 0.1,
-        child: Row(
-          children: [
-            Image.network(
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHpEEl5WrJrxkJS_AXy4xTsa55jmb-zw3iy-W4KHGqZBhrQUSAilwZUHKbcDfgz_BLLDM&usqp=CAU',
-                width: Get.width * 0.2,
-                height: Get.height * 0.2,
-                alignment: Alignment.center),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 children: [
                   Text(
                     widget.items.name,
                     style: Theme.of(context).textTheme.headline2,
                   ),
-                  SizedBox(height: Get.height * 0.01),
-                   Text(
-                    "Quant: "+widget.items.quantity.toString(),
-                    style: Theme.of(context).textTheme.headline4,
-                  ),
+                  const Spacer(),
                   Text(
-                    widget.items.total+"\$",
+                    widget.items.total + "\$",
                     style: Theme.of(context).textTheme.headline5,
                   ),
                 ],
               ),
-            ),
-          ],
+              SizedBox(height: 5.0),
+              Text(
+                "Quant: " + widget.items.quantity.toString(),
+                style: Theme.of(context).textTheme.headline4,
+              ),
+            ],
+          ),
         ),
       ),
     );

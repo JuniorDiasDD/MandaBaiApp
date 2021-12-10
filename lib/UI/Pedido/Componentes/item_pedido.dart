@@ -35,13 +35,27 @@ class _Item_PedidoState extends State<Item_Pedido> {
         ),
         child: ExpansionTile(
           backgroundColor: Theme.of(context).cardColor,
-          title: Text(
-            "Encomenda nº " + widget.order.id.toString(),
-            style: Theme.of(context).textTheme.headline1,
+          title: Row(
+            children: [
+              Image.asset('assets/images/' + widget.order.status + '.png',
+                  width: 30,
+                  height: 30,
+                  alignment: Alignment.center),
+                  
+              Padding(
+                padding: const EdgeInsets.only(left:8.0),
+                child: Text(
+                  "Encomenda nº " + widget.order.id.toString(),
+                  style: Theme.of(context).textTheme.headline1,
+                ),
+              ),
+            ],
           ),
           trailing: Icon(
             Icons.circle,
-            color: widget.order.status=="processing"? Colors.amber: Colors.green,
+            color: widget.order.status == "processing"
+                ? Colors.amber
+                : Colors.green,
             size: 10,
           ),
           children: <Widget>[

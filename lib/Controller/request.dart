@@ -53,7 +53,7 @@ class ServiceRequest {
     List<Product> list = [];
     List<Product> list_page = [];
     var response = await http.get(Uri.parse(productCategorias + id.toString()));
-    //  print(response.body);
+      print(response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       var quantidade = response.headers['x-wp-total'];
@@ -306,13 +306,13 @@ class ServiceRequest {
 
   //! Cart
   //? addCart
-  static Future addCart(item) async {
+  static Future addCart(item, quant) async {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode(user.username + ':' + user.senha));
     var response = await http.post(Uri.parse(addItemCart),
         headers: <String, String>{'authorization': basicAuth},
-        body: {'id': item.toString(), 'quantity': "1"});
-    print(response.body);
+        body: {'id': item.toString(), 'quantity': quant.toString()});
+    print(response.statusCode);
 
     if (response.statusCode == 200) {
       //  final jsonResponse = json.decode(response.body);

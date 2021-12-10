@@ -17,7 +17,7 @@ class ProductListComponent extends StatefulWidget {
 class _ProductListComponentState extends State<ProductListComponent> {
   bool checkFavorite = false;
   _addCart(id) async {
-    bool check = await ServiceRequest.addCart(id);
+    bool check = await ServiceRequest.addCart(id,1);
   }
 
   var money_txt;

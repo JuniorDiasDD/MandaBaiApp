@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_session/flutter_session.dart';
+import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/cart/pages/cart_page.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 
 class ProdutoDetailPage extends StatefulWidget {
   Product product;
@@ -15,6 +18,35 @@ class ProdutoDetailPage extends StatefulWidget {
 
 class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
   int quantidade = 1;
+  _addCart(id) async {
+    bool check = await ServiceRequest.addCart(id, quantidade);
+    if (check) {
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Pop_up_Message(
+                mensagem: "Adicionado no carrinho",
+                icon: Icons.check,
+                caminho: "description");
+          });
+    } else {
+      return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Pop_up_Message(
+                mensagem: "Erro em adicionar",
+                icon: Icons.error,
+                caminho: "erro");
+          });
+    }
+  }
+
+  var money_txt;
+  Future _carregarMoney() async {
+    money_txt = await FlutterSession().get('money');
+
+    return money_txt;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,27 +92,60 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                       ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          right: Get.width * 0.01,
-                        ),
-                        child: Text(
-                          widget.product.price.toString(),
-                          style: Theme.of(context).textTheme.headline5,
-                        ),
-                      ),
-                      Text(
-                        '€',
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                    ],
-                  ),
+                  FutureBuilder(
+                      future: _carregarMoney(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.data == null) {
+                          return const Text(" ");
+                        } else {
+                          switch (money_txt) {
+                            case 'EUR':
+                              {
+                                return Text(
+                                  widget.product.price.toStringAsFixed(2) +
+                                      " €",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline5!
+                                      .copyWith(
+                                        fontSize: Get.width * 0.05,
+                                      ),
+                                );
+                              }
+                            case 'ECV':
+                              {
+                                return Text(
+                                  widget.product.price.toStringAsFixed(0) +
+                                      " \$",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline5!
+                                      .copyWith(
+                                        fontSize: Get.width * 0.05,
+                                      ),
+                                );
+                              }
+                            case 'USD':
+                              {
+                                return Text(
+                                  "\$ " +
+                                      widget.product.price.toStringAsFixed(2),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline5!
+                                      .copyWith(
+                                        fontSize: Get.width * 0.05,
+                                      ),
+                                );
+                              }
+                          }
+                          return Container();
+                        }
+                      }),
                 ],
               ),
             ),
-            Padding(
+            /*   Padding(
               padding: EdgeInsets.only(
                 left: Get.width * 0.03,
                 right: Get.width * 0.04,
@@ -105,7 +170,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                   },
                 ),
               ),
-            ),
+            ),*/
             SizedBox(height: Get.height * 0.06),
             Padding(
               padding: EdgeInsets.only(
@@ -177,7 +242,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
               child: Container(
                 height: Get.height * 0.06,
                 width: Get.width,
-                decoration:  BoxDecoration(
+                decoration: BoxDecoration(
                   color: AppColors.greenColor,
                   borderRadius: BorderRadius.all(
                     Radius.circular(15),
@@ -199,7 +264,9 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                         fontSize: Get.width * 0.035,
                         color: Colors.white),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    _addCart(widget.product.id);
+                  },
                 ),
               ),
             ),
