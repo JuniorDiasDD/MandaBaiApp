@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Controller/cart_controller.dart';
+import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
+import 'package:manda_bai/Model/location.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
 class CheckoutPageStep3 extends StatefulWidget {
-  const CheckoutPageStep3({Key? key}) : super(key: key);
+  Location location;
+  CheckoutPageStep3({Key? key, required this.location}) : super(key: key);
 
   @override
   _CheckoutPageStep3State createState() => _CheckoutPageStep3State();
 }
 
 class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
+  final CartPageController cartPageController = Get.find();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   int val = 1;
   bool isCheckedPromocao = false;
@@ -24,10 +30,40 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
     final FormState? form = _formKey.currentState;
 
     if (form!.validate()) {
+      bool check = await ServiceRequest.createOrder(true, "processing",
+          widget.location, cartPageController.list, cartPageController.total);
+      if (check) {
+        return showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Pop_up_Message(
+                  mensagem: "Encomenda feito com sucesso.\nAcompanha a sua encomenda em 'Meus Pedidos'!",
+                  icon: Icons.check,
+                  caminho: "encomenda");
+            });
+      } else {
+        return showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Pop_up_Message(
+                  mensagem: "Erro em efetuar a encomenda",
+                  icon: Icons.error,
+                  caminho: "erro");
+            });
+      }
       print('Form is valid');
     } else {
       print('Form is invalid');
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    /*  for(int i=0;i<cartPageController.list.length;i++){
+        print(cartPageController.list[i].name);
+    }*/
   }
 
   @override
@@ -172,7 +208,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                     ),
                     Text(
                       "Tenho um desconto",
-                      style:Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.headline6,
                     ),
                   ],
                 ),
@@ -194,8 +230,8 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                               controller: input_codigo,
                               style: Theme.of(context).textTheme.headline4,
                               decoration: InputDecoration(
-                               filled: true,
-                    fillColor: Theme.of(context).backgroundColor,
+                                filled: true,
+                                fillColor: Theme.of(context).backgroundColor,
                                 border: OutlineInputBorder(
                                   borderRadius: new BorderRadius.circular(15.0),
                                   borderSide: new BorderSide(),
@@ -340,7 +376,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                 padding: const EdgeInsets.only(left: 10.0),
                                 child: Text(
                                   "Giropay",
-                                  style:Theme.of(context).textTheme.headline4,
+                                  style: Theme.of(context).textTheme.headline4,
                                 ),
                               )
                             ],
@@ -424,7 +460,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                 padding: const EdgeInsets.only(left: 10.0),
                                 child: Text(
                                   "Bancontact",
-                                  style:Theme.of(context).textTheme.headline4,
+                                  style: Theme.of(context).textTheme.headline4,
                                 ),
                               )
                             ],
@@ -517,8 +553,8 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                             keyboardType: TextInputType.number,
                             style: Theme.of(context).textTheme.headline4,
                             decoration: InputDecoration(
-                             filled: true,
-                          fillColor: Theme.of(context).backgroundColor,
+                              filled: true,
+                              fillColor: Theme.of(context).backgroundColor,
                               border: OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(15.0),
                                 borderSide: new BorderSide(),
@@ -543,10 +579,10 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                           child: TextFormField(
                             keyboardType: TextInputType.number,
                             controller: input_ccv,
-                            style:Theme.of(context).textTheme.headline4,
+                            style: Theme.of(context).textTheme.headline4,
                             decoration: InputDecoration(
                               filled: true,
-                          fillColor: Theme.of(context).backgroundColor,
+                              fillColor: Theme.of(context).backgroundColor,
                               border: OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(15.0),
                                 borderSide: new BorderSide(),
@@ -566,7 +602,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                   children: [
                     Text(
                       "Total",
-                      style:Theme.of(context).textTheme.headline5,
+                      style: Theme.of(context).textTheme.headline5,
                     ),
                     Text(
                       "99",

@@ -112,6 +112,20 @@ class _ItemLocationState extends State<ItemLocation> {
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: Get.height * 0.01,
+                ),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.email,
+                    ),
+                    Text(
+                      widget.location.email,
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

@@ -7,7 +7,9 @@ User user = new User(
     senha: "",
     email: "",
     avatar: "",
-    username: "");
+    username: "",
+    city: "",
+    country: "");
 
 String ver_dados_pessoais = "Dados Pessoais \n Nome: " +
     user.name +
@@ -55,4 +57,4 @@ const String removeItemCart = link_2 + "cart/item/";
 const String addItemCart = link_2 + "cart/add-item";
 
 //!orders
-const String getOrder = link + "orders?"+key;
+const String getOrder = link + "orders?" + key;

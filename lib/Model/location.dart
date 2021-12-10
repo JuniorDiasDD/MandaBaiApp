@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 class Location{
-  String name,island,city,endereco,phone;
+  String name,island,city,endereco,phone,email;
   int id;
-  Location({required this.id,required this.name,required this.island,required this.city,required this.endereco,required this.phone});
+  Location({required this.email,required this.id,required this.name,required this.island,required this.city,required this.endereco,required this.phone});
    factory Location.fromJson(Map<String, dynamic> jsonData) {
     return Location(
       id: jsonData['id'],
@@ -12,6 +12,7 @@ class Location{
       city: jsonData['city'],
       endereco: jsonData['endereco'],
        phone: jsonData['phone'],
+       email: jsonData['email'],
     );
   }
   static Map<String, dynamic> toMap(Location item) => {
@@ -21,6 +22,7 @@ class Location{
         'city':item.city,
         'endereco':item.endereco,
         'phone':item.phone,
+        'email':item.email,
 
       };
 

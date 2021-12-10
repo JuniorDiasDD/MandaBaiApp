@@ -6,17 +6,15 @@ import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
-import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/location.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
-import 'package:manda_bai/UI/location_destination/components/item_location.dart';
 import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
-import 'package:manda_bai/UI/location_destination/page/new_destination.dart';
 import 'package:readmore/readmore.dart';
 import 'checkout_page_step_3.dart';
 
 class CheckoutPageStep2 extends StatefulWidget {
   var location;
+
   CheckoutPageStep2({Key? key, required this.location}) : super(key: key);
 
   @override
@@ -34,18 +32,18 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => CheckoutPageStep3(),
+            builder: (context) => CheckoutPageStep3(location: widget.location),
           ),
         );
-      }else{
+      } else {
         return showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return Pop_up_Message(
-                    mensagem: "Destino de entrega não selecionado",
-                    icon: Icons.error,
-                    caminho: "erro");
-              });
+            context: context,
+            builder: (BuildContext context) {
+              return Pop_up_Message(
+                  mensagem: "Destino de entrega não selecionado",
+                  icon: Icons.error,
+                  caminho: "erro");
+            });
       }
       print('Form is valid');
     } else {
@@ -55,6 +53,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
 
   List<Location> list_location = [];
   Future _carregarLocation() async {
+  
     if (list_location.isEmpty) {
       list_location = await ServiceRequest.loadLocation();
 

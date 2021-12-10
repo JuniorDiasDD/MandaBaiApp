@@ -53,7 +53,7 @@ class ServiceRequest {
     List<Product> list = [];
     List<Product> list_page = [];
     var response = await http.get(Uri.parse(productCategorias + id.toString()));
-      print(response.body);
+    print(response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       var quantidade = response.headers['x-wp-total'];
@@ -239,12 +239,18 @@ class ServiceRequest {
     // print(response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
+
       user.name = jsonResponse["first_name"];
       user.email = jsonResponse["email"];
       user.nickname = jsonResponse["last_name"];
       user.username = jsonResponse["username"];
       user.avatar = jsonResponse["avatar_url"];
       user.telefone = jsonResponse["billing"]["phone"];
+      user.city = jsonResponse["billing"]["city"];
+      user.country = jsonResponse["billing"]["country"];
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final String encodedData = json.encode(User.toMap(user));
+      await prefs.setString('user', encodedData);
       return true;
     } else if (response.statusCode == 503) {
       print("Erro de serviço");
@@ -543,5 +549,101 @@ class ServiceRequest {
       print("Erro de authentiction");
     }
     return list_order;
+  }
+
+  //! registar
+  static Future createOrder(bool pagamento, status, Location location,
+      List<CartModel> listProduct, total) async {
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String userString = prefs.getString('user');
+    var userCache = json.decode(userString);
+    var id = await FlutterSession().get('id');
+    String items = "";
+    for (int i = 0; i < listProduct.length; i++) {
+      if (listProduct.length-1 == i) {
+        items = items +
+            '{' +
+            '"product_id":' +
+            listProduct[i].id.toString() +
+            ',' +
+            '"quantity":' +
+            listProduct[i].amount.toString() +
+            '}';
+      } else {
+        items = items +
+            '{' +
+            '"product_id":' +
+            listProduct[i].id.toString() +
+            ',' +
+            '"quantity":' +
+            listProduct[i].amount.toString() +
+            '},';
+      }
+    }
+   
+    String data ='{'+
+      '"customer_id":'+ id.toString()+','+
+      '"payment_method":"",'+
+      '"payment_method_title": "",'+
+      '"set_paid":"'+ pagamento.toString()+'",'+
+      '"status":"'+ status.toString()+'",'+
+      '"billing": {'+
+        '"first_name":"'+ userCache['name'] +'",'+
+        '"last_name":"'+ userCache['nickname'].toString()+'",'+
+        '"address_1": "",'+
+        '"address_2": "",'+
+        '"city":"'+ userCache['city']+'",'+
+        '"state": "",'+
+        '"postcode": "",'+
+        '"country": "'+userCache['country']+'",'+
+        '"email": "'+userCache['email']+'",'+
+        '"phone": "'+userCache['telefone']+'"'+
+     '},'+
+      '"shipping": {'+
+        '"first_name":"'+ location.name+'",'+
+        '"last_name": "",'+
+        '"address_1":"'+ location.endereco+'",'+
+        '"address_": "",'+
+        '"city":"'+ location.city+'",'
+        '"state": "",'+
+        '"postcode": "",'+
+        '"country":"'+ location.island+'",'+
+        '"email":"'+ location.email+'",'+
+        '"phone": "'+location.phone+'"'+
+     '},'+
+      '"line_items":['+ items+'],'+
+      '"shipping_lines": ['+
+        '{'+
+          '"method_id": "flat_rate",'+
+          '"method_title": "Flat Rate",'+
+          '"total":"'+ total.toString()+'"'+
+       '}'+
+     ']'+
+    '}';
+     var item_json=json.encode(data);
+    var resp = json.decode(item_json);
+    print(resp.toString());
+    print(getOrder);
+    var response =
+        await http.post(Uri.parse(getOrder), headers: headers, body: item_json);
+
+    print(response.statusCode);
+    print(response.body);
+    if (response.statusCode == 201) {
+      /* final jsonResponse = json.decode(response.body);
+      var session = FlutterSession();
+      await session.set('id', jsonResponse["id"]);*/
+      return true;
+    } else if (response.statusCode == 503) {
+      print("Erro de serviço");
+      return false;
+    } else {
+      print("Erro de authentiction");
+      return false;
+    }
+    return false;
   }
 }

@@ -21,6 +21,7 @@ class _NewDestinationState extends State<NewDestination> {
   final input_cidade = TextEditingController();
   final input_endereco = TextEditingController();
   final input_tel = TextEditingController();
+   final input_email = TextEditingController();
 
   String dropdownValue = 'Santiago';
   List<String> list_island = [
@@ -43,7 +44,7 @@ class _NewDestinationState extends State<NewDestination> {
           city: input_cidade.text,
           endereco: input_endereco.text,
           island: dropdownValue,
-          phone: input_tel.text);
+          phone: input_tel.text,email:input_email.text);
       bool check = await ServiceRequest.addLocation(novo);
       if (check == true) {
         Navigator.pushReplacement(
@@ -219,6 +220,27 @@ class _NewDestinationState extends State<NewDestination> {
                         ),
                         validator: (value) =>
                             value!.isEmpty ? 'Insira o Endereço' : null,
+                      ),
+                    ),
+                      SizedBox(height: Get.height * 0.01),
+                    SizedBox(
+                      width: Get.width,
+                      child: TextFormField(
+                        controller: input_email,
+                         keyboardType: TextInputType.emailAddress,
+                        style: Theme.of(context).textTheme.headline4,
+                        decoration: InputDecoration(
+                          labelText: "Email",
+                          labelStyle: Theme.of(context).textTheme.headline4,
+                          filled: true,
+                          fillColor: Theme.of(context).backgroundColor,
+                          border: OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(15.0),
+                            borderSide: new BorderSide(),
+                          ),
+                        ),
+                        validator: (value) =>
+                            value!.isEmpty ? 'Insira o Email' : null,
                       ),
                     ),
                     SizedBox(height: Get.height * 0.01),

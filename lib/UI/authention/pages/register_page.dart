@@ -25,7 +25,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final input_username = TextEditingController();
   final input_senha = TextEditingController();
   final input_nome = TextEditingController();
-    bool statePassword = false;
+  final input_city = TextEditingController();
+  final input_country = TextEditingController();
+  bool statePassword = false;
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
@@ -36,7 +38,9 @@ class _RegisterPageState extends State<RegisterPage> {
           senha: input_senha.text,
           username: input_username.text,
           nickname: input_nickname.text,
-          avatar: "");
+          avatar: "",
+          city: input_city.text,
+          country: input_country.text);
 
       bool check = await ServiceRequest.createAccount(new_user);
       if (check == true) {
@@ -209,7 +213,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       style: Theme.of(context).textTheme.headline4,
                       decoration: InputDecoration(
                         filled: true,
-                    fillColor: Theme.of(context).backgroundColor,
+                        fillColor: Theme.of(context).backgroundColor,
                         border: OutlineInputBorder(
                           borderRadius: new BorderRadius.circular(15.0),
                           borderSide: new BorderSide(),
@@ -221,7 +225,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             color: Colors.grey,
                           ), // icon is 48px widget.
                         ),
-                         suffixIcon: IconButton(
+                        suffixIcon: IconButton(
                           onPressed: () {
                             setState(() {
                               statePassword = !statePassword;
@@ -234,7 +238,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                         labelText: 'Palavra-passe',
-                        labelStyle:Theme.of(context).textTheme.headline4,
+                        labelStyle: Theme.of(context).textTheme.headline4,
                       ),
                       validator: (value) =>
                           value!.isEmpty ? 'Insira a senha' : null,
