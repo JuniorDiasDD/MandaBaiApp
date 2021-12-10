@@ -121,21 +121,6 @@ class _FavoritePageState extends State<FavoritePage> {
                           ),
                         );
                       default:
-                      
-                   /* if (!snapshot.hasData) {
-                      return Container(
-                        height: Get.height * 0.2,
-                        width: Get.width,
-                        child: Center(
-                          child: Image.asset(
-                            AppImages.loading,
-                            width: Get.width * 0.2,
-                            height: Get.height * 0.2,
-                            alignment: Alignment.center,
-                          ),
-                        ),
-                      );
-                    } else {*/
                       if (snapshot.data == null) {
                         return Container(
                           height: Get.height * 0.5,
@@ -157,10 +142,6 @@ class _FavoritePageState extends State<FavoritePage> {
                       } else {
                         return Container(
                           height: Get.height * 0.85,
-                          /* margin: EdgeInsets.only(
-                                          left: Get.width * 0.05,
-                                          right: Get.width * 0.05,
-                                        ),*/
                           child: ListView.builder(
                             padding: EdgeInsets.only(
                               top: 0.0,

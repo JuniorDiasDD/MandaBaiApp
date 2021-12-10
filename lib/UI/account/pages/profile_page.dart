@@ -8,7 +8,7 @@ import 'package:manda_bai/UI/Contact/contact_page.dart';
 import 'package:manda_bai/UI/about/pages/info_page.dart';
 import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 import 'package:manda_bai/UI/account/pages/edit_profile.dart';
-import 'package:manda_bai/UI/Pedido/pedido_page.dart';
+import 'package:manda_bai/UI/Pedido/pages/pedido_page.dart';
 import 'package:manda_bai/UI/home/pop_up/carrega_saldo.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_island.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_moeda.dart';

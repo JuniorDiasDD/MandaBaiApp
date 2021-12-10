@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Model/order.dart';
 import 'package:manda_bai/Model/product.dart';
+import 'package:manda_bai/UI/Pedido/Componentes/item_list_order.dart';
 
 class Item_Pedido extends StatefulWidget {
+  Order order;
+  Item_Pedido({Key? key, required this.order}) : super(key: key);
   @override
   _Item_PedidoState createState() => _Item_PedidoState();
 }
@@ -11,40 +15,33 @@ class _Item_PedidoState extends State<Item_Pedido> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        left: Get.width * 0.02,
-        right: Get.width * 0.02,
-        //top: Get.height * 0.014,
-        //bottom: Get.height * 0.005,
-      ),
+      padding: EdgeInsets.all(10.0),
       child: Container(
         margin: EdgeInsets.only(
           left: Get.width * 0.01,
           right: Get.width * 0.01,
-          //top: Get.height * 0.02,
         ),
         decoration: BoxDecoration(
           color: Theme.of(context).dialogBackgroundColor,
           borderRadius: BorderRadius.circular(10),
-            boxShadow:[
-              BoxShadow(
-                color:Theme.of(context).cardColor,
-                blurRadius: 1.0,
-                spreadRadius: 0.0,
-                offset: Offset(0.5, 0.5),
-              ),
-            ],
-                 ),
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).cardColor,
+              blurRadius: 1.0,
+              spreadRadius: 0.0,
+              offset: Offset(0.5, 0.5),
+            ),
+          ],
+        ),
         child: ExpansionTile(
           backgroundColor: Theme.of(context).cardColor,
-
           title: Text(
-            "Pedido nº1",
+            "Encomenda nº " + widget.order.id.toString(),
             style: Theme.of(context).textTheme.headline1,
           ),
           trailing: Icon(
             Icons.circle,
-            color: Colors.green,
+            color: widget.order.status=="processing"? Colors.amber: Colors.green,
             size: 10,
           ),
           children: <Widget>[
@@ -52,43 +49,19 @@ class _Item_PedidoState extends State<Item_Pedido> {
               color: Theme.of(context).cardColor,
               height: 5,
             ),
-
-            Padding(
-              padding: EdgeInsets.only(
-                  left: Get.width * 0.02, right: Get.width * 0.02),
-
-              child: Container(
-                width: Get.width,
-                height: Get.height * 0.1,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Image.network(
-                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHpEEl5WrJrxkJS_AXy4xTsa55jmb-zw3iy-W4KHGqZBhrQUSAilwZUHKbcDfgz_BLLDM&usqp=CAU',
-                        width: Get.width * 0.2,
-                        height: Get.height * 0.2,
-                        alignment: Alignment.center),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        right: Get.width * 0.23,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Nome do Produto',
-                            style: Theme.of(context).textTheme.headline2,
-                          ),
-                          SizedBox(height: Get.height * 0.01),
-                          Text(
-                            '100',
-                            style: Theme.of(context).textTheme.headline4,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+            SizedBox(
+              height: Get.height * 0.3,
+              child: ListView.builder(
+                padding: EdgeInsets.only(
+                  top: 0.0,
+                  bottom: Get.height * 0.03,
                 ),
+                scrollDirection: Axis.vertical,
+                itemCount: widget.order.items.length,
+                itemBuilder: (BuildContext context, index) {
+                  var list = widget.order.items[index];
+                  return ItemListOrder(items: list);
+                },
               ),
             ),
           ],

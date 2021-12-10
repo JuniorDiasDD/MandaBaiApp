@@ -19,10 +19,11 @@ String ver_dados_pessoais = "Dados Pessoais \n Nome: " +
 
 //! Configuração de serviços
 //?links- urls
-const String url_consulta_Dolar="https://economia.awesomeapi.com.br/all/USD-EUR";
-const String url_pricipal="https://www.mandabai.com/wp-json/";
-const String link =url_pricipal+ "wc/v3/";
-const String link_2 = url_pricipal+"cocart/v2/";
+const String url_consulta_Dolar =
+    "https://economia.awesomeapi.com.br/all/USD-EUR";
+const String url_pricipal = "https://www.mandabai.com/wp-json/";
+const String link = url_pricipal + "wc/v3/";
+const String link_2 = url_pricipal + "cocart/v2/";
 //?key access
 const String consumer_key = "ck_99b6b6151e8db4d15190cd8fef823839f2595594";
 const String consumer_secret = "cs_2f6fd0fc9ff05307dada1a8104e6f27c39b6cd86";
@@ -34,7 +35,7 @@ const String categorias = link + "products/categories?" + key;
 
 //!Products get category
 const String productCategorias = link + "products?" + key + "&category=";
-const String get_Produto = link+"products/";
+const String get_Produto = link + "products/";
 
 //! register
 const String register_client = link + "customers?" + key;
@@ -48,7 +49,10 @@ const String getUser = link + "customers/";
 //! Cart
 const String getCart = link_2 + "cart";
 //! remove de cart
-const String removeItemCart=link_2+"cart/item/";
+const String removeItemCart = link_2 + "cart/item/";
 
 //!addcart
-const String addItemCart=link_2+"cart/add-item";
+const String addItemCart = link_2 + "cart/add-item";
+
+//!orders
+const String getOrder = link + "orders?"+key;

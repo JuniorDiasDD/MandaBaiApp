@@ -6,6 +6,7 @@ import 'package:manda_bai/Model/category.dart';
 import 'package:http/http.dart' as http;
 import 'package:manda_bai/Model/favorite.dart';
 import 'package:manda_bai/Model/location.dart';
+import 'package:manda_bai/Model/order.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/Model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -515,5 +516,32 @@ class ServiceRequest {
       print("Erro de authentiction");
       return false;
     }
+  }
+
+  //! order
+  //?get ORDER
+  static Future<List<Order>> loadOrder() async {
+    List<Order> list = [];
+    List<Order> list_order = [];
+    var id = await FlutterSession().get('id');
+    var response =
+        await http.get(Uri.parse(getOrder + "&customer=" + id.toString()));
+    print(response.body);
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      final _cats = jsonResponse.cast<Map<String, dynamic>>();
+      list = _cats.map<Order>((cat) => Order.fromJson(cat)).toList();
+
+      for (int i = 0; i < list.length; i++) {
+        if (list[i].status == "processing" || list[i].status == "completed") {
+          list_order.add(list[i]);
+        }
+      }
+    } else if (response.statusCode == 503) {
+      print("Erro de serviço");
+    } else {
+      print("Erro de authentiction");
+    }
+    return list_order;
   }
 }
