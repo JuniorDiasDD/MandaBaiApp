@@ -85,13 +85,16 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        widget.product.name,
-                        style: Theme.of(context).textTheme.headline1,
+                      Container(
+                        width: Get.width * 0.7,
+                        child: Text(
+                          widget.product.name,
+                          style: Theme.of(context).textTheme.headline1,
+                        ),
                       ),
-                    ],
-                  ),
+
                   FutureBuilder(
                       future: _carregarMoney(),
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -108,7 +111,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                                       .textTheme
                                       .headline5!
                                       .copyWith(
-                                        fontSize: Get.width * 0.05,
+                                        fontSize: Get.width * 0.04,
                                       ),
                                 );
                               }
@@ -121,7 +124,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                                       .textTheme
                                       .headline5!
                                       .copyWith(
-                                        fontSize: Get.width * 0.05,
+                                        fontSize: Get.width * 0.04,
                                       ),
                                 );
                               }
@@ -134,7 +137,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                                       .textTheme
                                       .headline5!
                                       .copyWith(
-                                        fontSize: Get.width * 0.05,
+                                        fontSize: Get.width * 0.04,
                                       ),
                                 );
                               }
@@ -142,6 +145,36 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                           return Container();
                         }
                       }),
+
+                    ],
+                  ),
+                  IconButton(
+                    padding: const EdgeInsets.all(0.0),
+                    onPressed: () {
+                      if (widget.product.favorite == false) {
+                        ServiceRequest.addFavrite(
+                            widget.product.id);
+                        setState(() {
+                          widget.product.favorite =
+                          !widget.product.favorite;
+                        });
+                      } else {
+                        ServiceRequest.removeFavrite(
+                            widget.product.id);
+                        setState(() {
+                          widget.product.favorite =
+                          !widget.product.favorite;
+                        });
+                      }
+                    },
+                    icon: const Icon(Icons.favorite),
+                    iconSize: Get.width * 0.09,
+                    alignment: Alignment.centerRight,
+                    color: widget.product.favorite
+                        ? Colors.red
+                        : Colors.black54,
+                  ),
+
                 ],
               ),
             ),
@@ -171,23 +204,38 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                 ),
               ),
             ),*/
-            SizedBox(height: Get.height * 0.06),
+            SizedBox(height: Get.height * 0.02),
             Padding(
               padding: EdgeInsets.only(
                 left: Get.width * 0.04,
                 right: Get.width * 0.04,
               ),
-              child: SizedBox(
-                height: Get.height * 0.08,
+              child: Container(
+                height: Get.height * 0.15,
                 child: SingleChildScrollView(
-                  child: Text(
-                    widget.product.description,
-                    style: Theme.of(context).textTheme.headline4,
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text('Descrição',
+                         style: Theme.of(context).textTheme.headline2!.copyWith( fontSize: Get.width * 0.035,
+                         ),
+                        ),
+                      ),
+                      SizedBox(height: Get.height * 0.01),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          widget.product.description,
+                          style: Theme.of(context).textTheme.headline4,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
-            SizedBox(height: Get.height * 0.04),
+            SizedBox(height: Get.height * 0.02),
             Container(
               width: Get.width * 0.3,
               child: Row(
@@ -233,7 +281,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                 ],
               ),
             ),
-            SizedBox(height: Get.height * 0.05),
+            SizedBox(height: Get.height * 0.026),
             Padding(
               padding: EdgeInsets.only(
                 left: Get.width * 0.04,
@@ -270,6 +318,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                 ),
               ),
             ),
+
           ],
         ),
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
@@ -9,6 +10,7 @@ import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/authention/pages/recovery_password_page.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -18,6 +20,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool _isLoggedIn = false;
+  late GoogleSignInAccount _userObj;
+  GoogleSignIn _googleSignIn = GoogleSignIn();
+
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool statePassword = true;
   final input_username = TextEditingController();
@@ -286,7 +293,17 @@ class _LoginPageState extends State<LoginPage> {
                             child: SignInButton(
                               Buttons.Google,
                               text: "Login com Google",
-                              onPressed: () {},
+                              onPressed: () {
+                                _googleSignIn.signIn().then((userData) {
+                                  setState(() {
+                                    _isLoggedIn = true;
+                                    _userObj = userData!;
+                                    print('--'+_userObj.email);
+                                  });
+                                }).catchError((e) {
+                                  print(e);
+                                });
+                              },
                             ),
                           ),
                           Container(
