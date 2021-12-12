@@ -553,7 +553,7 @@ class ServiceRequest {
 
   //! registar
   static Future createOrder(bool pagamento, status, Location location,
-      List<CartModel> listProduct, total) async {
+      List<CartModel> listProduct, total, note) async {
     var headers = {
       'Content-Type': 'application/json',
     };
@@ -561,81 +561,62 @@ class ServiceRequest {
     final String userString = prefs.getString('user');
     var userCache = json.decode(userString);
     var id = await FlutterSession().get('id');
-    String items = "";
-    for (int i = 0; i < listProduct.length; i++) {
-      if (listProduct.length-1 == i) {
-        items = items +
-            '{' +
-            '"product_id":' +
-            listProduct[i].id.toString() +
-            ',' +
-            '"quantity":' +
-            listProduct[i].amount.toString() +
-            '}';
-      } else {
-        items = items +
-            '{' +
-            '"product_id":' +
-            listProduct[i].id.toString() +
-            ',' +
-            '"quantity":' +
-            listProduct[i].amount.toString() +
-            '},';
-      }
-    }
-   
-    String data ='{'+
-      '"customer_id":'+ id.toString()+','+
-      '"payment_method":"",'+
-      '"payment_method_title": "",'+
-      '"set_paid":"'+ pagamento.toString()+'",'+
-      '"status":"'+ status.toString()+'",'+
-      '"billing": {'+
-        '"first_name":"'+ userCache['name'] +'",'+
-        '"last_name":"'+ userCache['nickname'].toString()+'",'+
-        '"address_1": "",'+
-        '"address_2": "",'+
-        '"city":"'+ userCache['city']+'",'+
-        '"state": "",'+
-        '"postcode": "",'+
-        '"country": "'+userCache['country']+'",'+
-        '"email": "'+userCache['email']+'",'+
-        '"phone": "'+userCache['telefone']+'"'+
-     '},'+
-      '"shipping": {'+
-        '"first_name":"'+ location.name+'",'+
-        '"last_name": "",'+
-        '"address_1":"'+ location.endereco+'",'+
-        '"address_": "",'+
-        '"city":"'+ location.city+'",'
-        '"state": "",'+
-        '"postcode": "",'+
-        '"country":"'+ location.island+'",'+
-        '"email":"'+ location.email+'",'+
-        '"phone": "'+location.phone+'"'+
-     '},'+
-      '"line_items":['+ items+'],'+
-      '"shipping_lines": ['+
-        '{'+
-          '"method_id": "flat_rate",'+
-          '"method_title": "Flat Rate",'+
-          '"total":"'+ total.toString()+'"'+
-       '}'+
-     ']'+
-    '}';
-     var item_json=json.encode(data);
-    var resp = json.decode(item_json);
-    print(resp.toString());
-    print(getOrder);
-    var response =
-        await http.post(Uri.parse(getOrder), headers: headers, body: item_json);
 
-    print(response.statusCode);
-    print(response.body);
+    var data = json.encode({
+      "customer_id": id.toString(),
+      "payment_method": "",
+      "payment_method_title": "",
+      "set_paid": pagamento.toString(),
+      "status": status.toString(),
+      "billing": {
+        "first_name": userCache['name'],
+        "last_name": userCache['nickname'],
+        "address_1": "",
+        "address_2": "",
+        "city": userCache['city'],
+        "state": "",
+        "postcode": "",
+        "country": userCache['country'],
+        "email": userCache['email'],
+        "phone": userCache['telefone']
+      },
+      "shipping": {
+        "first_name": location.name,
+        "last_name": "",
+        "address_1": location.endereco,
+        "address_": "",
+        "city": location.city,
+        "state": "",
+        "postcode": "",
+        "country": location.island,
+        "email": location.email,
+        "phone": location.phone
+      },
+      "line_items": listProduct
+          .map<Map<String, dynamic>>((item) => CartModel.toMap(item))
+          .toList(),
+      "customer_note": note.toString(),
+      "shipping_lines": [
+        {
+          "method_id": "flat_rate",
+          "method_title": "Flat Rate",
+          "total": total.toString()
+        }
+      ]
+    });
+
+    print(data);
+    var response =
+        await http.post(Uri.parse(getOrder), headers: headers, body: data);
+
+    //  print(response.statusCode);
+    // print(response.body);
     if (response.statusCode == 201) {
-      /* final jsonResponse = json.decode(response.body);
-      var session = FlutterSession();
-      await session.set('id', jsonResponse["id"]);*/
+      List<String> list_item = [];
+      for (int i = 0; i < listProduct.length; i++) {
+        list_item.add(listProduct[i].item_key);
+      }
+      removeCart(list_item);
       return true;
     } else if (response.statusCode == 503) {
       print("Erro de serviço");

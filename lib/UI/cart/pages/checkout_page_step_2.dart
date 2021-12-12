@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Controller/cart_controller.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_colors.dart';
@@ -23,12 +24,13 @@ class CheckoutPageStep2 extends StatefulWidget {
 
 class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  final CartPageController cartPageController = Get.find();
   final input_info = TextEditingController();
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
       if (widget.location != null) {
+        cartPageController.note = input_info.text;
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -53,7 +55,6 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
 
   List<Location> list_location = [];
   Future _carregarLocation() async {
-  
     if (list_location.isEmpty) {
       list_location = await ServiceRequest.loadLocation();
 

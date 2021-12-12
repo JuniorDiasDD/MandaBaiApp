@@ -47,9 +47,13 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
                 ),
               ),
               SizedBox(height: Get.height * 0.01),
-              Text(
-                widget.mensagem,
-                style: Theme.of(context).textTheme.headline4,
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Text(
+                  widget.mensagem,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline4,
+                ),
               ),
               SizedBox(height: Get.height * 0.02),
               Container(
@@ -88,6 +92,9 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => HomePage(index: 3)));
+                      } else if (widget.caminho == "encomenda") {
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            '/home', (Route<dynamic> route) => false);
                       }
                     }),
               ),

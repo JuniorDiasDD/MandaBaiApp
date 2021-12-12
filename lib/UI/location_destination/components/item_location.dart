@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Model/location.dart';
 import 'package:manda_bai/UI/cart/pages/checkout_page_step_2.dart';
+import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 
 class ItemLocation extends StatefulWidget {
   Location location;
@@ -63,8 +64,11 @@ class _ItemLocationState extends State<ItemLocation> {
                         onPressed: () {
                           setState(() {
                             ServiceRequest.removeLocation(widget.location.id);
-                            Navigator.pushReplacementNamed(
-                                context, '/Destination');
+                             Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        Destination_Page(route: "checkout")));
                           });
                         },
                         icon: const Icon(

@@ -28,16 +28,21 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
   final input_data_expiracao = TextEditingController();
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
-
     if (form!.validate()) {
-      bool check = await ServiceRequest.createOrder(true, "processing",
-          widget.location, cartPageController.list, cartPageController.total);
+      bool check = await ServiceRequest.createOrder(
+          true,
+          "processing",
+          widget.location,
+          cartPageController.list,
+          cartPageController.total,
+          cartPageController.note);
       if (check) {
         return showDialog(
             context: context,
             builder: (BuildContext context) {
               return Pop_up_Message(
-                  mensagem: "Encomenda feito com sucesso.\nAcompanha a sua encomenda em 'Meus Pedidos'!",
+                  mensagem:
+                      "Encomenda feito com sucesso.\nAcompanha a sua encomenda em 'Meus Pedidos'!",
                   icon: Icons.check,
                   caminho: "encomenda");
             });

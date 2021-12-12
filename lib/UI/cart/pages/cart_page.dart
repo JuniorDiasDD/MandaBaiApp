@@ -81,7 +81,6 @@ class _StartPageState extends State<CartPage> {
   @override
   void initState() {
     super.initState();
-  
     list_cart = [];
     cartPageController.total = 0;
     cartPageController.subTotal = 0;

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ffi';
 
 class CartModel {
@@ -27,4 +28,14 @@ class CartModel {
       checkout:false,
     );
   }
+   static Map<String, dynamic> toMap(CartModel item) => {
+        'product_id': item.id,
+        'quantity':item.amount,
+      };
+
+  static String encode(List<CartModel> items) => json.encode(
+        items
+            .map<Map<String, dynamic>>((item) => CartModel.toMap(item))
+            .toList(),
+      );
 }
