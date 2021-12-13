@@ -110,12 +110,12 @@ class ServiceRequest {
         "company": "",
         "address_1": "",
         "address_2": "",
-        "city": "",
+        "city": user.city,
         "state": "",
         "postcode": "",
-        "country": "",
+        "country": user.country,
         "email": user.email,
-        "phone": ""
+        "phone": user.telefone
       },
       "shipping": {
         "first_name": "",
@@ -132,7 +132,7 @@ class ServiceRequest {
     var response = await http.post(Uri.parse(register_client),
         headers: headers, body: data);
 
-    //  print(response.body);
+    print(response.body);
     if (response.statusCode == 201) {
       final jsonResponse = json.decode(response.body);
       var session = FlutterSession();
@@ -651,11 +651,7 @@ class ServiceRequest {
             .toList(),
         "customer_note": note.toString(),
         "shipping_lines": [
-          {
-            "method_id": "flat_rate",
-            "method_title": "Flat Rate",
-            "total": "5"
-          }
+          {"method_id": "flat_rate", "method_title": "Flat Rate", "total": "5"}
         ]
       });
     }

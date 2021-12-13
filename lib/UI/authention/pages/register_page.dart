@@ -29,6 +29,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final input_nome = TextEditingController();
   final input_city = TextEditingController();
   final input_country = TextEditingController();
+  String mensage_password = " ";
+  Color cor_password = Colors.transparent;
   bool statePassword = false;
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
@@ -44,7 +46,7 @@ class _RegisterPageState extends State<RegisterPage> {
           city: input_city.text,
           country: input_country.text);
 
-      /*bool check = await ServiceRequest.createAccount(new_user);
+      bool check = await ServiceRequest.createAccount(new_user);
       if (check == true) {
         return showDialog(
             context: context,
@@ -52,20 +54,40 @@ class _RegisterPageState extends State<RegisterPage> {
               return Pop_up_Message(
                   mensagem: "Registo feito com sucesso!",
                   icon: Icons.check,
-                  caminho: "home");
+                  caminho: "registo");
             });
       } else {
         return showDialog(
             context: context,
             builder: (BuildContext context) {
               return Pop_up_Message(
-                  mensagem: "Dados invalidos...",
+                  mensagem: "Dados invalidos...\nJá existe Conta com esses dados.",
                   icon: Icons.error,
                   caminho: "erro");
             });
-      }*/
+      }
     } else {
       print('Form is invalid');
+    }
+  }
+
+  _validar_password() {
+    if (input_senha.text.length < 7) {
+      setState(() {
+        mensage_password = "Senha Fraco";
+        cor_password = Colors.red;
+      });
+    } else if (RegExp(r'\d+\w*\d+').hasMatch(input_senha.text) &&
+        !input_senha.text.contains(RegExp(r'[A-Z]'))) {
+      setState(() {
+        mensage_password = "Senha Razóavel";
+        cor_password = Colors.yellowAccent;
+      });
+    } else if (input_senha.text.contains(RegExp(r'[A-Z]'))) {
+      setState(() {
+        mensage_password = "Senha Muito forte";
+        cor_password = Colors.green;
+      });
     }
   }
 
@@ -159,6 +181,50 @@ class _RegisterPageState extends State<RegisterPage> {
                       ],
                     ),
                     SizedBox(height: Get.height * 0.01),
+                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: Get.width * 0.43,
+                          child: TextFormField(
+                            controller: input_country,
+                            style: Theme.of(context).textTheme.headline4,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Theme.of(context).backgroundColor,
+                              border: OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(15.0),
+                                borderSide: new BorderSide(),
+                              ),
+                              labelText: 'Pais',
+                              labelStyle: Theme.of(context).textTheme.headline4,
+                            ),
+                            validator: (value) =>
+                                value!.isEmpty ? 'Insira o Pais' : null,
+                          ),
+                        ),
+                        SizedBox(
+                          width: Get.width * 0.43,
+                          child: TextFormField(
+                            controller: input_city,
+                            style: Theme.of(context).textTheme.headline4,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Theme.of(context).backgroundColor,
+                              border: OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(15.0),
+                                borderSide: new BorderSide(),
+                              ),
+                              labelText: 'Cidade',
+                              labelStyle: Theme.of(context).textTheme.headline4,
+                            ),
+                            validator: (value) =>
+                                value!.isEmpty ? 'Insira a Cidade' : null,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: Get.height * 0.01),
                     TextFormField(
                       controller: input_email,
                       obscureText: false,
@@ -182,7 +248,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       validator: (value) => EmailValidator.validate(value!)
                           ? null
-                          : 'Emial inváido',
+                          : 'Email inváido',
                     ),
                     SizedBox(height: Get.height * 0.01),
                     TextFormField(
@@ -207,7 +273,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         labelStyle: Theme.of(context).textTheme.headline4,
                       ),
                       validator: (value) =>
-                          value!.isEmpty ? 'Insira o telefone' : null,
+                          value!.length<7 ? 'Telefone inválido' : null,
                     ),
                     SizedBox(height: Get.height * 0.01),
                     TextFormField(
@@ -270,22 +336,18 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       validator: (value) =>
                           value!.isEmpty ? 'Insira a senha' : null,
+                      onChanged: (value) => _validar_password(),
                     ),
                     SizedBox(height: Get.height * 0.005),
-                    FlutterPwValidator(
-                      controller: input_senha,
-                      minLength: 8,
-                      uppercaseCharCount: 1,
-                      numericCharCount: 2,
-                      specialCharCount: 1,
-                      width: 400,
-                      height: 150,
-                      //   strings:FrenchStrings(),
-                      onSuccess: () {
-                        print("Matched");
-                        Scaffold.of(context).showSnackBar(new SnackBar(
-                            content: new Text("Password is matched")));
-                      },
+                    Align(
+                      alignment:Alignment.topLeft,
+                      child: Text(
+                        mensage_password,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline4!
+                            .copyWith(color: cor_password),
+                      ),
                     ),
                     SizedBox(
                       height: Get.height * 0.02,

@@ -162,6 +162,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                     TextFormField(
                       controller: input_email,
                       obscureText: false,
+                      keyboardType: TextInputType.emailAddress,
                       style: Theme.of(context).textTheme.headline4,
                       decoration: InputDecoration(
                         filled: true,

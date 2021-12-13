@@ -96,6 +96,8 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
                       } else if (widget.caminho == "encomenda") {
                         Navigator.of(context).pushNamedAndRemoveUntil(
                             '/home', (Route<dynamic> route) => false);
+                      }else if(widget.caminho=="registo"){
+                        Navigator.pushReplacementNamed(context, '/login');
                       }
                     }),
               ),
