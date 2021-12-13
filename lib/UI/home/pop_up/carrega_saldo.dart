@@ -110,7 +110,8 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
 
                             ),
                             validator: (value) =>
-                                value!.isEmpty ? 'Insira o Numero' : null,
+                                value!.length==7 ? null : ' Número Inválido',
+
                           ),
                         ),
                         SizedBox(height: Get.height * 0.01),
