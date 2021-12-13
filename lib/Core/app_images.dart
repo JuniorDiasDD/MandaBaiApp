@@ -43,5 +43,7 @@ class AppImages {
   static const loading = 'assets/images/loading.gif';
   static const appLogo2 = 'assets/images/logo2.png';
   static const whatsapp = 'assets/images/whatsapp.png';
+  static const ilhasWhite = 'assets/images/ilhasWhite.png';
+
 
 }

@@ -49,8 +49,13 @@ class _ChooseIslandState extends State<ChooseIsland> {
               children: [
                 Align(
                   alignment: Alignment.topRight,
-                  child: Image.asset(
+
+                  child: Theme.of(context)=='lightTheme'?  Image.asset(
                     AppImages.ilha_2,
+                    height: Get.height * 0.38,
+                    width: Get.width * 0.99,
+                  ): Image.asset(
+                    AppImages.ilhasWhite,
                     height: Get.height * 0.38,
                     width: Get.width * 0.99,
                   ),

@@ -19,7 +19,7 @@ class _ContactPageState extends State<ContactPage> {
     var whatsapp = "+2389149439";
     var whatsappURl_android =
         "whatsapp://send?phone=" + whatsapp + "&text=Hello";
-    var whatappURL_ios = "https://wa.me/$whatsapp?text=${Uri.parse("hello")}";
+
 
     if (await canLaunch(whatsappURl_android)) {
       await launch(whatsappURl_android);
@@ -135,8 +135,8 @@ class _ContactPageState extends State<ContactPage> {
                           Flexible(
                             flex: 1,
                             child: Icon(
-                              Icons.email,
-                              color: Theme.of(context).backgroundColor,
+                              Icons.email,color: Theme.of(context).backgroundColor,
+
                             ),
                           ),
                           Flexible(
