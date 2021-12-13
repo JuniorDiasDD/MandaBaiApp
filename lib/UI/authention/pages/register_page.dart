@@ -21,6 +21,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final input_email = TextEditingController();
+  final input_telefone = TextEditingController();
   final input_nickname = TextEditingController();
   final input_username = TextEditingController();
   final input_senha = TextEditingController();
@@ -31,9 +32,10 @@ class _RegisterPageState extends State<RegisterPage> {
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
+
       User new_user = new User(
           name: input_nome.text,
-          telefone: "0",
+          telefone: input_telefone.text,
           email: input_email.text,
           senha: input_senha.text,
           username: input_username.text,
@@ -42,7 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
           city: input_city.text,
           country: input_country.text);
 
-      bool check = await ServiceRequest.createAccount(new_user);
+      /*bool check = await ServiceRequest.createAccount(new_user);
       if (check == true) {
         return showDialog(
             context: context,
@@ -61,7 +63,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   icon: Icons.error,
                   caminho: "erro");
             });
-      }
+      }*/
     } else {
       print('Form is invalid');
     }
@@ -180,6 +182,31 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       validator: (value) =>
                           value!.isEmpty ? 'Insira o email' : null,
+                    ),
+                    SizedBox(height: Get.height * 0.01),
+                    TextFormField(
+                      controller: input_telefone,
+                      obscureText: false,
+                      style: Theme.of(context).textTheme.headline4,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Theme.of(context).backgroundColor,
+                        border: OutlineInputBorder(
+                          borderRadius: new BorderRadius.circular(15.0),
+                          borderSide: new BorderSide(),
+                        ),
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.all(0.0),
+                          child: Icon(
+                            Icons.phone,
+                            color: Colors.grey,
+                          ), // icon is 48px widget.
+                        ),
+                        labelText: 'Telefone',
+                        labelStyle: Theme.of(context).textTheme.headline4,
+                      ),
+                      validator: (value) =>
+                      value!.isEmpty ? 'Insira o telefone' : null,
                     ),
                     SizedBox(height: Get.height * 0.01),
                     TextFormField(
