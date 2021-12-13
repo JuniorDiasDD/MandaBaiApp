@@ -171,7 +171,7 @@ class _ProductListComponentState extends State<ProductListComponent> {
                                 alignment: Alignment.centerRight,
                                 color: widget.product.favorite
                                     ? Colors.red
-                                    : Colors.black54,
+                                    : Theme.of(context).indicatorColor,
                               ),
                               IconButton(
                                 padding: const EdgeInsets.all(0.0),

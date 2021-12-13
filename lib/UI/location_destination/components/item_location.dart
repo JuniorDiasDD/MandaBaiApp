@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Model/location.dart';
 import 'package:manda_bai/UI/cart/pages/checkout_page_step_2.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
+import 'package:flutter_session/flutter_session.dart';
 
 class ItemLocation extends StatefulWidget {
   Location location;
@@ -18,8 +20,11 @@ class _ItemLocationState extends State<ItemLocation> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async{
         if (widget.route == "checkout") {
+           var island = await FlutterSession().get('island');
+           print(island);
+           if(widget.location.island==island){
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -27,6 +32,17 @@ class _ItemLocationState extends State<ItemLocation> {
                   CheckoutPageStep2(location: widget.location),
             ),
           );
+           }else{
+               return showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Pop_up_Message(
+                  mensagem: "Esses produtos não correspondem a essa Ilha",
+                  icon: Icons.error,
+                  caminho: "erro");
+            });
+           }
+         
         }
       },
       child: Padding(

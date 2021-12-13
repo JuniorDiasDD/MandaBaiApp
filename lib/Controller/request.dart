@@ -265,7 +265,7 @@ class ServiceRequest {
   //? getCart
   static Future<List<CartModel>> loadCart() async {
     List<CartModel> list = [];
-
+    List<CartModel> listCart = [];
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode(user.username + ':' + user.senha));
     var response = await http.get(Uri.parse(getCart),
@@ -276,12 +276,21 @@ class ServiceRequest {
       final jsonResponse = json.decode(response.body);
       final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();
       list = _cats.map<CartModel>((cat) => CartModel.fromJson(cat)).toList();
+      var island = await FlutterSession().get('island');
+      for (int i = 0; i < list.length; i++) {
+        response = await http
+            .get(Uri.parse(get_Produto + list[i].id.toString() + "?" + key));
+        final jsonResponse = json.decode(response.body);
+        if (jsonResponse['categories'][0]['name'].contains(island) == true) {
+          listCart.add(list[i]);
+        }
+      }
     } else if (response.statusCode == 503) {
       print("Erro de serviço");
     } else {
       print("Erro de authentiction");
     }
-    return list;
+    return listCart;
   }
 
   //! removeItemCart
@@ -396,9 +405,10 @@ class ServiceRequest {
         if (listFavorites[i].island == island) {
           var response = await http.get(Uri.parse(
               get_Produto + listFavorites[i].id.toString() + "?" + key));
-          final jsonResponse = json.decode(response.body);
+
           //  print(response.body);
           if (response.statusCode == 200) {
+            final jsonResponse = json.decode(response.body);
             list.add(Product(
                 id: jsonResponse['id'],
                 name: jsonResponse['name'].toString(),
@@ -561,49 +571,94 @@ class ServiceRequest {
     final String userString = prefs.getString('user');
     var userCache = json.decode(userString);
     var id = await FlutterSession().get('id');
-
-    var data = json.encode({
-      "customer_id": id.toString(),
-      "payment_method": "",
-      "payment_method_title": "",
-      "set_paid": pagamento.toString(),
-      "status": status.toString(),
-      "billing": {
-        "first_name": userCache['name'],
-        "last_name": userCache['nickname'],
-        "address_1": "",
-        "address_2": "",
-        "city": userCache['city'],
-        "state": "",
-        "postcode": "",
-        "country": userCache['country'],
-        "email": userCache['email'],
-        "phone": userCache['telefone']
-      },
-      "shipping": {
-        "first_name": location.name,
-        "last_name": "",
-        "address_1": location.endereco,
-        "address_": "",
-        "city": location.city,
-        "state": "",
-        "postcode": "",
-        "country": location.island,
-        "email": location.email,
-        "phone": location.phone
-      },
-      "line_items": listProduct
-          .map<Map<String, dynamic>>((item) => CartModel.toMap(item))
-          .toList(),
-      "customer_note": note.toString(),
-      "shipping_lines": [
-        {
-          "method_id": "flat_rate",
-          "method_title": "Flat Rate",
-          "total": total.toString()
-        }
-      ]
-    });
+    var data;
+    if (location == null) {
+      data = json.encode({
+        "customer_id": id.toString(),
+        "payment_method": "",
+        "payment_method_title": "",
+        "set_paid": pagamento.toString(),
+        "status": status.toString(),
+        "billing": {
+          "first_name": userCache['name'],
+          "last_name": userCache['nickname'],
+          "address_1": "",
+          "address_2": "",
+          "city": userCache['city'],
+          "state": "",
+          "postcode": "",
+          "country": userCache['country'],
+          "email": userCache['email'],
+          "phone": userCache['telefone']
+        },
+        "shipping": {
+          "first_name": "",
+          "last_name": "",
+          "address_1": "",
+          "address_": "",
+          "city": "",
+          "state": "",
+          "postcode": "",
+          "country": "",
+          "email": "",
+          "phone": ""
+        },
+        "line_items": listProduct
+            .map<Map<String, dynamic>>((item) => CartModel.toMap(item))
+            .toList(),
+        "customer_note": note.toString(),
+        "shipping_lines": [
+          {
+            "method_id": "flat_rate",
+            "method_title": "Flat Rate",
+            "total": total.toString()
+          }
+        ]
+      });
+    } else {
+      data = json.encode({
+        "customer_id": id.toString(),
+        "payment_method": "",
+        "payment_method_title": "",
+        "set_paid": pagamento.toString(),
+        "status": status.toString(),
+        "billing": {
+          "first_name": userCache['name'],
+          "last_name": userCache['nickname'],
+          "address_1": "",
+          "address_2": "",
+          "city": userCache['city'],
+          "state": "",
+          "postcode": "",
+          "country": userCache['country'],
+          "email": userCache['email'],
+          "phone": userCache['telefone']
+        },
+        "shipping": {
+          "first_name": location.name,
+          "last_name": "",
+          "address_1": location.endereco,
+          "address_": "",
+          "city": location.city,
+          "state": "",
+          "postcode": "",
+          "country": location.island,
+          "email": location.email,
+          "phone": location.phone
+        },
+        "line_items": listProduct
+            .map<Map<String, dynamic>>((item) => CartModel.toMap(item))
+            .toList(),
+        "customer_note": note.toString(),
+        "shipping_lines": [
+          {
+            "method_id": "flat_rate",
+            "method_title": "Flat Rate",
+            "total": "5"
+          }
+        ]
+      });
+    }
 
     print(data);
     var response =
@@ -616,7 +671,10 @@ class ServiceRequest {
       for (int i = 0; i < listProduct.length; i++) {
         list_item.add(listProduct[i].item_key);
       }
-      removeCart(list_item);
+      if (status == "processing") {
+        removeCart(list_item);
+      }
+
       return true;
     } else if (response.statusCode == 503) {
       print("Erro de serviço");
@@ -624,6 +682,33 @@ class ServiceRequest {
     } else {
       print("Erro de authentiction");
       return false;
+    }
+    return false;
+  }
+
+  //! load product by id
+  static Future loadProductbyId(id) async {
+    var response =
+        await http.get(Uri.parse(get_Produto + id.toString() + "?" + key));
+
+    //  print(response.body);
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      Product novo = new Product(
+          id: jsonResponse['id'],
+          name: jsonResponse['name'].toString(),
+          description: jsonResponse['description'].toString(),
+          price: double.parse(jsonResponse['price']),
+          rating_count: jsonResponse['rating_count'] ?? 0,
+          sale_price: jsonResponse['sale_price'].toString(),
+          in_stock: jsonResponse['manage_stock'].toString(),
+          on_sale: jsonResponse['on_sale'].toString(),
+          stock_quantity: jsonResponse['stock_quantity'].toString(),
+          image: jsonResponse['images'][0]["src"],
+          favorite: false);
+      return novo;
+    } else {
+      print("Erro em carregar o produto");
     }
     return false;
   }

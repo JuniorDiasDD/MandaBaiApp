@@ -42,7 +42,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
             builder: (BuildContext context) {
               return Pop_up_Message(
                   mensagem:
-                      "Encomenda feito com sucesso.\nAcompanha a sua encomenda em 'Meus Pedidos'!",
+                      "Encomenda feito com sucesso.\nAcompanha a sua encomenda em \n'Meus Pedidos'!",
                   icon: Icons.check,
                   caminho: "encomenda");
             });

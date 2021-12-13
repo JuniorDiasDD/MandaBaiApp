@@ -37,9 +37,7 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.only(
-                  top: Get.height * 0.04,
-                ),
+                padding: EdgeInsets.all(10.0),
                 child: Icon(
                   widget.icon,
                   color: widget.caminho != "erro" ? Colors.green : Colors.red,
@@ -48,7 +46,10 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
               ),
               SizedBox(height: Get.height * 0.01),
               Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: const EdgeInsets.only(
+                  left: 10.0,
+                  right: 10.0,
+                ),
                 child: Text(
                   widget.mensagem,
                   textAlign: TextAlign.center,
@@ -57,7 +58,7 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
               ),
               SizedBox(height: Get.height * 0.02),
               Container(
-                height: Get.height * 0.07,
+                height: Get.height * 0.06,
                 width: Get.width * 0.3,
                 decoration: BoxDecoration(
                   color: AppColors.greenColor,

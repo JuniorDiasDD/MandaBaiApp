@@ -70,7 +70,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: Icon(Icons.arrow_back),
+                    icon: Icon(Icons.arrow_back,color:Colors.black,),
                   ),
                 ),
               ],
@@ -172,9 +172,8 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                     alignment: Alignment.centerRight,
                     color: widget.product.favorite
                         ? Colors.red
-                        : Colors.black54,
+                        : Theme.of(context).indicatorColor,
                   ),
-
                 ],
               ),
             ),

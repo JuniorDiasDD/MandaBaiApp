@@ -88,7 +88,15 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                   children: [
                     Container(
                       child: IconButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          // Navigator.pop(context);
+                          bool check = await ServiceRequest.createOrder(
+                              false,
+                              "cancelled",
+                              widget.location,
+                              cartPageController.list,
+                              cartPageController.total,
+                              cartPageController.note);
                           Navigator.pop(context);
                         },
                         icon: const Icon(
