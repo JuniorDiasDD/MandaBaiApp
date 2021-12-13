@@ -6,6 +6,7 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
+import 'package:email_validator/email_validator.dart';
 
 class EditPorfilePage extends StatefulWidget {
   @override
@@ -180,7 +181,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                         labelStyle: Theme.of(context).textTheme.headline4,
                       ),
                       validator: (value) =>
-                          value!.isEmpty ? 'Insira o email' : null,
+                          EmailValidator.validate(value!) ? null:'Emial inváido',
                     ),
                     SizedBox(height: Get.height * 0.01),
                     TextFormField(
@@ -206,6 +207,8 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                         labelText: 'Telefone',
                         labelStyle: Theme.of(context).textTheme.headline4,
                       ),
+                       validator: (value) =>
+                          value!.isEmpty ? 'Insira o Numero' : null,
                     ),
                     SizedBox(height: Get.height * 0.01),
                     TextFormField(

@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pw_validator/Resource/Strings.dart';
@@ -32,7 +33,6 @@ class _RegisterPageState extends State<RegisterPage> {
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
-
       User new_user = new User(
           name: input_nome.text,
           telefone: input_telefone.text,
@@ -180,13 +180,14 @@ class _RegisterPageState extends State<RegisterPage> {
                         labelText: 'Email',
                         labelStyle: Theme.of(context).textTheme.headline4,
                       ),
-                      validator: (value) =>
-                          value!.isEmpty ? 'Insira o email' : null,
+                      validator: (value) => EmailValidator.validate(value!)
+                          ? null
+                          : 'Emial inváido',
                     ),
                     SizedBox(height: Get.height * 0.01),
                     TextFormField(
                       controller: input_telefone,
-                      obscureText: false,
+                      keyboardType: TextInputType.phone,
                       style: Theme.of(context).textTheme.headline4,
                       decoration: InputDecoration(
                         filled: true,
@@ -206,7 +207,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         labelStyle: Theme.of(context).textTheme.headline4,
                       ),
                       validator: (value) =>
-                      value!.isEmpty ? 'Insira o telefone' : null,
+                          value!.isEmpty ? 'Insira o telefone' : null,
                     ),
                     SizedBox(height: Get.height * 0.01),
                     TextFormField(
