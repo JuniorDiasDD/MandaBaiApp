@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
@@ -12,7 +11,6 @@ import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/category_filter/controller/categoryController.dart';
 import 'package:manda_bai/UI/home/components/product_list_component.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:websafe_svg/websafe_svg.dart';
 
 class CategoryPage extends StatefulWidget {
   Category category;
@@ -67,8 +65,8 @@ class _CategoryPageState extends State<CategoryPage> {
         return null;
       } else {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
-        final String itemFavortiesString = prefs.getString('itens_favorites');
-        var money = await FlutterSession().get('money');
+        final String? itemFavortiesString = prefs.getString('itens_favorites');
+        var money = prefs.getString('money');
         if (itemFavortiesString != null) {
           List<Favorite> list = Favorite.decode(itemFavortiesString);
           for (int i = 0; i < list_product.length; i++) {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/cart_controller.dart';
 import 'package:manda_bai/Controller/request.dart';
@@ -12,6 +11,7 @@ import 'package:manda_bai/Model/location.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 import 'package:readmore/readmore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'checkout_page_step_3.dart';
 
 class CheckoutPageStep2 extends StatefulWidget {
@@ -68,7 +68,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
 
   String island = "";
   Future _carregarIsland() async {
-    island = await FlutterSession().get('island');
+     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    island = prefs.getString('island')!;
     return island;
   }
 
@@ -78,8 +79,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
       body: Stack(
         children: [
           Padding(
-            padding:
-                EdgeInsets.only(left: Get.width * 0.04, right: Get.width * 0.04),
+            padding: EdgeInsets.only(
+                left: Get.width * 0.04, right: Get.width * 0.04),
             child: SingleChildScrollView(
               child: Form(
                 key: _formKey,
@@ -92,7 +93,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                         Container(
                           child: IconButton(
                             onPressed: () async {
-                                cartPageController.loading = true;
+                              cartPageController.loading = true;
                               bool check = await ServiceRequest.createOrder(
                                   false,
                                   "cancelled",
@@ -100,11 +101,11 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                   cartPageController.list,
                                   cartPageController.total,
                                   cartPageController.note);
-                                if(check){
-                                  cartPageController.loading = false;
-                                }else{
-                                  cartPageController.loading = false;
-                                }
+                              if (check) {
+                                cartPageController.loading = false;
+                              } else {
+                                cartPageController.loading = false;
+                              }
                               Navigator.pop(context);
                             },
                             icon: const Icon(
@@ -119,160 +120,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                         ),
                         IconButton(
                           padding: const EdgeInsets.all(0.0),
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return Scaffold(
-                                  backgroundColor: Colors.transparent,
-                                  body: Center(
-                                    child: Container(
-                                      width: Get.width,
-                                      height: Get.height * 0.6,
-                                      margin: EdgeInsets.only(left: 20, right: 20),
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context)
-                                            .scaffoldBackgroundColor,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Container(
-                                                  width: Get.width * 0.08,
-                                                ),
-                                                Text(
-                                                  'Instruções',
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline1,
-                                                ),
-                                                IconButton(
-                                                  icon: Icon(Icons.close),
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                left: Get.width * 0.05,
-                                                right: Get.width * 0.05,
-                                              ),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.stretch,
-                                                children: [
-                                                  SizedBox(
-                                                      height: Get.height * 0.01),
-                                                  Text(
-                                                    'Informações do Formulário',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline2,
-                                                  ),
-                                                  SizedBox(
-                                                      height: Get.height * 0.01),
-                                                  Text(
-                                                    'Neste formulário, deverá completar com os dados da pessoa receptora da encomenda (produtos).',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline4,
-                                                  ),
-                                                  SizedBox(
-                                                      height: Get.height * 0.01),
-                                                  Text(
-                                                    '1º "Nome"',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline2,
-                                                  ),
-                                                  Text(
-                                                    ' Escreva o Nome da Pessoa que irá receber a encomenda;',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline4,
-                                                  ),
-                                                  SizedBox(
-                                                      height: Get.height * 0.01),
-                                                  Text(
-                                                    '2º "Cidade"',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline2,
-                                                  ),
-                                                  Text(
-                                                    'Escreva a Cidade onde reside essa Pessoa acima referida;',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline4,
-                                                  ),
-                                                  SizedBox(
-                                                      height: Get.height * 0.01),
-                                                  Text(
-                                                    '3º "Endereço"',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline2,
-                                                  ),
-                                                  Text(
-                                                    'Escreva o Endereço onde deverá ser entregue a encomenda;',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline4,
-                                                  ),
-                                                  SizedBox(
-                                                      height: Get.height * 0.01),
-                                                  Text(
-                                                    '4º "Telemovel/Telefone"',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline2,
-                                                  ),
-                                                  Text(
-                                                    'Introduza o Contacto do receptor para podermos lhe contactar.',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline4,
-                                                  ),
-                                                  SizedBox(
-                                                      height: Get.height * 0.02),
-                                                  Text(
-                                                    'Informação Adicional',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline2,
-                                                  ),
-                                                  SizedBox(
-                                                      height: Get.height * 0.01),
-                                                  Text(
-                                                    'Neste campo, poderá adicionar qualquer informação extra que deseja informar a Empresa. Exemplo: a data que deseja a ser entregue.',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline4,
-                                                  ),
-                                                  SizedBox(
-                                                    height: Get.height * 0.02,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          },
+                          onPressed: () {},
                           icon: const Icon(
                             Icons.info,
                           ),
@@ -330,8 +178,9 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                     } else {
                                       return Text(
                                         island,
-                                        style:
-                                            Theme.of(context).textTheme.headline2,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline2,
                                       );
                                     }
                                   }),
@@ -348,23 +197,25 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            Destination_Page(route: "checkout")));
+                                        builder: (context) => Destination_Page(
+                                            route: "checkout")));
                               },
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
                                     "Sem localizações de entrega...",
-                                    style: Theme.of(context).textTheme.headline3,
+                                    style:
+                                        Theme.of(context).textTheme.headline3,
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
                                         "Por Favor insera o destino de entrega",
-                                        style:
-                                            Theme.of(context).textTheme.headline3,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline3,
                                       ),
                                       Icon(
                                         Icons.add,
@@ -393,14 +244,16 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                       children: [
                                         Text(
                                           "Endereço de Entrega",
-                                          style:
-                                              Theme.of(context).textTheme.headline1,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline1,
                                         ),
                                         const Spacer(),
                                         Text(
                                           "Trocar",
-                                          style:
-                                              Theme.of(context).textTheme.headline3,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline3,
                                         ),
                                         Icon(
                                           Icons.add,
@@ -410,8 +263,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                   ),
                                   Container(
                                     decoration: BoxDecoration(
-                                      color:
-                                          Theme.of(context).dialogBackgroundColor,
+                                      color: Theme.of(context)
+                                          .dialogBackgroundColor,
                                       borderRadius: BorderRadius.circular(10),
                                       boxShadow: [
                                         BoxShadow(
@@ -454,8 +307,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                             height: Get.height * 0.01,
                                           ),
                                           Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 15.0),
+                                            padding: const EdgeInsets.only(
+                                                left: 15.0),
                                             child: Text(
                                               widget.location.city +
                                                   ',' +
@@ -508,7 +361,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                     Container(
                       height: Get.height * 0.2,
                       width: Get.width,
-                      child: TextField(
+                      child: TextFormField(
                         maxLines: 10,
                         controller: input_info,
                         keyboardType: TextInputType.text,
@@ -516,21 +369,9 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Theme.of(context).backgroundColor,
-                          contentPadding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(
-                              width: 2,
-                              color: Theme.of(context).backgroundColor,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 2,
-                              color: Theme.of(context).backgroundColor,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: new BorderRadius.circular(15.0),
+                            borderSide: new BorderSide(),
                           ),
                           hintText: 'escrever...',
                           hintStyle: Theme.of(context).textTheme.headline4,
@@ -543,7 +384,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
               ),
             ),
           ),
-           Obx(
+          Obx(
             () => SizedBox(
               child: cartPageController.loading
                   ? Container(

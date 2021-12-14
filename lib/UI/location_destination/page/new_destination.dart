@@ -5,6 +5,7 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Model/location.dart';
 import 'package:manda_bai/UI/cart/pages/checkout_page_step_2.dart';
+import 'package:manda_bai/UI/location_destination/components/popup_info.dart';
 import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 
 class NewDestination extends StatefulWidget {
@@ -21,7 +22,7 @@ class _NewDestinationState extends State<NewDestination> {
   final input_cidade = TextEditingController();
   final input_endereco = TextEditingController();
   final input_tel = TextEditingController();
-   final input_email = TextEditingController();
+  final input_email = TextEditingController();
 
   String dropdownValue = 'Santiago';
   List<String> list_island = [
@@ -44,7 +45,8 @@ class _NewDestinationState extends State<NewDestination> {
           city: input_cidade.text,
           endereco: input_endereco.text,
           island: dropdownValue,
-          phone: input_tel.text,email:input_email.text);
+          phone: input_tel.text,
+          email: input_email.text);
       bool check = await ServiceRequest.addLocation(novo);
       if (check == true) {
         Navigator.pushReplacement(
@@ -67,11 +69,11 @@ class _NewDestinationState extends State<NewDestination> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: Get.height * 0.08),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: IconButton(
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  IconButton(
                     onPressed: () {
                       Navigator.pushReplacement(
                           context,
@@ -84,15 +86,30 @@ class _NewDestinationState extends State<NewDestination> {
                     ),
                     alignment: Alignment.centerRight,
                   ),
-                ),
-                Text(
-                  'Novo Destino',
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-                Container(
-                  width: 10,
-                ),
-              ],
+                  const Spacer(),
+                  Text(
+                    'Novo Destino',
+                    style: Theme.of(context).textTheme.headline1,
+                  ),
+                  const Spacer(),
+                  IconButton(
+                   
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return PopupInfo();
+                        },
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.info,
+                    ),
+                    iconSize: Get.width * 0.05,
+                    alignment: Alignment.centerRight,
+                  ),
+                ],
+              ),
             ),
             Padding(
               padding: EdgeInsets.only(
@@ -222,12 +239,12 @@ class _NewDestinationState extends State<NewDestination> {
                             value!.isEmpty ? 'Insira o Endereço' : null,
                       ),
                     ),
-                      SizedBox(height: Get.height * 0.01),
+                    SizedBox(height: Get.height * 0.01),
                     SizedBox(
                       width: Get.width,
                       child: TextFormField(
                         controller: input_email,
-                         keyboardType: TextInputType.emailAddress,
+                        keyboardType: TextInputType.emailAddress,
                         style: Theme.of(context).textTheme.headline4,
                         decoration: InputDecoration(
                           labelText: "Email",

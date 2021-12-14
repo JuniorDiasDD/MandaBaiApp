@@ -17,16 +17,14 @@ class ContactPage extends StatefulWidget {
 class _ContactPageState extends State<ContactPage> {
   openwhatsapp() async {
     var whatsapp = "+2389149439";
-    var whatsappURl_android =
-        "whatsapp://send?phone=" + whatsapp + "&text=Hello";
-
-
-    if (await canLaunch(whatsappURl_android)) {
-      await launch(whatsappURl_android);
+    var whatsappURl_android = "whatsapp://send?phone=" + whatsapp;
+    await launch(whatsappURl_android);
+    /* if (await canLaunch(whatsappURl_android)) {
+    
     } else {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: new Text("whatsapp no installed")));
-    }
+    }*/
   }
 
   Future<void> send() async {
@@ -35,13 +33,15 @@ class _ContactPageState extends State<ContactPage> {
       subject: 'Preciso da Ajuda',
       recipients: ['mandabai2020@gmail.com'],
     );
-
+print("aqui");
     String platformResponse;
 
     try {
-      await FlutterEmailSender.send(email);
+     var check= await FlutterEmailSender.send(email);
+     print("--s");
       platformResponse = 'success';
     } catch (error) {
+           print("--n");
       platformResponse = error.toString();
     }
   }
@@ -135,8 +135,8 @@ class _ContactPageState extends State<ContactPage> {
                           Flexible(
                             flex: 1,
                             child: Icon(
-                              Icons.email,color: Theme.of(context).backgroundColor,
-
+                              Icons.email,
+                              color: Theme.of(context).backgroundColor,
                             ),
                           ),
                           Flexible(

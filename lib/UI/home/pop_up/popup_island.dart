@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/UI/home/pages/home_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Popup_Island extends StatefulWidget {
   const Popup_Island({Key? key}) : super(key: key);
@@ -18,7 +18,8 @@ class _Popup_IslandState extends State<Popup_Island> {
 
   Future _carregarIsland() async {
     if (_isRadioSelected == "") {
-      _isRadioSelected = await FlutterSession().get('island');
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      _isRadioSelected = prefs.getString('island')!;
     }
     return _isRadioSelected;
   }
@@ -307,10 +308,12 @@ class _Popup_IslandState extends State<Popup_Island> {
                                       color: Colors.white),
                                 ),
                                 onPressed: () async {
-                                  var session = FlutterSession();
-
-                                  await session.set('island', _isRadioSelected);
-                                  await session.set('island_atualizar', "true");
+                                  final SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  await prefs.setString(
+                                      'island', _isRadioSelected);
+                                  await prefs.setString(
+                                      'island_atualizar', "true");
                                   setState(() {
                                     Navigator.pushReplacement(
                                         context,

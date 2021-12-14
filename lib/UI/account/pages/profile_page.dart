@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/Contact/contact_page.dart';
 import 'package:manda_bai/UI/about/pages/info_page.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
 import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 import 'package:manda_bai/UI/account/pages/edit_profile.dart';
 import 'package:manda_bai/UI/Pedido/pages/pedido_page.dart';
 import 'package:manda_bai/UI/home/pop_up/carrega_saldo.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_island.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_moeda.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -27,27 +28,37 @@ class _StartPageState extends State<ProfilePage> {
   String money = "";
   String language = "";
   Future _carregarIsland() async {
-    island = await FlutterSession().get('island');
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    island = prefs.getString('island')!;
     return island;
   }
 
   Future _carregarMoney() async {
-    money = await FlutterSession().get('money');
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    money = prefs.getString('money')!;
     return money;
   }
 
   Future _carregarLanguage() async {
-    language = await FlutterSession().get('language');
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    language = prefs.getString('language')!;
     return language;
   }
 
   Future _carregarUser() async {
-    bool check = await ServiceRequest.GetUser();
-
-    if (check == false) {
-      return null;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var id = prefs.getString('id');
+    if (id != 'null' && id != null) {
+      print("entrou");
+      bool check = await ServiceRequest.GetUser();
+      if (check == false) {
+        return null;
+      } else {
+        return check;
+      }
     }
-    return check;
+
+    return null;
   }
 
   @override
@@ -70,38 +81,54 @@ class _StartPageState extends State<ProfilePage> {
                 FutureBuilder(
                   future: _carregarUser(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (!snapshot.hasData) {
-                      return Container(
-                        height: Get.height * 0.1,
-                        width: Get.width,
-                        child: Center(
-                          child: Image.asset(
-                            AppImages.loading,
-                            width: Get.width * 0.1,
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return Container(
+                          height: Get.height * 0.2,
+                          width: Get.width,
+                          child: Center(
+                            child: Image.asset(
+                              AppImages.loading,
+                              width: Get.width * 0.2,
+                              height: Get.height * 0.2,
+                              alignment: Alignment.center,
+                            ),
+                          ),
+                        );
+                      default:
+                        if (snapshot.data == null) {
+                          return Container(
                             height: Get.height * 0.1,
-                            alignment: Alignment.center,
-                          ),
-                        ),
-                      );
-                    } else {
-                      return Column(
-                        children: [
-                          Image.network(
-                            user.avatar,
-                            width: Get.width * 0.2,
-                            alignment: Alignment.center,
-                          ),
-                          SizedBox(height: Get.height * 0.03),
-                          Text(
-                            user.name,
-                            style: Theme.of(context).textTheme.headline2,
-                          ),
-                          Text(
-                            user.email,
-                            style: Theme.of(context).textTheme.headline4,
-                          ),
-                        ],
-                      );
+                            width: Get.width,
+                            child: Center(
+                              child: Image.asset(
+                                AppImages.appLogo2,
+                                width: Get.width * 0.5,
+                                height: Get.height * 0.1,
+                                alignment: Alignment.center,
+                              ),
+                            ),
+                          );
+                        } else {
+                          return Column(
+                            children: [
+                              Image.network(
+                                user.avatar,
+                                width: Get.width * 0.2,
+                                alignment: Alignment.center,
+                              ),
+                              SizedBox(height: Get.height * 0.03),
+                              Text(
+                                user.name,
+                                style: Theme.of(context).textTheme.headline2,
+                              ),
+                              Text(
+                                user.email,
+                                style: Theme.of(context).textTheme.headline4,
+                              ),
+                            ],
+                          );
+                        }
                     }
                   },
                 ),
@@ -109,13 +136,24 @@ class _StartPageState extends State<ProfilePage> {
                 Container(
                   height: Get.height * 0.06,
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditPorfilePage(),
-                        ),
-                      );
+                    onTap: () async {
+                      final SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      var check = prefs.getString('id');
+                      if (check == 'null' || check == null) {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Pop_Login();
+                            });
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditPorfilePage(),
+                          ),
+                        );
+                      }
                     },
                     child: Row(
                       children: [
@@ -482,7 +520,7 @@ class _StartPageState extends State<ProfilePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Destination_Page(route:""),
+                              builder: (context) => Destination_Page(route: ""),
                             ),
                           );
                         },
@@ -515,21 +553,6 @@ class _StartPageState extends State<ProfilePage> {
                                     style:
                                         Theme.of(context).textTheme.headline3,
                                   ),
-                                  /*FutureBuilder(
-                                      future: _carregarLanguage(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot snapshot) {
-                                        if (snapshot.data == null) {
-                                          return const Text(" ");
-                                        } else {
-                                          return Text(
-                                            ' (' + language + ')',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline3,
-                                          );
-                                        }
-                                      }),*/
                                 ],
                               ),
                             ),
@@ -541,13 +564,24 @@ class _StartPageState extends State<ProfilePage> {
                     Container(
                       height: Get.height * 0.06,
                       child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PedidoPage(),
-                            ),
-                          );
+                        onTap: () async {
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          var check = prefs.getString('id');
+                          if (check == 'null' || check == null) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Pop_Login();
+                                });
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PedidoPage(),
+                              ),
+                            );
+                          }
                         },
                         child: Row(
                           children: [
@@ -578,21 +612,6 @@ class _StartPageState extends State<ProfilePage> {
                                     style:
                                         Theme.of(context).textTheme.headline3,
                                   ),
-                                  /*FutureBuilder(
-                                      future: _carregarIsland(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot snapshot) {
-                                        if (snapshot.data == null) {
-                                          return const Text(" ");
-                                        } else {
-                                          return Text(
-                                            ' (' + island + ')',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline3,
-                                          );
-                                        }
-                                      }),*/
                                 ],
                               ),
                             ),
@@ -765,9 +784,20 @@ class _StartPageState extends State<ProfilePage> {
   }
 
   _terminarSessao() async {
-    var session = FlutterSession();
-    await session.set('id', "null");
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var check = prefs.getString('id');
+    if (check == 'null' || check == null) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Pop_Login();
+          });
+    }else{
+      prefs.remove('id');
+
     Navigator.of(context)
         .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+    }
+    
   }
 }

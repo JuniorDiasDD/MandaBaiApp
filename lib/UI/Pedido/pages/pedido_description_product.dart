@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
-import 'package:manda_bai/Core/app_colors.dart';
-import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PedidoDescriptionProduct extends StatefulWidget {
   int idProduct;
@@ -28,7 +26,8 @@ class _PedidoDescriptionProductState extends State<PedidoDescriptionProduct> {
 
   var money_txt;
   Future _carregarMoney() async {
-    money_txt = await FlutterSession().get('money');
+     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    money_txt = prefs.getString('money');
 
     return money_txt;
   }

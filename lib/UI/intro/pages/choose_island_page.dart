@@ -1,12 +1,12 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:websafe_svg/websafe_svg.dart';
 
@@ -149,10 +149,10 @@ class _ChooseIslandState extends State<ChooseIsland> {
   }
 
   _navigacao() async {
-   // print(dropdownValue);
-     var session = FlutterSession();
-    await session.set('onboarding', true);
-    await session.set('island', dropdownValue);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+  
+    await prefs.setString('onboarding', 'true');
+    await prefs.setString('island', dropdownValue);
     Navigator.pushReplacementNamed(context, '/home');
   }
 }

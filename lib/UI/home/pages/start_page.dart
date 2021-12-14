@@ -2,23 +2,16 @@ import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
-import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
-import 'package:manda_bai/Model/category.dart';
-import 'package:manda_bai/Model/product.dart';
-import 'package:manda_bai/Model/user.dart';
-import 'package:manda_bai/UI/category_filter/pages/category_page.dart';
-import 'package:manda_bai/UI/home/components/header.dart';
 import 'package:manda_bai/UI/home/components/item_category.dart';
 import 'package:manda_bai/UI/home/components/item_new.dart';
-import 'package:manda_bai/UI/home/components/menu.dart';
-import 'package:manda_bai/UI/home/components/product_list_component.dart';
 import 'package:manda_bai/data/madaBaiData.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class StartPage extends StatefulWidget {
   @override
@@ -33,16 +26,18 @@ class _StartPageState extends State<StartPage> {
   ];
 
   Future _carregarCategory() async {
-    var island_atualizar = await FlutterSession().get('island_atualizar');
-    print(island_atualizar);
+   
+     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var island_atualizar= prefs.getString('island_atualizar');
+   // print(island_atualizar);
     if (island_atualizar != null && island_atualizar != false) {
       list_category = await ServiceRequest.loadCategory();
 
       if (list_category.isEmpty) {
         return null;
       }
-      var session = FlutterSession();
-      await session.set('island_atualizar', "false");
+      
+      await prefs.setString('island_atualizar', "false");
     } else {
       if (list_category.isEmpty) {
         // print("entrou");
@@ -58,24 +53,27 @@ class _StartPageState extends State<StartPage> {
   }
 
   validateMoney() async {
-    var money = await FlutterSession().get('money');
-    var session = FlutterSession();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var money = prefs.getString('money');
     if (money == "null" || money == null) {
-      await session.set('money', "EUR");
+      await prefs.setString('money', "EUR");
     }
   }
 
   validateLanguage() async {
-    var language = await FlutterSession().get('language');
-    var session = FlutterSession();
+     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var language = prefs.getString('language');
+  
     if (language == "null" || language == null) {
-      await session.set('language', "pt");
+      await prefs.setString('language', "pt");
     }
   }
 
   validateDados() async {
-    var username = await FlutterSession().get('username');
-    var password = await FlutterSession().get('password');
+     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    
+    var username = prefs.getString('username');
+    var password = prefs.getString('password');
 
     if (password != null && username != null) {
       user.username = username.toString();
@@ -164,10 +162,10 @@ class _StartPageState extends State<StartPage> {
                     Container(
                       padding: EdgeInsets.only(
                           top: Get.height * 0.01, left: Get.width * 0.023),
-                      child: Text(
+                      child:Text(AppLocalizations.of(context)!.title_categoria),/*  Text(
                         'Categorias',
                         style: Theme.of(context).textTheme.headline1,
-                      ),
+                      ),*/
                     ),
                   ],
                 ),

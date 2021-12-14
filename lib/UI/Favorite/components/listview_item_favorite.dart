@@ -4,7 +4,9 @@ import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/Favorite/controller/favorite_controller.dart';
 import 'package:manda_bai/UI/home/pages/home_page.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ItemFavoriteComponent extends StatefulWidget {
   // final CartPageController cartPageController = Get.find();
@@ -79,36 +81,47 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                           IconButton(
                             padding: const EdgeInsets.all(0.0),
                             onPressed: () async {
-                              setState(() {
-                                controller.loading = true;
-                              });
-                              var check = await _addCart(widget.product.id);
-                              print(check.toString());
-                              if (check == true) {
-                                setState(() {
-                                  controller.loading = false;
-                                });
+                              final SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              var check = prefs.getString('id');
+                              if (check == 'null' || check == null) {
                                 showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
-                                      return Pop_up_Message(
-                                          mensagem: "Adicionado no carrinho",
-                                          icon: Icons.check,
-                                          caminho: "addCarrinho");
+                                      return Pop_Login();
                                     });
                               } else {
                                 setState(() {
-                                  controller.loading = false;
+                                  controller.loading = true;
                                 });
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return Pop_up_Message(
-                                          mensagem:
-                                              "Erro em adicionar no carrinho\nTente novamente em segundos!",
-                                          icon: Icons.error,
-                                          caminho: "erro");
-                                    });
+                                var check = await _addCart(widget.product.id);
+                                print(check.toString());
+                                if (check == true) {
+                                  setState(() {
+                                    controller.loading = false;
+                                  });
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Pop_up_Message(
+                                            mensagem: "Adicionado no carrinho",
+                                            icon: Icons.check,
+                                            caminho: "addCarrinho");
+                                      });
+                                } else {
+                                  setState(() {
+                                    controller.loading = false;
+                                  });
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Pop_up_Message(
+                                            mensagem:
+                                                "Erro em adicionar no carrinho\nTente novamente em segundos!",
+                                            icon: Icons.error,
+                                            caminho: "erro");
+                                      });
+                                }
                               }
                             },
                             icon: const Icon(

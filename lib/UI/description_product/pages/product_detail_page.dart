@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_session/flutter_session.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
@@ -8,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/cart/pages/cart_page.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProdutoDetailPage extends StatefulWidget {
   Product product;
@@ -43,7 +43,8 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
 
   var money_txt;
   Future _carregarMoney() async {
-    money_txt = await FlutterSession().get('money');
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    money_txt = prefs.getString('money');
 
     return money_txt;
   }
@@ -70,7 +71,10 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: Icon(Icons.arrow_back,color:Colors.black,),
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ],
@@ -94,76 +98,72 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                           style: Theme.of(context).textTheme.headline1,
                         ),
                       ),
-
-                  FutureBuilder(
-                      future: _carregarMoney(),
-                      builder: (BuildContext context, AsyncSnapshot snapshot) {
-                        if (snapshot.data == null) {
-                          return const Text(" ");
-                        } else {
-                          switch (money_txt) {
-                            case 'EUR':
-                              {
-                                return Text(
-                                  widget.product.price.toStringAsFixed(2) +
-                                      " €",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline5!
-                                      .copyWith(
-                                        fontSize: Get.width * 0.04,
-                                      ),
-                                );
+                      FutureBuilder(
+                          future: _carregarMoney(),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.data == null) {
+                              return const Text(" ");
+                            } else {
+                              switch (money_txt) {
+                                case 'EUR':
+                                  {
+                                    return Text(
+                                      widget.product.price.toStringAsFixed(2) +
+                                          " €",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline5!
+                                          .copyWith(
+                                            fontSize: Get.width * 0.04,
+                                          ),
+                                    );
+                                  }
+                                case 'ECV':
+                                  {
+                                    return Text(
+                                      widget.product.price.toStringAsFixed(0) +
+                                          " \$",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline5!
+                                          .copyWith(
+                                            fontSize: Get.width * 0.04,
+                                          ),
+                                    );
+                                  }
+                                case 'USD':
+                                  {
+                                    return Text(
+                                      "\$ " +
+                                          widget.product.price
+                                              .toStringAsFixed(2),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline5!
+                                          .copyWith(
+                                            fontSize: Get.width * 0.04,
+                                          ),
+                                    );
+                                  }
                               }
-                            case 'ECV':
-                              {
-                                return Text(
-                                  widget.product.price.toStringAsFixed(0) +
-                                      " \$",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline5!
-                                      .copyWith(
-                                        fontSize: Get.width * 0.04,
-                                      ),
-                                );
-                              }
-                            case 'USD':
-                              {
-                                return Text(
-                                  "\$ " +
-                                      widget.product.price.toStringAsFixed(2),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline5!
-                                      .copyWith(
-                                        fontSize: Get.width * 0.04,
-                                      ),
-                                );
-                              }
-                          }
-                          return Container();
-                        }
-                      }),
-
+                              return Container();
+                            }
+                          }),
                     ],
                   ),
                   IconButton(
                     padding: const EdgeInsets.all(0.0),
                     onPressed: () {
                       if (widget.product.favorite == false) {
-                        ServiceRequest.addFavrite(
-                            widget.product.id);
+                        ServiceRequest.addFavrite(widget.product.id);
                         setState(() {
-                          widget.product.favorite =
-                          !widget.product.favorite;
+                          widget.product.favorite = !widget.product.favorite;
                         });
                       } else {
-                        ServiceRequest.removeFavrite(
-                            widget.product.id);
+                        ServiceRequest.removeFavrite(widget.product.id);
                         setState(() {
-                          widget.product.favorite =
-                          !widget.product.favorite;
+                          widget.product.favorite = !widget.product.favorite;
                         });
                       }
                     },
@@ -216,9 +216,12 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                     children: [
                       Align(
                         alignment: Alignment.centerLeft,
-                        child: Text('Descrição',
-                         style: Theme.of(context).textTheme.headline2!.copyWith( fontSize: Get.width * 0.035,
-                         ),
+                        child: Text(
+                          'Descrição',
+                          style:
+                              Theme.of(context).textTheme.headline2!.copyWith(
+                                    fontSize: Get.width * 0.035,
+                                  ),
                         ),
                       ),
                       SizedBox(height: Get.height * 0.01),
@@ -317,7 +320,6 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                 ),
               ),
             ),
-
           ],
         ),
       ),

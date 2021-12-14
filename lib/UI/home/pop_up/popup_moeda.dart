@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/UI/home/pages/home_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Popup_Moeda extends StatefulWidget {
   const Popup_Moeda({Key? key}) : super(key: key);
@@ -16,7 +16,9 @@ class _Popup_MoedaState extends State<Popup_Moeda> {
   String _isRadioSelected = "";
   Future _carregarMoney() async {
     if (_isRadioSelected == "") {
-      _isRadioSelected = await FlutterSession().get('money');
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      _isRadioSelected = prefs.getString('money')!;
     }
     return _isRadioSelected;
   }
@@ -145,8 +147,11 @@ class _Popup_MoedaState extends State<Popup_Moeda> {
                                       color: Colors.white),
                                 ),
                                 onPressed: () async {
-                                  var session = FlutterSession();
-                                  await session.set('money', _isRadioSelected);
+                                  final SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+
+                                  await prefs.setString(
+                                      'money', _isRadioSelected);
                                   setState(() {
                                     Navigator.pushReplacement(
                                         context,

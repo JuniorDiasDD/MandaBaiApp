@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/cart_controller.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 
 import 'package:manda_bai/Model/cart_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ItemCart extends StatefulWidget {
   final CartPageController cartPageController = Get.find();
@@ -22,7 +22,8 @@ class _ItemCartState extends State<ItemCart> {
   double price = 0.0;
   String money = "";
   Future _carregarMoney() async {
-    money = await FlutterSession().get('money');
+     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    money = prefs.getString('money')!;
     return money;
   }
 

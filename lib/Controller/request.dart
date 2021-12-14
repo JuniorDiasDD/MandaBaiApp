@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter_session/flutter_session.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Model/cart_model.dart';
 import 'package:manda_bai/Model/category.dart';
@@ -27,9 +26,11 @@ class ServiceRequest {
       if (response.statusCode == 200) {
         final _cats = jsonResponse.cast<Map<String, dynamic>>();
         list = _cats.map<Category>((cat) => Category.fromJson(cat)).toList();
-        var island = await FlutterSession().get('island');
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        var island = prefs.getString('island');
+
         for (var i = 0; i < list.length; i++) {
-          if (list[i].name.contains(island) == true) {
+          if (list[i].name.contains(island!) == true) {
             var name = list[i].name.split(" / ");
             list[i].name = name[0];
             list_final.add(list[i]);
@@ -135,8 +136,8 @@ class ServiceRequest {
     print(response.body);
     if (response.statusCode == 201) {
       final jsonResponse = json.decode(response.body);
-      var session = FlutterSession();
-      await session.set('id', jsonResponse["id"]);
+      //  var session = FlutterSession();
+      //  await session.set('id', jsonResponse["id"]);
       return true;
     } else if (response.statusCode == 503) {
       print("Erro de serviço");
@@ -183,7 +184,8 @@ class ServiceRequest {
         "country": ""
       }
     });
-    var id = await FlutterSession().get('id');
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var id = prefs.getString('id');
     var response = await http.put(
         Uri.parse(updateUser + id.toString() + "?" + key),
         headers: headers,
@@ -211,10 +213,11 @@ class ServiceRequest {
 
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
-      var session = FlutterSession();
-      await session.set('id', jsonResponse["ID"]);
-      await session.set('username', username);
-      await session.set('password', password);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      await prefs.setString('id', jsonResponse["ID"].toString());
+      await prefs.setString('username', username);
+      await prefs.setString('password', password);
       user.senha = password;
       user.username = username;
       loginCoCart();
@@ -238,7 +241,9 @@ class ServiceRequest {
   //! Get User
 
   static Future GetUser() async {
-    var id = await FlutterSession().get('id');
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var id = prefs.getString('id');
+
     var response = await http.post(Uri.parse(
       getUser + id.toString() + "?" + key,
     ));
@@ -284,7 +289,10 @@ class ServiceRequest {
       final jsonResponse = json.decode(response.body);
       final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();
       list = _cats.map<CartModel>((cat) => CartModel.fromJson(cat)).toList();
-      var island = await FlutterSession().get('island');
+
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      var island = prefs.getString('island');
       for (int i = 0; i < list.length; i++) {
         response = await http
             .get(Uri.parse(get_Produto + list[i].id.toString() + "?" + key));
@@ -336,7 +344,7 @@ class ServiceRequest {
     var response = await http.post(Uri.parse(addItemCart),
         headers: <String, String>{'authorization': basicAuth},
         body: {'id': item.toString(), 'quantity': quant.toString()});
-    print("addCart:"+response.body);
+    print("addCart:" + response.body);
 
     if (response.statusCode == 200) {
       //  final jsonResponse = json.decode(response.body);
@@ -353,12 +361,12 @@ class ServiceRequest {
   //?add favorite
   static Future addFavrite(int id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String itemFavortiesString = prefs.getString('itens_favorites');
-    var island = await FlutterSession().get('island');
+    final String? itemFavortiesString = prefs.getString('itens_favorites');
+    var island = prefs.getString('island');
     if (itemFavortiesString != null) {
       // decode and store data in SharedPreferences
       List<Favorite> list = Favorite.decode(itemFavortiesString);
-      list.add(new Favorite(id: id, island: island));
+      list.add(new Favorite(id: id, island: island.toString()));
 
       // Encode and store data in SharedPreferences
       final String encodedData = Favorite.encode(list);
@@ -366,7 +374,7 @@ class ServiceRequest {
       await prefs.setString('itens_favorites', encodedData);
     } else {
       List<Favorite> list = [];
-      list.add(new Favorite(id: id, island: island));
+      list.add(new Favorite(id: id, island: island.toString()));
       // Encode and store data in SharedPreferences
       final String encodedData = Favorite.encode(list);
 
@@ -376,9 +384,8 @@ class ServiceRequest {
 
   //?remove favorite
   static Future removeFavrite(int id) async {
-    print("id" + id.toString());
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String itemFavortiesString = prefs.getString('itens_favorites');
+    final String? itemFavortiesString = prefs.getString('itens_favorites');
 
     if (itemFavortiesString != null) {
       // decode and store data in SharedPreferences
@@ -404,12 +411,12 @@ class ServiceRequest {
   static Future<List<Product>> loadFavorite() async {
     List<Product> list = [];
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String itemFavortiesString = prefs.getString('itens_favorites');
+    final String? itemFavortiesString = prefs.getString('itens_favorites');
 
     if (itemFavortiesString != null) {
       // decode and store data in SharedPreferences
       List<Favorite> listFavorites = Favorite.decode(itemFavortiesString);
-      var island = await FlutterSession().get('island');
+      var island = prefs.getString('island');
       for (int i = 0; i < listFavorites.length; i++) {
         if (listFavorites[i].island == island) {
           var response = await http.get(Uri.parse(
@@ -448,7 +455,7 @@ class ServiceRequest {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     // await prefs.remove('itens_location');
-    final String itemLocationString = prefs.getString('itens_location');
+    final String? itemLocationString = prefs.getString('itens_location');
     if (itemLocationString != null) {
       //  print("nao vazio");
       // decode and store data in SharedPreferencesSS
@@ -464,7 +471,7 @@ class ServiceRequest {
   static Future addLocation(Location location) async {
     Location new_location = location;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String itemLocationString = prefs.getString('itens_location');
+    String? itemLocationString = prefs.getString('itens_location');
 
     if (itemLocationString != null) {
       // decode and store data in SharedPreferences
@@ -502,7 +509,7 @@ class ServiceRequest {
   //?remove location
   static Future removeLocation(int id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String itemLocationString = prefs.getString('itens_location');
+    final String? itemLocationString = prefs.getString('itens_location');
 
     if (itemLocationString != null) {
       // decode and store data in SharedPreferences
@@ -548,7 +555,9 @@ class ServiceRequest {
   static Future<List<Order>> loadOrder() async {
     List<Order> list = [];
     List<Order> list_order = [];
-    var id = await FlutterSession().get('id');
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var id = prefs.getString('id');
     var response =
         await http.get(Uri.parse(getOrder + "&customer=" + id.toString()));
     print(response.body);
@@ -577,9 +586,9 @@ class ServiceRequest {
       'Content-Type': 'application/json',
     };
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String userString = prefs.getString('user');
-    var userCache = json.decode(userString);
-    var id = await FlutterSession().get('id');
+    final String? userString = prefs.getString('user');
+    var userCache = json.decode(userString!);
+    var id = prefs.getString('id');
     var data;
     if (location == null) {
       data = json.encode({

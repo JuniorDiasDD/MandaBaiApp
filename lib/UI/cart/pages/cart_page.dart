@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/cart_controller.dart';
 import 'package:manda_bai/Controller/request.dart';
@@ -8,6 +7,7 @@ import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/cart_model.dart';
 import 'package:manda_bai/UI/cart/components/listview_item_cart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 import 'checkout_page_step_2.dart';
 
@@ -40,7 +40,8 @@ class _StartPageState extends State<CartPage> {
   }
 
   Future _carregarMoney() async {
-    money = await FlutterSession().get('money');
+     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    money = prefs.getString('money')!;
     return money;
   }
 

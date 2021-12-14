@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'onboarding_screen.dart';
 
@@ -20,8 +20,10 @@ class _SplashPageState extends State<SplashPage> {
     // TODO: implement initState
     super.initState();
     Future.delayed(Duration(seconds: 2)).then((_) async {
-      var check = await FlutterSession().get('onboarding');
-      if (check == true) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      var check = prefs.getString('onboarding');
+      if (check.toString() == 'true' && check != null) {
         Navigator.pushReplacementNamed(context, '/home');
       } else {
         Navigator.pushReplacement(context,
@@ -33,7 +35,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     // backgroundColor: Colors.white,
+      // backgroundColor: Colors.white,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

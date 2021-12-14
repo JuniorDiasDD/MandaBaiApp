@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/category_filter/controller/categoryController.dart';
 import 'package:manda_bai/UI/description_product/pages/product_detail_page.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductListComponent extends StatefulWidget {
   Product product;
@@ -26,7 +27,8 @@ class _ProductListComponentState extends State<ProductListComponent> {
 
   var money_txt;
   Future _carregarMoney() async {
-    money_txt = await FlutterSession().get('money');
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    money_txt = prefs.getString('money');
 
     return money_txt;
   }
@@ -184,15 +186,26 @@ class _ProductListComponentState extends State<ProductListComponent> {
                               IconButton(
                                 padding: const EdgeInsets.all(0.0),
                                 onPressed: () async {
-                                  setState(() {
-                                    controller.loading = true;
-                                     });
-                                    var check = await _addCart(widget.product.id);
+                                  final SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  var check = prefs.getString('id');
+                                  if (check == 'null' || check == null) {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return Pop_Login();
+                                        });
+                                  } else {
+                                    setState(() {
+                                      controller.loading = true;
+                                    });
+                                    var check =
+                                        await _addCart(widget.product.id);
                                     print(check.toString());
-                                    if (check==true) {
-                                     setState(() {
-                                    controller.loading = false;
-                                     });
+                                    if (check == true) {
+                                      setState(() {
+                                        controller.loading = false;
+                                      });
                                       showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
@@ -204,8 +217,8 @@ class _ProductListComponentState extends State<ProductListComponent> {
                                           });
                                     } else {
                                       setState(() {
-                                    controller.loading = false;
-                                     });
+                                        controller.loading = false;
+                                      });
                                       showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
@@ -216,7 +229,7 @@ class _ProductListComponentState extends State<ProductListComponent> {
                                                 caminho: "erro");
                                           });
                                     }
-                                 
+                                  }
                                 },
                                 icon: const Icon(Icons.shopping_cart_outlined),
                                 iconSize: Get.width * 0.05,
