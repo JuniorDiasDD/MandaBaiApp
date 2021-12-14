@@ -26,17 +26,16 @@ class _StartPageState extends State<StartPage> {
   ];
 
   Future _carregarCategory() async {
-   
-     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var island_atualizar= prefs.getString('island_atualizar');
-   // print(island_atualizar);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var island_atualizar = prefs.getString('island_atualizar');
+    // print(island_atualizar);
     if (island_atualizar != null && island_atualizar != false) {
       list_category = await ServiceRequest.loadCategory();
 
       if (list_category.isEmpty) {
         return null;
       }
-      
+
       await prefs.setString('island_atualizar', "false");
     } else {
       if (list_category.isEmpty) {
@@ -61,17 +60,17 @@ class _StartPageState extends State<StartPage> {
   }
 
   validateLanguage() async {
-     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     var language = prefs.getString('language');
-  
+
     if (language == "null" || language == null) {
       await prefs.setString('language', "pt");
     }
   }
 
   validateDados() async {
-     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
     var username = prefs.getString('username');
     var password = prefs.getString('password');
 
@@ -89,6 +88,7 @@ class _StartPageState extends State<StartPage> {
     validateDados();
   }
 
+  int _current = 0;
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
@@ -110,12 +110,16 @@ class _StartPageState extends State<StartPage> {
                   children: [
                     CarouselSlider(
                       options: CarouselOptions(
-                        viewportFraction: 1,
-                        autoPlayAnimationDuration:
-                            const Duration(milliseconds: 100),
-                        autoPlay: true,
-                        enlargeCenterPage: true,
-                      ),
+                          viewportFraction: 1,
+                          autoPlayAnimationDuration:
+                              const Duration(milliseconds: 100),
+                          autoPlay: true,
+                          enlargeCenterPage: true,
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              _current = index;
+                            });
+                          }),
                       items: imagesList
                           .map(
                             (item) => Center(
@@ -128,6 +132,29 @@ class _StartPageState extends State<StartPage> {
                             ),
                           )
                           .toList(),
+                    ),
+                    SizedBox(
+                       height: Get.height * 0.25,
+                      child: Row(
+                        mainAxisAlignment:MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: imagesList.map(
+                          (image) {
+                            int index = imagesList.indexOf(image);
+                            return Container(
+                              width: 10.0,
+                              height: 10.0,
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 2.0),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: _current == index
+                                      ? Colors.green
+                                      : Colors.green[50],),
+                            );
+                          },
+                        ).toList(), // this was the part the I had to add
+                      ),
                     ),
                   ],
                 ),
@@ -162,7 +189,8 @@ class _StartPageState extends State<StartPage> {
                     Container(
                       padding: EdgeInsets.only(
                           top: Get.height * 0.01, left: Get.width * 0.023),
-                      child:Text(AppLocalizations.of(context)!.title_categoria),/*  Text(
+                      child: Text(AppLocalizations.of(context)!
+                          .title_categoria), /*  Text(
                         'Categorias',
                         style: Theme.of(context).textTheme.headline1,
                       ),*/

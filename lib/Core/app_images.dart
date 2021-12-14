@@ -44,6 +44,9 @@ class AppImages {
   static const appLogo2 = 'assets/images/logo2.png';
   static const whatsapp = 'assets/images/whatsapp.png';
   static const ilhasWhite = 'assets/images/ilhasWhite.png';
-
-
+  static const messenger_logo = 'assets/images/messenger_logo.png';
+  static const whatsapp_logo = 'assets/images/whatsapp_logo.png';
+  static const gmail_logo = 'assets/images/gmail_logo.png';
+  static const instagram_logo = 'assets/images/instagram_logo.png';
+  static const facebook_logo = 'assets/images/facebook_logo.png';
 }

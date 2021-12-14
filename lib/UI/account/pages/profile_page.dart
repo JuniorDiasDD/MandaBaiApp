@@ -13,6 +13,7 @@ import 'package:manda_bai/UI/home/pop_up/carrega_saldo.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_island.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_moeda.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -635,6 +636,117 @@ class _StartPageState extends State<ProfilePage> {
                             right: Get.width * 0.05,
                           ),
                           child: Text(
+                            "Redes Sociais",
+                            style: Theme.of(context).textTheme.headline4,
+                          ),
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                            width: Get.width * 0.4,
+                            child: const Divider(
+                              height: 36,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: Get.height * 0.01),
+                    Container(
+                      height: Get.height * 0.06,
+                      child: GestureDetector(
+                        onTap: () async {
+                          var facebookUrl =
+                              'https://www.facebook.com/shopmandabai/';
+                          await launch(facebookUrl);
+                        },
+                        child: Row(
+                          children: [
+                            Container(
+                              height: Get.height * 0.042,
+                              width: Get.height * 0.042,
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(100),
+                                ),
+                                border:
+                                    Border.all(color: Colors.deepPurpleAccent),
+                                image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: AssetImage(AppImages.facebook_logo),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: Get.width * 0.02,
+                              ),
+                              child: Text(
+                                'Facebook',
+                                style: Theme.of(context).textTheme.headline3,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: Get.height * 0.01),
+                    Container(
+                      height: Get.height * 0.06,
+                      child: GestureDetector(
+                        onTap: () async {
+                          var facebookUrl =
+                              'https://www.instagram.com/mandabaishop/';
+                          await launch(facebookUrl);
+                        },
+                        child: Row(
+                          children: [
+                            Container(
+                              height: Get.height * 0.042,
+                              width: Get.height * 0.042,
+                              decoration: BoxDecoration(
+                                color: Colors.deepPurpleAccent,
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(100),
+                                ),
+                                border:
+                                    Border.all(color: Colors.deepPurpleAccent),
+                                image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: AssetImage(AppImages.instagram_logo),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: Get.width * 0.02,
+                              ),
+                              child: Text(
+                                'Instagram',
+                                style: Theme.of(context).textTheme.headline3,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: Get.height * 0.01),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: SizedBox(
+                            width: Get.width * 0.1,
+                            child: Divider(
+                              height: 36,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: Get.width * 0.05,
+                            right: Get.width * 0.05,
+                          ),
+                          child: Text(
                             "Informações",
                             style: Theme.of(context).textTheme.headline4,
                           ),
@@ -792,12 +904,11 @@ class _StartPageState extends State<ProfilePage> {
           builder: (BuildContext context) {
             return Pop_Login();
           });
-    }else{
+    } else {
       prefs.remove('id');
 
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
     }
-    
   }
 }
