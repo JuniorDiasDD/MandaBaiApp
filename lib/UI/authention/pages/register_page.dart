@@ -32,6 +32,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String mensage_password = " ";
   Color cor_password = Colors.transparent;
   bool statePassword = false;
+    bool loading = false;
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
@@ -45,9 +46,14 @@ class _RegisterPageState extends State<RegisterPage> {
           avatar: "",
           city: input_city.text,
           country: input_country.text);
-
+ setState(() {
+        loading = true;
+      });
       bool check = await ServiceRequest.createAccount(new_user);
       if (check == true) {
+         setState(() {
+        loading = false;
+      });
         return showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -57,6 +63,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   caminho: "registo");
             });
       } else {
+         setState(() {
+        loading = false;
+      });
         return showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -94,300 +103,320 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Stack(
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Align(
-                  alignment: Alignment.bottomLeft,
-                  child: ColoredCircleComponent(),
+                Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: ColoredCircleComponent(),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 33.0),
+                      width: Get.width,
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(Icons.arrow_back),
+                        alignment: Alignment.topLeft,
+                      ),
+                    ),
+                  ],
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: 33.0),
-                  width: Get.width,
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(Icons.arrow_back),
-                    alignment: Alignment.topLeft,
+                Image.asset(
+                  AppImages.appLogo2,
+                  width: Get.width * 0.6,
+                  height: Get.height * 0.1,
+                ),
+                SizedBox(
+                  height: Get.height * 0.03,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: Get.width * 0.05,
+                    right: Get.width * 0.05,
+                  ),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: Get.width * 0.43,
+                              child: TextFormField(
+                                controller: input_nome,
+                                obscureText: false,
+                                style: Theme.of(context).textTheme.headline4,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Theme.of(context).backgroundColor,
+                                  border: OutlineInputBorder(
+                                    borderRadius: new BorderRadius.circular(15.0),
+                                    borderSide: new BorderSide(),
+                                  ),
+                                  labelText: 'Nome',
+                                  labelStyle: Theme.of(context).textTheme.headline4,
+                                ),
+                                validator: (value) =>
+                                    value!.isEmpty ? 'Insira o Nome' : null,
+                              ),
+                            ),
+                            SizedBox(
+                              width: Get.width * 0.43,
+                              child: TextFormField(
+                                controller: input_nickname,
+                                autocorrect: false,
+                                obscureText: false,
+                                style: Theme.of(context).textTheme.headline4,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Theme.of(context).backgroundColor,
+                                  border: OutlineInputBorder(
+                                    borderRadius: new BorderRadius.circular(15.0),
+                                    borderSide: new BorderSide(),
+                                  ),
+                                  labelText: 'Apelido',
+                                  labelStyle: Theme.of(context).textTheme.headline4,
+                                ),
+                                validator: (value) =>
+                                    value!.isEmpty ? 'Insira o Apelido' : null,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: Get.height * 0.01),
+                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: Get.width * 0.43,
+                              child: TextFormField(
+                                controller: input_country,
+                                style: Theme.of(context).textTheme.headline4,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Theme.of(context).backgroundColor,
+                                  border: OutlineInputBorder(
+                                    borderRadius: new BorderRadius.circular(15.0),
+                                    borderSide: new BorderSide(),
+                                  ),
+                                  labelText: 'Pais',
+                                  labelStyle: Theme.of(context).textTheme.headline4,
+                                ),
+                                validator: (value) =>
+                                    value!.isEmpty ? 'Insira o Pais' : null,
+                              ),
+                            ),
+                            SizedBox(
+                              width: Get.width * 0.43,
+                              child: TextFormField(
+                                controller: input_city,
+                                style: Theme.of(context).textTheme.headline4,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Theme.of(context).backgroundColor,
+                                  border: OutlineInputBorder(
+                                    borderRadius: new BorderRadius.circular(15.0),
+                                    borderSide: new BorderSide(),
+                                  ),
+                                  labelText: 'Cidade',
+                                  labelStyle: Theme.of(context).textTheme.headline4,
+                                ),
+                                validator: (value) =>
+                                    value!.isEmpty ? 'Insira a Cidade' : null,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: Get.height * 0.01),
+                        TextFormField(
+                          controller: input_email,
+                          obscureText: false,
+                          style: Theme.of(context).textTheme.headline4,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Theme.of(context).backgroundColor,
+                            border: OutlineInputBorder(
+                              borderRadius: new BorderRadius.circular(15.0),
+                              borderSide: new BorderSide(),
+                            ),
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.all(0.0),
+                              child: Icon(
+                                Icons.email,
+                                color: Colors.grey,
+                              ), // icon is 48px widget.
+                            ),
+                            labelText: 'Email',
+                            labelStyle: Theme.of(context).textTheme.headline4,
+                          ),
+                          validator: (value) => EmailValidator.validate(value!)
+                              ? null
+                              : 'Email inváido',
+                        ),
+                        SizedBox(height: Get.height * 0.01),
+                        TextFormField(
+                          controller: input_telefone,
+                          keyboardType: TextInputType.phone,
+                          style: Theme.of(context).textTheme.headline4,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Theme.of(context).backgroundColor,
+                            border: OutlineInputBorder(
+                              borderRadius: new BorderRadius.circular(15.0),
+                              borderSide: new BorderSide(),
+                            ),
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.all(0.0),
+                              child: Icon(
+                                Icons.phone,
+                                color: Colors.grey,
+                              ), // icon is 48px widget.
+                            ),
+                            labelText: 'Telefone',
+                            labelStyle: Theme.of(context).textTheme.headline4,
+                          ),
+                          validator: (value) =>
+                              value!.length<7 ? 'Telefone inválido' : null,
+                        ),
+                        SizedBox(height: Get.height * 0.01),
+                        TextFormField(
+                          controller: input_username,
+                          obscureText: false,
+                          style: Theme.of(context).textTheme.headline4,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Theme.of(context).backgroundColor,
+                            border: OutlineInputBorder(
+                              borderRadius: new BorderRadius.circular(15.0),
+                              borderSide: new BorderSide(),
+                            ),
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.all(0.0),
+                              child: Icon(
+                                Icons.person,
+                                color: Colors.grey,
+                              ), // icon is 48px widget.
+                            ),
+                            labelText: 'Utilizador',
+                            labelStyle: Theme.of(context).textTheme.headline4,
+                          ),
+                          validator: (value) =>
+                              value!.isEmpty ? 'Insira o Utilizador' : null,
+                        ),
+                        SizedBox(height: Get.height * 0.01),
+                        TextFormField(
+                          controller: input_senha,
+                          obscureText: statePassword,
+                          style: Theme.of(context).textTheme.headline4,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Theme.of(context).backgroundColor,
+                            border: OutlineInputBorder(
+                              borderRadius: new BorderRadius.circular(15.0),
+                              borderSide: new BorderSide(),
+                            ),
+                            prefixIcon: Padding(
+                              padding: EdgeInsets.all(0.0),
+                              child: Icon(
+                                Icons.lock,
+                                color: Colors.grey,
+                              ), // icon is 48px widget.
+                            ),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  statePassword = !statePassword;
+                                });
+                              },
+                              icon: Icon(
+                                statePassword
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                            ),
+                            labelText: 'Palavra-passe',
+                            labelStyle: Theme.of(context).textTheme.headline4,
+                          ),
+                          validator: (value) =>
+                              value!.isEmpty ? 'Insira a senha' : null,
+                          onChanged: (value) => _validar_password(),
+                        ),
+                        SizedBox(height: Get.height * 0.005),
+                        Align(
+                          alignment:Alignment.topLeft,
+                          child: Text(
+                            mensage_password,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline4!
+                                .copyWith(color: cor_password),
+                          ),
+                        ),
+                        SizedBox(
+                          height: Get.height * 0.02,
+                        ),
+                        Container(
+                          height: Get.height * 0.07,
+                          width: Get.width,
+                          decoration: BoxDecoration(
+                            color: AppColors.greenColor,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Theme.of(context).cardColor,
+                                blurRadius: 2.0,
+                                spreadRadius: 0.0,
+                                offset:
+                                    Offset(2.0, 2.0), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          child: TextButton(
+                            child: Text(
+                              'Registar',
+                              style: TextStyle(
+                                  fontFamily: AppFonts.poppinsRegularFont,
+                                  fontSize: Get.width * 0.035,
+                                  color: Colors.white),
+                            ),
+                            onPressed: validateAndSave,
+                          ),
+                        ),
+                        SizedBox(height: Get.height * 0.02),
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
-            Image.asset(
-              AppImages.appLogo2,
-              width: Get.width * 0.6,
-              height: Get.height * 0.1,
-            ),
-            SizedBox(
-              height: Get.height * 0.03,
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: Get.width * 0.05,
-                right: Get.width * 0.05,
-              ),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: Get.width * 0.43,
-                          child: TextFormField(
-                            controller: input_nome,
-                            obscureText: false,
-                            style: Theme.of(context).textTheme.headline4,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Theme.of(context).backgroundColor,
-                              border: OutlineInputBorder(
-                                borderRadius: new BorderRadius.circular(15.0),
-                                borderSide: new BorderSide(),
-                              ),
-                              labelText: 'Nome',
-                              labelStyle: Theme.of(context).textTheme.headline4,
-                            ),
-                            validator: (value) =>
-                                value!.isEmpty ? 'Insira o Nome' : null,
-                          ),
-                        ),
-                        SizedBox(
-                          width: Get.width * 0.43,
-                          child: TextFormField(
-                            controller: input_nickname,
-                            autocorrect: false,
-                            obscureText: false,
-                            style: Theme.of(context).textTheme.headline4,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Theme.of(context).backgroundColor,
-                              border: OutlineInputBorder(
-                                borderRadius: new BorderRadius.circular(15.0),
-                                borderSide: new BorderSide(),
-                              ),
-                              labelText: 'Apelido',
-                              labelStyle: Theme.of(context).textTheme.headline4,
-                            ),
-                            validator: (value) =>
-                                value!.isEmpty ? 'Insira o Apelido' : null,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: Get.height * 0.01),
-                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: Get.width * 0.43,
-                          child: TextFormField(
-                            controller: input_country,
-                            style: Theme.of(context).textTheme.headline4,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Theme.of(context).backgroundColor,
-                              border: OutlineInputBorder(
-                                borderRadius: new BorderRadius.circular(15.0),
-                                borderSide: new BorderSide(),
-                              ),
-                              labelText: 'Pais',
-                              labelStyle: Theme.of(context).textTheme.headline4,
-                            ),
-                            validator: (value) =>
-                                value!.isEmpty ? 'Insira o Pais' : null,
-                          ),
-                        ),
-                        SizedBox(
-                          width: Get.width * 0.43,
-                          child: TextFormField(
-                            controller: input_city,
-                            style: Theme.of(context).textTheme.headline4,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Theme.of(context).backgroundColor,
-                              border: OutlineInputBorder(
-                                borderRadius: new BorderRadius.circular(15.0),
-                                borderSide: new BorderSide(),
-                              ),
-                              labelText: 'Cidade',
-                              labelStyle: Theme.of(context).textTheme.headline4,
-                            ),
-                            validator: (value) =>
-                                value!.isEmpty ? 'Insira a Cidade' : null,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: Get.height * 0.01),
-                    TextFormField(
-                      controller: input_email,
-                      obscureText: false,
-                      style: Theme.of(context).textTheme.headline4,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Theme.of(context).backgroundColor,
-                        border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(15.0),
-                          borderSide: new BorderSide(),
-                        ),
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(0.0),
-                          child: Icon(
-                            Icons.email,
-                            color: Colors.grey,
-                          ), // icon is 48px widget.
-                        ),
-                        labelText: 'Email',
-                        labelStyle: Theme.of(context).textTheme.headline4,
-                      ),
-                      validator: (value) => EmailValidator.validate(value!)
-                          ? null
-                          : 'Email inváido',
-                    ),
-                    SizedBox(height: Get.height * 0.01),
-                    TextFormField(
-                      controller: input_telefone,
-                      keyboardType: TextInputType.phone,
-                      style: Theme.of(context).textTheme.headline4,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Theme.of(context).backgroundColor,
-                        border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(15.0),
-                          borderSide: new BorderSide(),
-                        ),
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(0.0),
-                          child: Icon(
-                            Icons.phone,
-                            color: Colors.grey,
-                          ), // icon is 48px widget.
-                        ),
-                        labelText: 'Telefone',
-                        labelStyle: Theme.of(context).textTheme.headline4,
-                      ),
-                      validator: (value) =>
-                          value!.length<7 ? 'Telefone inválido' : null,
-                    ),
-                    SizedBox(height: Get.height * 0.01),
-                    TextFormField(
-                      controller: input_username,
-                      obscureText: false,
-                      style: Theme.of(context).textTheme.headline4,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Theme.of(context).backgroundColor,
-                        border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(15.0),
-                          borderSide: new BorderSide(),
-                        ),
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(0.0),
-                          child: Icon(
-                            Icons.person,
-                            color: Colors.grey,
-                          ), // icon is 48px widget.
-                        ),
-                        labelText: 'Utilizador',
-                        labelStyle: Theme.of(context).textTheme.headline4,
-                      ),
-                      validator: (value) =>
-                          value!.isEmpty ? 'Insira o Utilizador' : null,
-                    ),
-                    SizedBox(height: Get.height * 0.01),
-                    TextFormField(
-                      controller: input_senha,
-                      obscureText: statePassword,
-                      style: Theme.of(context).textTheme.headline4,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Theme.of(context).backgroundColor,
-                        border: OutlineInputBorder(
-                          borderRadius: new BorderRadius.circular(15.0),
-                          borderSide: new BorderSide(),
-                        ),
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.all(0.0),
-                          child: Icon(
-                            Icons.lock,
-                            color: Colors.grey,
-                          ), // icon is 48px widget.
-                        ),
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              statePassword = !statePassword;
-                            });
-                          },
-                          icon: Icon(
-                            statePassword
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                          ),
-                        ),
-                        labelText: 'Palavra-passe',
-                        labelStyle: Theme.of(context).textTheme.headline4,
-                      ),
-                      validator: (value) =>
-                          value!.isEmpty ? 'Insira a senha' : null,
-                      onChanged: (value) => _validar_password(),
-                    ),
-                    SizedBox(height: Get.height * 0.005),
-                    Align(
-                      alignment:Alignment.topLeft,
-                      child: Text(
-                        mensage_password,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline4!
-                            .copyWith(color: cor_password),
+          ),
+           SizedBox(
+            child: loading
+                ? Container(
+                    color: Colors.black54,
+                    height: Get.height,
+                    child: Center(
+                      child: Image.asset(
+                        AppImages.loading,
+                        width: Get.width * 0.2,
+                        height: Get.height * 0.2,
+                        alignment: Alignment.center,
                       ),
                     ),
-                    SizedBox(
-                      height: Get.height * 0.02,
-                    ),
-                    Container(
-                      height: Get.height * 0.07,
-                      width: Get.width,
-                      decoration: BoxDecoration(
-                        color: AppColors.greenColor,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(15),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Theme.of(context).cardColor,
-                            blurRadius: 2.0,
-                            spreadRadius: 0.0,
-                            offset:
-                                Offset(2.0, 2.0), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: TextButton(
-                        child: Text(
-                          'Registar',
-                          style: TextStyle(
-                              fontFamily: AppFonts.poppinsRegularFont,
-                              fontSize: Get.width * 0.035,
-                              color: Colors.white),
-                        ),
-                        onPressed: validateAndSave,
-                      ),
-                    ),
-                    SizedBox(height: Get.height * 0.02),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+                  )
+                : null,
+          ),
+        ],
       ),
     );
   }

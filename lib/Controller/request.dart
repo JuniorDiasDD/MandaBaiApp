@@ -215,8 +215,9 @@ class ServiceRequest {
       await session.set('id', jsonResponse["ID"]);
       await session.set('username', username);
       await session.set('password', password);
-
-      // print(jsonResponse["ID"]);
+      user.senha = password;
+      user.username = username;
+      loginCoCart();
       GetUser();
       return true;
     } else if (response.statusCode == 503) {
@@ -228,6 +229,12 @@ class ServiceRequest {
     }
   }
 
+//! login cocart
+  static Future loginCoCart() async {
+    var response = await http.post(Uri.parse(request_login),
+        body: {'username': user.username, 'password': user.senha});
+    print("Cocart:" + response.statusCode.toString());
+  }
   //! Get User
 
   static Future GetUser() async {
@@ -266,6 +273,7 @@ class ServiceRequest {
   static Future<List<CartModel>> loadCart() async {
     List<CartModel> list = [];
     List<CartModel> listCart = [];
+    loginCoCart();
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode(user.username + ':' + user.senha));
     var response = await http.get(Uri.parse(getCart),
@@ -296,7 +304,7 @@ class ServiceRequest {
   //! removeItemCart
   static Future<List<CartModel>> removeCart(List<String> list_item) async {
     List<CartModel> list = [];
-
+    loginCoCart();
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode(user.username + ':' + user.senha));
 
@@ -322,12 +330,13 @@ class ServiceRequest {
   //! Cart
   //? addCart
   static Future addCart(item, quant) async {
+    loginCoCart();
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode(user.username + ':' + user.senha));
     var response = await http.post(Uri.parse(addItemCart),
         headers: <String, String>{'authorization': basicAuth},
         body: {'id': item.toString(), 'quantity': quant.toString()});
-    print(response.statusCode);
+    print("addCart:"+response.body);
 
     if (response.statusCode == 200) {
       //  final jsonResponse = json.decode(response.body);

@@ -85,6 +85,7 @@ class _ItemCartState extends State<ItemCart> {
                             width:Get.width*0.4,
                             child: Text(
                               widget.cartModel.name,
+                              maxLines: 2,
                               textAlign: TextAlign.start,
                               style: Theme.of(context).textTheme.headline2,
                             ),

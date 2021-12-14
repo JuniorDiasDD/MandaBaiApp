@@ -10,8 +10,9 @@ class CartPageController extends GetxController {
   final _subTotal = 0.0.obs;
   final _total = 0.0.obs;
   final _taxa = 0.0.obs;
-  final _note=''.obs;
-  final _route=''.obs;
+  final _note = ''.obs;
+  final _route = ''.obs;
+  final _loading = false.obs;
 
   final _list = <CartModel>[].obs;
 
@@ -22,20 +23,31 @@ class CartPageController extends GetxController {
   set list(List<CartModel> list) {
     this._list.value = list;
   }
-String get route {
+
+  set loading(bool loading) {
+    this._loading.value = loading;
+  }
+
+  bool get loading {
+    return _loading.value;
+  }
+
+  String get route {
     return _route.value;
   }
 
   set route(String route) {
     this._route.value = route;
   }
- String get note {
+
+  String get note {
     return _note.value;
   }
 
   set note(String note) {
     this._note.value = note;
   }
+
   String get name {
     return _name.value;
   }

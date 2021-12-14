@@ -86,7 +86,7 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
                       if (widget.caminho == "home") {
                         Navigator.pushReplacementNamed(context, '/home');
                       } else if (widget.caminho == "erro" ||
-                          widget.caminho == "description") {
+                          widget.caminho == "description" || widget.caminho=="addCarrinho") {
                         Navigator.pop(context);
                       } else if (widget.caminho == "atualizar") {
                         Navigator.pushReplacement(

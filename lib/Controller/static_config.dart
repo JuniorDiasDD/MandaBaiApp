@@ -41,7 +41,7 @@ const String get_Produto = link + "products/";
 
 //! register
 const String register_client = link + "customers?" + key;
-//! login
+//! login Cocart
 const String request_login = url_pricipal + "custom-plugin/login";
 //! update user
 const String updateUser = link + "customers/";

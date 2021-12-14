@@ -3,7 +3,9 @@ import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Model/product.dart';
+import 'package:manda_bai/UI/category_filter/controller/categoryController.dart';
 import 'package:manda_bai/UI/description_product/pages/product_detail_page.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 
 class ProductListComponent extends StatefulWidget {
   Product product;
@@ -15,9 +17,11 @@ class ProductListComponent extends StatefulWidget {
 }
 
 class _ProductListComponentState extends State<ProductListComponent> {
+  final CategoryController controller = Get.find();
   bool checkFavorite = false;
-  _addCart(id) async {
-    bool check = await ServiceRequest.addCart(id,1);
+  Future _addCart(id) async {
+    bool check = await ServiceRequest.addCart(id, 1);
+    return check;
   }
 
   var money_txt;
@@ -30,14 +34,18 @@ class _ProductListComponentState extends State<ProductListComponent> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ProdutoDetailPage(
-            product: widget.product,
-          ),
-        ),
-      ),
+      onTap: () {
+        if (controller.loading == false) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProdutoDetailPage(
+                product: widget.product,
+              ),
+            ),
+          );
+        }
+      },
       child: Padding(
         padding: EdgeInsets.only(
             left: Get.width * 0.023,
@@ -175,8 +183,40 @@ class _ProductListComponentState extends State<ProductListComponent> {
                               ),
                               IconButton(
                                 padding: const EdgeInsets.all(0.0),
-                                onPressed: () {
-                                  _addCart(widget.product.id);
+                                onPressed: () async {
+                                  setState(() {
+                                    controller.loading = true;
+                                     });
+                                    var check = await _addCart(widget.product.id);
+                                    print(check.toString());
+                                    if (check==true) {
+                                     setState(() {
+                                    controller.loading = false;
+                                     });
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return Pop_up_Message(
+                                                mensagem:
+                                                    "Adicionado no carrinho",
+                                                icon: Icons.check,
+                                                caminho: "addCarrinho");
+                                          });
+                                    } else {
+                                      setState(() {
+                                    controller.loading = false;
+                                     });
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return Pop_up_Message(
+                                                mensagem:
+                                                    "Erro em adicionar no carrinho",
+                                                icon: Icons.error,
+                                                caminho: "erro");
+                                          });
+                                    }
+                                 
                                 },
                                 icon: const Icon(Icons.shopping_cart_outlined),
                                 iconSize: Get.width * 0.05,

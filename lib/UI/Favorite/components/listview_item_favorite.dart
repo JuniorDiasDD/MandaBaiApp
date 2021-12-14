@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Model/product.dart';
+import 'package:manda_bai/UI/Favorite/controller/favorite_controller.dart';
 import 'package:manda_bai/UI/home/pages/home_page.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 
 class ItemFavoriteComponent extends StatefulWidget {
   // final CartPageController cartPageController = Get.find();
@@ -14,7 +16,12 @@ class ItemFavoriteComponent extends StatefulWidget {
 }
 
 class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
+  final FavoriteController controller = Get.find();
   bool isChecked = false;
+  Future _addCart(id) async {
+    bool check = await ServiceRequest.addCart(id, 1);
+    return check;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +78,39 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                         children: [
                           IconButton(
                             padding: const EdgeInsets.all(0.0),
-                            onPressed: () {},
+                            onPressed: () async {
+                              setState(() {
+                                controller.loading = true;
+                              });
+                              var check = await _addCart(widget.product.id);
+                              print(check.toString());
+                              if (check == true) {
+                                setState(() {
+                                  controller.loading = false;
+                                });
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Pop_up_Message(
+                                          mensagem: "Adicionado no carrinho",
+                                          icon: Icons.check,
+                                          caminho: "addCarrinho");
+                                    });
+                              } else {
+                                setState(() {
+                                  controller.loading = false;
+                                });
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Pop_up_Message(
+                                          mensagem:
+                                              "Erro em adicionar no carrinho\nTente novamente em segundos!",
+                                          icon: Icons.error,
+                                          caminho: "erro");
+                                    });
+                              }
+                            },
                             icon: const Icon(
                               Icons.shopping_cart,
                             ),
