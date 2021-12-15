@@ -1,11 +1,11 @@
 {
     "title_categories": "Categorias",
-    "textfield_user": "utilizador",
+    "textfield_user": "Utilizador",
     "validator_user": "Insira o Utilizador",
     "textfield_password": "Senha",
     "validator_password": "Insira a senha",
     "text_forgot_password": "Esqueceu a senha?",
-    "button_login": "Entrar?",
+    "button_login": "Entrar",
     "text_dont_have_an_account": "Não possui uma conta",
     "button_sign_up_now": "Regista agora",
     "text_or": "ou",
@@ -89,11 +89,38 @@
     "text_add_new_location": "Adiciona uma nova localização no",
     "title_new_destiny": "Novo Destino",
     "title_delivery_location": "Locais de Entrega",
-
-
-
-
-
+    "text_fill_the_field": "Prencher os seguintes campos com o dados do destino pretendido:",
+    "text_recipient_name": "Nome do destinatário",
+    "text_address": "Endereço",
+    "validator_enter_address": "Insira o Endereço",
+    "labeltext_phone_or_mobile": "Telefone ou Telemovel",
+    "button_save": "Guardar",
+    "title_instructions": "Instruções",
+    "text_information_form": "Informações do Formulário",
+    "text_description_form": "Neste formulário, deverá completar com os dados da pessoa receptora da encomenda (produtos).",
+    "text_person_name": "Escreva o Nome da Pessoa que irá receber a encomenda;",
+    "text_city_name": "Escreva a Cidade onde reside essa Pessoa acima referida;",
+    "text_adress_name": "Escreva o Endereço onde deverá ser entregue a encomenda;",
+    "text_enter_contact": "Introduza o Contacto do receptor para podermos lhe contactar.",
+    "text_add_information": "Neste campo, poderá adicionar qualquer informação extra que deseja informar a Empresa. Exemplo: a data que deseja a ser entregue.",
+    "subtitle_payment": "Pagamento",
+    "text_cuppon": "Caso tiver um Cuppon de Desconto, clica na caixinha \"Tenho um desconto\", a seguir, introduza o código do desconto.",
+    "text_discount": "Tenho um desconto",
+    "subtitle_code_discount":"Código de Desconto",
+    "valitador_code_discount":"Insira o codigo de desconto",
+    "subtitle_number_card":"Número de Cartão",
+    "valitador_number_card":"Número do cartão",
+    "subtitle_expiration":"Expiração",
+    "valitador_number_data":"Número do data",
+    "subtitle_cvv2":"CVV2",
+    "valitador_cvv2":"Insira ccv",
+    "button_done":"Finalizar",
+    "text_no_product": "Sem produtos...",
+    "title_about_us": "Sobre Nós",
+    "text_mandabai": "MandaBai, somos mais que uma Empresa!",
+    "readmoretext_see_more": "Ver mais",
+    "text_description_mandabai": "MandaBai é uma empresa criada em 25-10-2018 no concelho de Santa Catarina, ilha de Santiago Cabo Verde.\\n\\nSurgiu da ideia de que deveria haver uma alternativa para o envio de produtos para familiares e amigos em Cabo-Verde com a mesma ou melhor rapidez e segurança com que se envia dinheiro.\n\n Sendo assim Carlos Sedoneo Pereira , criou um site online onde se pode encontrar uma variedade de produtos que vai desde generos alimenticios, electrodomésticos a materiais escolares, que podem ser comprados para presentear e\\ou ajudar amigos, familiares e instituições de caridade em Cabo Verde.\\n\\nUma mais valia que se pode obter em preferir a MandaBai é que quando se compra os produtos expostos no site, a entrega desses produtos é oferecida gratuitamente pela Mandabai para todo Cabo Verde.\\nA Mandabai abrange todas as 9 ilhas habitadas de Cabo Verde assim como o envio gratuito á essas ilhas na casa do destinatário.\nPara o uso do nosso serviço é lhe cobrado apenas uma taxa de 5 euros.\\n\\nSurpreenda alguém com uma encomenda com rapidez, seriedade, simpatia e segurança",
+    "text_": "MandaBai, somos mais que uma Empresa!",
 
 
 
@@ -106,15 +133,19 @@
     "message_error_cridencials": "Credências Inválidos",
     "message_success_register": "Registo feito com sucesso!",
     "message_error_register": "Dados invalidos...\nJá existe Conta com esses dados.",
-    "mensage_password_weak" : "Senha Fraco",
-    "mensage_password_reasonable" : "Senha Razóavel",
-    "mensage_password_strong" : "Senha Muito forte",
+    "message_password_weak" : "Senha Fraco",
+    "message_password_reasonable" : "Senha Razóavel",
+    "message_password_strong" : "Senha Muito forte",
     "message_login": "Deverá efectuar primeiramente o Login.",
     "message_sucess_update": "Atualizado com sucesso",
     "message_update_failed": "Falha na Atualização",
     "message_error_text": "Senha não corresponde",
     "message_error_destination_select": "Destino de entrega não selecionado",
     "message_error_product_dont_match_island": "Esses produtos não correspondem a essa Ilha",
+    "message_success_order": "Encomenda feito com sucesso.\nAcompanha a sua encomenda em \n'Meus Pedidos'!",
+    "message_error_order": "Erro em efetuar a encomenda",
+    "message_success_cart": "Adicionado no carrinho",
+    "message_error_cart": "Erro em adicionar no carrinho"
 
 
 
@@ -125,7 +156,9 @@
 
 
 
-    "text_description_mandabai": ""
+
+
+
 
 
 

@@ -231,7 +231,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                 Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    "Codigo de Desconto",
+                                    "Código de Desconto",
                                     style:
                                         Theme.of(context).textTheme.headline2,
                                   ),
