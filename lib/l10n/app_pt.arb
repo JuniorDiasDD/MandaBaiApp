@@ -68,26 +68,25 @@
     "text_tax": "Taxa",
     "text_delivery": "Entrega",
     "text_free": "Grátis",
-    "text_description_delivery": "Envio totalmente Grátis. Cobramos apenas uma pequena taxa por utilização do site no valor de: € 5.00 ",
+    "text_description_delivery": "Envio totalmente Grátis. Cobramos apenas uma pequena taxa por utilização do site no valor de:5.0 € ",
     "text_subtotal": "Subtotal",
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    "subtitle_billing_and_shipping": "Faturação e Envio",
+    "readmoretext_data": "Ver os dados",
+    "readmoretext_close": "Fechar",
+    "subtitle_recipient_data": "Dados do Destinário",
+    "text_island": "Ilha",
+    "text_no_delivery_locations": "Sem localizações de entrega...",
+    "text_enter_destination": "Por Favor insera o destino de entrega",
+    "text_delivery_address": "Endereço de Entrega",
+    "text_change": "Trocar",
+    "subtitle_add_information": "Informação Adicional",
+    "text_notes": "Notas da encomenda (opcional)",
+    "hint_write": "Escrever",
+    "textbutton_next": "Seguinte",
+    "textbutton_skip": "Ignorar",
+    "textbutton_back": "Voltar",
+    "text_no_locations": "Sem localizações...",
+    "text_add_new_location": "Adiciona uma nova localização no",
 
 
 
@@ -112,6 +111,9 @@
     "message_update_failed": "Falha na Atualização",
     "message_error_text": "Senha não corresponde",
     "message_error_destination_select": "Destino de entrega não selecionado",
+    "message_error_product_dont_match_island": "Esses produtos não correspondem a essa Ilha",
+
+
 
 
 
