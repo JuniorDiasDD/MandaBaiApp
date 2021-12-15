@@ -111,7 +111,7 @@
     "subtitle_number_card":"Número de Cartão",
     "valitador_number_card":"Número do cartão",
     "subtitle_expiration":"Expiração",
-    "valitador_number_data":"Número do data",
+    "valitador_number_data":"Inserir data",
     "subtitle_cvv2":"CVV2",
     "valitador_cvv2":"Insira ccv",
     "button_done":"Finalizar",
@@ -119,16 +119,38 @@
     "title_about_us": "Sobre Nós",
     "text_mandabai": "MandaBai, somos mais que uma Empresa!",
     "readmoretext_see_more": "Ver mais",
-    "text_description_mandabai": "MandaBai é uma empresa criada em 25-10-2018 no concelho de Santa Catarina, ilha de Santiago Cabo Verde.\\n\\nSurgiu da ideia de que deveria haver uma alternativa para o envio de produtos para familiares e amigos em Cabo-Verde com a mesma ou melhor rapidez e segurança com que se envia dinheiro.\n\n Sendo assim Carlos Sedoneo Pereira , criou um site online onde se pode encontrar uma variedade de produtos que vai desde generos alimenticios, electrodomésticos a materiais escolares, que podem ser comprados para presentear e\\ou ajudar amigos, familiares e instituições de caridade em Cabo Verde.\\n\\nUma mais valia que se pode obter em preferir a MandaBai é que quando se compra os produtos expostos no site, a entrega desses produtos é oferecida gratuitamente pela Mandabai para todo Cabo Verde.\\nA Mandabai abrange todas as 9 ilhas habitadas de Cabo Verde assim como o envio gratuito á essas ilhas na casa do destinatário.\nPara o uso do nosso serviço é lhe cobrado apenas uma taxa de 5 euros.\\n\\nSurpreenda alguém com uma encomenda com rapidez, seriedade, simpatia e segurança",
-    "text_": "MandaBai, somos mais que uma Empresa!",
-
-
-
-
-
-
-
-
+    "text_description_mandabai": "MandaBai é uma empresa criada em 25-10-2018 no concelho de Santa Catarina, ilha de Santiago Cabo Verde.\n\nSurgiu da ideia de que deveria haver uma alternativa para o envio de produtos para familiares e amigos em Cabo-Verde com a mesma ou melhor rapidez e segurança com que se envia dinheiro.\n\n Sendo assim Carlos Sedoneo Pereira , criou um site online onde se pode encontrar uma variedade de produtos que vai desde generos alimenticios, electrodomésticos a materiais escolares, que podem ser comprados para presentear e\\ou ajudar amigos, familiares e instituições de caridade em Cabo Verde.\\n\\nUma mais valia que se pode obter em preferir a MandaBai é que quando se compra os produtos expostos no site, a entrega desses produtos é oferecida gratuitamente pela Mandabai para todo Cabo Verde.\\nA Mandabai abrange todas as 9 ilhas habitadas de Cabo Verde assim como o envio gratuito á essas ilhas na casa do destinatário.\nPara o uso do nosso serviço é lhe cobrado apenas uma taxa de 5 euros.\\n\\nSurpreenda alguém com uma encomenda com rapidez, seriedade, simpatia e segurança",
+    "subtitle_company_members": "Constituição da Empresa",
+    "text_role_carlos": "Fundador da empresa",
+    "text_description_carlos": "Mentor por trás do empreendimento Mandabai. Acreditou que era possível o envio de produtos para familiares e amigos, através de processos online, provando ser um método eficaz e fazendo a diferença na vida de muitos cabo-verdianos.",
+    "text_role_eveline": "CEO",
+    "text_description_eveline": "Graduando em Economia e Ciências Empresariais.Acredita que a Mandabai é bem mais que uma empresa, mas sim uma forma de unir os emigrantes cabo-verdianos a Cabo Verde.'",
+    "text_role_antonio": "Estados unidos da América",
+    "text_description_antonio": "Mandatário de Mandabai nos Estados unidos da América",
+    "subtitle_representative_members": "Mandatários de MandaBai",
+    "text_role_estevao": "Portugal",
+    "text_description_estevao": "Mandatário de Mandabai em Portugal",
+    "subtitle_mission": "Missão",
+    "text_description_mission": "Contribuir para o aprofundamento e fortalecimento das relações familiares e de amizade entre os nossos clientes ;\\n\\nFazer com que os Cabo-Verdianos espalhados pela diáspora se sintam cada vez mais próximos de Cabo Verde ;\\n\\nOferecer produtos e serviços de qualidade com rapidez e simpatia.",
+    "subtitle_vision": "Visão",
+    "text_description_vision":"Ser o melhor e maior site de Cabo Verde na mente e no coração dos consumidores e dos funcionários;\\n\\nColocar á disposição dos nossos clientes um serviço que seja visto como qualitativamente diferenciador no curto, médio e longo prazo;\\n\\nSer uma startup reconhecida pela sua excelência, rapidez, qualidade e simpatia.",
+    "subtitle_values": "Visão",
+    "text_description_values":"1º-Integridade e honestidade;\n\n 2º-Empenho para com os clientes e parceiros;\n\n 3º-Abertura e respeito para com os outros e empenho para contribuir para o seu desenvolvimento;\n\n 4º-Qualidade, excelência e rapidez;\n\nResponsabilidade social e ambiental;\n\n 5º-Co-prosperidades;\n\n 6º-Confiança, respeito para com os clientes, funcionários e parceiros;\n\n 7º-Liderança e diversidade.",
+    "text_about_application": "Sobre Aplicação",
+    "textbutton_published_by":"Publicado por",
+    "textbutton_developed_by":"Desenvolvido por",
+    "textbutton_terms_of_uso":"Termos de Uso",
+    "textbutton_privacy_police":"Politica de Privacidade",
+    "title_my_favorites": "Meus Favoritos",
+    "text_no_favorite_product": "Sem produto marcado como favorito...",
+    "text_total": "Total",
+    "text_checkout": "Sem produto marcado como favorito...",
+    "text_in_process_order": "Encomenda em processo",
+    "text_delivery_order": "Encomenda entregue",
+    "text_empty_order": "Ainda não realizou nenhum pedido...",
+    "text_description": "Descrição",
+    "text_order_number": "Encomenda",
+    "text_amount": "Quant",
 
     "message_error_cridencials": "Credências Inválidos",
     "message_success_register": "Registo feito com sucesso!",
@@ -137,7 +159,7 @@
     "message_password_reasonable" : "Senha Razóavel",
     "message_password_strong" : "Senha Muito forte",
     "message_login": "Deverá efectuar primeiramente o Login.",
-    "message_sucess_update": "Atualizado com sucesso",
+    "message_success_update": "Atualizado com sucesso",
     "message_update_failed": "Falha na Atualização",
     "message_error_text": "Senha não corresponde",
     "message_error_destination_select": "Destino de entrega não selecionado",
@@ -145,21 +167,6 @@
     "message_success_order": "Encomenda feito com sucesso.\nAcompanha a sua encomenda em \n'Meus Pedidos'!",
     "message_error_order": "Erro em efetuar a encomenda",
     "message_success_cart": "Adicionado no carrinho",
-    "message_error_cart": "Erro em adicionar no carrinho"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    "message_error_cart": "Erro em adicionar no carrinho\nTente novamente em segundos!"
 
 }

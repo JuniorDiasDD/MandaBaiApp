@@ -37,7 +37,7 @@ class _InfoPageState extends State<InfoPage> {
       image:
           'https://www.mandabai.com/wp-content/uploads/elementor/thumbs/Design-sem-nome-4-pbwjcdm6kbjiw14u4pb8kvevyan7bq0lqfaqzjbqds.jpg',
       description:
-          'Graduanda em Economia e Ciências Empresariais.Acredita que a Mandabai é bem mais que uma empresa, mas sim uma forma de unir os emigrantes cabo-verdianos a Cabo Verde.',
+          'Graduando em Economia e Ciências Empresariais.Acredita que a Mandabai é bem mais que uma empresa, mas sim uma forma de unir os emigrantes cabo-verdianos a Cabo Verde.',
       tel: '+2389724140',
       email: 'eveline.mandabai@gmail.com',
     ));
@@ -502,7 +502,7 @@ class _InfoPageState extends State<InfoPage> {
                                 padding: EdgeInsets.only(
                                   left: Get.width * 0.02,
                                 ),
-                                child: Text('Políticas e Serviços',
+                                child: Text('Politica de Privacidade',
                                     style:
                                         Theme.of(context).textTheme.headline4),
                               ),
