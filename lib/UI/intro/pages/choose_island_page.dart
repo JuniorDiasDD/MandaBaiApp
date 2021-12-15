@@ -10,7 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:websafe_svg/websafe_svg.dart';
 
-import 'language_page.dart';
 
 class ChooseIsland extends StatefulWidget {
   const ChooseIsland({Key? key}) : super(key: key);

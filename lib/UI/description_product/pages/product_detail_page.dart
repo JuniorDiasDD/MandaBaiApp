@@ -4,6 +4,7 @@ import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/cart/pages/cart_page.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
@@ -18,9 +19,12 @@ class ProdutoDetailPage extends StatefulWidget {
 
 class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
   int quantidade = 1;
+  bool loading = false;
   _addCart(id) async {
+    setState((){loading=true;});
     bool check = await ServiceRequest.addCart(id, quantidade);
     if (check) {
+      setState((){loading=false;});
       return showDialog(
           context: context,
           builder: (BuildContext context) {
@@ -30,11 +34,12 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                 caminho: "description");
           });
     } else {
+      setState((){loading=false;});
       return showDialog(
           context: context,
           builder: (BuildContext context) {
             return Pop_up_Message(
-                mensagem: "Erro em adicionar",
+                mensagem: "Erro em adicionar\nTente novamente em segundos",
                 icon: Icons.error,
                 caminho: "erro");
           });
@@ -52,9 +57,11 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
+      body: Stack(
+        children: [
+          SafeArea(
+            child: Column(
+              children: [
             Stack(
               children: [
                 Container(
@@ -320,8 +327,27 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                 ),
               ),
             ),
-          ],
-        ),
+             
+              ],
+            ),
+          ),
+        SizedBox(
+            child: loading
+                ? Container(
+                    color: Colors.black54,
+                    height: Get.height,
+                    child: Center(
+                      child: Image.asset(
+                        AppImages.loading,
+                        width: Get.width * 0.2,
+                        height: Get.height * 0.2,
+                        alignment: Alignment.center,
+                      ),
+                    ),
+                  )
+                : null,
+          ),
+        ],
       ),
     );
   }

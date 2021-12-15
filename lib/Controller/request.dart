@@ -133,7 +133,7 @@ class ServiceRequest {
     var response = await http.post(Uri.parse(register_client),
         headers: headers, body: data);
 
-    print(response.body);
+ //   print(response.body);
     if (response.statusCode == 201) {
       final jsonResponse = json.decode(response.body);
       //  var session = FlutterSession();
@@ -283,7 +283,7 @@ class ServiceRequest {
         'Basic ' + base64Encode(utf8.encode(user.username + ':' + user.senha));
     var response = await http.get(Uri.parse(getCart),
         headers: <String, String>{'authorization': basicAuth});
-    print(response.body);
+    //print(response.body);
 
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
@@ -319,7 +319,7 @@ class ServiceRequest {
     for (int i = 0; i < list_item.length; i++) {
       var response = await http.delete(Uri.parse(removeItemCart + list_item[i]),
           headers: <String, String>{'authorization': basicAuth});
-      print(response.body);
+     // print(response.body);
 
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
@@ -344,7 +344,7 @@ class ServiceRequest {
     var response = await http.post(Uri.parse(addItemCart),
         headers: <String, String>{'authorization': basicAuth},
         body: {'id': item.toString(), 'quantity': quant.toString()});
-    print("addCart:" + response.body);
+  //  print("addCart:" + response.body);
 
     if (response.statusCode == 200) {
       //  final jsonResponse = json.decode(response.body);

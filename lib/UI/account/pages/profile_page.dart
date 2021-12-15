@@ -396,62 +396,7 @@ class _StartPageState extends State<ProfilePage> {
                       ),
                     ),
                     SizedBox(height: Get.height * 0.01),
-                    Container(
-                      height: Get.height * 0.06,
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Row(
-                          children: [
-                            Container(
-                              height: Get.height * 0.042,
-                              width: Get.height * 0.042,
-                              decoration: BoxDecoration(
-                                color: Colors.orangeAccent,
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(100),
-                                ),
-                                border: Border.all(color: Colors.orangeAccent),
-                              ),
-                              child: Icon(
-                                Icons.language,
-                                color: Colors.white,
-                                size: Get.height * 0.025,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                left: Get.width * 0.02,
-                              ),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    'Mudar de Idioma',
-                                    style:
-                                        Theme.of(context).textTheme.headline3,
-                                  ),
-                                  FutureBuilder(
-                                      future: _carregarLanguage(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot snapshot) {
-                                        if (snapshot.data == null) {
-                                          return const Text(" ");
-                                        } else {
-                                          return Text(
-                                            ' (' + language + ')',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline3,
-                                          );
-                                        }
-                                      }),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: Get.height * 0.01),
+                   
                     Container(
                       height: Get.height * 0.06,
                       child: GestureDetector(

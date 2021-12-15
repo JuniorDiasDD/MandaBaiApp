@@ -20,9 +20,11 @@ class StartPage extends StatefulWidget {
 
 class _StartPageState extends State<StartPage> {
   final List<String> imagesList = [
-    'https://jornaleconomico.sapo.pt/wp-content/uploads/2018/01/encomenda_correio.jpg',
-    'https://www.rastrearobjetos.com.br/blog/wp-content/uploads/2021/01/Como-rastrear-suas-encomendas-internacionais.png',
-    'https://www.sindcontsp.org.br/wp-content/uploads/2019/12/encomenda.jpg'
+    AppImages.banner1,
+    AppImages.banner2,
+    AppImages.banner3,
+    AppImages.banner4,
+    AppImages.banner5
   ];
 
   Future _carregarCategory() async {
@@ -123,7 +125,7 @@ class _StartPageState extends State<StartPage> {
                       items: imagesList
                           .map(
                             (item) => Center(
-                              child: Image.network(
+                              child: Image.asset(
                                 item,
                                 fit: BoxFit.cover,
                                 width: Get.width,
@@ -134,9 +136,9 @@ class _StartPageState extends State<StartPage> {
                           .toList(),
                     ),
                     SizedBox(
-                       height: Get.height * 0.25,
+                      height: Get.height * 0.25,
                       child: Row(
-                        mainAxisAlignment:MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: imagesList.map(
                           (image) {
@@ -147,10 +149,11 @@ class _StartPageState extends State<StartPage> {
                               margin: EdgeInsets.symmetric(
                                   vertical: 10.0, horizontal: 2.0),
                               decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: _current == index
-                                      ? Colors.green
-                                      : Colors.green[50],),
+                                shape: BoxShape.circle,
+                                color: _current == index
+                                    ? Colors.green
+                                    : Colors.green[50],
+                              ),
                             );
                           },
                         ).toList(), // this was the part the I had to add
