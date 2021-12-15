@@ -21,11 +21,11 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
-
     } else {
       print('Form is invalid');
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,10 +56,7 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                       padding: EdgeInsets.only(top: 33.0),
                       child: Text(
                         'Esqueceu sua senha',
-                        style: TextStyle(
-                          fontFamily: AppFonts.poppinsBoldFont,
-                          fontSize: 18.0,
-                        ),
+                        style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
                     Text(
@@ -81,14 +78,17 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                     Container(
                       padding: const EdgeInsets.only(top: 35.0),
                       height: Get.height * 0.25,
-                      child: const Text(
-                        'Por favor, digite seu e-mail registrado ou seu numero de telefone para redefinir sua senha ',
+                      child: Text(
+                        'Por favor, digite seu e-mail registrado ou seu número de telefone para redefinir sua senha ',
+                        style: Theme.of(context).textTheme.headline2,
                       ),
                     ),
-                    const Align(
+                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
                         'E-mail ou número de telefone',
+                        style: Theme.of(context).textTheme.headline3!
+                            .copyWith(fontSize: Get.width * 0.032),
                       ),
                     ),
                     SizedBox(height: Get.height * 0.01),
@@ -106,17 +106,15 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                                 width: 1, color: AppColors.greenColor),
                             borderRadius: BorderRadius.circular(15.0),
                           ),
-
                           labelText: 'Email/Telefone',
-                          labelStyle: Theme.of(context).textTheme.headline4,
+                          labelStyle: Theme.of(context).textTheme.headline4!
+                              .copyWith(fontSize: Get.width * 0.03),
                         ),
                         validator: (value) => EmailValidator.validate(value!)
                             ? null
-                            : 'Emial inváido',
-                        ),
+                            : 'Email inválido',
                       ),
-
-
+                    ),
                     SizedBox(
                       height: Get.height * 0.05,
                     ),

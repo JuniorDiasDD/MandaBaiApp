@@ -259,7 +259,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           validator: (value) => EmailValidator.validate(value!)
                               ? null
-                              : 'Email inváido',
+                              : 'Email inválido',
                         ),
                         SizedBox(height: Get.height * 0.01),
                         TextFormField(

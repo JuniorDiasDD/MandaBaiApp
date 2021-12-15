@@ -188,7 +188,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                           ),
                           validator: (value) => EmailValidator.validate(value!)
                               ? null
-                              : 'Emial inváido',
+                              : 'Email inváido',
                         ),
                         SizedBox(height: Get.height * 0.01),
                         TextFormField(

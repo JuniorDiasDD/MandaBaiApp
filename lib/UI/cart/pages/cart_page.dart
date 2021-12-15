@@ -223,7 +223,7 @@ class _StartPageState extends State<CartPage> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Sub Total: ",
+                                    "SubTotal: ",
                                     style: Theme.of(context).textTheme.headline2,
                                   ),
                                   Row(
