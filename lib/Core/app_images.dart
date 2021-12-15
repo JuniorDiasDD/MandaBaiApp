@@ -41,4 +41,5 @@ class AppImages {
   static const gmail_logo = 'assets/images/gmail_logo.png';
   static const instagram_logo = 'assets/images/instagram_logo.png';
   static const facebook_logo = 'assets/images/facebook_logo.png';
+  static const viber_logo = 'assets/images/viber_logo.png';
 }
