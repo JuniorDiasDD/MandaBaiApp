@@ -3,14 +3,13 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Controller/cart_controller.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
-import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/cart_model.dart';
 import 'package:manda_bai/UI/cart/components/listview_item_cart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 import 'checkout_page_step_2.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
   @override
@@ -115,7 +114,7 @@ class _StartPageState extends State<CartPage> {
                         width: Get.width * 0.1,
                       ),
                       Text(
-                        'Meu Carinho',
+                        AppLocalizations.of(context)!.title_my_cart,
                         style: Theme.of(context).textTheme.headline1,
                       ),
                       Container(
@@ -139,7 +138,7 @@ class _StartPageState extends State<CartPage> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text(
-                                "Selecionar Todos",
+                                AppLocalizations.of(context)!.text_select_all,
                                 style: Theme.of(context).textTheme.headline4,
                               ),
                               Checkbox(
@@ -183,7 +182,7 @@ class _StartPageState extends State<CartPage> {
                                   WebsafeSvg.asset(AppImages.cart_empyt),
                                   SizedBox(height: Get.height * 0.08),
                                   Text(
-                                    "O seu carrinho está vazio...",
+                                    AppLocalizations.of(context)!.text_empty_cart,
                                     style: Theme.of(context).textTheme.headline4,
                                   ),
                                 ],
@@ -223,7 +222,7 @@ class _StartPageState extends State<CartPage> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "SubTotal: ",
+                                    AppLocalizations.of(context)!.text_subtotal,
                                     style: Theme.of(context).textTheme.headline2,
                                   ),
                                   Row(
@@ -261,7 +260,7 @@ class _StartPageState extends State<CartPage> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Taxa: ",
+                                    AppLocalizations.of(context)!.text_tax,
                                     style: Theme.of(context).textTheme.headline2,
                                   ),
                                   Row(
@@ -299,18 +298,18 @@ class _StartPageState extends State<CartPage> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Entrega: ",
+                                    AppLocalizations.of(context)!.text_delivery,
                                     style: Theme.of(context).textTheme.headline2,
                                   ),
                                   Text(
-                                    "Gratis ",
+                                    AppLocalizations.of(context)!.text_free,
                                     style: Theme.of(context).textTheme.headline1,
                                   ),
                                 ],
                               ),
                               SizedBox(height: Get.height * 0.01),
                               Text(
-                                "Envio totalmente Grátis. Cobramos apenas uma pequena taxa por utilização do site no valor de: € 5.00 ",
+                                AppLocalizations.of(context)!.text_description_delivery,
                                 style: Theme.of(context).textTheme.headline4,
                               ),
                               SizedBox(height: Get.height * 0.01),
@@ -318,7 +317,7 @@ class _StartPageState extends State<CartPage> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "Total: ",
+                                    AppLocalizations.of(context)!.text_total,
                                     style: Theme.of(context).textTheme.headline1,
                                   ),
                                   Container(
@@ -366,7 +365,7 @@ class _StartPageState extends State<CartPage> {
                                   ),
                                   color: AppColors.greenColor,
                                   textColor: Colors.white,
-                                  child: Text('Checkout'),
+                                  child: Text(AppLocalizations.of(context)!.text_checkout),
                                   onPressed: () {
                                     Navigator.push(
                                       context,

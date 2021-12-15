@@ -10,6 +10,7 @@ import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/authention/pages/recovery_password_page.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -49,7 +50,8 @@ class _LoginPageState extends State<LoginPage> {
             context: context,
             builder: (BuildContext context) {
               return Pop_up_Message(
-                  mensagem: "Credências Inválidos",
+                  mensagem:
+                      AppLocalizations.of(context)!.message_error_cridencials,
                   icon: Icons.error,
                   caminho: "erro");
             });
@@ -128,11 +130,13 @@ class _LoginPageState extends State<LoginPage> {
                                   color: Colors.grey,
                                 ), // icon is 48px widget.
                               ),
-                              labelText: 'Utilizador',
+                              labelText:
+                                  AppLocalizations.of(context)!.textfield_user,
                               labelStyle: Theme.of(context).textTheme.headline4,
                             ),
-                            validator: (value) =>
-                                value!.isEmpty ? 'Insira o Utilizador' : null,
+                            validator: (value) => value!.isEmpty
+                                ? AppLocalizations.of(context)!.validator_user
+                                : null,
                           ),
                           SizedBox(height: Get.height * 0.01),
                           TextFormField(
@@ -165,11 +169,14 @@ class _LoginPageState extends State<LoginPage> {
                                       : Icons.visibility_off,
                                 ),
                               ),
-                              labelText: 'Palavra-passe',
+                              labelText: AppLocalizations.of(context)!
+                                  .textfield_password,
                               labelStyle: Theme.of(context).textTheme.headline4,
                             ),
-                            validator: (value) =>
-                                value!.isEmpty ? 'Insira a senha' : null,
+                            validator: (value) => value!.isEmpty
+                                ? AppLocalizations.of(context)!
+                                    .validator_password
+                                : null,
                           ),
                           Align(
                             alignment: Alignment.topLeft,
@@ -187,7 +194,8 @@ class _LoginPageState extends State<LoginPage> {
                                 );
                               },
                               child: Text(
-                                'Esqueceu sua senha?',
+                                AppLocalizations.of(context)!
+                                    .text_forgot_password,
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline4!
@@ -218,7 +226,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             child: TextButton(
                               child: Text(
-                                'Entrar',
+                                AppLocalizations.of(context)!.button_login,
                                 style: TextStyle(
                                     fontFamily: AppFonts.poppinsRegularFont,
                                     fontSize: Get.width * 0.035,
@@ -234,7 +242,8 @@ class _LoginPageState extends State<LoginPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Não possui uma conta?",
+                                AppLocalizations.of(context)!
+                                    .text_dont_have_an_account,
                                 style: Theme.of(context).textTheme.headline4,
                               ),
                               TextButton(
@@ -247,7 +256,8 @@ class _LoginPageState extends State<LoginPage> {
                                   Navigator.pushNamed(context, '/register');
                                 },
                                 child: Text(
-                                  'Registar agora',
+                                  AppLocalizations.of(context)!
+                                      .button_sign_up_now,
                                   style: TextStyle(
                                     decoration: TextDecoration.underline,
                                     fontStyle: FontStyle.italic,
@@ -278,7 +288,7 @@ class _LoginPageState extends State<LoginPage> {
                                       right: Get.width * 0.05,
                                     ),
                                     child: Text(
-                                      "ou",
+                                      AppLocalizations.of(context)!.text_or,
                                       style:
                                           Theme.of(context).textTheme.headline2,
                                     ),

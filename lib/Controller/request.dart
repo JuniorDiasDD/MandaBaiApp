@@ -54,7 +54,7 @@ class ServiceRequest {
     List<Product> list = [];
     List<Product> list_page = [];
     var response = await http.get(Uri.parse(productCategorias + id.toString()));
-    print(response.body);
+   // print(response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       var quantidade = response.headers['x-wp-total'];

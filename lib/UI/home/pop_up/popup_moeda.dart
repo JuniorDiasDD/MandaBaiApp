@@ -4,7 +4,7 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/UI/home/pages/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class Popup_Moeda extends StatefulWidget {
   const Popup_Moeda({Key? key}) : super(key: key);
 
@@ -56,7 +56,8 @@ class _Popup_MoedaState extends State<Popup_Moeda> {
                             top: Get.height * 0.02,
                           ),
                           child: Text(
-                            'Selecione a Moeda:',
+                           AppLocalizations.of(context)!
+                                        .text_select_currency,
                             textAlign: TextAlign.start,
                             style: Theme.of(context).textTheme.headline2,
                           ),

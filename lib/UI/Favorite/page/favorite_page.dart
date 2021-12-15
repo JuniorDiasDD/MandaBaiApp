@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
-import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/Favorite/components/listview_item_favorite.dart';
 import 'package:manda_bai/UI/Favorite/controller/favorite_controller.dart';
 import 'package:websafe_svg/websafe_svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({Key? key}) : super(key: key);
@@ -17,7 +17,6 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
-  
   final FavoriteController controller = Get.put(FavoriteController());
   bool isChecked = false;
   TextEditingController pesquisa = TextEditingController();
@@ -48,12 +47,13 @@ class _FavoritePageState extends State<FavoritePage> {
     });
   }
 
-@override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    controller.loading=false;
+    controller.loading = false;
   }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -64,14 +64,14 @@ class _FavoritePageState extends State<FavoritePage> {
         body: Stack(
           children: [
             Padding(
-              padding:
-                  EdgeInsets.only(left: Get.width * 0.02, right: Get.width * 0.02),
+              padding: EdgeInsets.only(
+                  left: Get.width * 0.02, right: Get.width * 0.02),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
                     SizedBox(height: Get.height * 0.08),
                     Text(
-                      'Meus Favoritos',
+                      AppLocalizations.of(context)!.title_my_favorites,
                       style: Theme.of(context).textTheme.headline1,
                     ),
                     SizedBox(height: Get.height * 0.03),
@@ -93,7 +93,7 @@ class _FavoritePageState extends State<FavoritePage> {
                                     BorderRadius.all(Radius.circular(30.0)),
                                 borderSide:
                                     BorderSide(color: AppColors.greenColor)),
-                            hintText: 'Pesquisar Produto...',
+                            hintText: AppLocalizations.of(context)!.search,
                             hintStyle: Theme.of(context).textTheme.headline4,
                             contentPadding: EdgeInsets.only(top: 10, left: 15),
                             suffixIcon: Icon(
@@ -132,41 +132,42 @@ class _FavoritePageState extends State<FavoritePage> {
                               ),
                             );
                           default:
-                          if (snapshot.data == null) {
-                            return Container(
-                              height: Get.height * 0.5,
-                              width: Get.width,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  WebsafeSvg.asset(AppImages.favorite_empyt),
-                                  SizedBox(height: Get.height * 0.08),
-                                  Text(
-                                    "Sem produto marcado como favorito...",
-                                    style:
-                                        Theme.of(context).textTheme.headline3,
-                                  ),
-                                ],
-                              ),
-                            );
-                          } else {
-                            return Container(
-                              height: Get.height * 0.85,
-                              child: ListView.builder(
-                                padding: EdgeInsets.only(
-                                  top: 0.0,
-                                  bottom: Get.height * 0.03,
+                            if (snapshot.data == null) {
+                              return Container(
+                                height: Get.height * 0.5,
+                                width: Get.width,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    WebsafeSvg.asset(AppImages.favorite_empyt),
+                                    SizedBox(height: Get.height * 0.08),
+                                    Text(
+                                      AppLocalizations.of(context)!
+                                        .text_no_favorite_product,
+                                      style:
+                                          Theme.of(context).textTheme.headline3,
+                                    ),
+                                  ],
                                 ),
-                                scrollDirection: Axis.vertical,
-                                itemCount: list_product.length,
-                                itemBuilder: (BuildContext context, index) {
-                                  var list = list_product[index];
-                                  return ItemFavoriteComponent(product: list);
-                                },
-                              ),
-                            );
-                          }
+                              );
+                            } else {
+                              return Container(
+                                height: Get.height * 0.85,
+                                child: ListView.builder(
+                                  padding: EdgeInsets.only(
+                                    top: 0.0,
+                                    bottom: Get.height * 0.03,
+                                  ),
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: list_product.length,
+                                  itemBuilder: (BuildContext context, index) {
+                                    var list = list_product[index];
+                                    return ItemFavoriteComponent(product: list);
+                                  },
+                                ),
+                              );
+                            }
                         }
                       },
                     ),
@@ -174,13 +175,13 @@ class _FavoritePageState extends State<FavoritePage> {
                 ),
               ),
             ),
-             Obx(
+            Obx(
               () => SizedBox(
                 child: controller.loading
                     ? Container(
-                      color:Colors.black54,
-                      height:Get.height,
-                      child: Center(
+                        color: Colors.black54,
+                        height: Get.height,
+                        child: Center(
                           child: Image.asset(
                             AppImages.loading,
                             width: Get.width * 0.2,
@@ -188,7 +189,7 @@ class _FavoritePageState extends State<FavoritePage> {
                             alignment: Alignment.center,
                           ),
                         ),
-                    )
+                      )
                     : null,
               ),
             ),

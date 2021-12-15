@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
-import 'package:manda_bai/Core/app_colors.dart';
-import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/location.dart';
 import 'package:manda_bai/UI/cart/pages/checkout_page_step_2.dart';
-import 'package:manda_bai/UI/home/pages/home_page.dart';
 import 'package:manda_bai/UI/location_destination/components/item_location.dart';
 import 'package:manda_bai/UI/location_destination/page/new_destination.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Destination_Page extends StatefulWidget {
   String route;
@@ -63,10 +61,7 @@ class _Destination_PageState extends State<Destination_Page> {
                           Navigator.pop(context);
                         }
 
-                        /* Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomePage(index: 3)));*/
+                     
                       },
                       icon: const Icon(
                         Icons.arrow_back,
@@ -75,7 +70,7 @@ class _Destination_PageState extends State<Destination_Page> {
                     ),
                   ),
                   Text(
-                    'Locais de Entrega',
+                    AppLocalizations.of(context)!.text_delivery_location,
                     style: Theme.of(context).textTheme.headline1,
                   ),
                   IconButton(
@@ -135,14 +130,14 @@ class _Destination_PageState extends State<Destination_Page> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Sem localizações...",
+                                  AppLocalizations.of(context)!.text_no_locations,
                                   style: Theme.of(context).textTheme.headline3,
                                 ),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "Adiciona uma nova localização no ",
+                                      AppLocalizations.of(context)!.text_add_new_location,
                                       style:
                                           Theme.of(context).textTheme.headline3,
                                     ),

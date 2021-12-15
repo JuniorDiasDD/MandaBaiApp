@@ -6,7 +6,7 @@ import 'package:manda_bai/UI/cart/pages/cart_page.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
 import 'package:manda_bai/UI/home/pages/start_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class HomePage extends StatefulWidget {
   int index;
   HomePage({required this.index});
@@ -64,22 +64,22 @@ class _HomePageState extends State<HomePage> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items:  <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
+            icon: const Icon(Icons.home_outlined),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart_outlined),
-            label: 'Carrinho',
+            icon: const Icon(Icons.shopping_cart_outlined),
+            label: AppLocalizations.of(context)!.label_cart,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_border),
-            label: 'Favoritos',
+            icon: const Icon(Icons.favorite_border),
+            label: AppLocalizations.of(context)!.label_favorites,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.line_weight),
-            label: 'Mais',
+            label: AppLocalizations.of(context)!.label_more,
           ),
         ],
         currentIndex: _selectedIndex,

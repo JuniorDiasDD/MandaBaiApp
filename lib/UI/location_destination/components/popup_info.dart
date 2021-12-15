@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PopupInfo extends StatelessWidget {
   const PopupInfo({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class PopupInfo extends StatelessWidget {
         child: Container(
           width: Get.width,
           height: Get.height * 0.6,
-          margin: EdgeInsets.only(left: 20, right: 20),
+          margin: const EdgeInsets.only(left: 20, right: 20),
           decoration: BoxDecoration(
             color: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(12),
@@ -28,7 +29,7 @@ class PopupInfo extends StatelessWidget {
                       width: Get.width * 0.08,
                     ),
                     Text(
-                      'Instruções',
+                       AppLocalizations.of(context)!.title_instructions,
                       style: Theme.of(context).textTheme.headline1,
                     ),
                     IconButton(
@@ -49,58 +50,58 @@ class PopupInfo extends StatelessWidget {
                     children: [
                       SizedBox(height: Get.height * 0.01),
                       Text(
-                        'Informações do Formulário',
+                       AppLocalizations.of(context)!.text_information_form,
                         style: Theme.of(context).textTheme.headline2,
                       ),
                       SizedBox(height: Get.height * 0.01),
                       Text(
-                        'Neste formulário, deverá completar com os dados da pessoa receptora da encomenda (produtos).',
+                         AppLocalizations.of(context)!.text_description_form,
                         style: Theme.of(context).textTheme.headline4,
                       ),
                       SizedBox(height: Get.height * 0.01),
                       Text(
-                        '1º "Nome"',
+                        '1º "'+ AppLocalizations.of(context)!.textfield_name+'"',
                         style: Theme.of(context).textTheme.headline2,
                       ),
                       Text(
-                        ' Escreva o Nome da Pessoa que irá receber a encomenda;',
+                         AppLocalizations.of(context)!.text_person_name,
                         style: Theme.of(context).textTheme.headline4,
                       ),
                       SizedBox(height: Get.height * 0.01),
                       Text(
-                        '2º "Cidade"',
+                        '2º "'+ AppLocalizations.of(context)!.textfield_city+'"',
                         style: Theme.of(context).textTheme.headline2,
                       ),
                       Text(
-                        'Escreva a Cidade onde reside essa Pessoa acima referida;',
+                         AppLocalizations.of(context)!.text_city_name,
                         style: Theme.of(context).textTheme.headline4,
                       ),
                       SizedBox(height: Get.height * 0.01),
                       Text(
-                        '3º "Endereço"',
+                        '3º "'+ AppLocalizations.of(context)!.text_address+'"',
                         style: Theme.of(context).textTheme.headline2,
                       ),
                       Text(
-                        'Escreva o Endereço onde deverá ser entregue a encomenda;',
+                         AppLocalizations.of(context)!.text_adress_name,
                         style: Theme.of(context).textTheme.headline4,
                       ),
                       SizedBox(height: Get.height * 0.01),
                       Text(
-                        '4º "Telemovel/Telefone"',
+                        '4º "'+ AppLocalizations.of(context)!.labeltext_phone_or_mobile+'"',
                         style: Theme.of(context).textTheme.headline2,
                       ),
                       Text(
-                        'Introduza o Contacto do receptor para podermos lhe contactar.',
+                         AppLocalizations.of(context)!.text_enter_contact,
                         style: Theme.of(context).textTheme.headline4,
                       ),
                       SizedBox(height: Get.height * 0.02),
                       Text(
-                        'Informação Adicional',
+                         AppLocalizations.of(context)!.subtitle_add_information,
                         style: Theme.of(context).textTheme.headline2,
                       ),
                       SizedBox(height: Get.height * 0.01),
                       Text(
-                        'Neste campo, poderá adicionar qualquer informação extra que deseja informar a Empresa. Exemplo: a data que deseja a ser entregue.',
+                        AppLocalizations.of(context)!.text_add_information,
                         style: Theme.of(context).textTheme.headline4,
                       ),
                       SizedBox(

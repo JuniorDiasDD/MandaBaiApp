@@ -6,7 +6,7 @@ import 'package:manda_bai/UI/cart/pages/checkout_page_step_2.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ItemLocation extends StatefulWidget {
   Location location;
   String route;
@@ -38,7 +38,7 @@ class _ItemLocationState extends State<ItemLocation> {
                 context: context,
                 builder: (BuildContext context) {
                   return Pop_up_Message(
-                      mensagem: "Esses produtos não correspondem a essa Ilha",
+                      mensagem: AppLocalizations.of(context)!.message_error_product_dont_match_island,
                       icon: Icons.error,
                       caminho: "erro");
                 });

@@ -11,14 +11,13 @@ import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/user.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
-
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
-
 class _RegisterPageState extends State<RegisterPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final input_email = TextEditingController();
@@ -36,7 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
-      User new_user = new User(
+      User new_user =  User(
           name: input_nome.text,
           telefone: input_telefone.text,
           email: input_email.text,
@@ -58,7 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
             context: context,
             builder: (BuildContext context) {
               return Pop_up_Message(
-                  mensagem: "Registo feito com sucesso!",
+                  mensagem: AppLocalizations.of(context)!.message_success_register,
                   icon: Icons.check,
                   caminho: "registo");
             });
@@ -70,7 +69,7 @@ class _RegisterPageState extends State<RegisterPage> {
             context: context,
             builder: (BuildContext context) {
               return Pop_up_Message(
-                  mensagem: "Dados invalidos...\nJá existe Conta com esses dados.",
+                  mensagem: AppLocalizations.of(context)!.message_error_register,
                   icon: Icons.error,
                   caminho: "erro");
             });
@@ -79,27 +78,25 @@ class _RegisterPageState extends State<RegisterPage> {
       print('Form is invalid');
     }
   }
-
   _validar_password() {
     if (input_senha.text.length < 7) {
       setState(() {
-        mensage_password = "Senha Fraco";
+        mensage_password = AppLocalizations.of(context)!.message_password_weak;
         cor_password = Colors.red;
       });
     } else if (RegExp(r'\d+\w*\d+').hasMatch(input_senha.text) &&
         !input_senha.text.contains(RegExp(r'[A-Z]'))) {
       setState(() {
-        mensage_password = "Senha Razóavel";
+        mensage_password = AppLocalizations.of(context)!.message_password_reasonable;
         cor_password = Colors.yellowAccent;
       });
     } else if (input_senha.text.contains(RegExp(r'[A-Z]'))) {
       setState(() {
-        mensage_password = "Senha Muito forte";
+        mensage_password = AppLocalizations.of(context)!.message_password_strong;
         cor_password = Colors.green;
       });
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -161,11 +158,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                     borderRadius: new BorderRadius.circular(15.0),
                                     borderSide: new BorderSide(),
                                   ),
-                                  labelText: 'Nome',
+                                  labelText: AppLocalizations.of(context)!.textfield_name,
                                   labelStyle: Theme.of(context).textTheme.headline4,
                                 ),
                                 validator: (value) =>
-                                    value!.isEmpty ? 'Insira o Nome' : null,
+                                    value!.isEmpty ? AppLocalizations.of(context)!.validator_name : null,
                               ),
                             ),
                             SizedBox(
@@ -182,11 +179,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                     borderRadius: new BorderRadius.circular(15.0),
                                     borderSide: new BorderSide(),
                                   ),
-                                  labelText: 'Apelido',
+                                  labelText: AppLocalizations.of(context)!.textfield_nickname,
                                   labelStyle: Theme.of(context).textTheme.headline4,
                                 ),
                                 validator: (value) =>
-                                    value!.isEmpty ? 'Insira o Apelido' : null,
+                                    value!.isEmpty ? AppLocalizations.of(context)!.validator_nickname : null,
                               ),
                             ),
                           ],
@@ -207,11 +204,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                     borderRadius: new BorderRadius.circular(15.0),
                                     borderSide: new BorderSide(),
                                   ),
-                                  labelText: 'Pais',
+                                  labelText: AppLocalizations.of(context)!.textfield_country,
                                   labelStyle: Theme.of(context).textTheme.headline4,
                                 ),
                                 validator: (value) =>
-                                    value!.isEmpty ? 'Insira o Pais' : null,
+                                    value!.isEmpty ? AppLocalizations.of(context)!.validator_country : null,
                               ),
                             ),
                             SizedBox(
@@ -226,11 +223,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                     borderRadius: new BorderRadius.circular(15.0),
                                     borderSide: new BorderSide(),
                                   ),
-                                  labelText: 'Cidade',
+                                  labelText: AppLocalizations.of(context)!.textfield_city,
                                   labelStyle: Theme.of(context).textTheme.headline4,
                                 ),
                                 validator: (value) =>
-                                    value!.isEmpty ? 'Insira a Cidade' : null,
+                                    value!.isEmpty ? AppLocalizations.of(context)!.validator_city : null,
                               ),
                             ),
                           ],
@@ -259,7 +256,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           validator: (value) => EmailValidator.validate(value!)
                               ? null
-                              : 'Email inválido',
+                              : AppLocalizations.of(context)!.validator_email,
                         ),
                         SizedBox(height: Get.height * 0.01),
                         TextFormField(
@@ -280,11 +277,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                 color: Colors.grey,
                               ), // icon is 48px widget.
                             ),
-                            labelText: 'Telefone',
+                            labelText: AppLocalizations.of(context)!.textfield_phone,
                             labelStyle: Theme.of(context).textTheme.headline4,
                           ),
                           validator: (value) =>
-                              value!.length<7 ? 'Telefone inválido' : null,
+                              value!.length<7 ? AppLocalizations.of(context)!.validator_number : null,
                         ),
                         SizedBox(height: Get.height * 0.01),
                         TextFormField(
@@ -305,11 +302,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                 color: Colors.grey,
                               ), // icon is 48px widget.
                             ),
-                            labelText: 'Utilizador',
+                            labelText: AppLocalizations.of(context)!.textfield_user,
                             labelStyle: Theme.of(context).textTheme.headline4,
                           ),
                           validator: (value) =>
-                              value!.isEmpty ? 'Insira o Utilizador' : null,
+                              value!.isEmpty ? AppLocalizations.of(context)!.validator_user : null,
                         ),
                         SizedBox(height: Get.height * 0.01),
                         TextFormField(
@@ -342,11 +339,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                     : Icons.visibility_off,
                               ),
                             ),
-                            labelText: 'Palavra-passe',
+                            labelText: AppLocalizations.of(context)!.textfield_password,
                             labelStyle: Theme.of(context).textTheme.headline4,
                           ),
                           validator: (value) =>
-                              value!.isEmpty ? 'Insira a senha' : null,
+                              value!.isEmpty ? AppLocalizations.of(context)!.validator_password : null,
                           onChanged: (value) => _validar_password(),
                         ),
                         SizedBox(height: Get.height * 0.005),
@@ -383,7 +380,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           child: TextButton(
                             child: Text(
-                              'Registar',
+                              AppLocalizations.of(context)!.button_register,
                               style: TextStyle(
                                   fontFamily: AppFonts.poppinsRegularFont,
                                   fontSize: Get.width * 0.035,
@@ -422,13 +419,4 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 }
 
-class FrenchStrings implements FlutterPwValidatorStrings {
-  @override
-  final String atLeast = 'Au moins - caractères';
-  @override
-  final String uppercaseLetters = '- Lettres majuscules';
-  @override
-  final String numericCharacters = '- Chiffres';
-  @override
-  final String specialCharacters = '- Caractères spéciaux';
-}
+

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class Pop_Login extends StatefulWidget {
   const Pop_Login({Key? key}) : super(key: key);
   @override
@@ -43,7 +43,7 @@ class _Pop_LoginState extends State<Pop_Login> {
                       ),
                     ),
                     Text(
-                      'LOGIN',
+                      AppLocalizations.of(context)!.button_login,
                        style: Theme.of(context).textTheme.headline1,
                     ),
                     IconButton(
@@ -64,7 +64,7 @@ class _Pop_LoginState extends State<Pop_Login> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Text(
-                          'Deverá efectuar primeiramente o Login.',
+                          AppLocalizations.of(context)!.message_login,
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.headline4,
                         ),
@@ -94,7 +94,7 @@ class _Pop_LoginState extends State<Pop_Login> {
                     ),
                     child: TextButton(
                       child: Text(
-                        'Login',
+                        AppLocalizations.of(context)!.button_login,
                         style: TextStyle(
                             fontFamily: AppFonts.poppinsBoldFont,
                             fontSize: Get.width * 0.04,

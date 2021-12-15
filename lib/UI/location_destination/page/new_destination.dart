@@ -7,6 +7,7 @@ import 'package:manda_bai/Model/location.dart';
 import 'package:manda_bai/UI/cart/pages/checkout_page_step_2.dart';
 import 'package:manda_bai/UI/location_destination/components/popup_info.dart';
 import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewDestination extends StatefulWidget {
   String route;
@@ -88,7 +89,7 @@ class _NewDestinationState extends State<NewDestination> {
                   ),
                   const Spacer(),
                   Text(
-                    'Novo Destino',
+                    AppLocalizations.of(context)!.title_new_destiny,
                     style: Theme.of(context).textTheme.headline1,
                   ),
                   const Spacer(),
@@ -128,7 +129,7 @@ class _NewDestinationState extends State<NewDestination> {
                           left: Get.width * 0.02,
                         ),
                         child: Text(
-                          'Prencher os seguintes campos com o dados do destino pretendido:',
+                          AppLocalizations.of(context)!.text_fill_the_field,
                           style: Theme.of(context).textTheme.headline4,
                         ),
                       ),
@@ -140,7 +141,7 @@ class _NewDestinationState extends State<NewDestination> {
                         controller: input_nome,
                         style: Theme.of(context).textTheme.headline4,
                         decoration: InputDecoration(
-                          labelText: "Nome do destinatário",
+                          labelText: AppLocalizations.of(context)!.text_recipient_name,
                           labelStyle: Theme.of(context).textTheme.headline4,
                           filled: true,
                           fillColor: Theme.of(context).backgroundColor,
@@ -151,7 +152,7 @@ class _NewDestinationState extends State<NewDestination> {
                           ),
                         ),
                         validator: (value) =>
-                            value!.isEmpty ? 'Insira o nome' : null,
+                            value!.isEmpty ? AppLocalizations.of(context)!.validator_name : null,
                       ),
                     ),
                     SizedBox(height: Get.height * 0.01),
@@ -206,7 +207,7 @@ class _NewDestinationState extends State<NewDestination> {
                         controller: input_cidade,
                         style: Theme.of(context).textTheme.headline4,
                         decoration: InputDecoration(
-                          labelText: "Cidade",
+                          labelText: AppLocalizations.of(context)!.textfield_city,
                           labelStyle: Theme.of(context).textTheme.headline4,
                           filled: true,
                           fillColor: Theme.of(context).backgroundColor,
@@ -216,7 +217,7 @@ class _NewDestinationState extends State<NewDestination> {
                           ),
                         ),
                         validator: (value) =>
-                            value!.isEmpty ? 'Insira a cidade' : null,
+                            value!.isEmpty ? AppLocalizations.of(context)!.validator_city : null,
                       ),
                     ),
                     SizedBox(height: Get.height * 0.01),
@@ -226,7 +227,7 @@ class _NewDestinationState extends State<NewDestination> {
                         controller: input_endereco,
                         style: Theme.of(context).textTheme.headline4,
                         decoration: InputDecoration(
-                          labelText: "Endereço",
+                          labelText: AppLocalizations.of(context)!.text_address,
                           labelStyle: Theme.of(context).textTheme.headline4,
                           filled: true,
                           fillColor: Theme.of(context).backgroundColor,
@@ -236,7 +237,7 @@ class _NewDestinationState extends State<NewDestination> {
                           ),
                         ),
                         validator: (value) =>
-                            value!.isEmpty ? 'Insira o Endereço' : null,
+                            value!.isEmpty ? AppLocalizations.of(context)!.validator_enter_address : null,
                       ),
                     ),
                     SizedBox(height: Get.height * 0.01),
@@ -257,7 +258,7 @@ class _NewDestinationState extends State<NewDestination> {
                           ),
                         ),
                         validator: (value) =>
-                            value!.isEmpty ? 'Insira o Email' : null,
+                            value!.isEmpty ? AppLocalizations.of(context)!.validator_email : null,
                       ),
                     ),
                     SizedBox(height: Get.height * 0.01),
@@ -268,7 +269,7 @@ class _NewDestinationState extends State<NewDestination> {
                         keyboardType: TextInputType.number,
                         style: Theme.of(context).textTheme.headline4,
                         decoration: InputDecoration(
-                          labelText: "Telefone ou Telemovel",
+                          labelText: AppLocalizations.of(context)!.textfield_phone,
                           labelStyle: Theme.of(context).textTheme.headline4,
                           filled: true,
                           fillColor: Theme.of(context).backgroundColor,
@@ -280,7 +281,7 @@ class _NewDestinationState extends State<NewDestination> {
                           ),
                         ),
                         validator: (value) =>
-                            value!.isEmpty ? 'Insira o número' : null,
+                            value!.isEmpty ? AppLocalizations.of(context)!.validator_number : null,
                       ),
                     ),
                   ],
@@ -318,7 +319,7 @@ class _NewDestinationState extends State<NewDestination> {
               ),
               child: TextButton(
                   child: Text(
-                    'Guardar',
+                    AppLocalizations.of(context)!.button_save,
                     style: TextStyle(
                         fontFamily: AppFonts.poppinsRegularFont,
                         fontSize: Get.width * 0.035,

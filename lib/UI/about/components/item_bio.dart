@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/employee.dart';
-import 'package:manda_bai/data/madaBaiData.dart';
-import 'package:readmore/readmore.dart';
 
 class Item_Bio extends StatefulWidget {
   Employee employee;

@@ -13,6 +13,7 @@ import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 import 'package:readmore/readmore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'checkout_page_step_3.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CheckoutPageStep2 extends StatefulWidget {
   var location;
@@ -43,7 +44,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
             context: context,
             builder: (BuildContext context) {
               return Pop_up_Message(
-                  mensagem: "Destino de entrega não selecionado",
+                  mensagem:AppLocalizations.of(context)!.message_error_destination_select,
                   icon: Icons.error,
                   caminho: "erro");
             });
@@ -115,7 +116,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                           ),
                         ),
                         Text(
-                          'Checkout',
+                          AppLocalizations.of(context)!.text_checkout,
                           style: Theme.of(context).textTheme.headline1,
                         ),
                         IconButton(
@@ -133,7 +134,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Faturação e Envio",
+                        AppLocalizations.of(context)!.subtitle_billing_and_shipping,
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
@@ -148,8 +149,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                             trimLines: 2,
                             colorClickableText: AppColors.greenColor,
                             trimMode: TrimMode.Line,
-                            trimCollapsedText: 'Ver os dados',
-                            trimExpandedText: 'Fechar',
+                            trimCollapsedText: AppLocalizations.of(context)!.readmoretext_data,
+                            trimExpandedText: AppLocalizations.of(context)!.readmoretext_close,
                             style: Theme.of(context).textTheme.headline4,
                             moreStyle: TextStyle(
                               fontSize: 14,
@@ -159,14 +160,14 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                           ),
                           SizedBox(height: Get.height * 0.01),
                           Text(
-                            "Dados do Destinário",
+                            AppLocalizations.of(context)!.subtitle_recipient_data,
                             style: Theme.of(context).textTheme.headline1,
                           ),
                           SizedBox(height: Get.height * 0.01),
                           Row(
                             children: [
                               Text(
-                                "Ilha: ",
+                                AppLocalizations.of(context)!.text_island,
                                 style: Theme.of(context).textTheme.headline2,
                               ),
                               FutureBuilder(
@@ -204,7 +205,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Sem localizações de entrega...",
+                                    AppLocalizations.of(context)!.text_no_delivery_locations,
                                     style:
                                         Theme.of(context).textTheme.headline3,
                                   ),
@@ -212,7 +213,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "Por Favor insera o destino de entrega",
+                                        AppLocalizations.of(context)!.text_enter_destiny,
                                         style: Theme.of(context)
                                             .textTheme
                                             .headline3,
@@ -243,14 +244,14 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                     child: Row(
                                       children: [
                                         Text(
-                                          "Endereço de Entrega",
+                                         AppLocalizations.of(context)!.text_delivery_address,
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline1,
                                         ),
                                         const Spacer(),
                                         Text(
-                                          "Trocar",
+                                          AppLocalizations.of(context)!.text_change,
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline3,
@@ -346,14 +347,14 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Informação Adicional",
+                        AppLocalizations.of(context)!.subtitle_add_information,
                         style: Theme.of(context).textTheme.headline2,
                       ),
                     ),
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Notas da encomenda (opcional)",
+                       AppLocalizations.of(context)!.text_notes,
                         style: Theme.of(context).textTheme.headline4,
                       ),
                     ),
@@ -373,7 +374,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                             borderRadius: new BorderRadius.circular(15.0),
                             borderSide: new BorderSide(),
                           ),
-                          hintText: 'escrever...',
+                          hintText: AppLocalizations.of(context)!.hint_write,
                           hintStyle: Theme.of(context).textTheme.headline4,
                         ),
                       ),
@@ -416,7 +417,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
             child: TextButton(
               onPressed: validateAndSave,
               child: Text(
-                "Seguinte >",
+                AppLocalizations.of(context)!.textbutton_next+" >",
                 style: TextStyle(
                     fontFamily: AppFonts.poppinsRegularFont,
                     color: AppColors.greenColor),

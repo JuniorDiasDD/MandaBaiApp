@@ -6,7 +6,7 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ContactPage extends StatefulWidget {
   const ContactPage({Key? key}) : super(key: key);
 
@@ -94,7 +94,7 @@ class _ContactPageState extends State<ContactPage> {
                   ),
                 ),
                 Text(
-                  'Fale Connosco',
+                AppLocalizations.of(context)!.text_talk_to_us,
                   style: Theme.of(context).textTheme.headline1,
                 ),
                 Container(
@@ -110,12 +110,11 @@ class _ContactPageState extends State<ContactPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Pode nos contatar pelo seu Email ou pelo seu WhatsApp e assim que um de nossos colaboradores visualizar sua mensagem irá te responder.\nDesde já agradecemos sua visita e pode contar conosco para tirar qualquer dúvida referente ao uso do aplicativo, envio de encomendas, preços e etc.",
-                    style: Theme.of(context).textTheme.headline3,
+                   AppLocalizations.of(context)!.text_description_contact, style: Theme.of(context).textTheme.headline3,
                   ),
                   SizedBox(height: Get.height * 0.018),
                   Text(
-                    "Estamos ao seu dispor!",
+                  AppLocalizations.of(context)!.text_description2_contact,
                     style: Theme.of(context)
                         .textTheme
                         .headline5!
@@ -132,7 +131,7 @@ class _ContactPageState extends State<ContactPage> {
                   width: Get.width * 0.7,
                   decoration: BoxDecoration(
                     color: AppColors.greenColor,
-                    borderRadius: BorderRadius.all(
+                    borderRadius:const BorderRadius.all(
                       Radius.circular(15),
                     ),
                     boxShadow: [
@@ -165,7 +164,7 @@ class _ContactPageState extends State<ContactPage> {
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                'Conversar pelo Email',
+                               AppLocalizations.of(context)!.button_chat_email,
                                 style: TextStyle(
                                     fontFamily: AppFonts.poppinsBoldFont,
                                     fontSize: Get.width * 0.035,
@@ -184,7 +183,7 @@ class _ContactPageState extends State<ContactPage> {
                   width: Get.width * 0.7,
                   decoration: BoxDecoration(
                     color: AppColors.greenColor,
-                    borderRadius: BorderRadius.all(
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(15),
                     ),
                     boxShadow: [
@@ -217,7 +216,7 @@ class _ContactPageState extends State<ContactPage> {
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                'Conversar pelo WhatsApp',
+                              AppLocalizations.of(context)!.button_chat_whatsapp,
                                 style: TextStyle(
                                     fontFamily: AppFonts.poppinsBoldFont,
                                     fontSize: Get.width * 0.035,
@@ -288,7 +287,7 @@ class _ContactPageState extends State<ContactPage> {
                   width: Get.width * 0.7,
                   decoration: BoxDecoration(
                     color: AppColors.greenColor,
-                    borderRadius: BorderRadius.all(
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(15),
                     ),
                     boxShadow: [
@@ -296,7 +295,7 @@ class _ContactPageState extends State<ContactPage> {
                         color: Theme.of(context).cardColor,
                         blurRadius: 4.0,
                         spreadRadius: 0.0,
-                        offset: Offset(2.0, 2.0), // changes position of shadow
+                        offset:const Offset(2.0, 2.0), // changes position of shadow
                       ),
                     ],
                   ),
@@ -321,7 +320,7 @@ class _ContactPageState extends State<ContactPage> {
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                'Conversar pelo Messeger',
+                                AppLocalizations.of(context)!.button_chat_messenger,
                                 style: TextStyle(
                                     fontFamily: AppFonts.poppinsBoldFont,
                                     fontSize: Get.width * 0.035,

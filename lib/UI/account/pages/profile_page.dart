@@ -14,7 +14,7 @@ import 'package:manda_bai/UI/home/pop_up/popup_island.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_moeda.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -179,7 +179,7 @@ class _StartPageState extends State<ProfilePage> {
                             left: Get.width * 0.02,
                           ),
                           child: Text(
-                            'Editar Perfil',
+                            AppLocalizations.of(context)!.text_edit_profile,
                             style: Theme.of(context).textTheme.headline3,
                           ),
                         ),
@@ -204,7 +204,7 @@ class _StartPageState extends State<ProfilePage> {
                         right: Get.width * 0.05,
                       ),
                       child: Text(
-                        "Outros Serviços",
+                        AppLocalizations.of(context)!.text_other_services,
                         style: Theme.of(context).textTheme.headline4,
                       ),
                     ),
@@ -316,7 +316,7 @@ class _StartPageState extends State<ProfilePage> {
                         right: Get.width * 0.05,
                       ),
                       child: Text(
-                        "Configurações",
+                      AppLocalizations.of(context)!.text_settings,
                         style: Theme.of(context).textTheme.headline4,
                       ),
                     ),
@@ -369,7 +369,7 @@ class _StartPageState extends State<ProfilePage> {
                               child: Row(
                                 children: [
                                   Text(
-                                    'Mudar de ILha',
+                                    AppLocalizations.of(context)!.text_change_island,
                                     style:
                                         Theme.of(context).textTheme.headline3,
                                   ),
@@ -432,7 +432,7 @@ class _StartPageState extends State<ProfilePage> {
                               child: Row(
                                 children: [
                                   Text(
-                                    'Selecionar Moeda',
+                                   AppLocalizations.of(context)!.text_select_currency,
                                     style:
                                         Theme.of(context).textTheme.headline3,
                                   ),
@@ -495,7 +495,7 @@ class _StartPageState extends State<ProfilePage> {
                               child: Row(
                                 children: [
                                   Text(
-                                    'Locais de Entrega',
+                                    AppLocalizations.of(context)!.text_delivery_location,
                                     style:
                                         Theme.of(context).textTheme.headline3,
                                   ),
@@ -554,7 +554,7 @@ class _StartPageState extends State<ProfilePage> {
                               child: Row(
                                 children: [
                                   Text(
-                                    'Meus Pedidos',
+                                    AppLocalizations.of(context)!.text_my_orders,
                                     style:
                                         Theme.of(context).textTheme.headline3,
                                   ),
@@ -581,7 +581,7 @@ class _StartPageState extends State<ProfilePage> {
                             right: Get.width * 0.05,
                           ),
                           child: Text(
-                            "Redes Sociais",
+                            AppLocalizations.of(context)!.text_social_media,
                             style: Theme.of(context).textTheme.headline4,
                           ),
                         ),
@@ -692,7 +692,7 @@ class _StartPageState extends State<ProfilePage> {
                             right: Get.width * 0.05,
                           ),
                           child: Text(
-                            "Informações",
+                            AppLocalizations.of(context)!.text_information,
                             style: Theme.of(context).textTheme.headline4,
                           ),
                         ),
@@ -742,7 +742,7 @@ class _StartPageState extends State<ProfilePage> {
                                 left: Get.width * 0.02,
                               ),
                               child: Text(
-                                'Sobre Nós e Aplicação',
+                                AppLocalizations.of(context)!.text_about_us_and_aplication,
                                 style: Theme.of(context).textTheme.headline3,
                               ),
                             ),
@@ -785,7 +785,7 @@ class _StartPageState extends State<ProfilePage> {
                                 left: Get.width * 0.02,
                               ),
                               child: Text(
-                                'Contacto',
+                                AppLocalizations.of(context)!.text_contact_us,
                                 style: Theme.of(context).textTheme.headline3,
                               ),
                             ),
@@ -821,7 +821,7 @@ class _StartPageState extends State<ProfilePage> {
                                 left: Get.width * 0.02,
                               ),
                               child: Text(
-                                'Terminar Sessão',
+                                AppLocalizations.of(context)!.text_logout,
                                 style: Theme.of(context).textTheme.headline3,
                               ),
                             ),

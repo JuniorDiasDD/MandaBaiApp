@@ -4,6 +4,7 @@ import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/order.dart';
 import 'package:manda_bai/UI/Pedido/Componentes/item_pedido.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PedidoPage extends StatefulWidget {
   @override
@@ -45,7 +46,7 @@ class _PedidoPageState extends State<PedidoPage> {
                   ),
                 ),
                 Text(
-                  'Meus Pedidos',
+                  AppLocalizations.of(context)!.text_my_orders,
                   style: Theme.of(context).textTheme.headline1,
                 ),
                 Container(
@@ -64,7 +65,8 @@ class _PedidoPageState extends State<PedidoPage> {
                     size: 10,
                   ),
                   Text(
-                    ' Encomenda em processo',
+                     AppLocalizations.of(context)!
+                                        .text_in_process_order,
                     style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: Get.width*0.03),
                   ),
                   Padding(
@@ -76,7 +78,8 @@ class _PedidoPageState extends State<PedidoPage> {
                     ),
                   ),
                   Text(
-                    ' Encomenda entregue',
+                     AppLocalizations.of(context)!
+                                        .text_delivery_order,
                     style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: Get.width*0.03),
                   ),
                 ],
@@ -106,7 +109,8 @@ class _PedidoPageState extends State<PedidoPage> {
                         width: Get.width,
                         child: Center(
                           child: Text(
-                            "Ainda não realizou nenhum pedido...",
+                            AppLocalizations.of(context)!
+                                        .text_empty_order,
                             style: Theme.of(context).textTheme.headline3,
                           ),
                         ),

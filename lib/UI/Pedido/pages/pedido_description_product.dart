@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PedidoDescriptionProduct extends StatefulWidget {
   int idProduct;
@@ -179,7 +180,8 @@ class _PedidoDescriptionProductState extends State<PedidoDescriptionProduct> {
                                   Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      'Descrição',
+                                       AppLocalizations.of(context)!
+                                        .text_description,
                                       style: Theme.of(context)
                                           .textTheme
                                           .headline2!

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
@@ -9,6 +8,7 @@ import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/cart/pages/cart_page.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProdutoDetailPage extends StatefulWidget {
   Product product;
@@ -29,7 +29,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
           context: context,
           builder: (BuildContext context) {
             return Pop_up_Message(
-                mensagem: "Adicionado no carrinho",
+                mensagem: AppLocalizations.of(context)!.message_success_cart,
                 icon: Icons.check,
                 caminho: "description");
           });
@@ -39,7 +39,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
           context: context,
           builder: (BuildContext context) {
             return Pop_up_Message(
-                mensagem: "Erro em adicionar\nTente novamente em segundos",
+                mensagem: AppLocalizations.of(context)!.message_error_cart,
                 icon: Icons.error,
                 caminho: "erro");
           });
@@ -224,7 +224,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Descrição',
+                         AppLocalizations.of(context)!.text_description,
                           style:
                               Theme.of(context).textTheme.headline2!.copyWith(
                                     fontSize: Get.width * 0.035,

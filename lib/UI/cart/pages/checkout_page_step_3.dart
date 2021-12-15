@@ -8,6 +8,7 @@ import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/location.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:websafe_svg/websafe_svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CheckoutPageStep3 extends StatefulWidget {
   Location location;
@@ -44,7 +45,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
             builder: (BuildContext context) {
               return Pop_up_Message(
                   mensagem:
-                      "Encomenda feito com sucesso.\nAcompanha a sua encomenda em \n'Meus Pedidos'!",
+                    AppLocalizations.of(context)!.message_success_order,
                   icon: Icons.check,
                   caminho: "encomenda");
             });
@@ -54,12 +55,12 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
             context: context,
             builder: (BuildContext context) {
               return Pop_up_Message(
-                  mensagem: "Erro em efetuar a encomenda",
+                  mensagem: AppLocalizations.of(context)!.message_error_order,
                   icon: Icons.error,
                   caminho: "erro");
             });
       }
-      print('Form is valid');
+    //  print('Form is valid');
     } else {
       print('Form is invalid');
     }
@@ -138,7 +139,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                                   width: Get.width * 0.08,
                                                 ),
                                                 Text(
-                                                  'Instruções',
+                                                  AppLocalizations.of(context)!.title_instructions,
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .headline1,
@@ -164,7 +165,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                                       height:
                                                           Get.height * 0.01),
                                                   Text(
-                                                    'Pagamento',
+                                                    AppLocalizations.of(context)!.subtitle_payment,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .headline2,
@@ -173,7 +174,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                                       height:
                                                           Get.height * 0.01),
                                                   Text(
-                                                    'Caso tiver um Cuppon de Desconto, clica na caixinha "Tenho um desconto", a seguir, introduza o código do desconto.',
+                                                   AppLocalizations.of(context)!.text_cuppon,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .headline4,
@@ -202,7 +203,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Pagamento",
+                        AppLocalizations.of(context)!.subtitle_payment,
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
@@ -219,7 +220,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                           },
                         ),
                         Text(
-                          "Tenho um desconto",
+                        AppLocalizations.of(context)!.text_discount,
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       ],
@@ -231,7 +232,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                 Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    "Código de Desconto",
+                                    AppLocalizations.of(context)!.subtitle_code_discount,
                                     style:
                                         Theme.of(context).textTheme.headline2,
                                   ),
@@ -253,7 +254,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                     ),
                                   ),
                                   validator: (value) => value!.isEmpty
-                                      ? 'Insira o codigo de desconto'
+                                      ? AppLocalizations.of(context)!.valitador_code_discount
                                       : null,
                                 ),
                                 SizedBox(
@@ -545,7 +546,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "Número de Cartão",
+                        AppLocalizations.of(context)!.subtitle_number_card,
                         style: Theme.of(context).textTheme.headline2,
                       ),
                     ),
@@ -565,7 +566,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                         ),
                       ),
                       validator: (value) =>
-                          value!.isEmpty ? 'Número do cartão' : null,
+                          value!.isEmpty ? AppLocalizations.of(context)!.valitador_number_card : null,
                     ),
                     SizedBox(height: Get.height * 0.01),
                     Row(
@@ -575,7 +576,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Expiração",
+                             AppLocalizations.of(context)!.subtitle_expiration,
                               style: Theme.of(context).textTheme.headline2,
                             ),
                             SizedBox(height: Get.height * 0.01),
@@ -595,7 +596,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                   ),
                                 ),
                                 validator: (value) =>
-                                    value!.isEmpty ? 'Número do data' : null,
+                                    value!.isEmpty ? AppLocalizations.of(context)!.valitador_number_data : null,
                               ),
                             ),
                           ],
@@ -604,7 +605,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "CVV2",
+                              AppLocalizations.of(context)!.subtitle_cvv2,
                               style: Theme.of(context).textTheme.headline2,
                             ),
                             SizedBox(height: Get.height * 0.01),
@@ -624,7 +625,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                   ),
                                 ),
                                 validator: (value) =>
-                                    value!.isEmpty ? 'insira ccv' : null,
+                                    value!.isEmpty ? AppLocalizations.of(context)!.valitador_cvv2 : null,
                               ),
                             ),
                           ],
@@ -636,11 +637,11 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Total",
+                         AppLocalizations.of(context)!.text_total,
                           style: Theme.of(context).textTheme.headline5,
                         ),
                         Text(
-                          "99",
+                          cartPageController.total.toStringAsFixed(1),
                           style: Theme.of(context).textTheme.headline5,
                         ),
                       ],
@@ -656,7 +657,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                         ),
                         color: AppColors.greenColor,
                         textColor: Colors.white,
-                        child: Text('Finalizar'),
+                        child: Text(AppLocalizations.of(context)!.button_done),
                         onPressed: validateAndSave,
                         shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(30.0),

@@ -11,7 +11,7 @@ import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/category_filter/controller/categoryController.dart';
 import 'package:manda_bai/UI/home/components/product_list_component.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class CategoryPage extends StatefulWidget {
   Category category;
   CategoryPage({required this.category});
@@ -108,7 +108,6 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     controller.loading=false;
   }
@@ -144,21 +143,21 @@ class _CategoryPageState extends State<CategoryPage> {
                           controller: pesquisa,
                           style: Theme.of(context).textTheme.headline4,
                           decoration: InputDecoration(
-                            focusedBorder: OutlineInputBorder(
+                            focusedBorder:const OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(30.0)),
                                 borderSide:
                                     BorderSide(color: AppColors.greenColor)),
-                            hintText: 'Pesquisar Produto...',
+                            hintText: AppLocalizations.of(context)!.search,
                             hintStyle: Theme.of(context).textTheme.headline4,
-                            contentPadding: EdgeInsets.only(top: 10, left: 15),
-                            suffixIcon: Icon(
+                            contentPadding: const EdgeInsets.only(top: 10, left: 15),
+                            suffixIcon:const Icon(
                               Icons.search,
                               color: AppColors.greenColor,
                             ),
                             filled: true,
                             fillColor: Theme.of(context).backgroundColor,
-                            border: OutlineInputBorder(
+                            border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(30.0),
                               ),
@@ -237,7 +236,7 @@ class _CategoryPageState extends State<CategoryPage> {
                           width: Get.width,
                           child: Center(
                             child: Text(
-                              "Sem Produtos...",
+                              AppLocalizations.of(context)!.text_no_product,
                               style: TextStyle(
                                 fontFamily: AppFonts.poppinsBoldFont,
                                 fontSize: Get.width * 0.035,

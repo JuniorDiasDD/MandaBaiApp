@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Model/order.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/Pedido/Componentes/item_list_order.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Item_Pedido extends StatefulWidget {
   Order order;
@@ -45,7 +46,7 @@ class _Item_PedidoState extends State<Item_Pedido> {
               Padding(
                 padding: const EdgeInsets.only(left:8.0),
                 child: Text(
-                  "Encomenda nº " + widget.order.id.toString(),
+                  AppLocalizations.of(context)! .text_order_number+" nº " + widget.order.id.toString(),
                   style: Theme.of(context).textTheme.headline1,
                 ),
               ),

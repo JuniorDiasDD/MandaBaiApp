@@ -7,6 +7,7 @@ import 'package:manda_bai/UI/home/pages/home_page.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ItemFavoriteComponent extends StatefulWidget {
   // final CartPageController cartPageController = Get.find();
@@ -104,7 +105,9 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return Pop_up_Message(
-                                            mensagem: "Adicionado no carrinho",
+                                            mensagem:
+                                                AppLocalizations.of(context)!
+                                                    .message_success_cart,
                                             icon: Icons.check,
                                             caminho: "addCarrinho");
                                       });
@@ -117,7 +120,8 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                                       builder: (BuildContext context) {
                                         return Pop_up_Message(
                                             mensagem:
-                                                "Erro em adicionar no carrinho\nTente novamente em segundos!",
+                                                AppLocalizations.of(context)!
+                                                    .message_error_cart,
                                             icon: Icons.error,
                                             caminho: "erro");
                                       });

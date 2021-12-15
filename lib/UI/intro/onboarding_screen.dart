@@ -17,19 +17,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     OnbordingData(
       imagePath: AppImages.firstOnboardingImage,
       title: "1",
-      desc: "Ajude a sua família lá dentro, cá fora.",
+      desc: "Djuda bo familia li dento, de lá",
     ),
+    //Ajude a sua família lá dentro, cá fora
     OnbordingData(
       imagePath: AppImages.secondOnboardingImage,
       title: "2",
-      desc: "Aceda a loja e compre os produtos que pretende.",
+      desc: "Kumpra tudu produtos que bo krê",
     ),
+  //  Aceda a loja e compre os produtos que pretende.
     OnbordingData(
       imagePath: AppImages.thirdOnboardingImage,
       title: "3",
       desc:
-          "Faça o pagamento online e os produtos serão entregues ao domicílio.",
+          "Paga online e nu ta bai leba la na Casa!",
     ),
+    //Faça o pagamento online e os produtos serão entregues ao domicílio.
   ];
 
   @override

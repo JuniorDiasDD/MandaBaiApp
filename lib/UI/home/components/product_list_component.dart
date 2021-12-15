@@ -7,7 +7,7 @@ import 'package:manda_bai/UI/description_product/pages/product_detail_page.dart'
 import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ProductListComponent extends StatefulWidget {
   Product product;
 
@@ -211,7 +211,8 @@ class _ProductListComponentState extends State<ProductListComponent> {
                                           builder: (BuildContext context) {
                                             return Pop_up_Message(
                                                 mensagem:
-                                                    "Adicionado no carrinho",
+                                                    AppLocalizations.of(context)!
+                                        .message_success_cart,
                                                 icon: Icons.check,
                                                 caminho: "addCarrinho");
                                           });
@@ -224,7 +225,8 @@ class _ProductListComponentState extends State<ProductListComponent> {
                                           builder: (BuildContext context) {
                                             return Pop_up_Message(
                                                 mensagem:
-                                                    "Erro em adicionar no carrinho",
+                                                    AppLocalizations.of(context)!
+                                        .message_error_cart,
                                                 icon: Icons.error,
                                                 caminho: "erro");
                                           });

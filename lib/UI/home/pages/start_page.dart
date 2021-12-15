@@ -82,12 +82,18 @@ class _StartPageState extends State<StartPage> {
     }
   }
 
+  removerId() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('onboarding');
+  }
+
   @override
   void initState() {
     super.initState();
     validateMoney();
     validateLanguage();
     validateDados();
+    removerId();
   }
 
   int _current = 0;
@@ -100,11 +106,6 @@ class _StartPageState extends State<StartPage> {
           return new Future(() => false);
         },
         child: Scaffold(
-          /* appBar: AppBar(
-
-            title: Header(title: 'MandaBai'),
-          ),*/
-          //  drawer: Menu(),
           body: SingleChildScrollView(
             child: Column(
               children: [
@@ -170,7 +171,7 @@ class _StartPageState extends State<StartPage> {
                     padding: EdgeInsets.only(
                         top: Get.height * 0.01, left: Get.width * 0.02),
                     child: Text(
-                      'Novos Serviços',
+                       AppLocalizations.of(context)!.title_new_services,
                       style: Theme.of(context).textTheme.headline1,
                     ),
                   ),
@@ -192,11 +193,10 @@ class _StartPageState extends State<StartPage> {
                     Container(
                       padding: EdgeInsets.only(
                           top: Get.height * 0.01, left: Get.width * 0.023),
-                      child: Text(AppLocalizations.of(context)!
-                          .title_categoria), /*  Text(
-                        'Categorias',
+                      child: Text(
+                        AppLocalizations.of(context)!.title_categories,
                         style: Theme.of(context).textTheme.headline1,
-                      ),*/
+                      ), 
                     ),
                   ],
                 ),
@@ -231,7 +231,7 @@ class _StartPageState extends State<StartPage> {
                                   size: Get.height * 0.06,
                                 ),
                                 Text(
-                                  "Serviço Indispónivel.\n Tente mais tarde...",
+                                  AppLocalizations.of(context)!.text_unavailable_service,
                                   style: TextStyle(
                                     fontFamily: AppFonts.poppinsBoldFont,
                                     fontSize: Get.width * 0.035,
@@ -264,75 +264,7 @@ class _StartPageState extends State<StartPage> {
                   },
                 ),
 
-                /*Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        top: Get.height * 0.01, left: Get.width * 0.02),
-                    child: const Text(
-                      'Produtos',
-                      style: TextStyle(
-                        fontFamily: AppFonts.poppinsBoldFont,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                ),
-                // ignore: sized_box_for_whitespace
-                FutureBuilder(
-                  future: carregarProdutos(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.data == null) {
-                      return Container();
-                    } else {
-                      return Container(
-                        height: Get.height * 0.2,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (BuildContext context, index) {
-                            var list = list_products[index];
-                            return ProductListComponent(product: list);
-                          },
-                        ),
-                      );
-                    }
-                  },
-                ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        top: Get.height * 0.01, left: Get.width * 0.02),
-                    child: const Text(
-                      'Produtos mais Vendidos',
-                      style: TextStyle(
-                        fontFamily: AppFonts.poppinsBoldFont,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                ),
-                FutureBuilder(
-                  future: _carregar(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.data == null) {
-                      return Container();
-                    } else {
-                      return Container(
-                        height: Get.height * 0.2,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (BuildContext context, index) {
-                            var list = list_product[index];
-                            return ProductListComponent(product: list);
-                          },
-                        ),
-                      );
-                    }
-                  },
-                ),*/
+               
               ],
             ),
           ),

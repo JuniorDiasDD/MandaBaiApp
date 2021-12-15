@@ -7,7 +7,7 @@ import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:email_validator/email_validator.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class EditPorfilePage extends StatefulWidget {
   @override
   _EditPorfilePageState createState() => _EditPorfilePageState();
@@ -70,7 +70,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
               context: context,
               builder: (BuildContext context) {
                 return Pop_up_Message(
-                    mensagem: "Atualizado com sucesso",
+                    mensagem: AppLocalizations.of(context)!.message_success_update,
                     icon: Icons.check,
                     caminho: "atualizar");
               });
@@ -80,7 +80,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
               context: context,
               builder: (BuildContext context) {
                 return Pop_up_Message(
-                    mensagem: "Falha na Atualização",
+                    mensagem: AppLocalizations.of(context)!.message_update_failed,
                     icon: Icons.error,
                     caminho: "erro");
               });
@@ -157,11 +157,11 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                                 color: Colors.grey,
                               ), // icon is 48px widget.
                             ),
-                            labelText: 'Nome',
+                            labelText: AppLocalizations.of(context)!.textfield_name,
                             labelStyle: Theme.of(context).textTheme.headline4,
                           ),
                           validator: (value) =>
-                              value!.isEmpty ? 'Insira o Nome' : null,
+                              value!.isEmpty ? AppLocalizations.of(context)!.validator_name : null,
                         ),
                         SizedBox(height: Get.height * 0.01),
                         TextFormField(
@@ -188,7 +188,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                           ),
                           validator: (value) => EmailValidator.validate(value!)
                               ? null
-                              : 'Email inváido',
+                              : AppLocalizations.of(context)!.validator_email,
                         ),
                         SizedBox(height: Get.height * 0.01),
                         TextFormField(
@@ -211,11 +211,11 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                                 color: Colors.grey,
                               ), // icon is 48px widget.
                             ),
-                            labelText: 'Telefone',
+                            labelText: AppLocalizations.of(context)!.textfield_phone_number,
                             labelStyle: Theme.of(context).textTheme.headline4,
                           ),
                           validator: (value) =>
-                              value!.isEmpty ? 'Insira o Numero' : null,
+                              value!.isEmpty ? AppLocalizations.of(context)!.validator_number : null,
                         ),
                         SizedBox(height: Get.height * 0.01),
                         TextFormField(
@@ -249,11 +249,11 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                                 color: Colors.grey,
                               ),
                             ),
-                            labelText: 'Palavra-passe',
+                            labelText: AppLocalizations.of(context)!.textfield_password,
                             labelStyle: Theme.of(context).textTheme.headline4,
                           ),
                           validator: (value) =>
-                              value!.isEmpty ? 'Insira a senha' : null,
+                              value!.isEmpty ? AppLocalizations.of(context)!.validator_password : null,
                         ),
                         SizedBox(height: Get.height * 0.01),
                         TextFormField(
@@ -262,7 +262,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                           style: Theme.of(context).textTheme.headline4,
                           decoration: InputDecoration(
                             errorText: checkPassword == false
-                                ? 'Senha não corresponde'
+                                ? AppLocalizations.of(context)!.message_error_text
                                 : null,
                             filled: true,
                             fillColor: Theme.of(context).backgroundColor,
@@ -290,11 +290,11 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                                 color: Colors.grey,
                               ),
                             ),
-                            labelText: 'Palavra-passe confirmar',
+                            labelText: AppLocalizations.of(context)!.label_confirm_password,
                             labelStyle: Theme.of(context).textTheme.headline4,
                           ),
                           validator: (value) =>
-                              value!.isEmpty ? 'Campo vazio' : null,
+                              value!.isEmpty ? AppLocalizations.of(context)!.validator_empty_field : null,
                         ),
                         SizedBox(
                           height: Get.height * 0.02,
@@ -319,7 +319,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                           ),
                           child: TextButton(
                             child: Text(
-                              'Atualizar',
+                              AppLocalizations.of(context)!.button_update,
                               style: TextStyle(
                                   fontFamily: AppFonts.poppinsRegularFont,
                                   fontSize: Get.width * 0.035,

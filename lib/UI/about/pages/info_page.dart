@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
-import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/employee.dart';
 import 'package:manda_bai/UI/about/components/item_bio.dart';
 import 'package:manda_bai/UI/about/components/item_mandatario.dart';
 import 'package:manda_bai/data/madaBaiData.dart';
 import 'package:readmore/readmore.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InfoPage extends StatefulWidget {
   const InfoPage({Key? key}) : super(key: key);
@@ -59,13 +59,13 @@ class _InfoPageState extends State<InfoPage> {
         tel: '+1 3057786138',
         email: 'acmonteiro48@gmail.com'));
     list_employee_Mandatarios.add(Employee(
-        name: 'Estêvão do Nascimento Gomes',
+        name: 'Francisco de Pina',
         cargo: 'Portugal',
         image:
             'https://www.mandabai.com/wp-content/uploads/elementor/thumbs/img-16-pbkbaaof0qxdaun3rdjj72eggo8xuf1tzefuxajdjk.jpg',
         description: 'Mandatário de Mandabai em Portugal',
-        tel: '+447442506316',
-        email: ''));
+        tel: '+351 913098511 | +351938880906',
+        email: 'francisco.r.depina@gmail.com'));
     if (list_employee_Mandatarios.isEmpty) {
       return null;
     }
@@ -99,7 +99,7 @@ class _InfoPageState extends State<InfoPage> {
                     ),
                   ),
                   Text(
-                    'Sobre Nós',
+                    AppLocalizations.of(context)!.title_about_us,
                     style: Theme.of(context).textTheme.headline1,
                   ),
                   Container(
@@ -116,7 +116,7 @@ class _InfoPageState extends State<InfoPage> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'MandaBai, somos mais que uma Empresa!',
+                        AppLocalizations.of(context)!.text_mandabai,
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
@@ -126,8 +126,10 @@ class _InfoPageState extends State<InfoPage> {
                       trimLines: 2,
                       colorClickableText: AppColors.greenColor,
                       trimMode: TrimMode.Line,
-                      trimCollapsedText: 'Ver mais',
-                      trimExpandedText: 'Fechar',
+                      trimCollapsedText:
+                          AppLocalizations.of(context)!.readmoretext_see_more,
+                      trimExpandedText:
+                          AppLocalizations.of(context)!.readmoretext_close,
                       style: Theme.of(context).textTheme.headline4,
                       moreStyle: Theme.of(context).textTheme.headline6,
                     ),
@@ -135,7 +137,7 @@ class _InfoPageState extends State<InfoPage> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Constituição da Empresa',
+                        AppLocalizations.of(context)!.subtitle_company_members,
                         style: Theme.of(context).textTheme.headline2,
                       ),
                     ),
@@ -181,7 +183,8 @@ class _InfoPageState extends State<InfoPage> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Mandatários de MandaBai',
+                        AppLocalizations.of(context)!
+                            .subtitle_representative_members,
                         style: Theme.of(context).textTheme.headline2,
                       ),
                     ),
@@ -242,14 +245,15 @@ class _InfoPageState extends State<InfoPage> {
                         backgroundColor: Theme.of(context).cardColor,
                         iconColor: AppColors.greenColor,
                         title: Text(
-                          "Missão",
+                          AppLocalizations.of(context)!.subtitle_mission,
                           style: Theme.of(context).textTheme.headline5,
                         ),
                         children: <Widget>[
                           Padding(
                             padding: EdgeInsets.all(15.0),
                             child: Text(
-                              description_missao,
+                              AppLocalizations.of(context)!
+                                  .text_description_mission,
                               textAlign: TextAlign.start,
                               style: Theme.of(context).textTheme.headline4,
                             ),
@@ -275,14 +279,15 @@ class _InfoPageState extends State<InfoPage> {
                         backgroundColor: Theme.of(context).cardColor,
                         iconColor: AppColors.greenColor,
                         title: Text(
-                          "Visão",
+                          AppLocalizations.of(context)!.subtitle_vision,
                           style: Theme.of(context).textTheme.headline5,
                         ),
                         children: <Widget>[
                           Padding(
                             padding: EdgeInsets.all(15.0),
                             child: Text(
-                              description_visao,
+                              AppLocalizations.of(context)!
+                                  .text_description_vision,
                               textAlign: TextAlign.start,
                               style: Theme.of(context).textTheme.headline4,
                             ),
@@ -308,13 +313,15 @@ class _InfoPageState extends State<InfoPage> {
                         backgroundColor: Theme.of(context).cardColor,
                         iconColor: AppColors.greenColor,
                         title: Text(
-                          "Valores",
+                          AppLocalizations.of(context)!.subtitle_values,
                           style: Theme.of(context).textTheme.headline5,
                         ),
                         children: <Widget>[
                           Padding(
                             padding: EdgeInsets.all(15.0),
-                            child: Text(description_valores,
+                            child: Text(
+                                AppLocalizations.of(context)!
+                                    .text_description_values,
                                 textAlign: TextAlign.start,
                                 style: Theme.of(context).textTheme.headline4),
                           ),
@@ -339,7 +346,8 @@ class _InfoPageState extends State<InfoPage> {
                             right: Get.width * 0.05,
                           ),
                           child: Text(
-                            "Sobre Aplicação",
+                            AppLocalizations.of(context)!
+                                .text_about_application,
                             style: Theme.of(context).textTheme.headline4,
                           ),
                         ),
@@ -376,7 +384,8 @@ class _InfoPageState extends State<InfoPage> {
                                   left: Get.width * 0.02,
                                 ),
                                 child: Text(
-                                  'Publicado por',
+                                  AppLocalizations.of(context)!
+                                      .textbutton_published_by,
                                   style: Theme.of(context).textTheme.headline4,
                                 ),
                               ),
@@ -417,7 +426,8 @@ class _InfoPageState extends State<InfoPage> {
                                   left: Get.width * 0.02,
                                 ),
                                 child: Text(
-                                  'Desenvolvido por',
+                                  AppLocalizations.of(context)!
+                                      .textbutton_developed_by,
                                   style: Theme.of(context).textTheme.headline4,
                                 ),
                               ),
@@ -460,7 +470,8 @@ class _InfoPageState extends State<InfoPage> {
                                   left: Get.width * 0.02,
                                 ),
                                 child: Text(
-                                  'Termos de Uso',
+                                  AppLocalizations.of(context)!
+                                      .textbutton_terms_of_uso,
                                   style: Theme.of(context).textTheme.headline4,
                                 ),
                               ),
@@ -502,7 +513,9 @@ class _InfoPageState extends State<InfoPage> {
                                 padding: EdgeInsets.only(
                                   left: Get.width * 0.02,
                                 ),
-                                child: Text('Politica de Privacidade',
+                                child: Text(
+                                    AppLocalizations.of(context)!
+                                        .textbutton_privacy_police,
                                     style:
                                         Theme.of(context).textTheme.headline4),
                               ),

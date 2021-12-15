@@ -2,9 +2,8 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
-import 'package:manda_bai/Core/app_fonts.dart';
-import 'package:manda_bai/Model/user.dart';
 import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RecoveryPassword extends StatefulWidget {
   const RecoveryPassword({Key? key}) : super(key: key);
@@ -55,7 +54,7 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                     Padding(
                       padding: EdgeInsets.only(top: 33.0),
                       child: Text(
-                        'Esqueceu sua senha',
+                        AppLocalizations.of(context)!.text_forgot_password,
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
@@ -79,14 +78,14 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                       padding: const EdgeInsets.only(top: 35.0),
                       height: Get.height * 0.25,
                       child: Text(
-                        'Por favor, digite seu e-mail registrado ou seu número de telefone para redefinir sua senha ',
+                       AppLocalizations.of(context)!.text_reset_password,
                         style: Theme.of(context).textTheme.headline2,
                       ),
                     ),
                      Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'E-mail ou número de telefone',
+                        AppLocalizations.of(context)!.text_email_phone,
                         style: Theme.of(context).textTheme.headline3!
                             .copyWith(fontSize: Get.width * 0.032),
                       ),
@@ -106,13 +105,13 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                                 width: 1, color: AppColors.greenColor),
                             borderRadius: BorderRadius.circular(15.0),
                           ),
-                          labelText: 'Email/Telefone',
+                          labelText: AppLocalizations.of(context)!.label_email_password,
                           labelStyle: Theme.of(context).textTheme.headline4!
                               .copyWith(fontSize: Get.width * 0.03),
                         ),
                         validator: (value) => EmailValidator.validate(value!)
                             ? null
-                            : 'Email inválido',
+                            : AppLocalizations.of(context)!.validator_email,
                       ),
                     ),
                     SizedBox(
@@ -128,7 +127,7 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                         ),
                         color: AppColors.greenColor,
                         textColor: Colors.white,
-                        child: const Text('Enviar'),
+                        child:  Text(AppLocalizations.of(context)!.button_chat_email),
                         onPressed: () {},
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),

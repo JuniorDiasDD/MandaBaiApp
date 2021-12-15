@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Model/order.dart';
 import 'package:manda_bai/UI/Pedido/pages/pedido_description_product.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ItemListOrder extends StatefulWidget {
   Items items;
   ItemListOrder({Key? key, required this.items}) : super(key: key);
@@ -49,7 +49,8 @@ class _ItemListOrderState extends State<ItemListOrder> {
                 ),
                 SizedBox(height: 5.0),
                 Text(
-                  "Quant: " + widget.items.quantity.toString(),
+                   AppLocalizations.of(context)!
+                                        .text_amount+ widget.items.quantity.toString(),
                   style: Theme.of(context).textTheme.headline4,
                 ),
               ],
