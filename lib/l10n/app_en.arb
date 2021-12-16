@@ -1,5 +1,5 @@
 {
-    "title_categories": "categories",
+    "title_categories": "Categories",
     "textfield_user": "User",
     "validator_user": "Enter the user",
     "textfield_password": "Password",
@@ -40,7 +40,7 @@
     "label_amount": "Amount",
     "validator_amount": "Enter the amount",
     "text_select_island": "Select the desired Island:",
-    "text_select_currency": "Select Currency",
+    "text_select_currency": "Select Currency:",
     "text_edit_profile": "Edit Profile",
     "validator_enter_number": "Enter the number",
     "label_confirm_password": "Confirm password",

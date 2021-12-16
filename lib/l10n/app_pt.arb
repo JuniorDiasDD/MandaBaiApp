@@ -40,7 +40,7 @@
     "label_amount": "Montante",
     "validator_amount": "Insira o Montante",
     "text_select_island": "Selecione a Ilha pretendida:",
-    "text_select_currency": "Selecione Moeda:",
+    "text_select_currency": "Selecione Moeda",
     "text_edit_profile": "Editar Perfil",
     "validator_enter_number": "Insira o Número",
     "label_confirm_password": "Palavra-passe confirmar",
