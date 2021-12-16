@@ -235,7 +235,7 @@ class _InfoPageState extends State<InfoPage> {
                       ),
                       decoration: BoxDecoration(
                         color: Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.all(
+                        borderRadius: const BorderRadius.all(
                           Radius.circular(15),
                         ),
                         border: Border.all(
@@ -269,7 +269,7 @@ class _InfoPageState extends State<InfoPage> {
                       ),
                       decoration: BoxDecoration(
                         color: Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.all(
+                        borderRadius: const BorderRadius.all(
                           Radius.circular(15),
                         ),
                         border: Border.all(
