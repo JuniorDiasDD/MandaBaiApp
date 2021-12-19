@@ -18,7 +18,7 @@ class _ContactPageState extends State<ContactPage> {
   Future<void> openwhatsapp() async {
     var whatsapp = "+2389149439";
     var whatsappURl_android = "whatsapp://send?phone=" + whatsapp;
-    //  await launch(whatsappURl_android);
+     await launch(whatsappURl_android);
     if (await canLaunch(whatsappURl_android)) {
       await launch(whatsappURl_android);
     } else {

@@ -44,7 +44,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
             context: context,
             builder: (BuildContext context) {
               return Pop_up_Message(
-                  mensagem:AppLocalizations.of(context)!.message_error_destination_select,
+                  mensagem: AppLocalizations.of(context)!
+                      .message_error_destination_select,
                   icon: Icons.error,
                   caminho: "erro");
             });
@@ -69,9 +70,38 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
 
   String island = "";
   Future _carregarIsland() async {
-     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     island = prefs.getString('island')!;
     return island;
+  }
+
+  String dataPersone = "";
+  Future _carregarDados() async {
+    dataPersone = "Dados Pessoais \n " +
+        AppLocalizations.of(context)!.textfield_name +
+        ": " +
+        user.name +
+        "\n Email: " +
+        user.email +
+        "\n " +
+        AppLocalizations.of(context)!.textfield_phone +
+        ": " +
+        user.telefone +
+        "\n" +
+        AppLocalizations.of(context)!.textfield_city +
+        ": " +
+        user.city +
+        "\n" +
+        AppLocalizations.of(context)!.textfield_country +
+        ": " +
+        user.country;
+    return dataPersone;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
 
   @override
@@ -134,7 +164,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        AppLocalizations.of(context)!.subtitle_billing_and_shipping,
+                        AppLocalizations.of(context)!
+                            .subtitle_billing_and_shipping,
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
@@ -144,23 +175,35 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          ReadMoreText(
-                            ver_dados_pessoais,
-                            trimLines: 2,
-                            colorClickableText: AppColors.greenColor,
-                            trimMode: TrimMode.Line,
-                            trimCollapsedText: AppLocalizations.of(context)!.readmoretext_data,
-                            trimExpandedText: AppLocalizations.of(context)!.readmoretext_close,
-                            style: Theme.of(context).textTheme.headline4,
-                            moreStyle: TextStyle(
-                              fontSize: 14,
-                              fontFamily: AppFonts.poppinsRegularFont,
-                              color: AppColors.greenColor,
-                            ),
-                          ),
+                          FutureBuilder(
+                              future: _carregarDados(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot snapshot) {
+                                if (snapshot.data == null) {
+                                  return const Text(" ");
+                                } else {
+                                  return ReadMoreText(
+                                    dataPersone,
+                                    trimLines: 2,
+                                    colorClickableText: AppColors.greenColor,
+                                    trimMode: TrimMode.Line,
+                                    trimCollapsedText:
+                                        AppLocalizations.of(context)!
+                                            .readmoretext_data,
+                                    trimExpandedText:
+                                        AppLocalizations.of(context)!
+                                            .readmoretext_close,
+                                    style:
+                                        Theme.of(context).textTheme.headline4,
+                                    moreStyle:
+                                        Theme.of(context).textTheme.headline6,
+                                  );
+                                }
+                              }),
                           SizedBox(height: Get.height * 0.01),
                           Text(
-                            AppLocalizations.of(context)!.subtitle_recipient_data,
+                            AppLocalizations.of(context)!
+                                .subtitle_recipient_data,
                             style: Theme.of(context).textTheme.headline1,
                           ),
                           SizedBox(height: Get.height * 0.01),
@@ -205,7 +248,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    AppLocalizations.of(context)!.text_no_delivery_locations,
+                                    AppLocalizations.of(context)!
+                                        .text_no_delivery_locations,
                                     style:
                                         Theme.of(context).textTheme.headline3,
                                   ),
@@ -213,7 +257,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        AppLocalizations.of(context)!.text_enter_destiny,
+                                        AppLocalizations.of(context)!
+                                            .text_enter_destiny,
                                         style: Theme.of(context)
                                             .textTheme
                                             .headline3,
@@ -244,14 +289,16 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                     child: Row(
                                       children: [
                                         Text(
-                                         AppLocalizations.of(context)!.text_delivery_address,
+                                          AppLocalizations.of(context)!
+                                              .text_delivery_address,
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline1,
                                         ),
                                         const Spacer(),
                                         Text(
-                                          AppLocalizations.of(context)!.text_change,
+                                          AppLocalizations.of(context)!
+                                              .text_change,
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline3,
@@ -276,67 +323,73 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                         ),
                                       ],
                                     ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            widget.location.name,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline2,
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.01,
-                                          ),
-                                          Row(
+                                    height: Get.height * 0.15,
+                                    child: ListView(
+                                      padding: EdgeInsets.all(0.0),
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(15.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Icon(
-                                                Icons.location_on_outlined,
-                                              ),
                                               Text(
-                                                widget.location.island,
+                                                widget.location.name,
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .headline3,
+                                                    .headline2,
+                                              ),
+                                              SizedBox(
+                                                height: Get.height * 0.01,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.location_on_outlined,
+                                                  ),
+                                                  Text(
+                                                    widget.location.island,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline3,
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: Get.height * 0.01,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 15.0),
+                                                child: Text(
+                                                  widget.location.city +
+                                                      ',' +
+                                                      widget.location.endereco,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline4,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: Get.height * 0.01,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.phone,
+                                                  ),
+                                                  Text(
+                                                    widget.location.phone,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline4,
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),
-                                          SizedBox(
-                                            height: Get.height * 0.01,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 15.0),
-                                            child: Text(
-                                              widget.location.city +
-                                                  ',' +
-                                                  widget.location.endereco,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline4,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.01,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.phone,
-                                              ),
-                                              Text(
-                                                widget.location.phone,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline4,
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
@@ -354,7 +407,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                       AppLocalizations.of(context)!.text_notes,
+                        AppLocalizations.of(context)!.text_notes,
                         style: Theme.of(context).textTheme.headline4,
                       ),
                     ),
@@ -417,7 +470,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
             child: TextButton(
               onPressed: validateAndSave,
               child: Text(
-                AppLocalizations.of(context)!.textbutton_next+" >",
+                AppLocalizations.of(context)!.textbutton_next + " >",
                 style: TextStyle(
                     fontFamily: AppFonts.poppinsRegularFont,
                     color: AppColors.greenColor),

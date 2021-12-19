@@ -17,7 +17,7 @@ String ver_dados_pessoais = "Dados Pessoais \n Nome: " +
     user.email +
     "\n Telefone: " +
     user.telefone +
-    "\n Morada: \n";
+    "\n Morada: \n"+user.city;
 
 //! Configuração de serviços
 //?links- urls

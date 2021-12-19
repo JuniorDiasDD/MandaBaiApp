@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -77,8 +78,19 @@ class _StartPageState extends State<StartPage> {
     var password = prefs.getString('password');
 
     if (password != null && username != null) {
+      final String? userString = prefs.getString('user');
+      var userCache = json.decode(userString!);
+
       user.username = username.toString();
       user.senha = password.toString();
+
+      user.name = userCache["name"];
+      user.email = userCache["email"];
+      user.nickname = userCache["nickname"];
+      user.avatar = userCache["avatar"];
+      user.telefone = userCache["telefone"];
+      user.city = userCache["city"];
+      user.country = userCache["country"];
     }
   }
 
@@ -93,7 +105,7 @@ class _StartPageState extends State<StartPage> {
     validateMoney();
     validateLanguage();
     validateDados();
-    removerId();
+    //removerId();
   }
 
   int _current = 0;

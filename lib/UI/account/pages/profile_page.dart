@@ -222,12 +222,11 @@ class _StartPageState extends State<ProfilePage> {
                   height: Get.height * 0.06,
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Carrega_Saldo(),
-                        ),
-                      );
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Carrega_Saldo();
+                          });
                     },
                     child: Row(
                       children: [

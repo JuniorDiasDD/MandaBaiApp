@@ -165,10 +165,10 @@ class ServiceRequest {
         "company": "",
         "address_1": "",
         "address_2": "",
-        "city": "",
+        "city": user.city,
         "state": "",
         "postcode": "",
-        "country": "",
+        "country": user.country,
         "email": user.email,
         "phone": user.telefone,
       },
@@ -278,10 +278,12 @@ class ServiceRequest {
   static Future<List<CartModel>> loadCart() async {
     List<CartModel> list = [];
     List<CartModel> listCart = [];
+    var response;
+    do{
     loginCoCart();
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode(user.username + ':' + user.senha));
-    var response = await http.get(Uri.parse(getCart),
+     response = await http.get(Uri.parse(getCart),
         headers: <String, String>{'authorization': basicAuth});
     //print(response.body);
 
@@ -306,6 +308,7 @@ class ServiceRequest {
     } else {
       print("Erro de authentiction");
     }
+    }while(response.statusCode==503);
     return listCart;
   }
 
@@ -598,16 +601,16 @@ class ServiceRequest {
         "set_paid": pagamento.toString(),
         "status": status.toString(),
         "billing": {
-          "first_name": userCache['name'],
-          "last_name": userCache['nickname'],
+          "first_name": userCache['name'].toString(),
+          "last_name": userCache['nickname'].toString(),
           "address_1": "",
           "address_2": "",
-          "city": userCache['city'],
+          "city": userCache['city'].toString(),
           "state": "",
           "postcode": "",
-          "country": userCache['country'],
-          "email": userCache['email'],
-          "phone": userCache['telefone']
+          "country": userCache['country'].toString(),
+          "email": userCache['email'].toString(),
+          "phone": userCache['telefone'].toString()
         },
         "shipping": {
           "first_name": "",
@@ -641,16 +644,16 @@ class ServiceRequest {
         "set_paid": pagamento.toString(),
         "status": status.toString(),
         "billing": {
-          "first_name": userCache['name'],
-          "last_name": userCache['nickname'],
+          "first_name": userCache['name'].toString(),
+          "last_name": userCache['nickname'].toString(),
           "address_1": "",
           "address_2": "",
-          "city": userCache['city'],
+          "city": userCache['city'].toString(),
           "state": "",
           "postcode": "",
-          "country": userCache['country'],
-          "email": userCache['email'],
-          "phone": userCache['telefone']
+          "country": userCache['country'].toString(),
+          "email": userCache['email'].toString(),
+          "phone": userCache['telefone'].toString()
         },
         "shipping": {
           "first_name": location.name,

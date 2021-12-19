@@ -9,6 +9,7 @@ import 'UI/home/pages/home_page.dart';
 import 'UI/intro/splash_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 void main() async {
   runApp(const App());
 }
@@ -35,7 +36,7 @@ class App extends StatelessWidget {
       supportedLocales: [
         Locale('en', ''), // English, no country code
         Locale('pt', ''),
-        Locale('nl', ''), // 
+        Locale('nl', ''), //
         Locale('fr', ''), // Spanish, no country code
       ],
       theme: AppThemes.lightTheme,

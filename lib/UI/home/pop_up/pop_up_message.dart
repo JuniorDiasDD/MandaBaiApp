@@ -34,74 +34,78 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
             color: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Icon(
-                  widget.icon,
-                  color: widget.caminho != "erro" ? Colors.green : Colors.red,
-                  size: Get.height * 0.09,
-                ),
-              ),
-              SizedBox(height: Get.height * 0.01),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 10.0,
-                  right: 10.0,
-                ),
-                child: Text(
-                  widget.mensagem,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-              ),
-              SizedBox(height: Get.height * 0.02),
-              Container(
-                height: Get.height * 0.06,
-                width: Get.width * 0.3,
-                decoration: BoxDecoration(
-                  color: AppColors.greenColor,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(15),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Icon(
+                    widget.icon,
+                    color: widget.caminho != "erro" ? Colors.green : Colors.red,
+                    size: Get.height * 0.09,
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Theme.of(context).cardColor,
-                      blurRadius: 2.0,
-                      spreadRadius: 0.0,
-                      offset: Offset(2.0, 2.0),
-                    ),
-                  ],
                 ),
-                child: TextButton(
-                    child: Text(
-                      'OK',
-                      style: TextStyle(
-                          fontFamily: AppFonts.poppinsBoldFont,
-                          fontSize: Get.width * 0.035,
-                          color: Colors.white),
+                SizedBox(height: Get.height * 0.01),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 10.0,
+                    right: 10.0,
+                  ),
+                  child: Text(
+                    widget.mensagem,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
+                ),
+                SizedBox(height: Get.height * 0.02),
+                Container(
+                  height: Get.height * 0.06,
+                  width: Get.width * 0.3,
+                  decoration: BoxDecoration(
+                    color: AppColors.greenColor,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
                     ),
-                    onPressed: () {
-                      if (widget.caminho == "home") {
-                        Navigator.pushReplacementNamed(context, '/home');
-                      } else if (widget.caminho == "erro" ||
-                          widget.caminho == "description" || widget.caminho=="addCarrinho") {
-                        Navigator.pop(context);
-                      } else if (widget.caminho == "atualizar") {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomePage(index: 3)));
-                      } else if (widget.caminho == "encomenda") {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            '/home', (Route<dynamic> route) => false);
-                      }else if(widget.caminho=="registo"){
-                        Navigator.pushReplacementNamed(context, '/login');
-                      }
-                    }),
-              ),
-            ],
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context).cardColor,
+                        blurRadius: 2.0,
+                        spreadRadius: 0.0,
+                        offset: Offset(2.0, 2.0),
+                      ),
+                    ],
+                  ),
+                  child: TextButton(
+                      child: Text(
+                        'OK',
+                        style: TextStyle(
+                            fontFamily: AppFonts.poppinsBoldFont,
+                            fontSize: Get.width * 0.035,
+                            color: Colors.white),
+                      ),
+                      onPressed: () {
+                        if (widget.caminho == "home") {
+                          Navigator.pushReplacementNamed(context, '/home');
+                        } else if (widget.caminho == "erro" ||
+                            widget.caminho == "description" || widget.caminho=="addCarrinho") {
+                          Navigator.pop(context);
+                        } else if (widget.caminho == "atualizar") {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomePage(index: 3)));
+                        } else if (widget.caminho == "encomenda") {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              '/home', (Route<dynamic> route) => false);
+                        }else if(widget.caminho=="registo"){
+                          Navigator.pushReplacementNamed(context, '/login');
+                        }
+                      }),
+                ),
+              ],
+            ),
           ),
         ),
       ),
