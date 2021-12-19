@@ -29,10 +29,11 @@ class _StartPageState extends State<StartPage> {
   ];
 
   Future _carregarCategory() async {
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var island_atualizar = prefs.getString('island_atualizar');
-    // print(island_atualizar);
-    if (island_atualizar != null && island_atualizar != false) {
+    print(island_atualizar);
+    if (island_atualizar != null && island_atualizar == "true") {
       list_category = await ServiceRequest.loadCategory();
 
       if (list_category.isEmpty) {

@@ -25,7 +25,7 @@ class _ChooseIslandState extends State<ChooseIsland> {
     'São Vicente',
     'São Nicolau',
     'Sal',
-    'Boavista',
+    'Boa Vista',
     'Maio',
     'Santiago',
     'Fogo',
@@ -59,7 +59,7 @@ class _ChooseIslandState extends State<ChooseIsland> {
                     width: Get.width * 0.99,
                   ),
                 ),
-                Padding(
+               /* Padding(
                   padding:
                       const EdgeInsets.only(top: 5.0, right: 150.0, left: 1.0),
                   child: Align(
@@ -70,7 +70,7 @@ class _ChooseIslandState extends State<ChooseIsland> {
                       width: Get.width * 0.01,
                     ),
                   ),
-                ),
+                ),*/
               ],
             ),
           ),

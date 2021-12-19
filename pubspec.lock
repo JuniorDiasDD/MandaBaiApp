@@ -144,13 +144,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_onboarding_screen:
-    dependency: "direct main"
-    description:
-      name: flutter_onboarding_screen
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.2"
   flutter_pw_validator:
     dependency: "direct main"
     description:
@@ -287,6 +280,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
+  onboarding:
+    dependency: "direct main"
+    description:
+      name: onboarding
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   path:
     dependency: transitive
     description:

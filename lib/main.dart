@@ -6,6 +6,7 @@ import 'Core/app_themes.dart';
 import 'UI/authention/pages/login_page.dart';
 import 'UI/authention/pages/register_page.dart';
 import 'UI/home/pages/home_page.dart';
+import 'UI/intro/pages/choose_island_page.dart';
 import 'UI/intro/splash_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -47,17 +48,11 @@ class App extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => SplashPage(),
+        '/chooseIsland': (context) => ChooseIsland(),
         '/login': (context) => LoginPage(),
         '/register': (context) => RegisterPage(),
         '/home': (context) => HomePage(index: 0),
-        //// '/solicitacao': (context) => PageSolicitacao(),
-        //   '/newDestination': (context) => NewDestination(rout),
         '/Destination': (context) => Destination_Page(route: " "),
-        // '/servicos': (context) => PageServicos(),
-        // '/restaurePassword': (context) => PageRestaurePassword(),
-        //  '/ativar': (context)=>PageAtivacaoCategoria(),
-        // '/onboarding': (context) => PageOnboarding(),
-        //'/StartPage': (context) => StartPage(),
       },
       // ),
     );

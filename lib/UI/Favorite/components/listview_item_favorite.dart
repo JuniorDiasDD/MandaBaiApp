@@ -26,6 +26,13 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
     return check;
   }
 
+  String money = "";
+  Future _carregarMoney() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    money = prefs.getString('money')!;
+    return money;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -62,19 +69,50 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
             Container(
               margin: EdgeInsets.only(
                 left: Get.width * 0.01,
+                top: Get.width * 0.04,
               ),
               width: Get.width * 0.62,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
                         width: Get.width * 0.35,
-                        child: Text(
-                          widget.product.name,
-                          style: Theme.of(context).textTheme.headline4,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.product.name,
+                              style: Theme.of(context).textTheme.headline4,
+                            ),
+                            FutureBuilder(
+                                future: _carregarMoney(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot snapshot) {
+                                  if (snapshot.data == null) {
+                                    return const Text(" ");
+                                  } else {
+                                    return Row(
+                                      children: [
+                                        Text(
+                                          money == "ECV"
+                                              ? widget.product.price.toStringAsFixed(0)
+                                              : widget.product.price.toStringAsFixed(2),
+                                          textAlign: TextAlign.center,
+                                          style: Theme.of(context).textTheme.headline5,
+                                        ),
+                                        Text(
+                                          " " + money,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline5,
+                                        ),
+                                      ],
+                                    );
+                                  }
+                                }),
+                          ],
                         ),
                       ),
                       Row(
@@ -138,11 +176,17 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                             onPressed: () {
                               setState(() {
                                 ServiceRequest.removeFavrite(widget.product.id);
-                                Navigator.pushReplacement(
+                                setState(() {
+                                  bool check=controller.remover(widget.product.id);
+                                  controller.vazio=check;
+                                });
+
+
+                                /*Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            HomePage(index: 2)));
+                                            HomePage(index: 2)));*/
                               });
                             },
                             icon: const Icon(
@@ -153,17 +197,6 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                         ],
                       ),
                     ],
-                  ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Padding(
-                      padding: EdgeInsets.only(right: Get.width * 0.04),
-                      child: Text(
-                        widget.product.price.toString(),
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                    ),
                   ),
                 ],
               ),

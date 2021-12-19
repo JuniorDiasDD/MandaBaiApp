@@ -28,6 +28,33 @@ class _StartPageState extends State<CartPage> {
       if (list_cart.isEmpty) {
         return null;
       } else {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+         money = prefs.getString('money')!;
+        cartPageController.taxa=5;
+        var value;
+        if (money == "USD") {
+          value = await ServiceRequest.loadDolar();
+        }
+        for (int m = 0; m < list_cart.length; m++) {
+          switch (money) {
+            case 'USD':
+              {
+                if (value != false) {
+                  double dolar = double.parse(value);
+                  list_cart[m].price = list_cart[m].price / dolar;
+                  cartPageController.taxa=5/dolar;
+                }
+                break;
+              }
+            case 'ECV':
+              {
+                list_cart[m].price = list_cart[m].price * 110.87;
+                cartPageController.taxa=5*110.87;
+                break;
+              }
+          }
+        }
+
         setState(() {
           cartPageController.list = list_cart;
           cartPageController.calcule();
@@ -229,8 +256,8 @@ class _StartPageState extends State<CartPage> {
                                     children: [
                                       Obx(
                                         () => Text(
-                                          cartPageController.subTotal
-                                              .toStringAsFixed(0),
+                                          money=="ECV"? cartPageController.subTotal.toStringAsFixed(0):cartPageController.subTotal.toStringAsFixed(2),
+
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline2,
@@ -267,8 +294,7 @@ class _StartPageState extends State<CartPage> {
                                     children: [
                                       Obx(
                                         () => Text(
-                                          cartPageController.taxa
-                                              .toStringAsFixed(0),
+                                          money=="ECV"?cartPageController.taxa.toStringAsFixed(0):cartPageController.taxa.toStringAsFixed(2),
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline6,
@@ -326,8 +352,7 @@ class _StartPageState extends State<CartPage> {
                                       children: [
                                         Obx(
                                           () => Text(
-                                            cartPageController.total
-                                                .toStringAsFixed(0),
+                                            money=="ECV"?cartPageController.total.toStringAsFixed(0):cartPageController.total.toStringAsFixed(2),
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline5!

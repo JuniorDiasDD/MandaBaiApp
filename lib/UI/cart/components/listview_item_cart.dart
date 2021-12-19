@@ -110,28 +110,28 @@ class _ItemCartState extends State<ItemCart> {
         
                     Flexible(
                       flex:1,
-                      child: Row(
-                        children: [
-                          Text(
-                            price.toStringAsFixed(0),
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                          FutureBuilder(
-                              future: _carregarMoney(),
-                              builder:
-                                  (BuildContext context, AsyncSnapshot snapshot) {
-                                if (snapshot.data == null) {
-                                  return const Text(" ");
-                                } else {
-                                  return Text(
+                      child: FutureBuilder(
+                          future: _carregarMoney(),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.data == null) {
+                              return const Text(" ");
+                            } else {
+                              return Row(
+                                children: [
+                                  Text(
+                                    money=="ECV"?price.toStringAsFixed(0):price.toStringAsFixed(2),
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context).textTheme.headline5,
+                                  ),
+                                  Text(
                                     " " + money,
                                     style: Theme.of(context).textTheme.headline5,
-                                  );
-                                }
-                              }),
-                        ],
-                      ),
+                                  ),
+                                ],
+                              );
+                            }
+                          }),
                     ),
                     
                     Flexible(

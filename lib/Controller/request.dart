@@ -19,6 +19,7 @@ class ServiceRequest {
 
     if (response.statusCode == 200) {
       var jsonResponse = json.decode(response.body);
+      //print(jsonResponse);
       var quantidade = response.headers['x-wp-total'];
       response = await http
           .get(Uri.parse(categorias + "&per_page=" + quantidade.toString()));
@@ -28,7 +29,7 @@ class ServiceRequest {
         list = _cats.map<Category>((cat) => Category.fromJson(cat)).toList();
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         var island = prefs.getString('island');
-
+         // print(island);
         for (var i = 0; i < list.length; i++) {
           if (list[i].name.contains(island!) == true) {
             var name = list[i].name.split(" / ");
@@ -101,12 +102,12 @@ class ServiceRequest {
 
     var data = json.encode({
       "email": user.email,
-      "first_name": user.name,
+      "first_name": user.name+" Tester",
       "last_name": user.nickname,
       "username": user.username,
       "password": user.senha,
       "billing": {
-        "first_name": user.name,
+        "first_name": user.name+" Tester",
         "last_name": user.nickname,
         "company": "",
         "address_1": "",
@@ -315,6 +316,7 @@ class ServiceRequest {
   //! removeItemCart
   static Future<List<CartModel>> removeCart(List<String> list_item) async {
     List<CartModel> list = [];
+    List<CartModel> listCart = [];
     loginCoCart();
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode(user.username + ':' + user.senha));
@@ -328,6 +330,17 @@ class ServiceRequest {
         final jsonResponse = json.decode(response.body);
         final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();
         list = _cats.map<CartModel>((cat) => CartModel.fromJson(cat)).toList();
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        var island = prefs.getString('island');
+        for (int i = 0; i < list.length; i++) {
+          response = await http
+              .get(Uri.parse(get_Produto + list[i].id.toString() + "?" + key));
+          final jsonResponse = json.decode(response.body);
+          if (jsonResponse['categories'][0]['name'].contains(island) == true) {
+            listCart.add(list[i]);
+          }
+        }
       } else if (response.statusCode == 503) {
         print("Erro de serviço");
       } else {
@@ -335,7 +348,7 @@ class ServiceRequest {
       }
     }
 
-    return list;
+    return listCart;
   }
 
   //! Cart

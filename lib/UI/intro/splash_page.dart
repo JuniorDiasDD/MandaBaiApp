@@ -3,9 +3,10 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
+import 'package:manda_bai/UI/intro/pages/onboarding_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'onboarding_screen.dart';
+
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class _SplashPageState extends State<SplashPage> {
         Navigator.pushReplacementNamed(context, '/home');
       } else {
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => OnboardingScreen()));
+            MaterialPageRoute(builder: (context) => OnboardingPage()));
       }
     });
   }
