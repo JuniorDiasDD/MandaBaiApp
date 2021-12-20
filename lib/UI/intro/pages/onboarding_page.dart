@@ -35,12 +35,12 @@ class OnboardingPage extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                Text('Nós Familia',
+                Text('Familia',
                     style: Theme.of(context).textTheme.headline1!.copyWith(
                           fontSize: Get.width * 0.08,
                         )),
                 Text(
-                  'Djuda bo familia li dento, de lá',
+                  'De undi bu sta,pa undi bu krê i pa kenha ki bu krê!',
                   style: Theme.of(context).textTheme.headline3,
                 ),
                 const Spacer(),
@@ -59,12 +59,12 @@ class OnboardingPage extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                Text('Produto Perto',
+                Text('Produtos',
                     style: Theme.of(context).textTheme.headline1!.copyWith(
                           fontSize: Get.width * 0.08,
                         ),),
                 Text(
-                  'Kumpra tudu produtos que bo krê',
+                  'Di tudo un poku!',
                   style: Theme.of(context).textTheme.headline3,
                 ),
                 const Spacer(),
@@ -83,12 +83,12 @@ class OnboardingPage extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                Text('Faxi Paga',
+                Text('Pagamentu',
                     style: Theme.of(context).textTheme.headline1!.copyWith(
                           fontSize: Get.width * 0.08,
                         )),
                 Text(
-                  'Paga online e nu ta bai leba la na Casa!',
+                  'Seguru i di rapidu acessu!',
                   style: Theme.of(context).textTheme.headline3,
                 ),
                 const Spacer(),

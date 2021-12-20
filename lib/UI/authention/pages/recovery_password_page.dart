@@ -69,6 +69,7 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
               padding: EdgeInsets.only(
                 left: Get.width * 0.05,
                 right: Get.height * 0.05,
+
               ),
               child: Form(
                 key: _formKey,
@@ -82,6 +83,7 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                         style: Theme.of(context).textTheme.headline2,
                       ),
                     ),
+
                      Align(
                       alignment: Alignment.topLeft,
                       child: Text(
@@ -127,7 +129,7 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                         ),
                         color: AppColors.greenColor,
                         textColor: Colors.white,
-                        child:  Text(AppLocalizations.of(context)!.button_chat_email),
+                        child:  Text(AppLocalizations.of(context)!.button_send),
                         onPressed: () {},
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/employee.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Item_Bio extends StatefulWidget {
   Employee employee;
@@ -74,7 +75,7 @@ class _Item_BioState extends State<Item_Bio> {
                               padding: const EdgeInsets.all(0.0),
                               children: [
                                 Text(
-                                  widget.employee.description,
+                                AppLocalizations.of(context)!.text_description_carlos,
                                   textAlign: TextAlign.justify,
                                   style: Theme.of(context)
                                       .textTheme

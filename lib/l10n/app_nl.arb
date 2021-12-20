@@ -152,6 +152,7 @@
     "text_order_number": "Volgorde",
     "text_amount": "De hoeveelheid",
     "text_personal_data": "Persoonlijke gegevens",
+    "text_information_checkout": "Als u de bezorglocatie niet heeft toegevoegd, moet u de bezorgbestemming invoeren door op het \"plus\"-pictogram te klikken om een locatie toe te voegen.\nAls u de locaties al heeft ingevoerd, kiest u gewoon de gewenste locatie.",
 
     "message_error_cridencials": "Ongeldige inloggegevens",
     "message_success_register": "Registratie gelukt!",

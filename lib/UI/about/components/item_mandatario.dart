@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Model/employee.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ItemMandatario extends StatefulWidget {
  Employee employee;
@@ -34,7 +35,8 @@ class _ItemMandatarioState extends State<ItemMandatario> {
                   ),
                   SizedBox(height: Get.height * 0.002),
                   Text(
-                    widget.employee.cargo,
+                    AppLocalizations.of(context)!
+                        .text_role_antonio,
                     style: Theme.of(context).textTheme.headline6,
                   ),
                  
@@ -73,7 +75,8 @@ class _ItemMandatarioState extends State<ItemMandatario> {
                               padding: const EdgeInsets.all(0.0),
                               children: [
                                 Text(
-                                  widget.employee.description+"\n\n"+widget.employee.tel+"\n"+widget.employee.email,
+                                  AppLocalizations.of(context)!
+                                      .text_description_antonio+"\n\n"+widget.employee.tel+"\n"+widget.employee.email,
                                   textAlign: TextAlign.justify,
                                   style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: Get.width*0.03,),
                                 ),

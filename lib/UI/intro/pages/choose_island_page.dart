@@ -7,6 +7,7 @@ import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:websafe_svg/websafe_svg.dart';
 
@@ -74,7 +75,7 @@ class _ChooseIslandState extends State<ChooseIsland> {
               ],
             ),
           ),
-          SizedBox(height: Get.height * 0.05),
+          SizedBox(height: Get.height * 0.15),
           Container(
             width: Get.width,
             height: Get.height * 0.06,
@@ -137,7 +138,7 @@ class _ChooseIslandState extends State<ChooseIsland> {
                 _navigacao();
               },
               child: Text(
-                "seguinte >",
+                AppLocalizations.of(context)!.textbutton_next+ ">",
                 style: Theme.of(context).textTheme.headline5,
               ),
             ),

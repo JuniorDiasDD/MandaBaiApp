@@ -122,7 +122,7 @@ class _InfoPageState extends State<InfoPage> {
                     ),
                     SizedBox(height: Get.height * 0.02),
                     ReadMoreText(
-                      description_mandabai,
+                      AppLocalizations.of(context)!.text_description_mandabai,
                       trimLines: 2,
                       colorClickableText: AppColors.greenColor,
                       trimMode: TrimMode.Line,

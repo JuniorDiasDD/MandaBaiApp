@@ -153,6 +153,8 @@
     "text_amount": "Quant",
     "button_add_cart": "Adicionar ao Carrinho",
     "text_personal_data": "Dados pessoais",
+    "text_information_checkout": "No caso, não tiver adicionado o local de entrega, deverá inserir o destino de entrega clicando no ícone \"mais\" para adicionar uma localização.\nSe já tem as localizações inseridas, é só escolher a localização que deseja.",
+
 
 
     "message_error_cridencials": "Credências Inválidas",

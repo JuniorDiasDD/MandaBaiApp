@@ -152,6 +152,7 @@
     "text_order_number": "Commander",
     "text_amount": "La quantité",
     "text_personal_data": "Données personnelles",
+    "text_information_checkout": "Dans le cas où vous n'avez pas ajouté le lieu de livraison, vous devez saisir la destination de livraison en cliquant sur l'icône \"plus\" pour ajouter un lieu.\nSi vous avez déjà saisi les emplacements, choisissez simplement l'emplacement que vous voulez.",
 
     "message_error_cridencials": "Les informations d'identification invalides",
     "message_success_register": "Inscription réussi!",

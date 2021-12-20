@@ -8,6 +8,7 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/location.dart';
+import 'package:manda_bai/UI/cart/components/Popupinfo_checkout.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 import 'package:readmore/readmore.dart';
@@ -77,7 +78,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
 
   String dataPersone = "";
   Future _carregarDados() async {
-    dataPersone = "Dados Pessoais \n " +
+    dataPersone = AppLocalizations.of(context)!.text_personal_data+" \n " +
         AppLocalizations.of(context)!.textfield_name +
         ": " +
         user.name +
@@ -151,7 +152,14 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                         ),
                         IconButton(
                           padding: const EdgeInsets.all(0.0),
-                          onPressed: () {},
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return PopupInfo_Checkout();
+                              },
+                            );
+                          },
                           icon: const Icon(
                             Icons.info,
                           ),
@@ -210,7 +218,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                           Row(
                             children: [
                               Text(
-                                AppLocalizations.of(context)!.text_island,
+                                AppLocalizations.of(context)!.text_island+ " ",
                                 style: Theme.of(context).textTheme.headline2,
                               ),
                               FutureBuilder(
