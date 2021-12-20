@@ -81,7 +81,7 @@
     "text_change": "Trocar",
     "subtitle_add_information": "Informação Adicional",
     "text_notes": "Notas da encomenda (opcional)",
-    "hint_write": "Escrever",
+    "hint_write": "Escrever...",
     "textbutton_next": "Seguinte",
     "textbutton_skip": "Ignorar",
     "textbutton_back": "Voltar",
@@ -152,6 +152,8 @@
     "text_order_number": "Encomenda",
     "text_amount": "Quant",
     "button_add_cart": "Adicionar ao Carrinho",
+    "text_personal_data": "Dados pessoais",
+
 
     "message_error_cridencials": "Credências Inválidas",
     "message_success_register": "Registro feito com sucesso!",
