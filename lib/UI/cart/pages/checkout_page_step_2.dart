@@ -78,7 +78,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
 
   String dataPersone = "";
   Future _carregarDados() async {
-    dataPersone = AppLocalizations.of(context)!.text_personal_data+" \n " +
+    dataPersone = AppLocalizations.of(context)!.text_personal_data +
+        " \n " +
         AppLocalizations.of(context)!.textfield_name +
         ": " +
         user.name +
@@ -132,7 +133,9 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                   widget.location,
                                   cartPageController.list,
                                   cartPageController.total,
-                                  cartPageController.note);
+                                  cartPageController.note,
+                                  false,
+                                  "");
                               if (check) {
                                 cartPageController.loading = false;
                               } else {
@@ -218,7 +221,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                           Row(
                             children: [
                               Text(
-                                AppLocalizations.of(context)!.text_island+ " ",
+                                AppLocalizations.of(context)!.text_island + " ",
                                 style: Theme.of(context).textTheme.headline2,
                               ),
                               FutureBuilder(

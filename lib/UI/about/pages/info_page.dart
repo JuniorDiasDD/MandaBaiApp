@@ -37,7 +37,7 @@ class _InfoPageState extends State<InfoPage> {
       image:
           'https://www.mandabai.com/wp-content/uploads/elementor/thumbs/Design-sem-nome-4-pbwjcdm6kbjiw14u4pb8kvevyan7bq0lqfaqzjbqds.jpg',
       description:
-          'Graduando em Economia e Ciências Empresariais.Acredita que a Mandabai é bem mais que uma empresa, mas sim uma forma de unir os emigrantes cabo-verdianos a Cabo Verde.',
+          'Licenciada em Economia e Ciências Empresariais. Acredita que a Mandabai é bem mais que uma empresa, mas sim uma forma de unir os emigrantes cabo-verdianos a Cabo Verde.',
       tel: '+2389724140',
       email: 'eveline.mandabai@gmail.com',
     ));
@@ -54,7 +54,7 @@ class _InfoPageState extends State<InfoPage> {
         name: 'António Coelho Monteiro',
         cargo: 'Estados unidos da América',
         image:
-            'https://www.mandabai.com/wp-content/uploads/elementor/thumbs/img-16-pbkbaaof0qxdaun3rdjj72eggo8xuf1tzefuxajdjk.jpg',
+            'https://www.mandabai.com/wp-content/uploads/2021/12/Antonio_SemFundo-2.png',
         description: 'Mandatário de Mandabai nos Estados unidos da América',
         tel: '+1 3057786138',
         email: 'acmonteiro48@gmail.com'));
@@ -62,7 +62,7 @@ class _InfoPageState extends State<InfoPage> {
         name: 'Francisco de Pina',
         cargo: 'Portugal',
         image:
-            'https://www.mandabai.com/wp-content/uploads/elementor/thumbs/img-16-pbkbaaof0qxdaun3rdjj72eggo8xuf1tzefuxajdjk.jpg',
+            'https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_12-20-08.16.39-scaled.jpg',
         description: 'Mandatário de Mandabai em Portugal',
         tel: '+351 913098511 | +351938880906',
         email: 'francisco.r.depina@gmail.com'));

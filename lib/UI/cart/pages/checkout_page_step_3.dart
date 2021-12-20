@@ -37,15 +37,16 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
           widget.location,
           cartPageController.list,
           cartPageController.total,
-          cartPageController.note);
+          cartPageController.note,
+          isCheckedPromocao,
+          input_codigo.text);
       if (check) {
         cartPageController.loading = false;
         return showDialog(
             context: context,
             builder: (BuildContext context) {
               return Pop_up_Message(
-                  mensagem:
-                    AppLocalizations.of(context)!.message_success_order,
+                  mensagem: AppLocalizations.of(context)!.message_success_order,
                   icon: Icons.check,
                   caminho: "encomenda");
             });
@@ -60,7 +61,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                   caminho: "erro");
             });
       }
-    //  print('Form is valid');
+      //  print('Form is valid');
     } else {
       print('Form is invalid');
     }
@@ -139,7 +140,8 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                                   width: Get.width * 0.08,
                                                 ),
                                                 Text(
-                                                  AppLocalizations.of(context)!.title_instructions,
+                                                  AppLocalizations.of(context)!
+                                                      .title_instructions,
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .headline1,
@@ -165,7 +167,9 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                                       height:
                                                           Get.height * 0.01),
                                                   Text(
-                                                    AppLocalizations.of(context)!.subtitle_payment,
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .subtitle_payment,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .headline2,
@@ -174,7 +178,9 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                                       height:
                                                           Get.height * 0.01),
                                                   Text(
-                                                   AppLocalizations.of(context)!.text_cuppon,
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .text_cuppon,
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .headline4,
@@ -220,7 +226,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                           },
                         ),
                         Text(
-                        AppLocalizations.of(context)!.text_discount,
+                          AppLocalizations.of(context)!.text_discount,
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       ],
@@ -232,7 +238,8 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                 Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    AppLocalizations.of(context)!.subtitle_code_discount,
+                                    AppLocalizations.of(context)!
+                                        .subtitle_code_discount,
                                     style:
                                         Theme.of(context).textTheme.headline2,
                                   ),
@@ -254,7 +261,8 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                     ),
                                   ),
                                   validator: (value) => value!.isEmpty
-                                      ? AppLocalizations.of(context)!.valitador_code_discount
+                                      ? AppLocalizations.of(context)!
+                                          .valitador_code_discount
                                       : null,
                                 ),
                                 SizedBox(
@@ -565,8 +573,9 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                           borderSide: new BorderSide(),
                         ),
                       ),
-                      validator: (value) =>
-                          value!.isEmpty ? AppLocalizations.of(context)!.valitador_number_card : null,
+                      validator: (value) => value!.isEmpty
+                          ? AppLocalizations.of(context)!.valitador_number_card
+                          : null,
                     ),
                     SizedBox(height: Get.height * 0.01),
                     Row(
@@ -576,7 +585,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                             AppLocalizations.of(context)!.subtitle_expiration,
+                              AppLocalizations.of(context)!.subtitle_expiration,
                               style: Theme.of(context).textTheme.headline2,
                             ),
                             SizedBox(height: Get.height * 0.01),
@@ -595,8 +604,10 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                     borderSide: new BorderSide(),
                                   ),
                                 ),
-                                validator: (value) =>
-                                    value!.isEmpty ? AppLocalizations.of(context)!.valitador_number_data : null,
+                                validator: (value) => value!.isEmpty
+                                    ? AppLocalizations.of(context)!
+                                        .valitador_number_data
+                                    : null,
                               ),
                             ),
                           ],
@@ -624,8 +635,10 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                                     borderSide: new BorderSide(),
                                   ),
                                 ),
-                                validator: (value) =>
-                                    value!.isEmpty ? AppLocalizations.of(context)!.valitador_cvv2 : null,
+                                validator: (value) => value!.isEmpty
+                                    ? AppLocalizations.of(context)!
+                                        .valitador_cvv2
+                                    : null,
                               ),
                             ),
                           ],
@@ -637,7 +650,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                         AppLocalizations.of(context)!.text_total,
+                          AppLocalizations.of(context)!.text_total,
                           style: Theme.of(context).textTheme.headline5,
                         ),
                         Text(

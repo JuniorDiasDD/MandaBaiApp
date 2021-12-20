@@ -21,18 +21,19 @@ class StartPage extends StatefulWidget {
 
 class _StartPageState extends State<StartPage> {
   final List<String> imagesList = [
-    AppImages.banner1,
-    AppImages.banner2,
-    AppImages.banner3,
-    AppImages.banner4,
-    AppImages.banner5
+    "https://www.mandabai.com/wp-content/uploads/2021/08/post-mandabai-facebook-05.jpg",
+    "https://www.mandabai.com/wp-content/uploads/2021/08/post-mandabai-facebook-17.png",
+    "https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_12-16-09.28.55-scaled.jpg",
+    "https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_12-07-05.43.14-scaled.jpg",
+    "https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_11-25-08.04.52.jpg",
+    "https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_11-20-12.59.37.jpg",
+    "https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_12-12-04.13.45-scaled.jpg"
   ];
 
   Future _carregarCategory() async {
-
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var island_atualizar = prefs.getString('island_atualizar');
-    print(island_atualizar);
+    //  print(island_atualizar);
     if (island_atualizar != null && island_atualizar == "true") {
       list_category = await ServiceRequest.loadCategory();
 
@@ -139,7 +140,7 @@ class _StartPageState extends State<StartPage> {
                       items: imagesList
                           .map(
                             (item) => Center(
-                              child: Image.asset(
+                              child: Image.network(
                                 item,
                                 fit: BoxFit.cover,
                                 width: Get.width,
@@ -184,7 +185,7 @@ class _StartPageState extends State<StartPage> {
                     padding: EdgeInsets.only(
                         top: Get.height * 0.01, left: Get.width * 0.02),
                     child: Text(
-                       AppLocalizations.of(context)!.title_new_services,
+                      AppLocalizations.of(context)!.title_new_services,
                       style: Theme.of(context).textTheme.headline1,
                     ),
                   ),
@@ -209,7 +210,7 @@ class _StartPageState extends State<StartPage> {
                       child: Text(
                         AppLocalizations.of(context)!.title_categories,
                         style: Theme.of(context).textTheme.headline1,
-                      ), 
+                      ),
                     ),
                   ],
                 ),
@@ -244,7 +245,8 @@ class _StartPageState extends State<StartPage> {
                                   size: Get.height * 0.06,
                                 ),
                                 Text(
-                                  AppLocalizations.of(context)!.text_unavailable_service,
+                                  AppLocalizations.of(context)!
+                                      .text_unavailable_service,
                                   style: TextStyle(
                                     fontFamily: AppFonts.poppinsBoldFont,
                                     fontSize: Get.width * 0.035,
@@ -276,8 +278,6 @@ class _StartPageState extends State<StartPage> {
                     }
                   },
                 ),
-
-               
               ],
             ),
           ),

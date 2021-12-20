@@ -75,7 +75,7 @@ class _Item_BioState extends State<Item_Bio> {
                               padding: const EdgeInsets.all(0.0),
                               children: [
                                 Text(
-                                AppLocalizations.of(context)!.text_description_carlos,
+                                widget.employee.description,
                                   textAlign: TextAlign.justify,
                                   style: Theme.of(context)
                                       .textTheme
