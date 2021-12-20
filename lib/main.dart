@@ -18,13 +18,9 @@ void main() async {
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // var localizationDelegate = LocalizedApp.of(context).delegate;
-    return /*LocalizationProvider(
-      state: LocalizationProvider.of(context).state,
-      child:*/
+    return 
         MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MandaBai',
@@ -54,7 +50,6 @@ class App extends StatelessWidget {
         '/home': (context) => HomePage(index: 0),
         '/Destination': (context) => Destination_Page(route: " "),
       },
-      // ),
     );
   }
 }

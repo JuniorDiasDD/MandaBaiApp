@@ -7,52 +7,6 @@ import 'package:websafe_svg/websafe_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnboardingPage extends StatelessWidget {
-  /* final onboardingPagesList = [
-    PageModel(
-      widget: Column(
-        children: [
-          Container(
-              padding: EdgeInsets.only(bottom: 45.0),
-              child: WebsafeSvg.asset(AppImages.firstOnboardingImage,),),
-          Container(
-              width: double.infinity,
-              child: Text('Nós Familia', style: pageTitleStyle)),
-          Container(
-            width: double.infinity,
-            child: Text(
-              'Djuda bo familia li dento, de lá',
-              style: pageInfoStyle,
-            ),
-          ),
-        ],
-      ),
-    ),
-    PageModel(
-      widget: Column(
-        children: [
-          WebsafeSvg.asset(AppImages.secondOnboardingImage,),
-          Text('Produto Perto', style: pageTitleStyle),
-          Text(
-            'Kumpra tudu produtos que bo krê',
-            style: pageInfoStyle,
-          )
-        ],
-      ),
-    ),
-    PageModel(
-      widget: Column(
-        children: [
-          WebsafeSvg.asset(AppImages.thirdOnboardingImage, ),
-          Text('Faxi Paga', style: Theme.of(context).textTheme.headline2),
-          Text(
-            'Paga online e nu ta bai leba la na Casa!',
-            style: pageInfoStyle,
-          ),
-        ],
-      ),
-    ),
-  ];*/
-
   @override
   Widget build(BuildContext context) {
     return Onboarding(
