@@ -21,24 +21,22 @@ class InfoPage extends StatefulWidget {
 class _InfoPageState extends State<InfoPage> {
   List<Employee> list_employee = [];
   List<Employee> list_employee_Mandatarios = [];
-  Future _carregar() async {
+  Future _carregar(context) async {
     list_employee.add(Employee(
       name: 'Carlos Pereira',
-      cargo: 'Fundador da empresa',
+      cargo: AppLocalizations.of(context)!.text_role_carlos,
       image:
           'https://www.mandabai.com/wp-content/uploads/elementor/thumbs/img-16-pbkbaaof0qxdaun3rdjj72eggo8xuf1tzefuxajdjk.jpg',
-      description:
-          'Mentor por trás do empreendimento Mandabai. Acreditou que era possível o envio de produtos para familiares e amigos, através de processos online, provando ser um método eficaz e fazendo a diferença na vida de muitos cabo-verdianos.',
+      description: AppLocalizations.of(context)!.text_description_carlos,
       tel: '+31639838997',
       email: 'pereirac2207@gmail.com',
     ));
     list_employee.add(Employee(
       name: 'Eveline Tavares',
-      cargo: 'CEO',
+      cargo: AppLocalizations.of(context)!.text_role_eveline,
       image:
           'https://www.mandabai.com/wp-content/uploads/elementor/thumbs/Design-sem-nome-4-pbwjcdm6kbjiw14u4pb8kvevyan7bq0lqfaqzjbqds.jpg',
-      description:
-          'Licenciada em Economia e Ciências Empresariais. Acredita que a Mandabai é bem mais que uma empresa, mas sim uma forma de unir os emigrantes cabo-verdianos a Cabo Verde.',
+      description: AppLocalizations.of(context)!.text_description_eveline,
       tel: '+2389724140',
       email: 'eveline.mandabai@gmail.com',
     ));
@@ -50,21 +48,21 @@ class _InfoPageState extends State<InfoPage> {
     return list_employee;
   }
 
-  Future _carregarMandatarios() async {
+  Future _carregarMandatarios(context) async {
     list_employee_Mandatarios.add(Employee(
         name: 'António Coelho Monteiro',
-        cargo: 'Estados unidos da América',
+        cargo: AppLocalizations.of(context)!.text_role_antonio,
         image:
             'https://www.mandabai.com/wp-content/uploads/2021/12/Antonio_SemFundo-2.png',
-        description: 'Mandatário de Mandabai nos Estados unidos da América',
+        description: AppLocalizations.of(context)!.text_description_antonio,
         tel: '+1 3057786138',
         email: 'acmonteiro48@gmail.com'));
     list_employee_Mandatarios.add(Employee(
         name: 'Francisco de Pina',
-        cargo: 'Portugal',
+        cargo: AppLocalizations.of(context)!.text_role_estevao,
         image:
             'https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_12-20-08.16.39-scaled.jpg',
-        description: 'Mandatário de Mandabai em Portugal',
+        description: AppLocalizations.of(context)!.text_description_estevao,
         tel: '+351 913098511 | +351938880906',
         email: 'francisco.r.depina@gmail.com'));
     list_employee_Mandatarios.add(Employee(
@@ -153,7 +151,7 @@ class _InfoPageState extends State<InfoPage> {
                     ),
                     const SizedBox(height: 10),
                     FutureBuilder(
-                      future: _carregar(),
+                      future: _carregar(context),
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
                         switch (snapshot.connectionState) {
                           case ConnectionState.waiting:
@@ -200,7 +198,7 @@ class _InfoPageState extends State<InfoPage> {
                     ),
                     const SizedBox(height: 10),
                     FutureBuilder(
-                      future: _carregarMandatarios(),
+                      future: _carregarMandatarios(context),
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
                         switch (snapshot.connectionState) {
                           case ConnectionState.waiting:
@@ -391,7 +389,7 @@ class _InfoPageState extends State<InfoPage> {
                             children: [
                               Icon(
                                 Icons.security,
-                                color:  Theme.of(context).indicatorColor,
+                                color: Theme.of(context).indicatorColor,
                                 size: Get.height * 0.025,
                               ),
                               Padding(
@@ -430,7 +428,7 @@ class _InfoPageState extends State<InfoPage> {
                             children: [
                               Icon(
                                 Icons.description,
-                                color:  Theme.of(context).indicatorColor,
+                                color: Theme.of(context).indicatorColor,
                                 size: Get.height * 0.025,
                               ),
                               Padding(
@@ -480,7 +478,7 @@ class _InfoPageState extends State<InfoPage> {
                                 ),
                                 child: Text(
                                   AppLocalizations.of(context)!
-                                      .textbutton_published_by ,
+                                      .textbutton_published_by,
                                   style: Theme.of(context).textTheme.headline4,
                                 ),
                               ),
