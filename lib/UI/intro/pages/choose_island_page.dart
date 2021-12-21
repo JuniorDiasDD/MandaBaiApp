@@ -75,7 +75,7 @@ class _ChooseIslandState extends State<ChooseIsland> {
               ],
             ),
           ),
-          SizedBox(height: Get.height * 0.15),
+          SizedBox(height: Get.height * 0.1),
           Container(
             width: Get.width,
             height: Get.height * 0.06,

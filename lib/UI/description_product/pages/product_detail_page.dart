@@ -290,7 +290,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                 ],
               ),
             ),
-            SizedBox(height: Get.height * 0.026),
+            SizedBox(height:10),
             Padding(
               padding: EdgeInsets.only(
                 left: Get.width * 0.04,
@@ -315,7 +315,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                 ),
                 child: TextButton(
                   child: Text(
-                    'Adicionar ao Carrinho',
+                    (AppLocalizations.of(context)!.button_add_cart),
                     style: TextStyle(
                         fontFamily: AppFonts.poppinsBoldFont,
                         fontSize: Get.width * 0.035,
