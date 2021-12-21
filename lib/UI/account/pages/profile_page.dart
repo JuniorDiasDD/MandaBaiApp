@@ -272,11 +272,11 @@ class _StartPageState extends State<ProfilePage> {
                           height: Get.height * 0.042,
                           width: Get.height * 0.042,
                           decoration: BoxDecoration(
-                            color: Colors.deepPurpleAccent,
+                            color: Colors.teal[100],
                             borderRadius: const BorderRadius.all(
                               Radius.circular(100),
                             ),
-                            border: Border.all(color: Colors.deepPurpleAccent),
+                            border: Border.all(color: Colors.teal.shade100),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
@@ -534,11 +534,11 @@ class _StartPageState extends State<ProfilePage> {
                               height: Get.height * 0.042,
                               width: Get.height * 0.042,
                               decoration: BoxDecoration(
-                                color: Colors.teal,
+                                color: Colors.lightGreen,
                                 borderRadius: const BorderRadius.all(
                                   Radius.circular(100),
                                 ),
-                                border: Border.all(color: Colors.teal),
+                                border: Border.all(color: Colors.lightGreen),
                               ),
                               child: Icon(
                                 Icons.description_outlined,

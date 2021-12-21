@@ -124,9 +124,9 @@
     "text_role_carlos": "Fundador da empresa",
     "text_description_carlos": "Mentor por trás do empreendimento Mandabai. Acreditou que era possível o envio de produtos para familiares e amigos, através de processos online, provando ser um método eficaz e fazendo a diferença na vida de muitos cabo-verdianos.",
     "text_role_eveline": "CEO",
-    "text_description_eveline": "Graduando em Economia e Ciências Empresariais.Acredita que a Mandabai é bem mais que uma empresa, mas sim uma forma de unir os emigrantes cabo-verdianos a Cabo Verde.'",
-    "text_role_antonio": "Estados unidos da América",
-    "text_description_antonio": "Mandatário de Mandabai nos Estados unidos da América",
+    "text_description_eveline": "Licenciada em Economia e Ciências Empresariais. Acredita que a Mandabai é bem mais que uma empresa, mas sim uma forma de unir os emigrantes cabo-verdianos a Cabo Verde.'",
+    "text_role_antonio": "Estados Unidos da América",
+    "text_description_antonio": "Mandatário de Mandabai nos Estados Unidos da América",
     "subtitle_representative_members": "Mandatários de MandaBai",
     "text_role_estevao": "Portugal",
     "text_description_estevao": "Mandatário de Mandabai em Portugal",
@@ -139,8 +139,7 @@
     "text_about_application": "Sobre Aplicação",
     "textbutton_published_by":"Publicado por",
     "textbutton_developed_by":"Desenvolvido por",
-    "textbutton_terms_of_uso":"Termos de Uso",
-    "textbutton_privacy_police":"Politica de Privacidade",
+    "textbutton_termos_of_use_and_privacy_police": "Termos de Uso e Politica de Privacidade",
     "title_my_favorites": "Meus Favoritos",
     "text_no_favorite_product": "Sem produto marcado como favorito...",
     "text_total": "Total",
@@ -154,6 +153,10 @@
     "button_add_cart": "Adicionar ao Carrinho",
     "text_personal_data": "Dados pessoais",
     "text_information_checkout": "No caso, não tiver adicionado o local de entrega, deverá inserir o destino de entrega clicando no ícone \"mais\" para adicionar uma localização.\nSe já tem as localizações inseridas, é só escolher a localização que deseja.",
+    "textbutton_security":"Segurança",
+    "title_termos_of_use_and_privacy_police": "Termos de Uso e Politica de Privacidade",
+    "title_security": "Segurança",
+
 
 
 
@@ -172,6 +175,6 @@
     "message_success_order": "Encomenda feito com sucesso.\nAcompanha a sua encomenda em \n'Meus Pedidos'!",
     "message_error_order": "Erro em efetuar a encomenda",
     "message_success_cart": "Adicionado no carrinho",
-    "message_error_cart": "Erro em adicionar no carrinho\nTente novamente em segundos!"
-
+    "message_error_cart": "Erro em adicionar no carrinho\nTente novamente em segundos!",
+    "message_error_order_cuppon": "Erro em efetuar a encomenda \nVerificar cupom!"
 }

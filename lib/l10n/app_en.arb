@@ -124,7 +124,7 @@
     "text_role_carlos": "Company Founder",
     "text_description_carlos": "Mentor behind the Mandabai venture. He believed that it was possible to send products to family and friends through online processes, proving to be an effective method and making a difference in the lives of many Cape Verdeans.",
     "text_role_eveline": "CEO",
-    "text_description_eveline": "Majoring in Economics and Business Sciences. She believes that Mandabai is much more than a company, but a way to unite Cape Verdean emigrants with Cape Verde.",
+    "text_description_eveline": "Degree in Economics and Business Sciences. She believes that Mandabai is much more than a company, but a way to unite Cape Verdean emigrants with Cape Verde.",
     "text_role_antonio":"United States of America",
     "text_description_antonio": "Mandabai's representative in the United States of America",
     "subtitle_representative_members": "MandaBai Representatives",
@@ -139,8 +139,7 @@
     "text_about_application": "About Application",
     "textbutton_published_by":"Published by",
     "textbutton_developed_by":"Developed by",
-    "textbutton_terms_of_uso":"Terms of Use",
-    "textbutton_privacy_police":"Privacy Policy",
+    "textbutton_termos_of_use_and_privacy_police": "Termos of use and Privacy Police",
     "title_my_favorites": "MY Favorites",
     "text_no_favorite_product": "No product marked as favorite...",
     "text_total": "Total",
@@ -154,6 +153,10 @@
     "button_add_cart": "Add to Cart",
     "text_personal_data": "Personal data",
     "text_information_checkout": "In case you have not added the delivery location, you must enter the delivery destination by clicking on the \"plus\" icon to add a location.\nIf you already have the locations entered, just choose the location you want.",
+    "textbutton_security":"Security",
+    "title_termos_of_use_and_privacy_police": "Termos of use and Privacy Police",
+    "title_security": "Security",
+
 
     "message_error_cridencials": "Invalid Credentials",
     "message_success_register": "Registration successful!",
@@ -170,6 +173,7 @@
     "message_success_order": "Order placed successfully.\nTrack your order on\n'My requests'!",
     "message_error_order": "Error in placing the order",
     "message_success_cart": "Added to cart",
-    "message_error_cart": "Error adding to cart\nPlease try again in seconds"
+    "message_error_cart": "Error adding to cart\nPlease try again in seconds",
+    "message_error_order_cuppon": "Error in placing the order\nCheck coupon!!"
 
 }

@@ -124,7 +124,7 @@
     "text_role_carlos": "Oprichter van het bedrijf",
     "text_description_carlos": "Mentor achter de Mandabai-onderneming. Hij geloofde dat het mogelijk was om producten via online processen naar familie en vrienden te sturen, wat een effectieve methode bleek te zijn en een verschil maakte in het leven van veel Kaapverdianen.",
     "text_role_eveline": "CEO",
-    "text_description_eveline": "Afgestudeerd in economie en bedrijfswetenschappen, gelooft hij dat Mandabai veel meer is dan een bedrijf, maar een manier om emigranten te verenigen met Kaapverdianen in Kaapverdië.",
+    "text_description_eveline": "Diploma in economie en bedrijfswetenschappen, gelooft hij dat Mandabai veel meer is dan een bedrijf, maar een manier om emigranten te verenigen met Kaapverdianen in Kaapverdië.",
     "text_role_antonio": "EUA",
     "text_description_antonio": "Mandabai-vertegenwoordiger in de Verenigde Staten van Amerika",
     "subtitle_representative_members": "MandaBai-vertegenwoordigers",
@@ -139,8 +139,7 @@
     "text_about_application": "Over de app",
     "textbutton_published_by":"Gepubliceerd door",
     "textbutton_developed_by":"Ontwikkeld door",
-    "textbutton_terms_of_uso":"Gebruiksvoorwaarden",
-    "textbutton_privacy_police":" Privacybeleid",
+    "textbutton_termos_of_use_and_privacy_police": "Gebruiksvoorwaarden en Privacybeleid",
     "title_my_favorites": "Mijn favorieten",
     "text_no_favorite_product": "Geen product gemarkeerd als favoriet...",
     "text_total": "Totaal",
@@ -153,6 +152,9 @@
     "text_amount": "De hoeveelheid",
     "text_personal_data": "Persoonlijke gegevens",
     "text_information_checkout": "Als u de bezorglocatie niet heeft toegevoegd, moet u de bezorgbestemming invoeren door op het \"plus\"-pictogram te klikken om een locatie toe te voegen.\nAls u de locaties al heeft ingevoerd, kiest u gewoon de gewenste locatie.",
+    "textbutton_security":"Veiligheid",
+    "title_termos_of_use_and_privacy_police": "Gebruiksvoorwaarden en Privacybeleid",
+    "title_security": "Privacybeleid",
 
     "message_error_cridencials": "Ongeldige inloggegevens",
     "message_success_register": "Registratie gelukt!",
@@ -169,5 +171,6 @@
     "message_success_order": "Bestelling succesvol geplaatst.\nVolg je bestelling op\n'Mijn aanvragen'!",
     "message_error_order": "Fout bij het plaatsen van de bestelling",
     "message_success_cart": "Toegevoegd aan winkelwagen",
-    "message_error_cart": "Fout bij toevoegen aan winkelwagen\nprobeer het over enkele seconden opnieuw!"
+    "message_error_cart": "Fout bij toevoegen aan winkelwagen\nprobeer het over enkele seconden opnieuw!",
+    "message_error_order_cuppon": "Fout bij het plaatsen van de bestelling\nControleer bon!!"
 }

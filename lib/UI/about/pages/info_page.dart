@@ -6,6 +6,7 @@ import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/employee.dart';
 import 'package:manda_bai/UI/about/components/item_bio.dart';
 import 'package:manda_bai/UI/about/components/item_mandatario.dart';
+import 'package:manda_bai/UI/about/pages/about_app.dart';
 import 'package:manda_bai/data/madaBaiData.dart';
 import 'package:readmore/readmore.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -377,30 +378,73 @@ class _InfoPageState extends State<InfoPage> {
                         ),
                         child: TextButton(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              Icon(
+                                Icons.security,
+                                color:  Theme.of(context).indicatorColor,
+                                size: Get.height * 0.025,
+                              ),
                               Padding(
                                 padding: EdgeInsets.only(
                                   left: Get.width * 0.02,
                                 ),
                                 child: Text(
                                   AppLocalizations.of(context)!
-                                      .textbutton_published_by,
-                                  style: Theme.of(context).textTheme.headline4,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  right: Get.width * 0.02,
-                                ),
-                                child: Text(
-                                  'MandaBai  >',
+                                      .textbutton_security,
                                   style: Theme.of(context).textTheme.headline4,
                                 ),
                               ),
                             ],
                           ),
                           onPressed: () {},
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: Get.height * 0.01),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: Get.width * 0.01, right: Get.width * 0.01),
+                      child: Container(
+                        height: Get.height * 0.06,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                          border: Border.all(
+                            color: Colors.black38,
+                          ),
+                        ),
+                        child: TextButton(
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.description,
+                                color:  Theme.of(context).indicatorColor,
+                                size: Get.height * 0.025,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left: Get.width * 0.02,
+                                ),
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .textbutton_termos_of_use_and_privacy_police,
+                                  style: Theme.of(context).textTheme.headline4,
+                                ),
+                              ),
+                            ],
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    Termos_de_Uso_Privacy_Policy(),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -427,7 +471,7 @@ class _InfoPageState extends State<InfoPage> {
                                 ),
                                 child: Text(
                                   AppLocalizations.of(context)!
-                                      .textbutton_developed_by,
+                                      .textbutton_published_by ,
                                   style: Theme.of(context).textTheme.headline4,
                                 ),
                               ),
@@ -436,95 +480,7 @@ class _InfoPageState extends State<InfoPage> {
                                   right: Get.width * 0.02,
                                 ),
                                 child: Text(
-                                  'MandaBai  >',
-                                  style: Theme.of(context).textTheme.headline4,
-                                ),
-                              ),
-                            ],
-                          ),
-                          onPressed: () {},
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: Get.height * 0.01),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: Get.width * 0.01, right: Get.width * 0.01),
-                      child: Container(
-                        height: Get.height * 0.06,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                          border: Border.all(
-                            color: Colors.black38,
-                          ),
-                        ),
-                        child: TextButton(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: Get.width * 0.02,
-                                ),
-                                child: Text(
-                                  AppLocalizations.of(context)!
-                                      .textbutton_terms_of_uso,
-                                  style: Theme.of(context).textTheme.headline4,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  right: Get.width * 0.02,
-                                ),
-                                child: Text(
-                                  ' >',
-                                  style: Theme.of(context).textTheme.headline4,
-                                ),
-                              ),
-                            ],
-                          ),
-                          onPressed: () {},
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: Get.height * 0.01),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: Get.width * 0.01, right: Get.width * 0.01),
-                      child: Container(
-                        height: Get.height * 0.06,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                          border: Border.all(
-                            color: Colors.black38,
-                          ),
-                        ),
-                        child: TextButton(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: Get.width * 0.02,
-                                ),
-                                child: Text(
-                                    AppLocalizations.of(context)!
-                                        .textbutton_privacy_police,
-                                    style:
-                                        Theme.of(context).textTheme.headline4),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  right: Get.width * 0.02,
-                                ),
-                                child: Text(
-                                  'MandaBai  >',
+                                  'MandaBai ',
                                   style: Theme.of(context).textTheme.headline4,
                                 ),
                               ),
