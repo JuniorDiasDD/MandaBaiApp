@@ -388,7 +388,7 @@ class _InfoPageState extends State<InfoPage> {
                             //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Icon(
-                                Icons.security,
+                                Icons.description,
                                 color: Theme.of(context).indicatorColor,
                                 size: Get.height * 0.025,
                               ),
@@ -398,13 +398,21 @@ class _InfoPageState extends State<InfoPage> {
                                 ),
                                 child: Text(
                                   AppLocalizations.of(context)!
-                                      .textbutton_security,
+                                      .textbutton_termos_of_use,
                                   style: Theme.of(context).textTheme.headline4,
                                 ),
                               ),
                             ],
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    Privacy_Policy(info: 1,),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ),
@@ -427,7 +435,7 @@ class _InfoPageState extends State<InfoPage> {
                           child: Row(
                             children: [
                               Icon(
-                                Icons.description,
+                                Icons.security,
                                 color: Theme.of(context).indicatorColor,
                                 size: Get.height * 0.025,
                               ),
@@ -436,8 +444,8 @@ class _InfoPageState extends State<InfoPage> {
                                   left: Get.width * 0.02,
                                 ),
                                 child: Text(
-                                  AppLocalizations.of(context)!
-                                      .textbutton_termos_of_use_and_privacy_police,
+                                    AppLocalizations.of(context)!
+                                        .textbutton_privacy_police,
                                   style: Theme.of(context).textTheme.headline4,
                                 ),
                               ),
@@ -448,7 +456,7 @@ class _InfoPageState extends State<InfoPage> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    Termos_de_Uso_Privacy_Policy(),
+                                    Privacy_Policy(info: 0,),
                               ),
                             );
                           },
