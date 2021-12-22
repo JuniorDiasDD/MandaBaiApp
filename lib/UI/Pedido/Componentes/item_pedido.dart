@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/order.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/Pedido/Componentes/item_list_order.dart';
@@ -38,7 +39,7 @@ class _Item_PedidoState extends State<Item_Pedido> {
           backgroundColor: Theme.of(context).cardColor,
           title: Row(
             children: [
-              Image.asset('assets/images/' + widget.order.status + '.png',
+              Image.network( widget.order.status=='processing'?AppImages.order_pendent:AppImages.order_finish,
                   width: 30,
                   height: 30,
                   alignment: Alignment.center),

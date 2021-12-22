@@ -90,7 +90,7 @@ class _StartPageState extends State<ProfilePage> {
                           height: Get.height * 0.2,
                           width: Get.width,
                           child: Center(
-                            child: Image.asset(
+                            child: Image.network(
                               AppImages.loading,
                               width: Get.width * 0.2,
                               height: Get.height * 0.2,
@@ -104,7 +104,7 @@ class _StartPageState extends State<ProfilePage> {
                             height: Get.height * 0.1,
                             width: Get.width,
                             child: Center(
-                              child: Image.asset(
+                              child: Image.network(
                                 AppImages.appLogo2,
                                 width: Get.width * 0.5,
                                 height: Get.height * 0.1,
@@ -244,7 +244,7 @@ class _StartPageState extends State<ProfilePage> {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
-                            child: Image.asset(
+                            child: Image.network(
                               AppImages.cvmovel,
                             ),
                           ),
@@ -292,7 +292,7 @@ class _StartPageState extends State<ProfilePage> {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
-                            child: Image.asset(
+                            child: Image.network(
                               AppImages.camara,
                             ),
                           ),
@@ -303,7 +303,7 @@ class _StartPageState extends State<ProfilePage> {
                             left: Get.width * 0.02,
                           ),
                           child: Text(
-                            'Serviços da Câmara ',
+                              AppLocalizations.of(context)!.text_city_council_services,
                             style: Theme.of(context).textTheme.headline3,
                           ),
                         ),
@@ -366,7 +366,7 @@ class _StartPageState extends State<ProfilePage> {
                                 border:
                                     Border.all(color: Colors.lightBlueAccent),
                               ),
-                              child: Image.asset(
+                              child: Image.network(
                                 AppImages.santiago,
                                 color: Colors.white,
                                 height: Get.height * 0.1,
@@ -632,7 +632,7 @@ class _StartPageState extends State<ProfilePage> {
                                     Border.all(color: Colors.deepPurpleAccent),
                                 image: DecorationImage(
                                   fit: BoxFit.fill,
-                                  image: AssetImage(AppImages.facebook_logo),
+                                  image: NetworkImage(AppImages.facebook_logo),
                                 ),
                               ),
                             ),
@@ -672,7 +672,7 @@ class _StartPageState extends State<ProfilePage> {
                                     Border.all(color: Colors.deepPurpleAccent),
                                 image: DecorationImage(
                                   fit: BoxFit.fill,
-                                  image: AssetImage(AppImages.instagram_logo),
+                                  image: NetworkImage(AppImages.instagram_logo),
                                 ),
                               ),
                             ),

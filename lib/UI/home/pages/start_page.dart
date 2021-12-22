@@ -198,7 +198,7 @@ class _StartPageState extends State<StartPage> {
                     children: [
                       ItemNew(image: AppImages.cvmovel, title: "Saldo CvMovel"),
                       ItemNew(
-                          image: AppImages.camara, title: "Serviços da Câmara"),
+                          image: AppImages.camara, title: AppLocalizations.of(context)!.text_city_council_services,),
                     ],
                   ),
                 ),
@@ -223,7 +223,7 @@ class _StartPageState extends State<StartPage> {
                         height: Get.height * 0.2,
                         width: Get.width,
                         child: Center(
-                          child: Image.asset(
+                          child: Image.network(
                             AppImages.loading,
                             width: Get.width * 0.2,
                             height: Get.height * 0.2,

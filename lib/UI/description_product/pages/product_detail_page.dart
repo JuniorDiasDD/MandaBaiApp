@@ -72,10 +72,25 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
               children: [
                 Stack(
                   children: [
-                    Image.network(
-                      widget.product.image,
+                   /* SizedBox(
+                      height:Get.height * 0.45 ,
+                      child: Image.network(
+                        widget.product.image,
+                        width: Get.width,
+                        fit: BoxFit.cover,
+                      ),
+                    ),*/
+                    Container(
                       width: Get.width,
-                      fit: BoxFit.cover,
+                      height:Get.height * 0.45 ,
+                      decoration: BoxDecoration(
+
+                        color: Colors.white,
+                        image: DecorationImage(
+                          fit: BoxFit.fill,
+                          image: NetworkImage(widget.product.image),
+                        ),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 10.0, top: 30.0),
@@ -109,10 +124,13 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    widget.product.name,
-                                    style:
-                                        Theme.of(context).textTheme.headline1,
+                                  SizedBox(
+                                    width: Get.width * 0.7,
+                                    child: Text(
+                                      widget.product.name,
+                                      style:
+                                          Theme.of(context).textTheme.headline1,
+                                    ),
                                   ),
                                   FutureBuilder(
                                       future: _carregarMoney(),
@@ -369,7 +387,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                       color: Colors.black54,
                       height: Get.height,
                       child: Center(
-                        child: Image.asset(
+                        child: Image.network(
                           AppImages.loading,
                           width: Get.width * 0.2,
                           height: Get.height * 0.2,

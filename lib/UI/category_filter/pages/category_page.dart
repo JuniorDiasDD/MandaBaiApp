@@ -121,6 +121,11 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
+    /*24 is for notification bar on Android*/
+    final double itemHeight = (size.height) / 3;
+    final double itemWidth = size.width / 2;
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -230,7 +235,7 @@ class _CategoryPageState extends State<CategoryPage> {
                         height: Get.height * 0.2,
                         width: Get.width,
                         child: Center(
-                          child: Image.asset(
+                          child: Image.network(
                             AppImages.loading,
                             width: Get.width * 0.2,
                             height: Get.height * 0.2,
@@ -269,9 +274,11 @@ class _CategoryPageState extends State<CategoryPage> {
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount:
                                           (Get.width == Orientation.portrait)
-                                              ? 2
-                                              : 2),
+                                              ? 3
+                                              : 2,
+                                    childAspectRatio: (itemWidth / itemHeight),),
                               itemCount: list_product.length,
+
                               itemBuilder: (BuildContext ctx, index) {
                                 var list = list_product[index];
                                 return ProductListComponent(product: list);
@@ -290,7 +297,7 @@ class _CategoryPageState extends State<CategoryPage> {
                         color: Colors.black54,
                         height: Get.height,
                         child: Center(
-                          child: Image.asset(
+                          child: Image.network(
                             AppImages.loading,
                             width: Get.width * 0.2,
                             height: Get.height * 0.2,

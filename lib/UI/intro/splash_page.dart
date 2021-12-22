@@ -44,7 +44,7 @@ class _SplashPageState extends State<SplashPage> {
           Container(
             width: Get.width,
             height: Get.height * 0.14,
-            child: Image.asset(AppImages.appLogo2),
+            child: Image.network(AppImages.appLogo2),
           ),
         ],
       ),

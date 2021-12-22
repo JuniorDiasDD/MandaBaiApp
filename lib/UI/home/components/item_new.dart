@@ -59,7 +59,7 @@ class _ItemNewState extends State<ItemNew> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(
+              Image.network(
                 widget.image,
                 width: Get.width * 0.15,
                 height: Get.width * 0.15,

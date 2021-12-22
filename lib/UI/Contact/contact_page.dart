@@ -153,7 +153,7 @@ class _ContactPageState extends State<ContactPage> {
                         children: [
                           Flexible(
                             flex: 1,
-                            child: Image.asset(
+                            child: Image.network(
                               AppImages.gmail_logo,
                               height: Get.height * 0.08,
                               width: Get.width * 0.08,
@@ -205,7 +205,7 @@ class _ContactPageState extends State<ContactPage> {
                         children: [
                           Flexible(
                             flex: 1,
-                            child: Image.asset(
+                            child: Image.network(
                               AppImages.whatsapp_logo,
                               height: Get.height * 0.08,
                               width: Get.width * 0.08,
@@ -309,7 +309,7 @@ class _ContactPageState extends State<ContactPage> {
                         children: [
                           Flexible(
                             flex: 1,
-                            child: Image.asset(
+                            child: Image.network(
                               AppImages.messenger_logo,
                               height: Get.height * 0.08,
                               width: Get.width * 0.08,

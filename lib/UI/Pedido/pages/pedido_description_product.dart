@@ -46,7 +46,7 @@ class _PedidoDescriptionProductState extends State<PedidoDescriptionProduct> {
                     height: Get.height * 0.2,
                     width: Get.width,
                     child: Center(
-                      child: Image.asset(
+                      child: Image.network(
                         AppImages.loading,
                         width: Get.width * 0.2,
                         height: Get.height * 0.2,

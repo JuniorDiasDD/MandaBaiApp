@@ -101,7 +101,7 @@ class _Destination_PageState extends State<Destination_Page> {
                           height: Get.height * 0.2,
                           width: Get.width,
                           child: Center(
-                            child: Image.asset(
+                            child: Image.network(
                               AppImages.loading,
                               width: Get.width * 0.2,
                               height: Get.height * 0.2,
@@ -110,20 +110,7 @@ class _Destination_PageState extends State<Destination_Page> {
                           ),
                         );
                       default:
-                        /* if (!snapshot.hasData) {
-                          return Container(
-                            height: Get.height * 0.2,
-                            width: Get.width,
-                            child: Center(
-                              child: Image.asset(
-                                AppImages.loading,
-                                width: Get.width * 0.2,
-                                height: Get.height * 0.2,
-                                alignment: Alignment.center,
-                              ),
-                            ),
-                          );
-                        } else {*/
+
                         if (snapshot.data == null) {
                           return Container(
                             child: Column(

@@ -95,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: Get.height * 0.02,
                   ),
-                  Image.asset(
+                  Image.network(
                     AppImages.appLogo2,
                     width: Get.width * 0.6,
                     height: Get.height * 0.15,
@@ -352,7 +352,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.black54,
                     height: Get.height,
                     child: Center(
-                      child: Image.asset(
+                      child: Image.network(
                         AppImages.loading,
                         width: Get.width * 0.2,
                         height: Get.height * 0.2,

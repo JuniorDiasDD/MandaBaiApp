@@ -35,8 +35,7 @@ class _ItemMandatarioState extends State<ItemMandatario> {
                   ),
                   SizedBox(height: Get.height * 0.002),
                   Text(
-                    AppLocalizations.of(context)!
-                        .text_role_antonio,
+                    widget.employee.cargo,
                     style: Theme.of(context).textTheme.headline6,
                   ),
                  
@@ -75,8 +74,7 @@ class _ItemMandatarioState extends State<ItemMandatario> {
                               padding: const EdgeInsets.all(0.0),
                               children: [
                                 Text(
-                                  AppLocalizations.of(context)!
-                                      .text_description_antonio+"\n\n"+widget.employee.tel+"\n"+widget.employee.email,
+                                  widget.employee.description+"\n\n"+widget.employee.tel+"\n"+widget.employee.email,
                                   textAlign: TextAlign.justify,
                                   style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: Get.width*0.03,),
                                 ),

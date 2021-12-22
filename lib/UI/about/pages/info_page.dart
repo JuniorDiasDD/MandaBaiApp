@@ -50,6 +50,14 @@ class _InfoPageState extends State<InfoPage> {
 
   Future _carregarMandatarios(context) async {
     list_employee_Mandatarios.add(Employee(
+        name: 'Celly Fontes',
+        cargo: AppLocalizations.of(context)!.text_role_antonio,
+        image:
+        'https://www.mandabai.com/wp-content/uploads/2021/12/1_orig-1000x1000.jpg',
+        description: AppLocalizations.of(context)!.text_description_antonio,
+        tel: '+774 3812002 ',
+        email: 'bellisimacosmeticsusa@gmail.com'));
+    list_employee_Mandatarios.add(Employee(
         name: 'António Coelho Monteiro',
         cargo: AppLocalizations.of(context)!.text_role_antonio,
         image:
@@ -65,14 +73,7 @@ class _InfoPageState extends State<InfoPage> {
         description: AppLocalizations.of(context)!.text_description_estevao,
         tel: '+351 913098511 | +351938880906',
         email: 'francisco.r.depina@gmail.com'));
-    list_employee_Mandatarios.add(Employee(
-        name: 'Celly Fontes',
-        cargo: 'Estados unidos da América',
-        image:
-        'https://www.mandabai.com/wp-content/uploads/2021/12/1_orig-1000x1000.jpg',
-        description: 'Mandatário de Mandabai nos Estados unidos da América',
-        tel: '+774 3812002 ',
-        email: 'bellisimacosmeticsusa@gmail.com'));
+
 
     if (list_employee_Mandatarios.isEmpty) {
       return null;

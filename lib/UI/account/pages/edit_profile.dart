@@ -461,7 +461,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                     color: Colors.black54,
                     height: Get.height,
                     child: Center(
-                      child: Image.asset(
+                      child: Image.network(
                         AppImages.loading,
                         width: Get.width * 0.2,
                         height: Get.height * 0.2,

@@ -50,11 +50,11 @@ class _ChooseIslandState extends State<ChooseIsland> {
                 Align(
                   alignment: Alignment.topRight,
 
-                  child: Theme.of(context).brightness==Brightness.dark ?  Image.asset(
+                  child: Theme.of(context).brightness==Brightness.dark ?  Image.network(
                     AppImages.ilhasWhite,
                     height: Get.height * 0.3,
                     width: Get.width,
-                  ): Image.asset(
+                  ): Image.network(
                     AppImages.ilha_2,
                     height: Get.height * 0.38,
                     width: Get.width * 0.99,

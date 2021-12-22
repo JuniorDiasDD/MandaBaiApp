@@ -113,7 +113,7 @@ class ServiceRequest {
         break;
     }
 
-    print(island.toString() + "-" + response.body);
+   // print(island.toString() + "-" + response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       var quantidade = response.headers['x-wp-total'];
@@ -205,7 +205,7 @@ class ServiceRequest {
     } else {
       print("Erro de authentiction");
     }
-    print(list.length.toString());
+  //  print(list.length.toString());
     return list;
   }
 
@@ -469,7 +469,7 @@ class ServiceRequest {
         {
           response = await http.post(Uri.parse(request_login_Brava),
               body: {'username': user.username, 'password': user.senha});
-          print(request_loginCocart_Brava);
+        //  print(request_loginCocart_Brava);
           responseCocart = await http.post(Uri.parse(request_loginCocart_Brava),
               body: {'username': user.username, 'password': user.senha});
           break;
@@ -552,7 +552,7 @@ class ServiceRequest {
               headers: <String, String>{'authorization': basicAuth});
           break;
         case "Santiago":
-          // print(getCartSantiago);
+
           response = await http.get(Uri.parse(getCartSantiago),
               headers: <String, String>{'authorization': basicAuth});
           break;
@@ -566,8 +566,8 @@ class ServiceRequest {
           break;
       }
 
-      print(response.body);
-      print(response.statusCode);
+     // print(response.body);
+     // print(response.statusCode);
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
         final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();
@@ -580,9 +580,9 @@ class ServiceRequest {
       } else {
         print("Erro de authentiction");
       }
-      print(response.statusCode);
+
     } while (response.statusCode == 503);
-    print("sai");
+
     return listCart;
   }
 
@@ -1009,7 +1009,7 @@ class ServiceRequest {
     if (itemLocationString != null) {
       List<Location> list = Location.decode(itemLocationString);
       for (int i = 0; i < list.length; i++) {
-        print("-" + list[i].name);
+       // print("-" + list[i].name);
         if (list[i].id == new_location.id) {
           return true;
         }
@@ -1053,7 +1053,7 @@ class ServiceRequest {
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       String dolar = jsonResponse['USD']['bid'];
-      print(dolar);
+
       return dolar;
     } else if (response.statusCode == 503) {
       print("Erro de serviço");
@@ -1074,7 +1074,7 @@ class ServiceRequest {
     var id = prefs.getString('id');
     var response =
         await http.get(Uri.parse(getOrder + "&customer=" + id.toString()));
-    print(response.body);
+  //  print(response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       final _cats = jsonResponse.cast<Map<String, dynamic>>();
@@ -1106,7 +1106,7 @@ class ServiceRequest {
     var headers = {
       'Content-Type': 'application/json',
     };
-    print("-"+cupon);
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? userString = prefs.getString('user');
     var userCache = json.decode(userString!);
@@ -1248,12 +1248,12 @@ class ServiceRequest {
       }
     }
 
-    print(data);
+
     var response =
         await http.post(Uri.parse(getOrder), headers: headers, body: data);
 
-      print(response.statusCode);
-    print(response.body);
+     // print(response.statusCode);
+    //print(response.body);
     if (response.statusCode == 201) {
       List<String> list_item = [];
       for (int i = 0; i < listProduct.length; i++) {

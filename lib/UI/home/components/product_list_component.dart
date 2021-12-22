@@ -55,7 +55,7 @@ class _ProductListComponentState extends State<ProductListComponent> {
             top: Get.height * 0.009,
             bottom: Get.height * 0.005),
         child: Container(
-          width: Get.width * 0.4,
+            height: Get.height * 0.05,
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(12),

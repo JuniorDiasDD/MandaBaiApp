@@ -34,8 +34,9 @@ class Privacy_Policy extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  AppLocalizations.of(context)!
-                      .title_privacy_police,
+                  info==0?AppLocalizations.of(context)!
+                      .title_privacy_police:AppLocalizations.of(context)!
+                      .title_terms_of_use,
                   style: Theme.of(context).textTheme.headline1,
                 ),
                 Container(
