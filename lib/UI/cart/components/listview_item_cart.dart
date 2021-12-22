@@ -29,7 +29,6 @@ class _ItemCartState extends State<ItemCart> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setState(() {
       quant = widget.cartModel.amount;
@@ -59,15 +58,22 @@ class _ItemCartState extends State<ItemCart> {
           children: [
             Flexible(
               flex: 1,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(10.0),
-                      bottomLeft: Radius.circular(10.0)),
-                  color: Colors.white,
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: NetworkImage(widget.cartModel.image),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: Get.width*0.2,
+                  width: Get.width*0.2,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(
+                           Radius.circular(10.0),
+                         ),
+                      color: Colors.white,
+                      image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: NetworkImage(widget.cartModel.image),
+                      ),
+                    ),
                   ),
                 ),
               ),

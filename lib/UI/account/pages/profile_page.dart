@@ -6,6 +6,7 @@ import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/Contact/contact_page.dart';
 import 'package:manda_bai/UI/about/pages/info_page.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 import 'package:manda_bai/UI/account/pages/edit_profile.dart';
 import 'package:manda_bai/UI/Pedido/pages/pedido_page.dart';
@@ -15,6 +16,7 @@ import 'package:manda_bai/UI/home/pop_up/popup_moeda.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -84,7 +86,7 @@ class _StartPageState extends State<ProfilePage> {
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
-                        return Container(
+                        return SizedBox(
                           height: Get.height * 0.2,
                           width: Get.width,
                           child: Center(
@@ -98,7 +100,7 @@ class _StartPageState extends State<ProfilePage> {
                         );
                       default:
                         if (snapshot.data == null) {
-                          return Container(
+                          return SizedBox(
                             height: Get.height * 0.1,
                             width: Get.width,
                             child: Center(
@@ -218,14 +220,14 @@ class _StartPageState extends State<ProfilePage> {
                     ),
                   ],
                 ),
-                Container(
+                SizedBox(
                   height: Get.height * 0.06,
                   child: GestureDetector(
                     onTap: () {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return Carrega_Saldo();
+                            return const Carrega_Saldo();
                           });
                     },
                     child: Row(
@@ -265,7 +267,17 @@ class _StartPageState extends State<ProfilePage> {
                 Container(
                   height: Get.height * 0.06,
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Pop_up_Message(
+                                mensagem: AppLocalizations.of(context)!
+                                    .text_unavailable_service,
+                                icon: Icons.device_unknown_sharp,
+                                caminho: "description");
+                          });
+                    },
                     child: Row(
                       children: [
                         Container(
@@ -315,7 +327,7 @@ class _StartPageState extends State<ProfilePage> {
                         right: Get.width * 0.05,
                       ),
                       child: Text(
-                      AppLocalizations.of(context)!.text_settings,
+                        AppLocalizations.of(context)!.text_settings,
                         style: Theme.of(context).textTheme.headline4,
                       ),
                     ),
@@ -368,7 +380,8 @@ class _StartPageState extends State<ProfilePage> {
                               child: Row(
                                 children: [
                                   Text(
-                                    AppLocalizations.of(context)!.text_change_island,
+                                    AppLocalizations.of(context)!
+                                        .text_change_island,
                                     style:
                                         Theme.of(context).textTheme.headline3,
                                   ),
@@ -395,7 +408,6 @@ class _StartPageState extends State<ProfilePage> {
                       ),
                     ),
                     SizedBox(height: Get.height * 0.01),
-                   
                     Container(
                       height: Get.height * 0.06,
                       child: GestureDetector(
@@ -431,7 +443,8 @@ class _StartPageState extends State<ProfilePage> {
                               child: Row(
                                 children: [
                                   Text(
-                                   AppLocalizations.of(context)!.text_select_currency,
+                                    AppLocalizations.of(context)!
+                                        .text_select_currency,
                                     style:
                                         Theme.of(context).textTheme.headline3,
                                   ),
@@ -494,7 +507,8 @@ class _StartPageState extends State<ProfilePage> {
                               child: Row(
                                 children: [
                                   Text(
-                                    AppLocalizations.of(context)!.text_delivery_location,
+                                    AppLocalizations.of(context)!
+                                        .text_delivery_location,
                                     style:
                                         Theme.of(context).textTheme.headline3,
                                   ),
@@ -553,7 +567,8 @@ class _StartPageState extends State<ProfilePage> {
                               child: Row(
                                 children: [
                                   Text(
-                                    AppLocalizations.of(context)!.text_my_orders,
+                                    AppLocalizations.of(context)!
+                                        .text_my_orders,
                                     style:
                                         Theme.of(context).textTheme.headline3,
                                   ),
@@ -741,7 +756,8 @@ class _StartPageState extends State<ProfilePage> {
                                 left: Get.width * 0.02,
                               ),
                               child: Text(
-                                AppLocalizations.of(context)!.text_about_us_and_aplication,
+                                AppLocalizations.of(context)!
+                                    .text_about_us_and_aplication,
                                 style: Theme.of(context).textTheme.headline3,
                               ),
                             ),

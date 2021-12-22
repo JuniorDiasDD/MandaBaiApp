@@ -161,7 +161,7 @@ class _StartPageState extends State<StartPage> {
                             return Container(
                               width: 10.0,
                               height: 10.0,
-                              margin: EdgeInsets.symmetric(
+                              margin: const EdgeInsets.symmetric(
                                   vertical: 10.0, horizontal: 2.0),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
@@ -179,6 +179,7 @@ class _StartPageState extends State<StartPage> {
                 SizedBox(
                   height: Get.height * 0.01,
                 ),
+               //NEW SERVICES
                 Align(
                   alignment: Alignment.topLeft,
                   child: Padding(

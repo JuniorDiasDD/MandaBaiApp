@@ -159,7 +159,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return PopupInfo_Checkout();
+                                return  PopupInfo_Checkout(title:AppLocalizations.of(context)!.title_instructions,subTitle:AppLocalizations.of(context)!.text_information,text:AppLocalizations.of(context)!.text_information_checkout);
                               },
                             );
                           },
@@ -244,7 +244,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                         ],
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       height: Get.height * 0.3,
                       child: widget.location == null
                           ? TextButton(
@@ -274,7 +274,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                             .textTheme
                                             .headline3,
                                       ),
-                                      Icon(
+                                      const Icon(
                                         Icons.add,
                                       ),
                                     ],
@@ -314,7 +314,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                               .textTheme
                                               .headline3,
                                         ),
-                                        Icon(
+                                        const Icon(
                                           Icons.add,
                                         ),
                                       ],
@@ -330,13 +330,13 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                           color: Theme.of(context).cardColor,
                                           blurRadius: 1.0,
                                           spreadRadius: 0.0,
-                                          offset: Offset(0.5, 0.5),
+                                          offset: const Offset(0.5, 0.5),
                                         ),
                                       ],
                                     ),
                                     height: Get.height * 0.15,
                                     child: ListView(
-                                      padding: EdgeInsets.all(0.0),
+                                      padding: const EdgeInsets.all(0.0),
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.all(15.0),
@@ -355,7 +355,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                               ),
                                               Row(
                                                 children: [
-                                                  Icon(
+                                                  const Icon(
                                                     Icons.location_on_outlined,
                                                   ),
                                                   Text(
@@ -386,7 +386,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                               ),
                                               Row(
                                                 children: [
-                                                  Icon(
+                                                  const Icon(
                                                     Icons.phone,
                                                   ),
                                                   Text(
@@ -423,7 +423,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                       ),
                     ),
                     SizedBox(height: Get.height * 0.01),
-                    Container(
+                    SizedBox(
                       height: Get.height * 0.2,
                       width: Get.width,
                       child: TextFormField(
@@ -435,8 +435,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                           filled: true,
                           fillColor: Theme.of(context).backgroundColor,
                           border: OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(15.0),
-                            borderSide: new BorderSide(),
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: const BorderSide(),
                           ),
                           hintText: AppLocalizations.of(context)!.hint_write,
                           hintStyle: Theme.of(context).textTheme.headline4,
@@ -472,9 +472,9 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
       bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(" "),
+          const Text(" "),
           Padding(
-            padding: EdgeInsets.only(
+            padding:const EdgeInsets.only(
               right: 15,
               bottom: 10,
             ),
@@ -482,7 +482,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
               onPressed: validateAndSave,
               child: Text(
                 AppLocalizations.of(context)!.textbutton_next + " >",
-                style: TextStyle(
+                style: const TextStyle(
                     fontFamily: AppFonts.poppinsRegularFont,
                     color: AppColors.greenColor),
               ),

@@ -6,6 +6,7 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/location.dart';
+import 'package:manda_bai/UI/cart/components/Popupinfo_checkout.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -113,87 +114,13 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return Scaffold(
-                                  backgroundColor: Colors.transparent,
-                                  body: Center(
-                                    child: Container(
-                                      width: Get.width,
-                                      height: Get.height * 0.3,
-                                      margin:
-                                          EdgeInsets.only(left: 20, right: 20),
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context)
-                                            .scaffoldBackgroundColor,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Container(
-                                                  width: Get.width * 0.08,
-                                                ),
-                                                Text(
-                                                  AppLocalizations.of(context)!
-                                                      .title_instructions,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline1,
-                                                ),
-                                                IconButton(
-                                                  icon: Icon(Icons.close),
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                left: Get.width * 0.04,
-                                                right: Get.width * 0.04,
-                                              ),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.stretch,
-                                                children: [
-                                                  SizedBox(
-                                                      height:
-                                                          Get.height * 0.01),
-                                                  Text(
-                                                    AppLocalizations.of(
-                                                            context)!
-                                                        .subtitle_payment,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline2,
-                                                  ),
-                                                  SizedBox(
-                                                      height:
-                                                          Get.height * 0.01),
-                                                  Text(
-                                                    AppLocalizations.of(
-                                                            context)!
-                                                        .text_cuppon,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline4,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                );
+                                return PopupInfo_Checkout(
+                                    title: AppLocalizations.of(context)!
+                                        .title_instructions,
+                                    subTitle: AppLocalizations.of(context)!
+                                        .subtitle_payment,
+                                    text: AppLocalizations.of(context)!
+                                        .text_cuppon);
                               },
                             );
                           },
@@ -272,8 +199,8 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                             )
                           : Container(),
                     ),
-                    Container(
-                      height: Get.height * 0.3,
+                    SizedBox(
+                      height: Get.height * 0.55,
                       child: ListView(
                         padding: EdgeInsets.all(0.0),
                         children: [
@@ -550,7 +477,10 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                         ],
                       ),
                     ),
-                    SizedBox(height: Get.height * 0.01),
+
+                    /* Column(
+                      children: [
+                        SizedBox(height: Get.height * 0.01),
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
@@ -558,8 +488,8 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                         style: Theme.of(context).textTheme.headline2,
                       ),
                     ),
-                    SizedBox(height: Get.height * 0.01),
-                    TextFormField(
+                        SizedBox(height: Get.height * 0.01),
+                        TextFormField(
                       controller: input_cartao,
                       keyboardType: TextInputType.number,
                       style: TextStyle(
@@ -645,6 +575,10 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                         ),
                       ],
                     ),
+                   
+                      ],
+                    ),
+                    */
                     SizedBox(height: Get.height * 0.02),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -671,9 +605,18 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
                         color: AppColors.greenColor,
                         textColor: Colors.white,
                         child: Text(AppLocalizations.of(context)!.button_done),
-                        onPressed: validateAndSave,
+                        // onPressed: validateAndSave,
+                        onPressed: () => showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Pop_up_Message(
+                                  mensagem: AppLocalizations.of(context)!
+                                      .text_unavailable_service,
+                                  icon: Icons.device_unknown_sharp,
+                                  caminho: "erro");
+                            }),
                         shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0),
+                          borderRadius: BorderRadius.circular(30.0),
                         ),
                       ),
                     ),

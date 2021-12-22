@@ -40,7 +40,7 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Icon(
                     widget.icon,
                     color: widget.caminho != "erro" ? Colors.green : Colors.red,
@@ -65,7 +65,7 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
                   width: Get.width * 0.3,
                   decoration: BoxDecoration(
                     color: AppColors.greenColor,
-                    borderRadius: BorderRadius.all(
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(15),
                     ),
                     boxShadow: [

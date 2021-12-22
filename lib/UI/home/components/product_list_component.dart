@@ -8,6 +8,7 @@ import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class ProductListComponent extends StatefulWidget {
   Product product;
 
@@ -63,7 +64,7 @@ class _ProductListComponentState extends State<ProductListComponent> {
                 color: Theme.of(context).cardColor,
                 blurRadius: 1.0,
                 spreadRadius: 0.0,
-                offset: Offset(1.0, 1.0),
+                offset: const Offset(1.0, 1.0),
               ),
             ],
           ),
@@ -105,7 +106,7 @@ class _ProductListComponentState extends State<ProductListComponent> {
                         children: [
                           SizedBox(
                             child: Padding(
-                              padding: EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                 left: 2.0,
                               ),
                               child: FutureBuilder(
@@ -193,7 +194,7 @@ class _ProductListComponentState extends State<ProductListComponent> {
                                     showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
-                                          return Pop_Login();
+                                          return const Pop_Login();
                                         });
                                   } else {
                                     setState(() {
