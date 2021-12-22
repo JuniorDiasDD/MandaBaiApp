@@ -61,7 +61,7 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                       padding: EdgeInsets.only(
                         left: Get.width * 0.04,
                       ),
-                      child: Image.asset(
+                      child: Image.network(
                         AppImages.cvmovel,
                         width: Get.width * 0.05,
                         height: Get.width * 0.05,

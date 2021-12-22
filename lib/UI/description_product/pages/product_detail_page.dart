@@ -6,6 +6,7 @@ import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/product.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -370,8 +371,20 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                                   fontSize: Get.width * 0.035,
                                   color: Colors.white),
                             ),
-                            onPressed: () {
-                              _addCart(widget.product.id);
+                            onPressed: () async {
+                              final SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              var check = prefs.getString('id');
+                              if (check == 'null' || check == null) {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return const Pop_Login();
+                                    });
+                              }else{
+                                _addCart(widget.product.id);
+                              }
+
                             },
                           ),
                         ),

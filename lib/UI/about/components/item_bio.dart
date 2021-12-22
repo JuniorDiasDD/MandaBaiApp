@@ -104,13 +104,13 @@ class _Item_BioState extends State<Item_Bio> {
                       children: [
                         Row(
                           children: [
-                            Image.asset(
+                            Image.network(
                               AppImages.viber_logo,
                               height: Get.height * 0.03,
                               width: Get.width * 0.03,
                             ),
                             const SizedBox(width: 1),
-                            Image.asset(
+                            Image.network(
                               AppImages.whatsapp_logo,
                               height: Get.height * 0.03,
                               width: Get.width * 0.03,
@@ -125,7 +125,7 @@ class _Item_BioState extends State<Item_Bio> {
                         const SizedBox(width: 5),
                         Row(
                           children: [
-                            Image.asset(
+                            Image.network(
                               AppImages.gmail_logo,
                               height: Get.height * 0.03,
                               width: Get.width * 0.03,

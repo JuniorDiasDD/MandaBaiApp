@@ -22,7 +22,7 @@ class _ItemNewState extends State<ItemNew> {
               builder: (BuildContext context) {
                 return Carrega_Saldo();
               });
-        } else if (widget.title == "Serviços da Câmara") {
+        } else {
           showDialog(
               context: context,
               builder: (BuildContext context) {

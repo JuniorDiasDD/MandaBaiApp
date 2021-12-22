@@ -275,7 +275,7 @@ class _StartPageState extends State<ProfilePage> {
                                 mensagem: AppLocalizations.of(context)!
                                     .text_unavailable_service,
                                 icon: Icons.device_unknown_sharp,
-                                caminho: "description");
+                                caminho: "erro");
                           });
                     },
                     child: Row(
