@@ -5,7 +5,7 @@ import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Model/category.dart';
 import 'package:manda_bai/UI/category_filter/pages/category_page.dart';
 import 'package:manda_bai/UI/home/pages/start_page.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ListViewItemComponent extends StatefulWidget {
   Category category;
   ListViewItemComponent({required this.category});
@@ -20,7 +20,7 @@ class _ListViewItemComponentState extends State<ListViewItemComponent> {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => CategoryPage(category: widget.category),
+          builder: (context) => CategoryPage(category: widget.category,filter_most: AppLocalizations.of(context)!.filter_more_price,filter_less: AppLocalizations.of(context)!.filter_less_price),
         ),
       ),
       child: Padding(

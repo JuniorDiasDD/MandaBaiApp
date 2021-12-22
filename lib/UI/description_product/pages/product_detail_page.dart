@@ -59,51 +59,54 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
     return Scaffold(
       body: Stack(
         children: [
-          SafeArea(
-            child: Column(
-              children: [
-            Stack(
+          Column(
+            children: [
+          Flexible(
+           flex:6,
+            child: Stack(
               children: [
                 Container(
-                  height: Get.height * 0.5,
                   child: Image.network(
                     widget.product.image,
                     width: Get.width,
                     fit: BoxFit.cover,
                   ),
                 ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: Colors.black,
+                Padding(
+                  padding: const EdgeInsets.only(left:10.0,top:30.0),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: Get.height * 0.01),
-            Padding(
+          ),
+         // SizedBox(height: Get.height * 0.01),
+         Flexible(
+           flex:1,
+            child: Padding(
               padding: EdgeInsets.only(
                 left: Get.width * 0.04,
                 right: Get.width * 0.04,
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        width: Get.width * 0.7,
-                        child: Text(
-                          widget.product.name,
-                          style: Theme.of(context).textTheme.headline1,
-                        ),
+                      Text(
+                        widget.product.name,
+                        style: Theme.of(context).textTheme.headline1,
                       ),
                       FutureBuilder(
                           future: _carregarMoney(),
@@ -159,6 +162,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                           }),
                     ],
                   ),
+                 const Spacer(),
                   IconButton(
                     padding: const EdgeInsets.all(0.0),
                     onPressed: () {
@@ -184,40 +188,42 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                 ],
               ),
             ),
-            /*   Padding(
-              padding: EdgeInsets.only(
-                left: Get.width * 0.03,
-                right: Get.width * 0.04,
-              ),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: RatingBar.builder(
-                  unratedColor: Colors.grey,
-                  initialRating: widget.product.rating_count.toDouble(),
-                  minRating: 0,
-                  direction: Axis.horizontal,
-                  allowHalfRating: true,
-                  itemCount: 5,
-                  itemSize: Get.height * 0.025,
-                  itemPadding: const EdgeInsets.all(0.0),
-                  itemBuilder: (context, _) => const Icon(
-                    Icons.star,
-                    color: Colors.amber,
-                  ),
-                  onRatingUpdate: (rating) {
-                    //print(rating);
-                  },
+          ),
+          /*   Padding(
+            padding: EdgeInsets.only(
+              left: Get.width * 0.03,
+              right: Get.width * 0.04,
+            ),
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: RatingBar.builder(
+                unratedColor: Colors.grey,
+                initialRating: widget.product.rating_count.toDouble(),
+                minRating: 0,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemSize: Get.height * 0.025,
+                itemPadding: const EdgeInsets.all(0.0),
+                itemBuilder: (context, _) => const Icon(
+                  Icons.star,
+                  color: Colors.amber,
                 ),
+                onRatingUpdate: (rating) {
+                  //print(rating);
+                },
               ),
-            ),*/
-            SizedBox(height: Get.height * 0.02),
-            Padding(
+            ),
+          ),*/
+        //  SizedBox(height: Get.height * 0.02),
+          Flexible(
+           flex:4,
+            child: Padding(
               padding: EdgeInsets.only(
                 left: Get.width * 0.04,
                 right: Get.width * 0.04,
               ),
-              child: Container(
-                height: Get.height * 0.15,
+              child: SizedBox(
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -244,53 +250,58 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                 ),
               ),
             ),
-            SizedBox(height: Get.height * 0.02),
-            Container(
-              width: Get.width * 0.3,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Container(
-                    width: Get.width * 0.08,
-                    child: FloatingActionButton(
-                      onPressed: () {
-                        setState(
-                          () {
-                            if (quantidade != 1) {
-                              quantidade--;
-                            }
+          ),
+        //  SizedBox(height: Get.height * 0.02),
+          Flexible(
+           flex:2,
+            child: Column(
+              children: [
+                Container(
+                  width: Get.width * 0.3,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Container(
+                        width: Get.width * 0.08,
+                        child: FloatingActionButton(
+                          onPressed: () {
+                            setState(
+                              () {
+                                if (quantidade != 1) {
+                                  quantidade--;
+                                }
+                              },
+                            );
                           },
-                        );
-                      },
-                      child: const Icon(
-                        Icons.remove,
-                        color: Colors.white,
+                          child: const Icon(
+                            Icons.remove,
+                            color: Colors.white,
+                          ),
+                          backgroundColor: AppColors.greenColor,
+                          elevation: 0,
+                        ),
                       ),
-                      backgroundColor: AppColors.greenColor,
-                      elevation: 0,
-                    ),
+                      Text(
+                        quantidade.toString(),
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                      Container(
+                        width: Get.width * 0.08,
+                        child: FloatingActionButton(
+                          child: const Icon(Icons.add, color: Colors.white),
+                          backgroundColor: AppColors.greenColor,
+                          elevation: 0,
+                          onPressed: () {
+                            setState(() {
+                              quantidade++;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    quantidade.toString(),
-                    style: Theme.of(context).textTheme.headline3,
-                  ),
-                  Container(
-                    width: Get.width * 0.08,
-                    child: FloatingActionButton(
-                      child: const Icon(Icons.add, color: Colors.white),
-                      backgroundColor: AppColors.greenColor,
-                      elevation: 0,
-                      onPressed: () {
-                        setState(() {
-                          quantidade++;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height:10),
+                ),
+                SizedBox(height:10),
             Padding(
               padding: EdgeInsets.only(
                 left: Get.width * 0.04,
@@ -328,8 +339,11 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
               ),
             ),
              
+            
               ],
             ),
+          ),
+          ],
           ),
         SizedBox(
             child: loading
@@ -349,6 +363,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
           ),
         ],
       ),
+      
     );
   }
 }

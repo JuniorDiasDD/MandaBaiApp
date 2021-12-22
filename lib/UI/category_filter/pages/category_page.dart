@@ -12,9 +12,14 @@ import 'package:manda_bai/UI/category_filter/controller/categoryController.dart'
 import 'package:manda_bai/UI/home/components/product_list_component.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class CategoryPage extends StatefulWidget {
   Category category;
-  CategoryPage({required this.category});
+  String filter_most, filter_less;
+  CategoryPage(
+      {required this.category,
+      required this.filter_most,
+      required this.filter_less});
 
   @override
   State<CategoryPage> createState() => _CategoryPageState();
@@ -25,11 +30,8 @@ class _CategoryPageState extends State<CategoryPage> {
   TextEditingController pesquisa = TextEditingController();
   List<Product> list_product = [];
   List<Product> list_product_full = [];
-  String dropdownValue = 'Menos Preço';
-  List<String> list_filter = [
-    'Menos Preço',
-    'Mais Preço',
-  ];
+  String dropdownValue = '';
+  List<String> list_filter = [];
   _search() {
     // print("click");
     list_product = [];
@@ -46,11 +48,11 @@ class _CategoryPageState extends State<CategoryPage> {
     list_product = [];
     setState(() {
       list_product = list_product_full;
-      if (dropdownValue == "Menos Preço") {
+      if (dropdownValue == widget.filter_less) {
         Comparator<Product> pesagemComparator =
             (a, b) => a.price.compareTo(b.price);
         list_product.sort(pesagemComparator);
-      } else if (dropdownValue == "Mais Preço") {
+      } else if (dropdownValue == widget.filter_most) {
         Comparator<Product> pesagemComparator =
             (a, b) => b.price.compareTo(a.price);
         list_product.sort(pesagemComparator);
@@ -106,11 +108,17 @@ class _CategoryPageState extends State<CategoryPage> {
 
     return list_product;
   }
-@override
+
+  @override
   void initState() {
     super.initState();
-    controller.loading=false;
+    controller.loading = false;
+    setState(() {
+      dropdownValue = widget.filter_less;
+      list_filter = [widget.filter_less, widget.filter_most];
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,15 +151,16 @@ class _CategoryPageState extends State<CategoryPage> {
                           controller: pesquisa,
                           style: Theme.of(context).textTheme.headline4,
                           decoration: InputDecoration(
-                            focusedBorder:const OutlineInputBorder(
+                            focusedBorder: const OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(30.0)),
                                 borderSide:
                                     BorderSide(color: AppColors.greenColor)),
                             hintText: AppLocalizations.of(context)!.search,
                             hintStyle: Theme.of(context).textTheme.headline4,
-                            contentPadding: const EdgeInsets.only(top: 10, left: 15),
-                            suffixIcon:const Icon(
+                            contentPadding:
+                                const EdgeInsets.only(top: 10, left: 15),
+                            suffixIcon: const Icon(
                               Icons.search,
                               color: AppColors.greenColor,
                             ),
@@ -278,9 +287,9 @@ class _CategoryPageState extends State<CategoryPage> {
               () => SizedBox(
                 child: controller.loading
                     ? Container(
-                      color:Colors.black54,
-                      height:Get.height,
-                      child: Center(
+                        color: Colors.black54,
+                        height: Get.height,
+                        child: Center(
                           child: Image.asset(
                             AppImages.loading,
                             width: Get.width * 0.2,
@@ -288,7 +297,7 @@ class _CategoryPageState extends State<CategoryPage> {
                             alignment: Alignment.center,
                           ),
                         ),
-                    )
+                      )
                     : null,
               ),
             ),
