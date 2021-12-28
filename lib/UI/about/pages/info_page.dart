@@ -71,7 +71,7 @@ class _InfoPageState extends State<InfoPage> {
         image:
             'https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_12-20-08.16.39-scaled.jpg',
         description: AppLocalizations.of(context)!.text_description_estevao,
-        tel: '+351 913098511 | +351938880906',
+        tel: '+351913098511\n+351938880906',
         email: 'francisco.r.depina@gmail.com'));
 
 

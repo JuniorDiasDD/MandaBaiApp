@@ -165,8 +165,8 @@ class _LoginPageState extends State<LoginPage> {
                                 },
                                 icon: Icon(
                                   statePassword
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
                                 ),
                               ),
                               labelText: AppLocalizations.of(context)!
