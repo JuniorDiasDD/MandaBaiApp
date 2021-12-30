@@ -33,8 +33,7 @@ class _CheckoutPageStep3State extends State<CheckoutPageStep3> {
     if (form!.validate()) {
       cartPageController.loading = true;
       bool check = await ServiceRequest.createOrder(
-          true,
-          "processing",
+        "",
           widget.location,
           cartPageController.list,
           cartPageController.total,

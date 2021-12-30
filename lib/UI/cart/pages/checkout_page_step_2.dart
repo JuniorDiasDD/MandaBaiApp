@@ -13,8 +13,8 @@ import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 import 'package:readmore/readmore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'checkout_page_step_3.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CheckoutPageStep2 extends StatefulWidget {
   var location;
@@ -29,17 +29,80 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final CartPageController cartPageController = Get.find();
   final input_info = TextEditingController();
+  bool isCheckedPromocao = false;
+  final input_codigo = TextEditingController();
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
       if (widget.location != null) {
         cartPageController.note = input_info.text;
-        Navigator.push(
+        cartPageController.loading = true;
+        var check = await ServiceRequest.createOrder(
+            "",
+            widget.location,
+            cartPageController.list,
+            cartPageController.total,
+            cartPageController.note,
+            isCheckedPromocao,
+            input_codigo.text);
+        if (check=="Erro de serviço") {
+          cartPageController.loading = false;
+          return showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Pop_up_Message(
+                    mensagem: AppLocalizations.of(context)!.message_error_order,
+                    icon: Icons.error,
+                    caminho: "erro");
+              });
+         /* return showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Pop_up_Message(
+                    mensagem: AppLocalizations.of(context)!.message_success_order,
+                    icon: Icons.check,
+                    caminho: "encomenda");
+              });*/
+        } else if(check=="Erro de cupom") {
+          cartPageController.loading = false;
+          return showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Pop_up_Message(
+                    mensagem: AppLocalizations.of(context)!.message_error_order,
+                    icon: Icons.error,
+                    caminho: "erro");
+              });
+        }else if(check=="false"){
+          cartPageController.loading = false;
+          return showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Pop_up_Message(
+                    mensagem: AppLocalizations.of(context)!.message_error_order,
+                    icon: Icons.error,
+                    caminho: "erro");
+              });
+        }else{
+          cartPageController.loading = false;
+         var response= await launch("https://mandabai.herokuapp.com/site/checkout?order="+check.toString());
+         if(response=="https://mandabai.herokuapp.com/site/completed"){
+           return showDialog(
+               context: context,
+               builder: (BuildContext context) {
+                 return Pop_up_Message(
+                     mensagem: AppLocalizations.of(context)!.message_success_order,
+                     icon: Icons.check,
+                     caminho: "encomenda");
+               });
+         }
+        }
+        /*Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => CheckoutPageStep3(location: widget.location),
           ),
-        );
+        );*/
       } else {
         return showDialog(
             context: context,
@@ -127,20 +190,17 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                           child: IconButton(
                             onPressed: () async {
                               cartPageController.loading = true;
-                              bool check = await ServiceRequest.createOrder(
-                                  false,
-                                  "cancelled",
+                              var check = await ServiceRequest.createOrder(
+                                "cancelled",
                                   widget.location,
                                   cartPageController.list,
                                   cartPageController.total,
                                   cartPageController.note,
                                   false,
                                   "");
-                              if (check) {
+
                                 cartPageController.loading = false;
-                              } else {
-                                cartPageController.loading = false;
-                              }
+
                               Navigator.pop(context);
                             },
                             icon: const Icon(
@@ -245,7 +305,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                       ),
                     ),
                     SizedBox(
-                      height: Get.height * 0.3,
+                      height: Get.height * 0.25,
                       child: widget.location == null
                           ? TextButton(
                               onPressed: () {
@@ -283,8 +343,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                               ),
                             )
                           : Padding(
-                              padding: EdgeInsets.all(
-                                Get.width * 0.03,
+                              padding:const EdgeInsets.all(
+                               10.0
                               ),
                               child: Column(
                                 children: [
@@ -406,6 +466,65 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                 ],
                               ),
                             ),
+                    ),
+                    Row(
+                      children: [
+                        Checkbox(
+                          checkColor: Colors.white,
+                          activeColor: Colors.green,
+                          value: isCheckedPromocao,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              isCheckedPromocao = value!;
+                            });
+                          },
+                        ),
+                        Text(
+                          AppLocalizations.of(context)!.text_discount,
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ],
+                    ),
+                    Container(
+                      child: isCheckedPromocao == true
+                          ? Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              AppLocalizations.of(context)!
+                                  .subtitle_code_discount,
+                              style:
+                              Theme.of(context).textTheme.headline2,
+                            ),
+                          ),
+                          SizedBox(
+                            height: Get.height * 0.005,
+                          ),
+                          TextFormField(
+                            controller: input_codigo,
+                            style: Theme.of(context).textTheme.headline4,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor:
+                              Theme.of(context).backgroundColor,
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                new BorderRadius.circular(15.0),
+                                borderSide: new BorderSide(),
+                              ),
+                            ),
+                            validator: (value) => value!.isEmpty
+                                ? AppLocalizations.of(context)!
+                                .valitador_code_discount
+                                : null,
+                          ),
+                          SizedBox(
+                            height: Get.height * 0.01,
+                          ),
+                        ],
+                      )
+                          : Container(),
                     ),
                     SizedBox(height: Get.height * 0.02),
                     Align(

@@ -223,7 +223,7 @@ class _StartPageState extends State<StartPage> {
                         child: Center(
                           child: Image.network(
                             AppImages.loading,
-                            width: Get.width * 0.2,
+                            width: Get.width * 0.15,
                             height: Get.height * 0.2,
                             alignment: Alignment.center,
                           ),

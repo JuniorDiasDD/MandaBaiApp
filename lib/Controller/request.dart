@@ -69,17 +69,17 @@ class ServiceRequest {
   static Future<List<Product>> loadProduct(id) async {
     List<Product> list = [];
     List<Product> list_page = [];
-//print(id.toString());
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var island = prefs.getString('island');
 
     var response;
     switch (island) {
-      case "São Antão":
+      case "Santo Antão":
         response = await http
             .get(Uri.parse(productCategoriasSaoAntao + id.toString()));
         break;
-      case "São  Vicente":
+      case "São Vicente":
         response = await http
             .get(Uri.parse(productCategoriasSaoVicente + id.toString()));
         break;
@@ -112,13 +112,60 @@ class ServiceRequest {
             await http.get(Uri.parse(productCategoriasBrava + id.toString()));
         break;
     }
-
-    // print(island.toString() + "-" + response.body);
+  //  print(island.toString() + "\n-" + response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       var quantidade = response.headers['x-wp-total'];
-      int total_wp = int.parse(quantidade!);
+      print("\n-"+quantidade.toString()+"-"+id.toString());
+      int total_wp = int.parse(quantidade);
       if (total_wp < 101) {
+        switch (island) {
+          case "Santo Antão":
+            response = await http
+                .get(Uri.parse(productCategoriasSaoAntao + id.toString()+
+                "&per_page="+total_wp.toString()));
+            break;
+          case "São Vicente":
+            response = await http
+                .get(Uri.parse(productCategoriasSaoVicente + id.toString()+
+                "&per_page="+total_wp.toString()));
+            break;
+          case "São Nicolau":
+            response = await http
+                .get(Uri.parse(productCategoriasSaoNicolau + id.toString()+
+                "&per_page="+total_wp.toString()));
+            break;
+          case "Boa Vista":
+            response = await http
+                .get(Uri.parse(productCategoriasBoaVista + id.toString()+
+                "&per_page="+total_wp.toString()));
+            break;
+          case "Sal":
+            response =
+            await http.get(Uri.parse(productCategoriasSal + id.toString()));
+            break;
+          case "Maio":
+            response =
+            await http.get(Uri.parse(productCategoriasMaio + id.toString()+
+                "&per_page="+total_wp.toString()));
+            break;
+          case "Santiago":
+            response = await http
+                .get(Uri.parse(productCategoriasSantiago + id.toString()+
+                "&per_page="+total_wp.toString()));
+            break;
+          case "Fogo":
+            response =
+            await http.get(Uri.parse(productCategoriasFogo + id.toString()+
+                "&per_page="+total_wp.toString()));
+            break;
+          case "Brava":
+            response =
+            await http.get(Uri.parse(productCategoriasBrava + id.toString()+
+                "&per_page="+total_wp.toString()));
+            break;
+        }
+        final jsonResponse = json.decode(response.body);
         final _cats = jsonResponse.cast<Map<String, dynamic>>();
         list = _cats.map<Product>((cat) => Product.fromJson(cat)).toList();
       } else {
@@ -132,13 +179,13 @@ class ServiceRequest {
         }
         for (int i = 1; i <= cont; i++) {
           switch (island) {
-            case "São Antão":
+            case "Santo Antão":
               response = await http.get(Uri.parse(productCategoriasSaoAntao +
                   id.toString() +
                   "&per_page=100&page=" +
                   i.toString()));
               break;
-            case "São  Vicente":
+            case "São Vicente":
               response = await http.get(Uri.parse(productCategoriasSaoVicente +
                   id.toString() +
                   "&per_page=100&page=" +
@@ -205,7 +252,7 @@ class ServiceRequest {
     } else {
       print("Erro de authentiction");
     }
-    //  print(list.length.toString());
+    print(list.length.toString());
     return list;
   }
 
@@ -317,12 +364,14 @@ class ServiceRequest {
 
   //! Login
   static Future login(username, password) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var island = prefs.getString('island');
-
+    //final SharedPreferences prefs = await SharedPreferences.getInstance();
+   // var island = prefs.getString('island');
+//print(island);
     var response;
-    switch (island) {
-      case "São Antão":
+    response = await http.post(Uri.parse(request_login),
+        body: {'username': username, 'password': password});
+   /* switch (island) {
+      case "Santo Antão":
         response = await http.post(Uri.parse(request_login_SantoAntao),
             body: {'username': username, 'password': password});
         break;
@@ -358,8 +407,9 @@ class ServiceRequest {
         response = await http.post(Uri.parse(request_login_Brava),
             body: {'username': password.username, 'password': password});
         break;
-    }
+    }*/
 
+      print(response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -381,13 +431,13 @@ class ServiceRequest {
     }
   }
 
-  static Future loginFresh() async {
+/*  static Future loginFresh() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var island = prefs.getString('island');
 
     var response;
     switch (island) {
-      case "São Antão":
+      case "Santo Antão":
         {
           response = await http.post(Uri.parse(request_login_SantoAntao),
               body: {'username': user.username, 'password': user.senha});
@@ -395,7 +445,7 @@ class ServiceRequest {
           break;
         }
 
-      case "São  Vicente":
+      case "São Vicente":
         {
           response = await http.post(Uri.parse(request_login_SaoVicente),
               body: {'username': user.username, 'password': user.senha});
@@ -459,7 +509,7 @@ class ServiceRequest {
           break;
         }
     }
-  }
+  }*/
 
 //! login cocart
   static Future loginCoCart() async {
@@ -468,20 +518,20 @@ class ServiceRequest {
 
     var response, responseCocart;
     switch (island) {
-      case "São Antão":
+      case "Santo Antão":
         {
-          response = await http.post(Uri.parse(request_login_SantoAntao),
-              body: {'username': user.username, 'password': user.senha});
+         // response = await http.post(Uri.parse(request_login_SantoAntao),
+          //    body: {'username': user.username, 'password': user.senha});
           responseCocart = await http.post(
               Uri.parse(request_loginCocart_SantoAntao),
               body: {'username': user.username, 'password': user.senha});
           break;
         }
 
-      case "São  Vicente":
+      case "São Vicente":
         {
-          response = await http.post(Uri.parse(request_login_SaoVicente),
-              body: {'username': user.username, 'password': user.senha});
+         // response = await http.post(Uri.parse(request_login_SaoVicente),
+         //     body: {'username': user.username, 'password': user.senha});
           responseCocart = await http.post(
               Uri.parse(request_loginCocart_SaoVicente),
               body: {'username': user.username, 'password': user.senha});
@@ -490,8 +540,8 @@ class ServiceRequest {
 
       case "São Nicolau":
         {
-          response = await http.post(Uri.parse(request_login_SaoNicolau),
-              body: {'username': user.username, 'password': user.senha});
+         // response = await http.post(Uri.parse(request_login_SaoNicolau),
+          //    body: {'username': user.username, 'password': user.senha});
           responseCocart = await http.post(
               Uri.parse(request_loginCocart_SaoNicolau),
               body: {'username': user.username, 'password': user.senha});
@@ -500,8 +550,8 @@ class ServiceRequest {
 
       case "Boa Vista":
         {
-          response = await http.post(Uri.parse(request_login_BoaVista),
-              body: {'username': user.username, 'password': user.senha});
+        //  response = await http.post(Uri.parse(request_login_BoaVista),
+          //    body: {'username': user.username, 'password': user.senha});
           responseCocart = await http.post(
               Uri.parse(request_loginCocart_BoaVista),
               body: {'username': user.username, 'password': user.senha});
@@ -510,8 +560,8 @@ class ServiceRequest {
 
       case "Sal":
         {
-          response = await http.post(Uri.parse(request_login_Sal),
-              body: {'username': user.username, 'password': user.senha});
+         // response = await http.post(Uri.parse(request_login_Sal),
+          //    body: {'username': user.username, 'password': user.senha});
           responseCocart = await http.post(Uri.parse(request_loginCocart_Sal),
               body: {'username': user.username, 'password': user.senha});
           break;
@@ -519,8 +569,8 @@ class ServiceRequest {
 
       case "Maio":
         {
-          response = await http.post(Uri.parse(request_login_Maio),
-              body: {'username': user.username, 'password': user.senha});
+         // response = await http.post(Uri.parse(request_login_Maio),
+          //    body: {'username': user.username, 'password': user.senha});
           responseCocart = await http.post(Uri.parse(request_loginCocart_Maio),
               body: {'username': user.username, 'password': user.senha});
           break;
@@ -528,8 +578,8 @@ class ServiceRequest {
 
       case "Santiago":
         {
-          response = await http.post(Uri.parse(request_login_Santiago),
-              body: {'username': user.username, 'password': user.senha});
+          //response = await http.post(Uri.parse(request_login_Santiago),
+          //    body: {'username': user.username, 'password': user.senha});
           responseCocart = await http.post(
               Uri.parse(request_loginCocart_Santiago),
               body: {'username': user.username, 'password': user.senha});
@@ -538,8 +588,8 @@ class ServiceRequest {
 
       case "Fogo":
         {
-          response = await http.post(Uri.parse(request_login_Fogo),
-              body: {'username': user.username, 'password': user.senha});
+        //  response = await http.post(Uri.parse(request_login_Fogo),
+          //    body: {'username': user.username, 'password': user.senha});
           responseCocart = await http.post(Uri.parse(request_loginCocart_Fogo),
               body: {'username': user.username, 'password': user.senha});
           break;
@@ -547,8 +597,8 @@ class ServiceRequest {
 
       case "Brava":
         {
-          response = await http.post(Uri.parse(request_login_Brava),
-              body: {'username': user.username, 'password': user.senha});
+         // response = await http.post(Uri.parse(request_login_Brava),
+          //    body: {'username': user.username, 'password': user.senha});
           //  print(request_loginCocart_Brava);
           responseCocart = await http.post(Uri.parse(request_loginCocart_Brava),
               body: {'username': user.username, 'password': user.senha});
@@ -607,11 +657,11 @@ class ServiceRequest {
 
       var response;
       switch (island) {
-        case "São Antão":
+        case "Santo Antão":
           response = await http.get(Uri.parse(getCartSaoAntao),
               headers: <String, String>{'authorization': basicAuth});
           break;
-        case "São  Vicente":
+        case "São Vicente":
           response = await http.get(Uri.parse(getCartSaoVicente),
               headers: <String, String>{'authorization': basicAuth});
           break;
@@ -676,7 +726,7 @@ class ServiceRequest {
 
     var response;
     switch (island) {
-      case "São Antão":
+      case "Santo Antão":
         {
           for (int i = 0; i < list_item.length; i++) {
             var response = await http.delete(
@@ -698,7 +748,7 @@ class ServiceRequest {
           }
           break;
         }
-      case "São  Vicente":
+      case "São Vicente":
         {
           for (int i = 0; i < list_item.length; i++) {
             var response = await http.delete(
@@ -891,12 +941,12 @@ class ServiceRequest {
 
     var response;
     switch (island) {
-      case "São Antão":
+      case "Santo Antão":
         response = await http.post(Uri.parse(addItemCartSantoAntao),
             headers: <String, String>{'authorization': basicAuth},
             body: {'id': item.toString(), 'quantity': quant.toString()});
         break;
-      case "São  Vicente":
+      case "São Vicente":
         response = await http.post(Uri.parse(addItemCartSaoVicente),
             headers: <String, String>{'authorization': basicAuth},
             body: {'id': item.toString(), 'quantity': quant.toString()});
@@ -1173,8 +1223,7 @@ class ServiceRequest {
 
   //! registar
   static Future createOrder(
-      bool pagamento,
-      status,
+      String status,
       Location location,
       List<CartModel> listProduct,
       total,
@@ -1190,13 +1239,11 @@ class ServiceRequest {
     var userCache = json.decode(userString!);
     var id = prefs.getString('id');
     var data;
-    if (location == null) {
+    if (status == "cancelled") {
       data = json.encode({
         "customer_id": id.toString(),
-        "payment_method": "",
-        "payment_method_title": "",
-        "set_paid": pagamento.toString(),
-        "status": status.toString(),
+        "set_paid": false,
+        "status": "cancelled",
         "billing": {
           "first_name": userCache['name'].toString(),
           "last_name": userCache['nickname'].toString(),
@@ -1237,10 +1284,7 @@ class ServiceRequest {
       if (isCheckedPromocao == true) {
         data = json.encode({
           "customer_id": id.toString(),
-          "payment_method": "",
-          "payment_method_title": "",
-          "set_paid": pagamento.toString(),
-          "status": status.toString(),
+          "set_paid": false,
           "coupon_lines": [
             {"code": cupon.toString()}
           ],
@@ -1283,10 +1327,7 @@ class ServiceRequest {
       } else {
         data = json.encode({
           "customer_id": id.toString(),
-          "payment_method": "",
-          "payment_method_title": "",
-          "set_paid": pagamento.toString(),
-          "status": status.toString(),
+          "set_paid": false,
           "billing": {
             "first_name": userCache['name'].toString(),
             "last_name": userCache['nickname'].toString(),
@@ -1332,21 +1373,24 @@ class ServiceRequest {
     // print(response.statusCode);
     //print(response.body);
     if (response.statusCode == 201) {
-      List<String> list_item = [];
+      /*List<String> list_item = [];
       for (int i = 0; i < listProduct.length; i++) {
         list_item.add(listProduct[i].item_key);
-      }
-      if (status == "processing") {
+      }*/
+    /*  if (status == "processing") {
         removeCart(list_item);
-      }
-
-      return true;
+      }*/
+      final jsonResponse = json.decode(response.body);
+      return jsonResponse["id"];
     } else if (response.statusCode == 503) {
       print("Erro de serviço");
-      return false;
-    } else {
+      return "Erro de serviço";
+    } else if(response.statusCode==400) {
+      print("Erro de cupom");
+      return "Erro de cupom";
+    }else{
       print("Erro de authentiction");
-      return false;
+      return "false";
     }
     return false;
   }
