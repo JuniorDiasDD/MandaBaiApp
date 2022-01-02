@@ -25,8 +25,8 @@ class _StartPageState extends State<StartPage> {
     "https://www.mandabai.com/wp-content/uploads/2021/08/post-mandabai-facebook-17.png",
     "https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_12-16-09.28.55-scaled.jpg",
     "https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_12-07-05.43.14-scaled.jpg",
-    "https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_11-25-08.04.52.jpg",
-    "https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_11-20-12.59.37.jpg",
+//"https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_11-25-08.04.52.jpg",
+   // "https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_11-20-12.59.37.jpg",
     "https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_12-12-04.13.45-scaled.jpg"
   ];
 

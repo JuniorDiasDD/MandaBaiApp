@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_colors.dart';
@@ -8,6 +13,7 @@ import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditPorfilePage extends StatefulWidget {
   @override
@@ -23,7 +29,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
   final input_nome = TextEditingController();
   final input_country = TextEditingController();
   final input_city = TextEditingController();
-
+  XFile? comprovante;
   bool statePassword = true;
   bool statePasswordconf = true;
   bool checkPassword = true, alterado = false, loading = false;
@@ -81,6 +87,12 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
         setState(() {
           loading = true;
         });
+        /*if (comprovante != null) {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          final bytes = File(comprovante!.path).readAsBytesSync();
+          String base64Image = base64Encode(bytes);
+          prefs.setString("image", base64Image);
+        }*/
         bool check = await ServiceRequest.updateAccount();
         if (check) {
           setState(() {
@@ -116,6 +128,18 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
     }
   }
 
+  Uint8List? imageFile;
+  Future _carregarUserImage() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var image_save = prefs.getString("image");
+    if (image_save != null) {
+      imageFile = base64Decode(image_save);
+      return imageFile;
+    }
+
+    return null;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -148,11 +172,82 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                     alignment: Alignment.topLeft,
                   ),
                 ),
-                Image.network(
-                  user.avatar,
-                  width: Get.width * 0.2,
-                  alignment: Alignment.center,
-                ),
+                FutureBuilder(
+                    future: _carregarUserImage(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return SizedBox(
+                            height: Get.height * 0.2,
+                            width: Get.width,
+                            child: Center(
+                              child: Image.network(
+                                AppImages.loading,
+                                width: Get.width * 0.2,
+                                height: Get.height * 0.2,
+                                alignment: Alignment.center,
+                              ),
+                            ),
+                          );
+                        default:
+                          return SizedBox(
+                            child: imageFile != null
+                                ? Container(
+                                    width: Get.width * 0.3,
+                                    height: Get.width * 0.3,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.greenColor,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(100),
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Theme.of(context).cardColor,
+                                          blurRadius: 2.0,
+                                          spreadRadius: 0.0,
+                                          offset: Offset(2.0,
+                                              2.0), // changes position of shadow
+                                        ),
+                                      ],
+                                      image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: MemoryImage(imageFile!),
+                                      ),
+                                    ),
+                                  )
+                                : Container(
+                                    width: Get.width * 0.3,
+                                    height: Get.width * 0.3,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.greenColor,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(100),
+                                      ),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Theme.of(context).cardColor,
+                                          blurRadius: 2.0,
+                                          spreadRadius: 0.0,
+                                          offset: Offset(2.0,
+                                              2.0), // changes position of shadow
+                                        ),
+                                      ],
+                                      image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: NetworkImage(user.avatar),
+                                      ),
+                                    ),
+                                    /*child: comprovante != null
+                          ? Image.file(File(comprovante!.path), width: Get.width * 0.2,)
+                          : Image.network(
+                              user.avatar,
+                              width: Get.width * 0.2,
+                              alignment: Alignment.center,
+                            ),*/
+                                  ),
+                          );
+                      }
+                    }),
                 SizedBox(
                   height: Get.height * 0.05,
                 ),
@@ -455,6 +550,37 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
               ],
             ),
           ),
+          Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: Get.height * 0.05,
+                right: 15,
+              ),
+              child: Container(
+                width: 45,
+                height: 45,
+                decoration: BoxDecoration(
+                  color: AppColors.greenColor,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(30),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).cardColor,
+                      blurRadius: 2.0,
+                      spreadRadius: 0.0,
+                      offset: Offset(2.0, 2.0), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.photo_camera_rounded),
+                  onPressed: selectImage,
+                ),
+              ),
+            ),
+          ),
           SizedBox(
             child: loading
                 ? Container(
@@ -474,5 +600,23 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
         ],
       ),
     );
+  }
+
+  selectImage() async {
+    final ImagePicker picker = ImagePicker();
+    try {
+      XFile? file = await picker.pickImage(source: ImageSource.gallery);
+      if (file != null) {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+          final bytes = File(file.path).readAsBytesSync();
+          String base64Image = base64Encode(bytes);
+          prefs.setString("image", base64Image);
+        setState(() {
+          comprovante = file;
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

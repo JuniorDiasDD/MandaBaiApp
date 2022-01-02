@@ -281,7 +281,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             labelStyle: Theme.of(context).textTheme.headline4,
                           ),
                           validator: (value) =>
-                              value!.length<7 ? AppLocalizations.of(context)!.validator_number : null,
+                              value!.length==7 ? null : AppLocalizations.of(context)!.validator_number ,
                         ),
                         SizedBox(height: Get.height * 0.01),
                         TextFormField(

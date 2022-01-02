@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
+import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/Contact/contact_page.dart';
 import 'package:manda_bai/UI/about/pages/info_page.dart';
@@ -48,17 +52,34 @@ class _StartPageState extends State<ProfilePage> {
     return language;
   }
 
+  Uint8List? image;
+  bool image_check = false;
   Future _carregarUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var id = prefs.getString('id');
+    print(id.toString());
     if (id != 'null' && id != null) {
-      print("entrou");
       bool check = await ServiceRequest.GetUser();
       if (check == false) {
         return null;
       } else {
+        await _carregarUserImage();
         return check;
       }
+    }
+
+    return null;
+  }
+
+  Future _carregarUserImage() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var image_save = prefs.getString("image");
+    if (image_save != null) {
+      print("entrr");
+
+      image = base64Decode(image_save);
+      image_check = true;
+      return image;
     }
 
     return null;
@@ -115,10 +136,63 @@ class _StartPageState extends State<ProfilePage> {
                         } else {
                           return Column(
                             children: [
-                              Image.network(
-                                user.avatar,
-                                width: Get.width * 0.2,
-                                alignment: Alignment.center,
+                              SizedBox(
+                                child: image_check == true
+                                    ? Container(
+                                        width: Get.width * 0.3,
+                                        height: Get.width * 0.3,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.greenColor,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(100),
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Theme.of(context).cardColor,
+                                              blurRadius: 2.0,
+                                              spreadRadius: 0.0,
+                                              offset: Offset(2.0,
+                                                  2.0), // changes position of shadow
+                                            ),
+                                          ],
+                                          image: DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: MemoryImage(image!),
+                                          ),
+                                        ),
+                                      )
+                                    : Container(
+                                        width: Get.width * 0.3,
+                                        height: Get.width * 0.3,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.greenColor,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(100),
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Theme.of(context).cardColor,
+                                              blurRadius: 2.0,
+                                              spreadRadius: 0.0,
+                                              offset: Offset(2.0,
+                                                  2.0), // changes position of shadow
+                                            ),
+                                          ],
+                                          image: DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: NetworkImage(user.avatar),
+                                          ),
+                                        ),
+                                        /*child: comprovante != null
+                        ? Image.file(File(comprovante!.path), width: Get.width * 0.2,)
+                        : Image.network(
+                            user.avatar,
+                            width: Get.width * 0.2,
+                            alignment: Alignment.center,
+                          ),*/
+                                      ),
                               ),
                               SizedBox(height: Get.height * 0.03),
                               Text(
@@ -303,7 +377,8 @@ class _StartPageState extends State<ProfilePage> {
                             left: Get.width * 0.02,
                           ),
                           child: Text(
-                              AppLocalizations.of(context)!.text_city_council_services,
+                            AppLocalizations.of(context)!
+                                .text_city_council_services,
                             style: Theme.of(context).textTheme.headline3,
                           ),
                         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:manda_bai/Core/app_themes.dart';
@@ -33,6 +34,7 @@ class Privacy_Policy extends StatelessWidget {
                     alignment: Alignment.centerRight,
                   ),
                 ),
+                
                 Text(
                   info==0?AppLocalizations.of(context)!
                       .title_privacy_police:AppLocalizations.of(context)!
@@ -60,12 +62,19 @@ class Privacy_Policy extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: Get.height * 0.01),
-                  Text(
+                   Html(
+                    data: info == 0
+                        ? AppLocalizations.of(context)!
+                        .text_privacy_police:AppLocalizations.of(context)!
+                        .text_terms_of_use,
+                       //  style: TextStyle(Theme.of(context).textTheme.headline1),
+                  ),
+                 /* Text(
                     info==0?AppLocalizations.of(context)!
                         .text_privacy_police:AppLocalizations.of(context)!
                         .text_terms_of_use,
                     style: Theme.of(context).textTheme.headline4,
-                  ),
+                  ),*/
                 ],
               ),
             )

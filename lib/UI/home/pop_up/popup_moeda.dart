@@ -31,6 +31,7 @@ class _Popup_MoedaState extends State<Popup_Moeda> {
         child: Container(
           width: Get.width,
           height: Get.height * 0.38,
+         
           margin:
               EdgeInsets.only(left: Get.width * 0.12, right: Get.width * 0.12),
           decoration: BoxDecoration(
@@ -50,7 +51,9 @@ class _Popup_MoedaState extends State<Popup_Moeda> {
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      
                       children: [
+                       
                         Padding(
                           padding: EdgeInsets.only(
                             top: Get.height * 0.02,
@@ -62,6 +65,7 @@ class _Popup_MoedaState extends State<Popup_Moeda> {
                             style: Theme.of(context).textTheme.headline2,
                           ),
                         ),
+                         const Spacer(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -163,6 +167,7 @@ class _Popup_MoedaState extends State<Popup_Moeda> {
                                 }),
                           ),
                         ),
+                        const Spacer(),
                       ],
                     ),
                   );

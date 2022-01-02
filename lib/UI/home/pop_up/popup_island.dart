@@ -174,7 +174,7 @@ class _Popup_IslandState extends State<Popup_Island> {
                                             .headline4,
                                       ),
                                       Radio(
-                                        value: "Boavista",
+                                        value: "Boa Vista",
                                         groupValue: _isRadioSelected,
                                         onChanged: (value) {
                                           setState(() {

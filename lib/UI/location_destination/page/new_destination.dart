@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
@@ -258,7 +259,10 @@ class _NewDestinationState extends State<NewDestination> {
                           ),
                         ),
                         validator: (value) =>
-                            value!.isEmpty ? AppLocalizations.of(context)!.validator_email : null,
+                            EmailValidator.validate(value!)
+                                        ? null
+                                        : AppLocalizations.of(context)!
+                                            .validator_email,
                       ),
                     ),
                     SizedBox(height: Get.height * 0.01),
@@ -273,15 +277,20 @@ class _NewDestinationState extends State<NewDestination> {
                           labelStyle: Theme.of(context).textTheme.headline4,
                           filled: true,
                           fillColor: Theme.of(context).backgroundColor,
+                           prefixIcon: Padding(
+                                padding: const EdgeInsets.all(13.0),
+                                child:   Text("+238",style:Theme.of(context).textTheme.headline4,),// icon is 48px widget.
+                              ),
                           border: OutlineInputBorder(
                             borderRadius: new BorderRadius.circular(15.0),
                             borderSide: new BorderSide(
                               color: Colors.red,
                             ),
+                            
                           ),
                         ),
                         validator: (value) =>
-                            value!.isEmpty ? AppLocalizations.of(context)!.validator_number : null,
+                            value!.length==7 ?  null:AppLocalizations.of(context)!.validator_number,
                       ),
                     ),
                   ],
