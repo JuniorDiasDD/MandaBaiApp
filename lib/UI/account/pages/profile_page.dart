@@ -125,8 +125,8 @@ class _StartPageState extends State<ProfilePage> {
                             height: Get.height * 0.1,
                             width: Get.width,
                             child: Center(
-                              child: Image.network(
-                                AppImages.appLogo2,
+                              child: Image.asset(
+                                AppImages.appLogo,
                                 width: Get.width * 0.5,
                                 height: Get.height * 0.1,
                                 alignment: Alignment.center,

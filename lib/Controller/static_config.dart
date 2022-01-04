@@ -137,10 +137,18 @@ const String addItemCartMaio = CocartMaio + "cart/add-item";
 const String addItemCartFogo = CocartFogo + "cart/add-item";
 const String addItemCartBrava = CocartBrava + "cart/add-item";
 
-
-
 //! register
 const String register_client = link + "customers?" + key;
+const String register_client_SantoAntao = linkSantoAntao + "customers?" + key;
+const String register_client_SaoVicente = linkSaoVicente + "customers?" + key;
+const String register_client_SaoNicolau = linkSaoNicolau + "customers?" + key;
+const String register_client_Sal =linkSal + "customers?" + key;
+const String register_client_BoaVista = linkBoaVista + "customers?" + key;
+const String register_client_Maio = linkMaio + "customers?" + key;
+const String register_client_Santiago = linkSantiago + "customers?" + key;
+const String register_client_Fogo = linkFogo + "customers?" + key;
+const String register_client_Brava = linkBrava + "customers?" + key;
+
 //! login Cocart
 const String request_login_SantoAntao = urlSantoAntao + "custom-plugin/login";
 const String request_login_SaoVicente = urlSaoVicente + "custom-plugin/login";
@@ -167,7 +175,5 @@ const String request_loginCocart_Brava = CocartBrava + "login";
 const String updateUser = link + "customers/";
 //! Get User
 const String getUser = link + "customers/";
-
-
 //!orders
 const String getOrder = link + "orders?" + key;

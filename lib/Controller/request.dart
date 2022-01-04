@@ -51,7 +51,7 @@ class ServiceRequest {
         response = await http.get(Uri.parse(categoriasBrava));
         break;
     }
-   // print(response.body);
+    // print(response.body);
     if (response.statusCode == 200) {
       var jsonResponse = json.decode(response.body);
       final _cats = jsonResponse.cast<Map<String, dynamic>>();
@@ -112,57 +112,65 @@ class ServiceRequest {
             await http.get(Uri.parse(productCategoriasBrava + id.toString()));
         break;
     }
-  //  print(island.toString() + "\n-" + response.body);
+    //  print(island.toString() + "\n-" + response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       var quantidade = response.headers['x-wp-total'];
-      print("\n-"+quantidade.toString()+"-"+id.toString());
+      //  print("\n-" + quantidade.toString() + "-" + id.toString());
       int total_wp = int.parse(quantidade);
       if (total_wp < 101) {
         switch (island) {
           case "Santo Antão":
-            response = await http
-                .get(Uri.parse(productCategoriasSaoAntao + id.toString()+
-                "&per_page="+total_wp.toString()));
+            response = await http.get(Uri.parse(productCategoriasSaoAntao +
+                id.toString() +
+                "&per_page=" +
+                total_wp.toString()));
             break;
           case "São Vicente":
-            response = await http
-                .get(Uri.parse(productCategoriasSaoVicente + id.toString()+
-                "&per_page="+total_wp.toString()));
+            response = await http.get(Uri.parse(productCategoriasSaoVicente +
+                id.toString() +
+                "&per_page=" +
+                total_wp.toString()));
             break;
           case "São Nicolau":
-            response = await http
-                .get(Uri.parse(productCategoriasSaoNicolau + id.toString()+
-                "&per_page="+total_wp.toString()));
+            response = await http.get(Uri.parse(productCategoriasSaoNicolau +
+                id.toString() +
+                "&per_page=" +
+                total_wp.toString()));
             break;
           case "Boa Vista":
-            response = await http
-                .get(Uri.parse(productCategoriasBoaVista + id.toString()+
-                "&per_page="+total_wp.toString()));
+            response = await http.get(Uri.parse(productCategoriasBoaVista +
+                id.toString() +
+                "&per_page=" +
+                total_wp.toString()));
             break;
           case "Sal":
             response =
-            await http.get(Uri.parse(productCategoriasSal + id.toString()));
+                await http.get(Uri.parse(productCategoriasSal + id.toString()));
             break;
           case "Maio":
-            response =
-            await http.get(Uri.parse(productCategoriasMaio + id.toString()+
-                "&per_page="+total_wp.toString()));
+            response = await http.get(Uri.parse(productCategoriasMaio +
+                id.toString() +
+                "&per_page=" +
+                total_wp.toString()));
             break;
           case "Santiago":
-            response = await http
-                .get(Uri.parse(productCategoriasSantiago + id.toString()+
-                "&per_page="+total_wp.toString()));
+            response = await http.get(Uri.parse(productCategoriasSantiago +
+                id.toString() +
+                "&per_page=" +
+                total_wp.toString()));
             break;
           case "Fogo":
-            response =
-            await http.get(Uri.parse(productCategoriasFogo + id.toString()+
-                "&per_page="+total_wp.toString()));
+            response = await http.get(Uri.parse(productCategoriasFogo +
+                id.toString() +
+                "&per_page=" +
+                total_wp.toString()));
             break;
           case "Brava":
-            response =
-            await http.get(Uri.parse(productCategoriasBrava + id.toString()+
-                "&per_page="+total_wp.toString()));
+            response = await http.get(Uri.parse(productCategoriasBrava +
+                id.toString() +
+                "&per_page=" +
+                total_wp.toString()));
             break;
         }
         final jsonResponse = json.decode(response.body);
@@ -264,12 +272,12 @@ class ServiceRequest {
 
     var data = json.encode({
       "email": user.email,
-      "first_name": user.name + " Tester",
+      "first_name": user.name ,
       "last_name": user.nickname,
       "username": user.username,
       "password": user.senha,
       "billing": {
-        "first_name": user.name + " Tester",
+        "first_name": user.name,
         "last_name": user.nickname,
         "company": "",
         "address_1": "",
@@ -298,7 +306,28 @@ class ServiceRequest {
     if (response.statusCode == 201) {
       final jsonResponse = json.decode(response.body);
 
+      /*registro para os dominios*/
+      await http.post(Uri.parse(register_client_SantoAntao),
+          headers: headers, body: data);
+       await http.post(Uri.parse(register_client_SaoVicente),
+          headers: headers, body: data);
+       await http.post(Uri.parse(register_client_SaoNicolau),
+          headers: headers, body: data);
+       await http.post(Uri.parse(register_client_Sal),
+          headers: headers, body: data);
+       await http.post(Uri.parse(register_client_BoaVista),
+          headers: headers, body: data);
+       await http.post(Uri.parse(register_client_Maio),
+          headers: headers, body: data);
+       await http.post(Uri.parse(register_client_Santiago),
+          headers: headers, body: data);
+       await http.post(Uri.parse(register_client_Fogo),
+          headers: headers, body: data);
+       await http.post(Uri.parse(register_client_Brava),
+          headers: headers, body: data);
+
       return true;
+
     } else if (response.statusCode == 503) {
       print("Erro de serviço");
       return false;
@@ -365,12 +394,12 @@ class ServiceRequest {
   //! Login
   static Future login(username, password) async {
     //final SharedPreferences prefs = await SharedPreferences.getInstance();
-   // var island = prefs.getString('island');
+    // var island = prefs.getString('island');
 //print(island);
     var response;
     response = await http.post(Uri.parse(request_login),
         body: {'username': username, 'password': password});
-   /* switch (island) {
+    /* switch (island) {
       case "Santo Antão":
         response = await http.post(Uri.parse(request_login_SantoAntao),
             body: {'username': username, 'password': password});
@@ -409,7 +438,7 @@ class ServiceRequest {
         break;
     }*/
 
-      print(response.body);
+    print(response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -520,8 +549,8 @@ class ServiceRequest {
     switch (island) {
       case "Santo Antão":
         {
-         // response = await http.post(Uri.parse(request_login_SantoAntao),
-          //    body: {'username': user.username, 'password': user.senha});
+          response = await http.post(Uri.parse(request_login_SantoAntao),
+              body: {'username': user.username, 'password': user.senha});
           responseCocart = await http.post(
               Uri.parse(request_loginCocart_SantoAntao),
               body: {'username': user.username, 'password': user.senha});
@@ -530,8 +559,8 @@ class ServiceRequest {
 
       case "São Vicente":
         {
-         // response = await http.post(Uri.parse(request_login_SaoVicente),
-         //     body: {'username': user.username, 'password': user.senha});
+          response = await http.post(Uri.parse(request_login_SaoVicente),
+              body: {'username': user.username, 'password': user.senha});
           responseCocart = await http.post(
               Uri.parse(request_loginCocart_SaoVicente),
               body: {'username': user.username, 'password': user.senha});
@@ -540,8 +569,8 @@ class ServiceRequest {
 
       case "São Nicolau":
         {
-         // response = await http.post(Uri.parse(request_login_SaoNicolau),
-          //    body: {'username': user.username, 'password': user.senha});
+          response = await http.post(Uri.parse(request_login_SaoNicolau),
+              body: {'username': user.username, 'password': user.senha});
           responseCocart = await http.post(
               Uri.parse(request_loginCocart_SaoNicolau),
               body: {'username': user.username, 'password': user.senha});
@@ -550,8 +579,8 @@ class ServiceRequest {
 
       case "Boa Vista":
         {
-        //  response = await http.post(Uri.parse(request_login_BoaVista),
-          //    body: {'username': user.username, 'password': user.senha});
+          response = await http.post(Uri.parse(request_login_BoaVista),
+              body: {'username': user.username, 'password': user.senha});
           responseCocart = await http.post(
               Uri.parse(request_loginCocart_BoaVista),
               body: {'username': user.username, 'password': user.senha});
@@ -560,8 +589,8 @@ class ServiceRequest {
 
       case "Sal":
         {
-         // response = await http.post(Uri.parse(request_login_Sal),
-          //    body: {'username': user.username, 'password': user.senha});
+          response = await http.post(Uri.parse(request_login_Sal),
+              body: {'username': user.username, 'password': user.senha});
           responseCocart = await http.post(Uri.parse(request_loginCocart_Sal),
               body: {'username': user.username, 'password': user.senha});
           break;
@@ -569,8 +598,8 @@ class ServiceRequest {
 
       case "Maio":
         {
-         // response = await http.post(Uri.parse(request_login_Maio),
-          //    body: {'username': user.username, 'password': user.senha});
+          response = await http.post(Uri.parse(request_login_Maio),
+              body: {'username': user.username, 'password': user.senha});
           responseCocart = await http.post(Uri.parse(request_loginCocart_Maio),
               body: {'username': user.username, 'password': user.senha});
           break;
@@ -578,8 +607,10 @@ class ServiceRequest {
 
       case "Santiago":
         {
-          //response = await http.post(Uri.parse(request_login_Santiago),
-          //    body: {'username': user.username, 'password': user.senha});
+          //  print("santiago login cocart");
+          response = await http.post(Uri.parse(request_login_Santiago),
+              body: {'username': user.username, 'password': user.senha});
+          // print(response.body);
           responseCocart = await http.post(
               Uri.parse(request_loginCocart_Santiago),
               body: {'username': user.username, 'password': user.senha});
@@ -588,8 +619,8 @@ class ServiceRequest {
 
       case "Fogo":
         {
-        //  response = await http.post(Uri.parse(request_login_Fogo),
-          //    body: {'username': user.username, 'password': user.senha});
+          response = await http.post(Uri.parse(request_login_Fogo),
+              body: {'username': user.username, 'password': user.senha});
           responseCocart = await http.post(Uri.parse(request_loginCocart_Fogo),
               body: {'username': user.username, 'password': user.senha});
           break;
@@ -597,8 +628,8 @@ class ServiceRequest {
 
       case "Brava":
         {
-         // response = await http.post(Uri.parse(request_login_Brava),
-          //    body: {'username': user.username, 'password': user.senha});
+          response = await http.post(Uri.parse(request_login_Brava),
+              body: {'username': user.username, 'password': user.senha});
           //  print(request_loginCocart_Brava);
           responseCocart = await http.post(Uri.parse(request_loginCocart_Brava),
               body: {'username': user.username, 'password': user.senha});
@@ -607,6 +638,7 @@ class ServiceRequest {
     }
     //  print(response.body);
     print("Cocart:" + responseCocart.statusCode.toString());
+    return responseCocart.statusCode;
   }
   //! Get User
 
@@ -650,64 +682,67 @@ class ServiceRequest {
     var response;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     do {
-      await loginCoCart();
+      var loginCocart = await loginCoCart();
+      //  print(loginCocart.toString()+"cocart:");
       String basicAuth = 'Basic ' +
           base64Encode(utf8.encode(user.username + ':' + user.senha));
       var island = prefs.getString('island');
 
       var response;
-      switch (island) {
-        case "Santo Antão":
-          response = await http.get(Uri.parse(getCartSaoAntao),
-              headers: <String, String>{'authorization': basicAuth});
-          break;
-        case "São Vicente":
-          response = await http.get(Uri.parse(getCartSaoVicente),
-              headers: <String, String>{'authorization': basicAuth});
-          break;
-        case "São Nicolau":
-          response = await http.get(Uri.parse(getCartSaoNicolau),
-              headers: <String, String>{'authorization': basicAuth});
-          break;
-        case "Boa Vista":
-          response = await http.get(Uri.parse(getCartBoaVista),
-              headers: <String, String>{'authorization': basicAuth});
-          break;
-        case "Sal":
-          response = await http.get(Uri.parse(getCartSal),
-              headers: <String, String>{'authorization': basicAuth});
-          break;
-        case "Maio":
-          response = await http.get(Uri.parse(getCartMaio),
-              headers: <String, String>{'authorization': basicAuth});
-          break;
-        case "Santiago":
-          response = await http.get(Uri.parse(getCartSantiago),
-              headers: <String, String>{'authorization': basicAuth});
-          break;
-        case "Fogo":
-          response = await http.get(Uri.parse(getCartFogo),
-              headers: <String, String>{'authorization': basicAuth});
-          break;
-        case "Brava":
-          response = await http.get(Uri.parse(getCartBrava),
-              headers: <String, String>{'authorization': basicAuth});
-          break;
-      }
+      if (loginCocart == 200) {
+        switch (island) {
+          case "Santo Antão":
+            response = await http.get(Uri.parse(getCartSaoAntao),
+                headers: <String, String>{'authorization': basicAuth});
+            break;
+          case "São Vicente":
+            response = await http.get(Uri.parse(getCartSaoVicente),
+                headers: <String, String>{'authorization': basicAuth});
+            break;
+          case "São Nicolau":
+            response = await http.get(Uri.parse(getCartSaoNicolau),
+                headers: <String, String>{'authorization': basicAuth});
+            break;
+          case "Boa Vista":
+            response = await http.get(Uri.parse(getCartBoaVista),
+                headers: <String, String>{'authorization': basicAuth});
+            break;
+          case "Sal":
+            response = await http.get(Uri.parse(getCartSal),
+                headers: <String, String>{'authorization': basicAuth});
+            break;
+          case "Maio":
+            response = await http.get(Uri.parse(getCartMaio),
+                headers: <String, String>{'authorization': basicAuth});
+            break;
+          case "Santiago":
+            response = await http.get(Uri.parse(getCartSantiago),
+                headers: <String, String>{'authorization': basicAuth});
+            break;
+          case "Fogo":
+            response = await http.get(Uri.parse(getCartFogo),
+                headers: <String, String>{'authorization': basicAuth});
+            break;
+          case "Brava":
+            response = await http.get(Uri.parse(getCartBrava),
+                headers: <String, String>{'authorization': basicAuth});
+            break;
+        }
 
-      // print(response.body);
-      // print(response.statusCode);
-      if (response.statusCode == 200) {
-        final jsonResponse = json.decode(response.body);
-        final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();
-        listCart =
-            _cats.map<CartModel>((cat) => CartModel.fromJson(cat)).toList();
+        // print(response.body);
+        // print(response.statusCode);
+        if (response.statusCode == 200) {
+          final jsonResponse = json.decode(response.body);
+          final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();
+          listCart =
+              _cats.map<CartModel>((cat) => CartModel.fromJson(cat)).toList();
 
-        return listCart;
-      } else if (response.statusCode == 503) {
-        print("Erro de serviço");
-      } else {
-        print("Erro de authentiction");
+          return listCart;
+        } else if (response.statusCode == 503) {
+          print("Erro de serviço");
+        } else {
+          print("Erro de authentiction");
+        }
       }
     } while (response.statusCode == 503);
 
@@ -934,67 +969,69 @@ class ServiceRequest {
   //? addCart
   static Future addCart(item, quant) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await loginCoCart();
+    var loginCocart = await loginCoCart();
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode(user.username + ':' + user.senha));
     var island = prefs.getString('island');
 
-    var response;
-    switch (island) {
-      case "Santo Antão":
-        response = await http.post(Uri.parse(addItemCartSantoAntao),
-            headers: <String, String>{'authorization': basicAuth},
-            body: {'id': item.toString(), 'quantity': quant.toString()});
-        break;
-      case "São Vicente":
-        response = await http.post(Uri.parse(addItemCartSaoVicente),
-            headers: <String, String>{'authorization': basicAuth},
-            body: {'id': item.toString(), 'quantity': quant.toString()});
-        break;
-      case "São Nicolau":
-        response = await http.post(Uri.parse(addItemCartSaoNicolau),
-            headers: <String, String>{'authorization': basicAuth},
-            body: {'id': item.toString(), 'quantity': quant.toString()});
-        break;
-      case "Boa Vista":
-        response = await http.post(Uri.parse(addItemCartBoaVista),
-            headers: <String, String>{'authorization': basicAuth},
-            body: {'id': item.toString(), 'quantity': quant.toString()});
-        break;
-      case "Sal":
-        response = await http.post(Uri.parse(addItemCartSal),
-            headers: <String, String>{'authorization': basicAuth},
-            body: {'id': item.toString(), 'quantity': quant.toString()});
-        break;
-      case "Maio":
-        response = await http.post(Uri.parse(addItemCartMaio),
-            headers: <String, String>{'authorization': basicAuth},
-            body: {'id': item.toString(), 'quantity': quant.toString()});
-        break;
-      case "Santiago":
-        response = await http.post(Uri.parse(addItemCartSantiago),
-            headers: <String, String>{'authorization': basicAuth},
-            body: {'id': item.toString(), 'quantity': quant.toString()});
-        break;
-      case "Fogo":
-        response = await http.post(Uri.parse(addItemCartFogo),
-            headers: <String, String>{'authorization': basicAuth},
-            body: {'id': item.toString(), 'quantity': quant.toString()});
-        break;
-      case "Brava":
-        response = await http.post(Uri.parse(addItemCartBrava),
-            headers: <String, String>{'authorization': basicAuth},
-            body: {'id': item.toString(), 'quantity': quant.toString()});
-        break;
-    }
+    if (loginCocart == 200) {
+      var response;
+      switch (island) {
+        case "Santo Antão":
+          response = await http.post(Uri.parse(addItemCartSantoAntao),
+              headers: <String, String>{'authorization': basicAuth},
+              body: {'id': item.toString(), 'quantity': quant.toString()});
+          break;
+        case "São Vicente":
+          response = await http.post(Uri.parse(addItemCartSaoVicente),
+              headers: <String, String>{'authorization': basicAuth},
+              body: {'id': item.toString(), 'quantity': quant.toString()});
+          break;
+        case "São Nicolau":
+          response = await http.post(Uri.parse(addItemCartSaoNicolau),
+              headers: <String, String>{'authorization': basicAuth},
+              body: {'id': item.toString(), 'quantity': quant.toString()});
+          break;
+        case "Boa Vista":
+          response = await http.post(Uri.parse(addItemCartBoaVista),
+              headers: <String, String>{'authorization': basicAuth},
+              body: {'id': item.toString(), 'quantity': quant.toString()});
+          break;
+        case "Sal":
+          response = await http.post(Uri.parse(addItemCartSal),
+              headers: <String, String>{'authorization': basicAuth},
+              body: {'id': item.toString(), 'quantity': quant.toString()});
+          break;
+        case "Maio":
+          response = await http.post(Uri.parse(addItemCartMaio),
+              headers: <String, String>{'authorization': basicAuth},
+              body: {'id': item.toString(), 'quantity': quant.toString()});
+          break;
+        case "Santiago":
+          response = await http.post(Uri.parse(addItemCartSantiago),
+              headers: <String, String>{'authorization': basicAuth},
+              body: {'id': item.toString(), 'quantity': quant.toString()});
+          break;
+        case "Fogo":
+          response = await http.post(Uri.parse(addItemCartFogo),
+              headers: <String, String>{'authorization': basicAuth},
+              body: {'id': item.toString(), 'quantity': quant.toString()});
+          break;
+        case "Brava":
+          response = await http.post(Uri.parse(addItemCartBrava),
+              headers: <String, String>{'authorization': basicAuth},
+              body: {'id': item.toString(), 'quantity': quant.toString()});
+          break;
+      }
 
-    if (response.statusCode == 200) {
-      //  final jsonResponse = json.decode(response.body);
-      return true;
-    } else if (response.statusCode == 503) {
-      print("Erro de serviço");
-    } else {
-      print("Erro de authentiction");
+      if (response.statusCode == 200) {
+        //  final jsonResponse = json.decode(response.body);
+        return true;
+      } else if (response.statusCode == 503) {
+        print("Erro de serviço");
+      } else {
+        print("Erro de authentiction");
+      }
     }
     return false;
   }
@@ -1377,7 +1414,7 @@ class ServiceRequest {
       for (int i = 0; i < listProduct.length; i++) {
         list_item.add(listProduct[i].item_key);
       }*/
-    /*  if (status == "processing") {
+      /*  if (status == "processing") {
         removeCart(list_item);
       }*/
       final jsonResponse = json.decode(response.body);
@@ -1385,10 +1422,10 @@ class ServiceRequest {
     } else if (response.statusCode == 503) {
       print("Erro de serviço");
       return "Erro de serviço";
-    } else if(response.statusCode==400) {
+    } else if (response.statusCode == 400) {
       print("Erro de cupom");
       return "Erro de cupom";
-    }else{
+    } else {
       print("Erro de authentiction");
       return "false";
     }

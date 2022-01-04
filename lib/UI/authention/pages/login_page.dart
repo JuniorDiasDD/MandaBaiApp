@@ -95,8 +95,8 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: Get.height * 0.02,
                   ),
-                  Image.network(
-                    AppImages.appLogo2,
+                  Image.asset(
+                    AppImages.appLogo,
                     width: Get.width * 0.6,
                     height: Get.height * 0.15,
                   ),
