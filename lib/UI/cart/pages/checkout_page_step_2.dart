@@ -9,6 +9,7 @@ import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/location.dart';
 import 'package:manda_bai/UI/cart/components/Popupinfo_checkout.dart';
+import 'package:manda_bai/UI/cart/pages/web_view.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 import 'package:readmore/readmore.dart';
@@ -45,7 +46,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
             cartPageController.note,
             isCheckedPromocao,
             input_codigo.text);
-        if (check=="Erro de serviço") {
+        if (check == "Erro de serviço") {
           cartPageController.loading = false;
           return showDialog(
               context: context,
@@ -55,7 +56,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                     icon: Icons.error,
                     caminho: "erro");
               });
-         /* return showDialog(
+          /* return showDialog(
               context: context,
               builder: (BuildContext context) {
                 return Pop_up_Message(
@@ -63,7 +64,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                     icon: Icons.check,
                     caminho: "encomenda");
               });*/
-        } else if(check=="Erro de cupom") {
+        } else if (check == "Erro de cupom") {
           cartPageController.loading = false;
           return showDialog(
               context: context,
@@ -73,7 +74,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                     icon: Icons.error,
                     caminho: "erro");
               });
-        }else if(check=="false"){
+        } else if (check == "false") {
           cartPageController.loading = false;
           return showDialog(
               context: context,
@@ -83,9 +84,16 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                     icon: Icons.error,
                     caminho: "erro");
               });
-        }else{
+        } else {
           cartPageController.loading = false;
-         var response= await launch("https://mandabai.herokuapp.com/site/checkout?order="+check.toString());
+          cartPageController.order=check.toString();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => WebViewPage(),
+            ),
+          );
+          /*            var response= await launch("https://mandabai.herokuapp.com/site/checkout?order="+check.toString());
          if(response=="https://mandabai.herokuapp.com/site/completed"){
            return showDialog(
                context: context,
@@ -95,7 +103,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                      icon: Icons.check,
                      caminho: "encomenda");
                });
-         }
+         }*/
         }
         /*Navigator.push(
           context,
@@ -191,7 +199,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                             onPressed: () async {
                               cartPageController.loading = true;
                               var check = await ServiceRequest.createOrder(
-                                "cancelled",
+                                  "cancelled",
                                   widget.location,
                                   cartPageController.list,
                                   cartPageController.total,
@@ -199,7 +207,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                   false,
                                   "");
 
-                                cartPageController.loading = false;
+                              cartPageController.loading = false;
 
                               Navigator.pop(context);
                             },
@@ -219,7 +227,13 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return  PopupInfo_Checkout(title:AppLocalizations.of(context)!.title_instructions,subTitle:AppLocalizations.of(context)!.text_information,text:AppLocalizations.of(context)!.text_information_checkout);
+                                return PopupInfo_Checkout(
+                                    title: AppLocalizations.of(context)!
+                                        .title_instructions,
+                                    subTitle: AppLocalizations.of(context)!
+                                        .text_information,
+                                    text: AppLocalizations.of(context)!
+                                        .text_information_checkout);
                               },
                             );
                           },
@@ -343,9 +357,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                               ),
                             )
                           : Padding(
-                              padding:const EdgeInsets.all(
-                               10.0
-                              ),
+                              padding: const EdgeInsets.all(10.0),
                               child: Column(
                                 children: [
                                   TextButton(
@@ -488,42 +500,42 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                     Container(
                       child: isCheckedPromocao == true
                           ? Column(
-                        children: [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .subtitle_code_discount,
-                              style:
-                              Theme.of(context).textTheme.headline2,
-                            ),
-                          ),
-                          SizedBox(
-                            height: Get.height * 0.005,
-                          ),
-                          TextFormField(
-                            controller: input_codigo,
-                            style: Theme.of(context).textTheme.headline4,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor:
-                              Theme.of(context).backgroundColor,
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                new BorderRadius.circular(15.0),
-                                borderSide: new BorderSide(),
-                              ),
-                            ),
-                            validator: (value) => value!.isEmpty
-                                ? AppLocalizations.of(context)!
-                                .valitador_code_discount
-                                : null,
-                          ),
-                          SizedBox(
-                            height: Get.height * 0.01,
-                          ),
-                        ],
-                      )
+                              children: [
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    AppLocalizations.of(context)!
+                                        .subtitle_code_discount,
+                                    style:
+                                        Theme.of(context).textTheme.headline2,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: Get.height * 0.005,
+                                ),
+                                TextFormField(
+                                  controller: input_codigo,
+                                  style: Theme.of(context).textTheme.headline4,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor:
+                                        Theme.of(context).backgroundColor,
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(15.0),
+                                      borderSide: new BorderSide(),
+                                    ),
+                                  ),
+                                  validator: (value) => value!.isEmpty
+                                      ? AppLocalizations.of(context)!
+                                          .valitador_code_discount
+                                      : null,
+                                ),
+                                SizedBox(
+                                  height: Get.height * 0.01,
+                                ),
+                              ],
+                            )
                           : Container(),
                     ),
                     SizedBox(height: Get.height * 0.02),
@@ -593,7 +605,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
         children: [
           const Text(" "),
           Padding(
-            padding:const EdgeInsets.only(
+            padding: const EdgeInsets.only(
               right: 15,
               bottom: 10,
             ),

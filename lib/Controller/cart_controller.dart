@@ -12,8 +12,9 @@ class CartPageController extends GetxController {
   final _taxa = 0.0.obs;
   final _note = ''.obs;
   final _route = ''.obs;
+  final _order = ''.obs;
   final _loading = false.obs;
-
+  final _checkMessage = false.obs;
   final _list = <CartModel>[].obs;
 
   List<CartModel> get list {
@@ -24,6 +25,13 @@ class CartPageController extends GetxController {
     this._list.value = list;
   }
 
+  set checkMessage(bool checkMessage) {
+    this._checkMessage.value = checkMessage;
+  }
+
+  bool get checkMessage {
+    return _checkMessage.value;
+  }
   set loading(bool loading) {
     this._loading.value = loading;
   }
@@ -32,14 +40,22 @@ class CartPageController extends GetxController {
     return _loading.value;
   }
 
-  String get route {
+
+  String get order {
+    return _order.value;
+  }
+
+  set order(String order) {
+    this._order.value = order;
+  }
+
+ String get route {
     return _route.value;
   }
 
   set route(String route) {
     this._route.value = route;
   }
-
   String get note {
     return _note.value;
   }

@@ -175,6 +175,9 @@
     "message_error_product_dont_match_island": "These products don't correspond to this Island.",
     "message_success_order": "Order placed successfully.\nTrack your order on\n'My requests'!",
     "message_error_order": "Error in placing the order",
+    "message_error_order_failed": "Failure to pay the order",
+    "message_error_order_cancelled": "Order cancellation",
+    "message_error_order_pending": "Order Pending Payment",
     "message_success_cart": "Added to cart",
     "message_error_cart": "Error adding to cart\nPlease try again in seconds",
     "message_error_order_cuppon": "Error in placing the order\nCheck coupon!!"

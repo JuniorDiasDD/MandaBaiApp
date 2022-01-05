@@ -6,6 +6,7 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/cart_model.dart';
 import 'package:manda_bai/UI/cart/components/listview_item_cart.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 import 'checkout_page_step_2.dart';
@@ -58,7 +59,7 @@ class _StartPageState extends State<CartPage> {
         setState(() {
           cartPageController.list = list_cart;
           cartPageController.calcule();
-        });
+       });
       }
     }
 
@@ -88,7 +89,7 @@ class _StartPageState extends State<CartPage> {
           cartPageController.list = list_cart;
           cartPageController.calcule();
             cartPageController.loading=false;
-        });
+       });
       }
     } else {
       bool check = false;
@@ -111,12 +112,14 @@ class _StartPageState extends State<CartPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
+  void initState() {  
+   
     list_cart = [];
     cartPageController.total = 0;
     cartPageController.subTotal = 0;
     cartPageController.loading=false;
+     super.initState();
+ 
   }
 
   @override
@@ -435,4 +438,5 @@ class _StartPageState extends State<CartPage> {
       ),
     );
   }
+   
 }

@@ -272,7 +272,7 @@ class ServiceRequest {
 
     var data = json.encode({
       "email": user.email,
-      "first_name": user.name ,
+      "first_name": user.name,
       "last_name": user.nickname,
       "username": user.username,
       "password": user.senha,
@@ -309,25 +309,24 @@ class ServiceRequest {
       /*registro para os dominios*/
       await http.post(Uri.parse(register_client_SantoAntao),
           headers: headers, body: data);
-       await http.post(Uri.parse(register_client_SaoVicente),
+      await http.post(Uri.parse(register_client_SaoVicente),
           headers: headers, body: data);
-       await http.post(Uri.parse(register_client_SaoNicolau),
+      await http.post(Uri.parse(register_client_SaoNicolau),
           headers: headers, body: data);
-       await http.post(Uri.parse(register_client_Sal),
+      await http.post(Uri.parse(register_client_Sal),
           headers: headers, body: data);
-       await http.post(Uri.parse(register_client_BoaVista),
+      await http.post(Uri.parse(register_client_BoaVista),
           headers: headers, body: data);
-       await http.post(Uri.parse(register_client_Maio),
+      await http.post(Uri.parse(register_client_Maio),
           headers: headers, body: data);
-       await http.post(Uri.parse(register_client_Santiago),
+      await http.post(Uri.parse(register_client_Santiago),
           headers: headers, body: data);
-       await http.post(Uri.parse(register_client_Fogo),
+      await http.post(Uri.parse(register_client_Fogo),
           headers: headers, body: data);
-       await http.post(Uri.parse(register_client_Brava),
+      await http.post(Uri.parse(register_client_Brava),
           headers: headers, body: data);
 
       return true;
-
     } else if (response.statusCode == 503) {
       print("Erro de serviço");
       return false;
@@ -1430,6 +1429,20 @@ class ServiceRequest {
       return "false";
     }
     return false;
+  }
+
+  static Future getOrderIdStatus(order) async {
+    var response = await http.get(Uri.parse(getOrderId + order + "?" + key));
+    print(response.body);
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      return jsonResponse["status"];
+    } else if (response.statusCode == 503) {
+      print("Erro de serviço");
+    } else {
+      print("Erro de authentiction");
+    }
+    return null;
   }
 
   //! load product by id

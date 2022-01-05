@@ -41,11 +41,19 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Icon(
-                    widget.icon,
-                    color: widget.caminho != "erro" ? Colors.green : Colors.red,
-                    size: Get.height * 0.09,
-                  ),
+                  child: widget.caminho == "erro_encomenda"
+                      ? Icon(
+                          widget.icon,
+                          color: Colors.yellow,
+                          size: Get.height * 0.09,
+                        )
+                      : Icon(
+                          widget.icon,
+                          color: widget.caminho != "erro"
+                              ? Colors.green
+                              : Colors.red,
+                          size: Get.height * 0.09,
+                        ),
                 ),
                 SizedBox(height: Get.height * 0.01),
                 Padding(
@@ -89,7 +97,8 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
                         if (widget.caminho == "home") {
                           Navigator.pushReplacementNamed(context, '/home');
                         } else if (widget.caminho == "erro" ||
-                            widget.caminho == "description" || widget.caminho=="addCarrinho") {
+                            widget.caminho == "description" ||
+                            widget.caminho == "addCarrinho") {
                           Navigator.pop(context);
                         } else if (widget.caminho == "atualizar") {
                           Navigator.pushReplacement(
@@ -99,8 +108,10 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
                         } else if (widget.caminho == "encomenda") {
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               '/home', (Route<dynamic> route) => false);
-                        }else if(widget.caminho=="registo"){
+                        } else if (widget.caminho == "registo") {
                           Navigator.pushReplacementNamed(context, '/login');
+                        } else if (widget.caminho == "erro_encomenda") {
+                          
                         }
                       }),
                 ),

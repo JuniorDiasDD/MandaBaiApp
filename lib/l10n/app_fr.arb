@@ -175,6 +175,9 @@
     "message_error_product_dont_match_island": "Ces produits ne correspondent pas à cette île.",
     "message_success_order": "Commande passée avec succès.\nSuivez votre commande sur\n'Mes demandes'!",
     "message_error_order": "Erreur lors de la passation de la commande",
+    "message_error_order_failed": "Non-paiement de la commande",
+    "message_error_order_cancelled": "Annulation de commande",
+    "message_error_order_pending": "Commande en attente de paiement",
     "message_success_cart": "Ajouté au panier",
     "message_error_cart": "Erreur lors de l'ajout au panier\nréessayer dans quelques secondes!",
     "message_error_order_cuppon": "Erreur lors de la passation de la commande\nVérifiez le coupon!"

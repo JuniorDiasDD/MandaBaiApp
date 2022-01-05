@@ -175,6 +175,9 @@
     "message_error_product_dont_match_island": "Deze producten komen niet overeen met dit eiland.",
     "message_success_order": "Bestelling succesvol geplaatst.\nVolg je bestelling op\n'Mijn aanvragen'!",
     "message_error_order": "Fout bij het plaatsen van de bestelling",
+    "message_error_order_failed": "Het niet betalen van de bestelling",
+    "message_error_order_cancelled": "Bestellings-annulering",
+    "message_error_order_pending": "Bestelling in afwachting van betaling",
     "message_success_cart": "Toegevoegd aan winkelwagen",
     "message_error_cart": "Fout bij toevoegen aan winkelwagen\nprobeer het over enkele seconden opnieuw!",
     "message_error_order_cuppon": "Fout bij het plaatsen van de bestelling\nControleer bon!!"
