@@ -5,12 +5,12 @@ import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
-import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WebViewPage extends StatefulWidget {
-  const WebViewPage({Key? key}) : super(key: key);
+  String sub;
+   WebViewPage({Key? key,required this.sub}) : super(key: key);
 
   @override
   _WebViewPageState createState() => _WebViewPageState();
@@ -21,7 +21,7 @@ class _WebViewPageState extends State<WebViewPage> {
 
   checkPagamento() async {
     cartPageController.loading = true;
-    print("entrou---");
+  
     var response =
         await ServiceRequest.getOrderIdStatus(cartPageController.order);
     if (null != response) {
@@ -84,6 +84,7 @@ class _WebViewPageState extends State<WebViewPage> {
       },
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
           leading: IconButton(
             icon: Icon(Icons.close, color: Colors.black),
             onPressed: () => checkPagamento(),
@@ -95,7 +96,7 @@ class _WebViewPageState extends State<WebViewPage> {
             WebView(
               initialUrl:
                   "https://mandabai.herokuapp.com/site/checkout?order=" +
-                      cartPageController.order,
+                      cartPageController.order+"&sub="+widget.sub,
               onWebViewCreated: (controller) {
                 // _controller = controller;
               },

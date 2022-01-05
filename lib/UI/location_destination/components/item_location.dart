@@ -5,6 +5,7 @@ import 'package:manda_bai/Model/location.dart';
 import 'package:manda_bai/UI/cart/pages/checkout_page_step_2.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
+import 'package:manda_bai/UI/location_destination/page/new_destination.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ItemLocation extends StatefulWidget {
@@ -74,23 +75,45 @@ class _ItemLocationState extends State<ItemLocation> {
                       widget.location.name,
                       style: Theme.of(context).textTheme.headline2,
                     ),
-                    SizedBox(
-                      child: IconButton(
-                        padding: const EdgeInsets.all(0.0),
-                        onPressed: () {
-                          setState(() {
-                            ServiceRequest.removeLocation(widget.location.id);
-                            Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        Destination_Page(route: "checkout")));
-                          });
-                        },
-                        icon: const Icon(
-                          Icons.delete,
+                    Row(
+                      children: [
+                        SizedBox(
+                          child: IconButton(
+                            padding: const EdgeInsets.all(0.0),
+                            onPressed: () {
+                              setState(() {
+                                ServiceRequest.removeLocation(widget.location.id);
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            NewDestination(route: widget.route,location:widget.location)));
+                              });
+                            },
+                            icon: const Icon(
+                              Icons.edit,
+                            ),
+                          ),
                         ),
-                      ),
+                         SizedBox(
+                          child: IconButton(
+                            padding: const EdgeInsets.all(0.0),
+                            onPressed: () {
+                              setState(() {
+                                ServiceRequest.removeLocation(widget.location.id);
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Destination_Page(route: widget.route)));
+                              });
+                            },
+                            icon: const Icon(
+                              Icons.delete,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -135,7 +158,7 @@ class _ItemLocationState extends State<ItemLocation> {
                 SizedBox(
                   height: Get.height * 0.01,
                 ),
-                Row(
+               /* Row(
                   children: [
                     Icon(
                       Icons.email,
@@ -145,7 +168,7 @@ class _ItemLocationState extends State<ItemLocation> {
                       style: Theme.of(context).textTheme.headline4,
                     ),
                   ],
-                ),
+                ),*/
               ],
             ),
           ),

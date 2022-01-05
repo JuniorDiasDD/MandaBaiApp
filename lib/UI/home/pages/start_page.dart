@@ -126,8 +126,9 @@ class _StartPageState extends State<StartPage> {
                     CarouselSlider(
                       options: CarouselOptions(
                           viewportFraction: 1,
+                          autoPlayInterval : const Duration(seconds: 10),
                           autoPlayAnimationDuration:
-                              const Duration(milliseconds: 100),
+                              const Duration(seconds: 1),
                           autoPlay: true,
                           enlargeCenterPage: true,
                           onPageChanged: (index, reason) {

@@ -18,6 +18,7 @@ class RegisterPage extends StatefulWidget {
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
+
 class _RegisterPageState extends State<RegisterPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final input_email = TextEditingController();
@@ -31,11 +32,11 @@ class _RegisterPageState extends State<RegisterPage> {
   String mensage_password = " ";
   Color cor_password = Colors.transparent;
   bool statePassword = false;
-    bool loading = false;
+  bool loading = false;
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
-      User new_user =  User(
+      User new_user = User(
           name: input_nome.text,
           telefone: input_telefone.text,
           email: input_email.text,
@@ -45,31 +46,33 @@ class _RegisterPageState extends State<RegisterPage> {
           avatar: "",
           city: input_city.text,
           country: input_country.text);
- setState(() {
+      setState(() {
         loading = true;
       });
       bool check = await ServiceRequest.createAccount(new_user);
       if (check == true) {
-         setState(() {
-        loading = false;
-      });
+        setState(() {
+          loading = false;
+        });
         return showDialog(
             context: context,
             builder: (BuildContext context) {
               return Pop_up_Message(
-                  mensagem: AppLocalizations.of(context)!.message_success_register,
+                  mensagem:
+                      AppLocalizations.of(context)!.message_success_register,
                   icon: Icons.check,
                   caminho: "registo");
             });
       } else {
-         setState(() {
-        loading = false;
-      });
+        setState(() {
+          loading = false;
+        });
         return showDialog(
             context: context,
             builder: (BuildContext context) {
               return Pop_up_Message(
-                  mensagem: AppLocalizations.of(context)!.message_error_register,
+                  mensagem:
+                      AppLocalizations.of(context)!.message_error_register,
                   icon: Icons.error,
                   caminho: "erro");
             });
@@ -78,6 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
       print('Form is invalid');
     }
   }
+
   _validar_password() {
     if (input_senha.text.length < 7) {
       setState(() {
@@ -87,16 +91,19 @@ class _RegisterPageState extends State<RegisterPage> {
     } else if (RegExp(r'\d+\w*\d+').hasMatch(input_senha.text) &&
         !input_senha.text.contains(RegExp(r'[A-Z]'))) {
       setState(() {
-        mensage_password = AppLocalizations.of(context)!.message_password_reasonable;
+        mensage_password =
+            AppLocalizations.of(context)!.message_password_reasonable;
         cor_password = Colors.yellowAccent;
       });
     } else if (input_senha.text.contains(RegExp(r'[A-Z]'))) {
       setState(() {
-        mensage_password = AppLocalizations.of(context)!.message_password_strong;
+        mensage_password =
+            AppLocalizations.of(context)!.message_password_strong;
         cor_password = Colors.green;
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -155,14 +162,19 @@ class _RegisterPageState extends State<RegisterPage> {
                                   filled: true,
                                   fillColor: Theme.of(context).backgroundColor,
                                   border: OutlineInputBorder(
-                                    borderRadius: new BorderRadius.circular(15.0),
+                                    borderRadius:
+                                        new BorderRadius.circular(15.0),
                                     borderSide: new BorderSide(),
                                   ),
-                                  labelText: AppLocalizations.of(context)!.textfield_name,
-                                  labelStyle: Theme.of(context).textTheme.headline4,
+                                  labelText: AppLocalizations.of(context)!
+                                      .textfield_name,
+                                  labelStyle:
+                                      Theme.of(context).textTheme.headline4,
                                 ),
-                                validator: (value) =>
-                                    value!.isEmpty ? AppLocalizations.of(context)!.validator_name : null,
+                                validator: (value) => value!.isEmpty
+                                    ? AppLocalizations.of(context)!
+                                        .validator_name
+                                    : null,
                               ),
                             ),
                             SizedBox(
@@ -176,20 +188,25 @@ class _RegisterPageState extends State<RegisterPage> {
                                   filled: true,
                                   fillColor: Theme.of(context).backgroundColor,
                                   border: OutlineInputBorder(
-                                    borderRadius: new BorderRadius.circular(15.0),
+                                    borderRadius:
+                                        new BorderRadius.circular(15.0),
                                     borderSide: new BorderSide(),
                                   ),
-                                  labelText: AppLocalizations.of(context)!.textfield_nickname,
-                                  labelStyle: Theme.of(context).textTheme.headline4,
+                                  labelText: AppLocalizations.of(context)!
+                                      .textfield_nickname,
+                                  labelStyle:
+                                      Theme.of(context).textTheme.headline4,
                                 ),
-                                validator: (value) =>
-                                    value!.isEmpty ? AppLocalizations.of(context)!.validator_nickname : null,
+                                validator: (value) => value!.isEmpty
+                                    ? AppLocalizations.of(context)!
+                                        .validator_nickname
+                                    : null,
                               ),
                             ),
                           ],
                         ),
                         SizedBox(height: Get.height * 0.01),
-                         Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
@@ -201,14 +218,19 @@ class _RegisterPageState extends State<RegisterPage> {
                                   filled: true,
                                   fillColor: Theme.of(context).backgroundColor,
                                   border: OutlineInputBorder(
-                                    borderRadius: new BorderRadius.circular(15.0),
+                                    borderRadius:
+                                        new BorderRadius.circular(15.0),
                                     borderSide: new BorderSide(),
                                   ),
-                                  labelText: AppLocalizations.of(context)!.textfield_country,
-                                  labelStyle: Theme.of(context).textTheme.headline4,
+                                  labelText: AppLocalizations.of(context)!
+                                      .textfield_country,
+                                  labelStyle:
+                                      Theme.of(context).textTheme.headline4,
                                 ),
-                                validator: (value) =>
-                                    value!.isEmpty ? AppLocalizations.of(context)!.validator_country : null,
+                                validator: (value) => value!.isEmpty
+                                    ? AppLocalizations.of(context)!
+                                        .validator_country
+                                    : null,
                               ),
                             ),
                             SizedBox(
@@ -220,14 +242,19 @@ class _RegisterPageState extends State<RegisterPage> {
                                   filled: true,
                                   fillColor: Theme.of(context).backgroundColor,
                                   border: OutlineInputBorder(
-                                    borderRadius: new BorderRadius.circular(15.0),
+                                    borderRadius:
+                                        new BorderRadius.circular(15.0),
                                     borderSide: new BorderSide(),
                                   ),
-                                  labelText: AppLocalizations.of(context)!.textfield_city,
-                                  labelStyle: Theme.of(context).textTheme.headline4,
+                                  labelText: AppLocalizations.of(context)!
+                                      .textfield_city,
+                                  labelStyle:
+                                      Theme.of(context).textTheme.headline4,
                                 ),
-                                validator: (value) =>
-                                    value!.isEmpty ? AppLocalizations.of(context)!.validator_city : null,
+                                validator: (value) => value!.isEmpty
+                                    ? AppLocalizations.of(context)!
+                                        .validator_city
+                                    : null,
                               ),
                             ),
                           ],
@@ -277,11 +304,13 @@ class _RegisterPageState extends State<RegisterPage> {
                                 color: Colors.grey,
                               ), // icon is 48px widget.
                             ),
-                            labelText: AppLocalizations.of(context)!.textfield_phone,
+                            labelText:
+                                AppLocalizations.of(context)!.textfield_phone,
                             labelStyle: Theme.of(context).textTheme.headline4,
                           ),
-                          validator: (value) =>
-                              value!.length==7 ? null : AppLocalizations.of(context)!.validator_number ,
+                          validator: (value) => value!.isEmpty
+                              ? AppLocalizations.of(context)!.validator_number
+                              : null,
                         ),
                         SizedBox(height: Get.height * 0.01),
                         TextFormField(
@@ -302,11 +331,13 @@ class _RegisterPageState extends State<RegisterPage> {
                                 color: Colors.grey,
                               ), // icon is 48px widget.
                             ),
-                            labelText: AppLocalizations.of(context)!.textfield_user,
+                            labelText:
+                                AppLocalizations.of(context)!.textfield_user,
                             labelStyle: Theme.of(context).textTheme.headline4,
                           ),
-                          validator: (value) =>
-                              value!.isEmpty ? AppLocalizations.of(context)!.validator_user : null,
+                          validator: (value) => value!.isEmpty
+                              ? AppLocalizations.of(context)!.validator_user
+                              : null,
                         ),
                         SizedBox(height: Get.height * 0.01),
                         TextFormField(
@@ -339,16 +370,18 @@ class _RegisterPageState extends State<RegisterPage> {
                                     : Icons.visibility_off,
                               ),
                             ),
-                            labelText: AppLocalizations.of(context)!.textfield_password,
+                            labelText: AppLocalizations.of(context)!
+                                .textfield_password,
                             labelStyle: Theme.of(context).textTheme.headline4,
                           ),
-                          validator: (value) =>
-                              value!.isEmpty ? AppLocalizations.of(context)!.validator_password : null,
+                          validator: (value) => value!.isEmpty
+                              ? AppLocalizations.of(context)!.validator_password
+                              : null,
                           onChanged: (value) => _validar_password(),
                         ),
                         SizedBox(height: Get.height * 0.005),
                         Align(
-                          alignment:Alignment.topLeft,
+                          alignment: Alignment.topLeft,
                           child: Text(
                             mensage_password,
                             style: Theme.of(context)
@@ -373,8 +406,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                 color: Theme.of(context).cardColor,
                                 blurRadius: 2.0,
                                 spreadRadius: 0.0,
-                                offset:
-                                    Offset(2.0, 2.0), // changes position of shadow
+                                offset: Offset(
+                                    2.0, 2.0), // changes position of shadow
                               ),
                             ],
                           ),
@@ -397,7 +430,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ],
             ),
           ),
-           SizedBox(
+          SizedBox(
             child: loading
                 ? Container(
                     color: Colors.black54,
@@ -418,5 +451,3 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 }
-
-

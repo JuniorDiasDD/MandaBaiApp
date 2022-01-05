@@ -230,23 +230,24 @@ class _CategoryPageState extends State<CategoryPage> {
                 FutureBuilder(
                   future: _carregar(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (!snapshot.hasData) {
-                      return Container(
-                        height: Get.height * 0.2,
-                        width: Get.width,
-                        child: Center(
-                          child: Image.network(
-                            AppImages.loading,
-                            width: Get.width * 0.2,
-                            height: Get.height * 0.2,
-                            alignment: Alignment.center,
-                          ),
-                        ),
-                      );
-                    } else {
+                   switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
+                              return Container(
+                                height: Get.height * 0.2,
+                                width: Get.width,
+                                child: Center(
+                                  child: Image.network(
+                                    AppImages.loading,
+                                    width: Get.width * 0.2,
+                                    height: Get.height * 0.2,
+                                    alignment: Alignment.center,
+                                  ),
+                                ),
+                              );
+                            default:
                       if (snapshot.data == null) {
                         return Container(
-                          height: Get.height * 0.85,
+                          height: Get.height * 0.4,
                           width: Get.width,
                           child: Center(
                             child: Text(

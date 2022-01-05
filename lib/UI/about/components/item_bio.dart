@@ -76,7 +76,7 @@ class _Item_BioState extends State<Item_Bio> {
                               children: [
                                 Text(
                                 widget.employee.description,
-                                  textAlign: TextAlign.justify,
+                                  textAlign: TextAlign.start,
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline4!

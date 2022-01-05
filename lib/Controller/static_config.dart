@@ -173,8 +173,41 @@ const String request_loginCocart_Fogo = CocartFogo + "login";
 const String request_loginCocart_Brava = CocartBrava + "login";
 //! update user
 const String updateUser = link + "customers/";
+
+
 //! Get User
 const String getUser = link + "customers/";
+const String getUserSantoAntao = linkSantoAntao + "customers/";
+const String getUserSaoVicente = linkSaoVicente + "customers/";
+const String getUserSaoNicolau = linkSaoNicolau + "customers/";
+const String getUserSal = linkSal + "customers/";
+const String getUserBoaVista = linkBoaVista + "customers/";
+const String getUserMaio = linkMaio + "customers/";
+const String getUserSantiago = linkSantiago + "customers/";
+const String getUserFogo = linkFogo + "customers/";
+const String getUserBrava = linkBrava + "customers/";
 //!orders
 const String getOrder = link + "orders?" + key;
+const String getOrderSantoAntao = linkSantoAntao + "orders?" + key;
+const String getOrderSaoVicente = linkSaoVicente+ "orders?" + key;
+const String getOrderSaoNicolau = linkSaoNicolau + "orders?" + key;
+const String getOrderSal = linkSal + "orders?" + key;
+const String getOrderBoaVista = linkBoaVista + "orders?" + key;
+const String getOrderMaio = linkMaio + "orders?" + key;
+const String getOrderSantiago = linkSantiago + "orders?" + key;
+const String getOrderFogo = linkFogo + "orders?" + key;
+const String getOrderBrava = linkBrava + "orders?" + key;
+
+
+
+
 const String getOrderId =link+"orders/";
+const String getOrderIdSantoAntao =linkSantoAntao+"orders/";
+const String getOrderIdSaoVicente =linkSaoVicente+"orders/";
+const String getOrderIdSaoNicolau =linkSaoNicolau+"orders/";
+const String getOrderIdSal =linkSal+"orders/";
+const String getOrderIdBoaVista =linkBoaVista+"orders/";
+const String getOrderIdMaio =linkMaio+"orders/";
+const String getOrderIdSantiago =linkSantiago+"orders/";
+const String getOrderIdFogo =linkFogo+"orders/";
+const String getOrderIdBrava =linkBrava+"orders/";

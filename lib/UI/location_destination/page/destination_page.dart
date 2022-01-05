@@ -80,7 +80,7 @@ class _Destination_PageState extends State<Destination_Page> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  NewDestination(route: widget.route)));
+                                  NewDestination(route: widget.route,location:null)));
                     },
                     icon: const Icon(
                       Icons.add,

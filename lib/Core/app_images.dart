@@ -13,6 +13,7 @@ class AppImages {
   static const loading = 'https://www.mandabai.com/wp-content/uploads/2021/12/loading.gif';
   static const appLogo2 = 'https://www.mandabai.com/wp-content/uploads/2021/12/logo2.png';
   static const appLogo = 'assets/images/logoMandaBai.png';
+   static const appLogoIcon = 'assets/images/icon @2x.png';
   static const ilhasWhite = 'https://www.mandabai.com/wp-content/uploads/2021/12/ilhasWhite.png';
   static const messenger_logo = 'https://www.mandabai.com/wp-content/uploads/2021/12/messenger_logo.png';
   static const whatsapp_logo = 'https://www.mandabai.com/wp-content/uploads/2021/12/whatsapp_logo.png';

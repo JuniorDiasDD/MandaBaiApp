@@ -12,7 +12,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NewDestination extends StatefulWidget {
   String route;
-  NewDestination({Key? key, required this.route}) : super(key: key);
+  Location? location;
+  NewDestination({Key? key, required this.route, required this.location})
+      : super(key: key);
 
   @override
   State<NewDestination> createState() => _NewDestinationState();
@@ -24,7 +26,6 @@ class _NewDestinationState extends State<NewDestination> {
   final input_cidade = TextEditingController();
   final input_endereco = TextEditingController();
   final input_tel = TextEditingController();
-  final input_email = TextEditingController();
 
   String dropdownValue = 'Santiago';
   List<String> list_island = [
@@ -32,7 +33,7 @@ class _NewDestinationState extends State<NewDestination> {
     'São Vicente',
     'São Nicolau',
     'Sal',
-    'Boavista',
+    'Boa Vista',
     'Maio',
     'Santiago',
     'Fogo',
@@ -48,7 +49,10 @@ class _NewDestinationState extends State<NewDestination> {
           endereco: input_endereco.text,
           island: dropdownValue,
           phone: input_tel.text,
-          email: input_email.text);
+          email: "");
+      if (widget.location != null) {
+        await ServiceRequest.removeLocation(widget.location!.id);
+      }
       bool check = await ServiceRequest.addLocation(novo);
       if (check == true) {
         Navigator.pushReplacement(
@@ -59,6 +63,18 @@ class _NewDestinationState extends State<NewDestination> {
       print('Form is valid');
     } else {
       print('Form is invalid');
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.location != null) {
+      input_nome.text = widget.location!.name;
+      input_cidade.text = widget.location!.city;
+      input_endereco.text = widget.location!.endereco;
+      input_tel.text = widget.location!.phone;
     }
   }
 
@@ -95,7 +111,6 @@ class _NewDestinationState extends State<NewDestination> {
                   ),
                   const Spacer(),
                   IconButton(
-                   
                     onPressed: () {
                       showDialog(
                         context: context,
@@ -142,7 +157,8 @@ class _NewDestinationState extends State<NewDestination> {
                         controller: input_nome,
                         style: Theme.of(context).textTheme.headline4,
                         decoration: InputDecoration(
-                          labelText: AppLocalizations.of(context)!.text_recipient_name,
+                          labelText:
+                              AppLocalizations.of(context)!.text_recipient_name,
                           labelStyle: Theme.of(context).textTheme.headline4,
                           filled: true,
                           fillColor: Theme.of(context).backgroundColor,
@@ -152,8 +168,9 @@ class _NewDestinationState extends State<NewDestination> {
                                 new BorderSide(color: Colors.red, width: 2.0),
                           ),
                         ),
-                        validator: (value) =>
-                            value!.isEmpty ? AppLocalizations.of(context)!.validator_name : null,
+                        validator: (value) => value!.isEmpty
+                            ? AppLocalizations.of(context)!.validator_name
+                            : null,
                       ),
                     ),
                     SizedBox(height: Get.height * 0.01),
@@ -208,7 +225,8 @@ class _NewDestinationState extends State<NewDestination> {
                         controller: input_cidade,
                         style: Theme.of(context).textTheme.headline4,
                         decoration: InputDecoration(
-                          labelText: AppLocalizations.of(context)!.textfield_city,
+                          labelText:
+                              AppLocalizations.of(context)!.textfield_city,
                           labelStyle: Theme.of(context).textTheme.headline4,
                           filled: true,
                           fillColor: Theme.of(context).backgroundColor,
@@ -217,8 +235,9 @@ class _NewDestinationState extends State<NewDestination> {
                             borderSide: new BorderSide(),
                           ),
                         ),
-                        validator: (value) =>
-                            value!.isEmpty ? AppLocalizations.of(context)!.validator_city : null,
+                        validator: (value) => value!.isEmpty
+                            ? AppLocalizations.of(context)!.validator_city
+                            : null,
                       ),
                     ),
                     SizedBox(height: Get.height * 0.01),
@@ -237,32 +256,10 @@ class _NewDestinationState extends State<NewDestination> {
                             borderSide: new BorderSide(),
                           ),
                         ),
-                        validator: (value) =>
-                            value!.isEmpty ? AppLocalizations.of(context)!.validator_enter_address : null,
-                      ),
-                    ),
-                    SizedBox(height: Get.height * 0.01),
-                    SizedBox(
-                      width: Get.width,
-                      child: TextFormField(
-                        controller: input_email,
-                        keyboardType: TextInputType.emailAddress,
-                        style: Theme.of(context).textTheme.headline4,
-                        decoration: InputDecoration(
-                          labelText: "Email",
-                          labelStyle: Theme.of(context).textTheme.headline4,
-                          filled: true,
-                          fillColor: Theme.of(context).backgroundColor,
-                          border: OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(15.0),
-                            borderSide: new BorderSide(),
-                          ),
-                        ),
-                        validator: (value) =>
-                            EmailValidator.validate(value!)
-                                        ? null
-                                        : AppLocalizations.of(context)!
-                                            .validator_email,
+                        validator: (value) => value!.isEmpty
+                            ? AppLocalizations.of(context)!
+                                .validator_enter_address
+                            : null,
                       ),
                     ),
                     SizedBox(height: Get.height * 0.01),
@@ -273,24 +270,28 @@ class _NewDestinationState extends State<NewDestination> {
                         keyboardType: TextInputType.number,
                         style: Theme.of(context).textTheme.headline4,
                         decoration: InputDecoration(
-                          labelText: AppLocalizations.of(context)!.textfield_phone,
+                          labelText:
+                              AppLocalizations.of(context)!.textfield_phone,
                           labelStyle: Theme.of(context).textTheme.headline4,
                           filled: true,
                           fillColor: Theme.of(context).backgroundColor,
-                           prefixIcon: Padding(
-                                padding: const EdgeInsets.all(13.0),
-                                child:   Text("+238",style:Theme.of(context).textTheme.headline4,),// icon is 48px widget.
-                              ),
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.all(13.0),
+                            child: Text(
+                              "+238",
+                              style: Theme.of(context).textTheme.headline4,
+                            ), // icon is 48px widget.
+                          ),
                           border: OutlineInputBorder(
                             borderRadius: new BorderRadius.circular(15.0),
                             borderSide: new BorderSide(
                               color: Colors.red,
                             ),
-                            
                           ),
                         ),
-                        validator: (value) =>
-                            value!.length==7 ?  null:AppLocalizations.of(context)!.validator_number,
+                        validator: (value) => value!.length == 7
+                            ? null
+                            : AppLocalizations.of(context)!.validator_number,
                       ),
                     ),
                   ],

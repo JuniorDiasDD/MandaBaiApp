@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 import 'Core/app_themes.dart';
+import 'UI/about/pages/info_app.dart';
 import 'UI/authention/pages/login_page.dart';
 import 'UI/authention/pages/register_page.dart';
 import 'UI/home/pages/home_page.dart';
@@ -20,8 +21,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-        MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MandaBai',
       localizationsDelegates: [
@@ -50,6 +50,7 @@ class App extends StatelessWidget {
         '/home': (context) => HomePage(index: 0),
         '/cart': (context) => HomePage(index: 1),
         '/Destination': (context) => Destination_Page(route: " "),
+        '/infoApp': (context) => InfoApp(),
       },
     );
   }

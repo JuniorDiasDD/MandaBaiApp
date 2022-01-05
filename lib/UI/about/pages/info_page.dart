@@ -160,7 +160,7 @@ class _InfoPageState extends State<InfoPage> {
                               height: Get.height * 0.2,
                               width: Get.width,
                               child: Center(
-                                child: Image.asset(
+                                child: Image.network(
                                   AppImages.loading,
                                   width: Get.width * 0.2,
                                   height: Get.height * 0.2,
@@ -207,7 +207,7 @@ class _InfoPageState extends State<InfoPage> {
                               height: Get.height * 0.2,
                               width: Get.width,
                               child: Center(
-                                child: Image.asset(
+                                child: Image.network(
                                   AppImages.loading,
                                   width: Get.width * 0.2,
                                   height: Get.height * 0.2,
@@ -502,7 +502,7 @@ class _InfoPageState extends State<InfoPage> {
                               ),
                             ],
                           ),
-                          onPressed: () {},
+                          onPressed: () => Navigator.pushNamed(context, '/infoApp'),
                         ),
                       ),
                     ),

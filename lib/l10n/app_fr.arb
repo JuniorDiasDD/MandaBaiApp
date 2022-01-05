@@ -147,7 +147,7 @@
     "text_checkout": "Vérifier",
     "text_in_process_order": "Commande en cours",
     "text_delivery_order": "Commande livrée",
-    "text_empty_order": "Vous n'avez pas encore passé de commandes...",
+    "text_empty_order": "pas de commande...",
     "text_description": "La description",
     "text_order_number": "Commander",
     "text_amount": "La quantité",
