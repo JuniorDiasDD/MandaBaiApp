@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_images.dart';
-import 'package:manda_bai/Core/app_themes.dart';
 import 'package:manda_bai/UI/about/components/item_developer.dart';
 
 class InfoApp extends StatelessWidget {
@@ -22,20 +20,17 @@ class InfoApp extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    child: IconButton(
-                      // padding: EdgeInsets.all(0.0),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(
-                        Icons.arrow_back,
-                      ),
-                      alignment: Alignment.centerRight,
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(
+                      Icons.arrow_back,
                     ),
+                    alignment: Alignment.centerRight,
                   ),
                   Text(
-                    AppLocalizations.of(context)!.title_terms_of_use,
+                    AppLocalizations.of(context)!.info_app_title,
                     style: Theme.of(context).textTheme.headline1,
                   ),
                   Container(
@@ -67,26 +62,31 @@ class InfoApp extends StatelessWidget {
                     ),
                     SizedBox(height: Get.height * 0.01),
                     Text(
-                      "MandaBai descriçao",
+                      AppLocalizations.of(context)!.info_app_description,
                       style: Theme.of(context).textTheme.headline4,
                       textAlign: TextAlign.center,
                     ),
+                    SizedBox(height: Get.height * 0.02),
                     Divider(),
+                    SizedBox(height: Get.height * 0.02),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Publicado por",
+                          AppLocalizations.of(context)!
+                              .info_app_published_title,
                           style: Theme.of(context).textTheme.headline1,
                         ),
                         Text(
-                          "Empresa MandaBai",
+                          AppLocalizations.of(context)!
+                              .info_app_published_description,
                           style: Theme.of(context).textTheme.headline4,
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(height: Get.height * 0.01),
                         Text(
-                          "Pesquisa e Desenvolvimento por",
+                          AppLocalizations.of(context)!
+                              .info_app_developer_title,
                           style: Theme.of(context).textTheme.headline1,
                         ),
                         SizedBox(height: Get.height * 0.01),
@@ -97,31 +97,36 @@ class InfoApp extends StatelessWidget {
                                 image:
                                     "https://www.mandabai.com/wp-content/uploads/2022/01/fotoPassPorte6.jpg",
                                 name: "Júnior Dias Silva",
-                                cargo: "Engenheiro / Programador"),
+                                cargo: AppLocalizations.of(context)!
+                                    .info_app_func_eng),
                             ItemDeveloper(
                                 image:
                                     "https://www.mandabai.com/wp-content/uploads/2022/01/avatar_rossana.jpg",
                                 name: "Rossana Mendes",
-                                cargo: "Designer"),
+                                cargo: AppLocalizations.of(context)!
+                                    .info_app_func_desn),
                             ItemDeveloper(
                                 image:
                                     "https://www.mandabai.com/wp-content/uploads/2022/01/avatar_erickson.jpg",
                                 name: "Erickson Carvalho Vaz",
-                                cargo: "Engenheiro / Programador"),
+                                cargo: AppLocalizations.of(context)!
+                                    .info_app_func_eng),
                           ],
                         ),
-                        Divider(),
-                        Text(
-                          "Licenças e Créditos",
-                          style: Theme.of(context).textTheme.headline1,
-                        ),
-                        SizedBox(height: Get.height * 0.01),
-                        Text(
-                          "Esta aplicativo se encontra em desenvolvimento Nativo base em Flutter \n Este aplicativo utiliza Material App com base no SDK 3.0.0\n",
-                          style: Theme.of(context).textTheme.headline4,
-                          textAlign: TextAlign.center,
-                        ),
                       ],
+                    ),
+                    SizedBox(height: Get.height * 0.02),
+                    Divider(),
+                    SizedBox(height: Get.height * 0.02),
+                    Text(
+                      AppLocalizations.of(context)!.info_app_license_title,
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
+                    SizedBox(height: Get.height * 0.01),
+                    Text(
+                      AppLocalizations.of(context)!.info_app_license_decription,
+                      style: Theme.of(context).textTheme.headline4,
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),

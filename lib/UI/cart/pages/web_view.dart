@@ -75,6 +75,40 @@ class _WebViewPageState extends State<WebViewPage> {
       }
     }
   }
+  String subdominio="";
+ @override
+  void initState() {
+  switch(widget.sub){
+    case "Santo Antão":
+    subdominio="santoantao";
+    break;
+     case "São Vicente":
+    subdominio="saovicente";
+    break;
+     case "São Nicolau":
+    subdominio="saonicolau";
+    break;
+     case "Sal":
+    subdominio="sal";
+    break;
+     case "BoaVista":
+    subdominio="boavista";
+    break;
+     case "Maio":
+    subdominio="maio";
+    break;
+     case "Santiago":
+    subdominio="santiago";
+    break;
+     case "Fogo":
+    subdominio="fogo";
+    break;
+     case "Brava":
+    subdominio="brava";
+    break;
+  }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +130,7 @@ class _WebViewPageState extends State<WebViewPage> {
             WebView(
               initialUrl:
                   "https://mandabai.herokuapp.com/site/checkout?order=" +
-                      cartPageController.order+"&sub="+widget.sub,
+                      cartPageController.order+"&sub="+subdominio,
               onWebViewCreated: (controller) {
                 // _controller = controller;
               },
