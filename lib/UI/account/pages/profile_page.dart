@@ -264,7 +264,7 @@ class _StartPageState extends State<ProfilePage> {
                   ),
                 ),
                 SizedBox(height: Get.height * 0.01),
-                Row(
+                /*Row(
                   children: <Widget>[
                     Expanded(
                       child: SizedBox(
@@ -385,7 +385,7 @@ class _StartPageState extends State<ProfilePage> {
                       ],
                     ),
                   ),
-                ),
+                ),*/
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -933,17 +933,10 @@ class _StartPageState extends State<ProfilePage> {
   _terminarSessao() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var check = prefs.getString('id');
-    if (check == 'null' || check == null) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return Pop_Login();
-          });
-    } else {
+    if (check != 'null' || check != null) {
       prefs.remove('id');
-
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
     }
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
   }
 }

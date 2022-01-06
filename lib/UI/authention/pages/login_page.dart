@@ -79,29 +79,18 @@ class _LoginPageState extends State<LoginPage> {
                         alignment: Alignment.bottomLeft,
                         child: ColoredCircleComponent(),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(top: 33.0),
-                        width: Get.width,
-                        child: IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: Icon(Icons.arrow_back),
-                          alignment: Alignment.topLeft,
-                        ),
-                      ),
                     ],
                   ),
                   SizedBox(
                     height: Get.height * 0.02,
                   ),
                   Image.asset(
-                    AppImages.appLogo,
+                    AppImages.appLogoIcon,
                     width: Get.width * 0.6,
                     height: Get.height * 0.15,
                   ),
                   SizedBox(
-                    height: Get.height * 0.05,
+                    height: Get.height * 0.06,
                   ),
                   Padding(
                     padding: EdgeInsets.only(
@@ -204,7 +193,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           SizedBox(
-                            height: Get.height * 0.01,
+                            height: Get.height * 0.02,
                           ),
                           Container(
                             height: Get.height * 0.07,
@@ -238,36 +227,8 @@ class _LoginPageState extends State<LoginPage> {
                           SizedBox(
                             height: Get.height * 0.01,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!
-                                    .text_dont_have_an_account,
-                                style: Theme.of(context).textTheme.headline4,
-                              ),
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                  primary: AppColors.greenColor,
-                                  textStyle:
-                                      TextStyle(fontSize: Get.width * 0.03),
-                                ),
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/register');
-                                },
-                                child: Text(
-                                  AppLocalizations.of(context)!
-                                      .button_sign_up_now,
-                                  style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                    fontStyle: FontStyle.italic,
-                                    fontFamily: AppFonts.poppinsItalicFont,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
+
+                          /* SizedBox(
                             height: Get.height * 0.01,
                           ),
                           Column(
@@ -307,8 +268,8 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           SizedBox(
                             height: Get.height * 0.02,
-                          ),
-                          Column(
+                          ),*/
+                          /* Column(
                             children: [
                               Container(
                                 width: Get.width,
@@ -337,7 +298,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                             ],
-                          ),
+                          ),*/
                         ],
                       ),
                     ),
@@ -361,6 +322,32 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   )
                 : null,
+          ),
+        ],
+      ),
+      bottomNavigationBar: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            AppLocalizations.of(context)!.text_dont_have_an_account,
+            style: Theme.of(context).textTheme.headline4,
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              primary: AppColors.greenColor,
+              textStyle: TextStyle(fontSize: Get.width * 0.03),
+            ),
+            onPressed: () {
+              Navigator.pushNamed(context, '/register');
+            },
+            child: Text(
+              AppLocalizations.of(context)!.button_sign_up_now,
+              style: TextStyle(
+                decoration: TextDecoration.underline,
+                fontStyle: FontStyle.italic,
+                fontFamily: AppFonts.poppinsItalicFont,
+              ),
+            ),
           ),
         ],
       ),

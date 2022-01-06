@@ -42,25 +42,16 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 33.0),
+                      margin: const EdgeInsets.only(top: 33.0),
                       child: IconButton(
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        icon: Icon(Icons.arrow_back),
+                        icon: const Icon(Icons.arrow_back,color: Colors.black,),
                         alignment: Alignment.topLeft,
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 33.0),
-                      child: Text(
-                        AppLocalizations.of(context)!.text_forgot_password,
-                        style: Theme.of(context).textTheme.headline1,
-                      ),
-                    ),
-                    Text(
-                      '       ',
-                    ),
+                   const Spacer(),
                   ],
                 ),
               ],
@@ -75,46 +66,39 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.only(top: 35.0),
-                      height: Get.height * 0.25,
+                     Padding(
+                      padding: EdgeInsets.only(top: 33.0),
                       child: Text(
-                       AppLocalizations.of(context)!.text_reset_password,
-                        style: Theme.of(context).textTheme.headline2,
+                        AppLocalizations.of(context)!.text_forgot_password,
+                        style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
-
-                     Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        AppLocalizations.of(context)!.text_email_phone,
-                        style: Theme.of(context).textTheme.headline3!
-                            .copyWith(fontSize: Get.width * 0.032),
-                      ),
+                    SizedBox(height: Get.height * 0.02),
+                    Text(
+                     AppLocalizations.of(context)!.text_reset_password,
+                      style: Theme.of(context).textTheme.headline2,
                     ),
+                    SizedBox(height: Get.height * 0.02),
+                     
                     SizedBox(height: Get.height * 0.01),
-                    Container(
-                      height: Get.height * 0.07,
-                      width: Get.width,
-                      child: TextFormField(
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                width: 1, color: AppColors.greenColor),
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          labelText: AppLocalizations.of(context)!.label_email_password,
-                          labelStyle: Theme.of(context).textTheme.headline4!
-                              .copyWith(fontSize: Get.width * 0.03),
+                    TextFormField(
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15.0),
                         ),
-                        validator: (value) => EmailValidator.validate(value!)
-                            ? null
-                            : AppLocalizations.of(context)!.validator_email,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              width: 1, color: AppColors.greenColor),
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        labelText: "Email",
+                        labelStyle: Theme.of(context).textTheme.headline4!
+                            .copyWith(fontSize: Get.width * 0.03),
                       ),
+                      validator: (value) => EmailValidator.validate(value!)
+                          ? null
+                          : AppLocalizations.of(context)!.validator_email,
                     ),
                     SizedBox(
                       height: Get.height * 0.05,
@@ -130,7 +114,7 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                         color: AppColors.greenColor,
                         textColor: Colors.white,
                         child:  Text(AppLocalizations.of(context)!.button_send),
-                        onPressed: () {},
+                        onPressed: () =>validateAndSave(),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
                         ),

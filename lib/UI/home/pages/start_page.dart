@@ -179,7 +179,7 @@ class _StartPageState extends State<StartPage> {
                   height: Get.height * 0.01,
                 ),
                //NEW SERVICES
-                Align(
+             /*   Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
                     padding: EdgeInsets.only(
@@ -200,7 +200,7 @@ class _StartPageState extends State<StartPage> {
                           image: AppImages.camara, title: AppLocalizations.of(context)!.text_city_council_services,),
                     ],
                   ),
-                ),
+                ),*/
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -260,7 +260,7 @@ class _StartPageState extends State<StartPage> {
                       } else {
                         return Container(
                           margin: EdgeInsets.only(top: Get.height * 0.012),
-                          height: Get.height * 0.5,
+                          height: Get.height * 0.62,
                           child: ListView.builder(
                             padding: EdgeInsets.only(
                               top: 0.0,

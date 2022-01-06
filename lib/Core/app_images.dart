@@ -16,11 +16,11 @@ class AppImages {
    static const appLogoIcon = 'assets/images/icon @2x.png';
   static const ilhasWhite = 'https://www.mandabai.com/wp-content/uploads/2021/12/ilhasWhite.png';
   static const messenger_logo = 'https://www.mandabai.com/wp-content/uploads/2021/12/messenger_logo.png';
-  static const whatsapp_logo = 'https://www.mandabai.com/wp-content/uploads/2021/12/whatsapp_logo.png';
+  static const whatsapp_logo = 'assets/images/whatsapp_logo.png';
   static const gmail_logo = 'https://www.mandabai.com/wp-content/uploads/2021/12/gmail_logo.png';
   static const instagram_logo = 'https://www.mandabai.com/wp-content/uploads/2021/12/instagram_logo.png';
   static const facebook_logo = 'https://www.mandabai.com/wp-content/uploads/2021/12/facebook_logo.png';
-  static const viber_logo = 'https://www.mandabai.com/wp-content/uploads/2021/12/viber_logo.png';
+  static const viber_logo = 'assets/images/viber_logo.png';
   static const order_finish ='https://www.mandabai.com/wp-content/uploads/2021/12/completed.png';
   static const order_pendent ='https://www.mandabai.com/wp-content/uploads/2021/12/processing.png';
 }

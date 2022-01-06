@@ -205,7 +205,7 @@ class _ContactPageState extends State<ContactPage> {
                         children: [
                           Flexible(
                             flex: 1,
-                            child: Image.network(
+                            child: Image.asset(
                               AppImages.whatsapp_logo,
                               height: Get.height * 0.08,
                               width: Get.width * 0.08,

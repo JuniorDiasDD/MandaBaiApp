@@ -120,26 +120,27 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: ColoredCircleComponent(),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 33.0),
+                      margin: const EdgeInsets.only(top: 33.0),
                       width: Get.width,
                       child: IconButton(
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        icon: Icon(Icons.arrow_back),
+                        icon: const Icon(Icons.arrow_back,color:Colors.black,),
                         alignment: Alignment.topLeft,
                       ),
                     ),
                   ],
                 ),
-                Image.network(
-                  AppImages.appLogo2,
+                Image.asset(
+                  AppImages.appLogoIcon,
                   width: Get.width * 0.6,
                   height: Get.height * 0.1,
                 ),
                 SizedBox(
                   height: Get.height * 0.03,
                 ),
+                 
                 Padding(
                   padding: EdgeInsets.only(
                     left: Get.width * 0.05,
@@ -149,6 +150,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     key: _formKey,
                     child: Column(
                       children: [
+                        Text(
+                     AppLocalizations.of(context)!.text_registre,
+                      style: Theme.of(context).textTheme.headline2,
+                    ),
+                     SizedBox(
+                  height: Get.height * 0.02,
+                ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
