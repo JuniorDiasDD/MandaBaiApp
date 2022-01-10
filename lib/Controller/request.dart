@@ -379,28 +379,46 @@ class ServiceRequest {
     });
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var id = prefs.getString('id');
+     await http.post(Uri.parse(request_login),
+      body: {'username': user.username, 'password': user.senha});
     var response = await http.put(
         Uri.parse(updateUser + id.toString() + "?" + key),
         headers: headers,
         body: data);
 
     if (response.statusCode == 200) {
+     await http.post(Uri.parse(request_login_SantoAntao),
+          body: {'username': user.username, 'password': user.senha});
       await http.put(Uri.parse(getUserSantoAntao + id.toString() + "?" + key),
           headers: headers, body: data);
+     await http.post(Uri.parse(request_login_SaoNicolau),
+         body: {'username': user.username, 'password': user.senha});
       await http.put(Uri.parse(getUserSaoNicolau + id.toString() + "?" + key),
           headers: headers, body: data);
+     await http.post(Uri.parse(request_login_SaoVicente),
+         body: {'username': user.username, 'password': user.senha});
       await http.put(Uri.parse(getUserSaoVicente + id.toString() + "?" + key),
           headers: headers, body: data);
+     await http.post(Uri.parse(request_login_BoaVista),
+         body: {'username': user.username, 'password': user.senha});
       await http.put(Uri.parse(getUserBoaVista + id.toString() + "?" + key),
           headers: headers, body: data);
+     await http.post(Uri.parse(request_login_Sal),
+         body: {'username': user.username, 'password': user.senha});
       await http.put(Uri.parse(getUserSal + id.toString() + "?" + key),
           headers: headers, body: data);
+     await http.post(Uri.parse(request_login_Maio),
+         body: {'username': user.username, 'password': user.senha});
       await http.put(Uri.parse(getUserMaio + id.toString() + "?" + key),
           headers: headers, body: data);
+     await http.post(Uri.parse(request_login_Fogo),
+         body: {'username': user.username, 'password': user.senha});
       await http.put(Uri.parse(getUserSantiago + id.toString() + "?" + key),
           headers: headers, body: data);
       await http.put(Uri.parse(getUserFogo + id.toString() + "?" + key),
           headers: headers, body: data);
+     await http.post(Uri.parse(request_login_Brava),
+         body: {'username': user.username, 'password': user.senha});
       await http.put(Uri.parse(getUserBrava + id.toString() + "?" + key),
           headers: headers, body: data);
       return true;

@@ -102,7 +102,7 @@ class InfoApp extends StatelessWidget {
                             ItemDeveloper(
                                 image:
                                     "https://www.mandabai.com/wp-content/uploads/2022/01/avatar_rossana.jpg",
-                                name: "Rossana Mendes",
+                                name: "Rossana Mendes de Pina",
                                 cargo: AppLocalizations.of(context)!
                                     .info_app_func_desn),
                             ItemDeveloper(
