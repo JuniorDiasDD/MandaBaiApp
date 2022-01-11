@@ -125,8 +125,8 @@ class _Item_BioState extends State<Item_Bio> {
                         const SizedBox(width: 5),
                         Row(
                           children: [
-                            Image.network(
-                              AppImages.gmail_logo,
+                            Image.asset(
+                              AppImages.appLogoGmail,
                               height: Get.height * 0.03,
                               width: Get.width * 0.03,
                             ),

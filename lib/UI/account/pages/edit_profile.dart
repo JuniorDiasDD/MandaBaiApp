@@ -10,6 +10,7 @@ import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
+import 'package:manda_bai/UI/home/pages/home_page.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -32,13 +33,15 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
   XFile? comprovante;
   bool statePassword = true;
   bool statePasswordconf = true;
-  bool checkPassword = true, alterado = false, loading = false;
+  bool checkPassword = true, alterado = false, loading = false,atualizar_image=false;
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
+      bool updateUser=false;
       if (input_senha.text != user.senha) {
         if (input_senha == input_senha_conf) {
           alterado = true;
+          updateUser=true;
           user.senha = input_senha.text;
           if (input_email.text != user.email) {
             user.email = input_email.text;
@@ -68,31 +71,31 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
           checkPassword = true;
         });
         if (input_city.text != user.city) {
+          updateUser=true;
           user.city = input_city.text;
         }
         if (input_country.text != user.country) {
+          updateUser=true;
           user.country = input_country.text;
         }
         if (input_email.text != user.email) {
+          updateUser=true;
           user.email = input_email.text;
         }
         if (input_nome.text != user.name) {
+          updateUser=true;
           user.name = input_nome.text;
         }
         if (input_numero.text != user.telefone) {
+          updateUser=true;
           user.telefone = input_numero.text;
         }
       }
-      if (checkPassword == true) {
+      if (checkPassword == true && updateUser==true) {
         setState(() {
           loading = true;
         });
-        /*if (comprovante != null) {
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
-          final bytes = File(comprovante!.path).readAsBytesSync();
-          String base64Image = base64Encode(bytes);
-          prefs.setString("image", base64Image);
-        }*/
+
         bool check = await ServiceRequest.updateAccount();
         if (check) {
           setState(() {
@@ -120,6 +123,13 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                     icon: Icons.error,
                     caminho: "erro");
               });
+        }
+      }else{
+        if(atualizar_image==true){
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => HomePage(index: 3)));
         }
       }
       // print('Form is valid');
@@ -165,7 +175,12 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                   margin: EdgeInsets.only(top: Get.height * 0.05),
                   width: Get.width,
                   child: IconButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      if(atualizar_image==true){
+                        final SharedPreferences prefs = await SharedPreferences.getInstance();
+                        prefs.remove("image");
+                      }
+
                       Navigator.pop(context);
                     },
                     icon: Icon(Icons.arrow_back),
@@ -237,13 +252,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                                         image: NetworkImage(user.avatar),
                                       ),
                                     ),
-                                    /*child: comprovante != null
-                          ? Image.file(File(comprovante!.path), width: Get.width * 0.2,)
-                          : Image.network(
-                              user.avatar,
-                              width: Get.width * 0.2,
-                              alignment: Alignment.center,
-                            ),*/
+
                                   ),
                           );
                       }
@@ -612,6 +621,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
           String base64Image = base64Encode(bytes);
           prefs.setString("image", base64Image);
         setState(() {
+          atualizar_image=true;
           comprovante = file;
         });
       }

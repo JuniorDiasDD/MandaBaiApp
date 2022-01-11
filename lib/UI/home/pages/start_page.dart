@@ -8,6 +8,7 @@ import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
+import 'package:manda_bai/UI/about/pages/info_page.dart';
 import 'package:manda_bai/UI/home/components/item_category.dart';
 import 'package:manda_bai/UI/home/components/item_new.dart';
 import 'package:manda_bai/data/madaBaiData.dart';
@@ -201,18 +202,29 @@ class _StartPageState extends State<StartPage> {
                     ],
                   ),
                 ),*/
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(
-                          top: Get.height * 0.01, left: Get.width * 0.023),
-                      child: Text(
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Text(
                         AppLocalizations.of(context)!.title_categories,
                         style: Theme.of(context).textTheme.headline1,
                       ),
-                    ),
-                  ],
+                      const Spacer(),
+                      GestureDetector(
+                          onTap: () {
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => InfoPage(),
+                              ),
+                            );
+
+                          },
+                          child: Image.asset(AppImages.appLogoSem,width: Get.width*0.3,)),
+                    ],
+                  ),
                 ),
                 FutureBuilder(
                   future: _carregarCategory(),

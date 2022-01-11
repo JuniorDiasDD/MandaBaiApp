@@ -348,7 +348,7 @@ class ServiceRequest {
     };
 
     var data = json.encode({
-      "email": user.email,
+      "user_email": user.email,
       "first_name": user.name,
       "last_name": user.nickname,
       "password": user.senha,
@@ -381,11 +381,13 @@ class ServiceRequest {
     var id = prefs.getString('id');
      await http.post(Uri.parse(request_login),
       body: {'username': user.username, 'password': user.senha});
-    var response = await http.put(
+
+    var response= await http.put(
         Uri.parse(updateUser + id.toString() + "?" + key),
         headers: headers,
         body: data);
-
+    //  print(response.body);
+   //   print(data.toString());
     if (response.statusCode == 200) {
      await http.post(Uri.parse(request_login_SantoAntao),
           body: {'username': user.username, 'password': user.senha});
