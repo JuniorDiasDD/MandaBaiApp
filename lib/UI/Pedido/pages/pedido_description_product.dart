@@ -24,7 +24,6 @@ class _PedidoDescriptionProductState extends State<PedidoDescriptionProduct> {
     }
     return product;
   }
-
   var money_txt;
   Future _carregarMoney() async {
      final SharedPreferences prefs = await SharedPreferences.getInstance();

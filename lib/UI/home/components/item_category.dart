@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Model/category.dart';
 import 'package:manda_bai/UI/category_filter/pages/category_page.dart';
-import 'package:manda_bai/UI/home/pages/start_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class ListViewItemComponent extends StatefulWidget {
   Category category;
   ListViewItemComponent({required this.category});
@@ -20,7 +19,10 @@ class _ListViewItemComponentState extends State<ListViewItemComponent> {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => CategoryPage(category: widget.category,filter_most: AppLocalizations.of(context)!.filter_more_price,filter_less: AppLocalizations.of(context)!.filter_less_price),
+          builder: (context) => CategoryPage(
+              category: widget.category,
+              filter_most: AppLocalizations.of(context)!.filter_more_price,
+              filter_less: AppLocalizations.of(context)!.filter_less_price),
         ),
       ),
       child: Padding(
@@ -49,8 +51,8 @@ class _ListViewItemComponentState extends State<ListViewItemComponent> {
           width: Get.width,
           height: Get.height * 0.2,
           child: Padding(
-            padding: EdgeInsets.only(
-                left: Get.width * 0.01, top: Get.height * 0.15),
+            padding:
+                EdgeInsets.only(left: Get.width * 0.01, top: Get.height * 0.15),
             child: Text(
               widget.category.name,
               textAlign: TextAlign.start,

@@ -51,7 +51,6 @@ class ServiceRequest {
         response = await http.get(Uri.parse(categoriasBrava));
         break;
     }
-    // print(response.body);
     if (response.statusCode == 200) {
       var jsonResponse = json.decode(response.body);
       final _cats = jsonResponse.cast<Map<String, dynamic>>();
@@ -113,12 +112,11 @@ class ServiceRequest {
             await http.get(Uri.parse(productCategoriasBrava + id.toString()));
         break;
     }
-    //  print(island.toString() + "-" + id.toString() + "\n-" + response.body);
+
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       if (jsonResponse != "[]") {
         var quantidade = response.headers['x-wp-total'];
-        //  print("\n-" + quantidade.toString() + "-" + id.toString());
         int total_wp = int.parse(quantidade);
         if (total_wp < 101) {
           switch (island) {
@@ -265,7 +263,6 @@ class ServiceRequest {
     } else {
       print("Erro de authentiction");
     }
-    print(list.length.toString());
     return list;
   }
 
@@ -386,8 +383,7 @@ class ServiceRequest {
         Uri.parse(updateUser + id.toString() + "?" + key),
         headers: headers,
         body: data);
-    //  print(response.body);
-   //   print(data.toString());
+
     if (response.statusCode == 200) {
      await http.post(Uri.parse(request_login_SantoAntao),
           body: {'username': user.username, 'password': user.senha});
@@ -437,7 +433,7 @@ class ServiceRequest {
   static Future login(username, password) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var island = prefs.getString('island');
-//print(island);
+
     var response;
     // response = await http.post(Uri.parse(request_login),
     //   body: {'username': username, 'password': password});
@@ -480,7 +476,6 @@ class ServiceRequest {
         break;
     }
 
-    print(response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -655,10 +650,8 @@ class ServiceRequest {
 
       case "Santiago":
         {
-          //  print("santiago login cocart");
           response = await http.post(Uri.parse(request_login_Santiago),
               body: {'username': user.username, 'password': user.senha});
-          // print(response.body);
           responseCocart = await http.post(
               Uri.parse(request_loginCocart_Santiago),
               body: {'username': user.username, 'password': user.senha});
@@ -678,14 +671,13 @@ class ServiceRequest {
         {
           response = await http.post(Uri.parse(request_login_Brava),
               body: {'username': user.username, 'password': user.senha});
-          //  print(request_loginCocart_Brava);
           responseCocart = await http.post(Uri.parse(request_loginCocart_Brava),
               body: {'username': user.username, 'password': user.senha});
           break;
         }
     }
-    //  print(response.body);
-    print("Cocart:" + responseCocart.statusCode.toString());
+
+    //print("Cocart:" + responseCocart.statusCode.toString());
     return responseCocart.statusCode;
   }
   //! Get User
@@ -772,8 +764,6 @@ class ServiceRequest {
     /* var response = await http.post(Uri.parse(
       getUser + id.toString() + "?" + key,
     ));*/
-
-    // print(response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
 
@@ -806,7 +796,6 @@ class ServiceRequest {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     do {
       var loginCocart = await loginCoCart();
-      //  print(loginCocart.toString()+"cocart:");
       String basicAuth = 'Basic ' +
           base64Encode(utf8.encode(user.username + ':' + user.senha));
       var island = prefs.getString('island');
@@ -851,9 +840,6 @@ class ServiceRequest {
                 headers: <String, String>{'authorization': basicAuth});
             break;
         }
-
-        // print(response.body);
-        // print(response.statusCode);
         if (response.statusCode == 200) {
           final jsonResponse = json.decode(response.body);
           final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();
@@ -881,8 +867,6 @@ class ServiceRequest {
     String basicAuth =
         'Basic ' + base64Encode(utf8.encode(user.username + ':' + user.senha));
     var island = prefs.getString('island');
-
-    var response;
     switch (island) {
       case "Santo Antão":
         {
@@ -890,7 +874,7 @@ class ServiceRequest {
             var response = await http.delete(
                 Uri.parse(removeItemCartSantoAntao + list_item[i]),
                 headers: <String, String>{'authorization': basicAuth});
-            // print(response.body);
+
 
             if (response.statusCode == 200) {
               final jsonResponse = json.decode(response.body);
@@ -912,8 +896,6 @@ class ServiceRequest {
             var response = await http.delete(
                 Uri.parse(removeItemCartSaoVicente + list_item[i]),
                 headers: <String, String>{'authorization': basicAuth});
-            // print(response.body);
-
             if (response.statusCode == 200) {
               final jsonResponse = json.decode(response.body);
               final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();
@@ -934,8 +916,6 @@ class ServiceRequest {
             var response = await http.delete(
                 Uri.parse(removeItemCartSaoNicolau + list_item[i]),
                 headers: <String, String>{'authorization': basicAuth});
-            // print(response.body);
-
             if (response.statusCode == 200) {
               final jsonResponse = json.decode(response.body);
               final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();
@@ -956,8 +936,6 @@ class ServiceRequest {
             var response = await http.delete(
                 Uri.parse(removeItemCartBoaVista + list_item[i]),
                 headers: <String, String>{'authorization': basicAuth});
-            // print(response.body);
-
             if (response.statusCode == 200) {
               final jsonResponse = json.decode(response.body);
               final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();
@@ -978,8 +956,6 @@ class ServiceRequest {
             var response = await http.delete(
                 Uri.parse(removeItemCartSal + list_item[i]),
                 headers: <String, String>{'authorization': basicAuth});
-            // print(response.body);
-
             if (response.statusCode == 200) {
               final jsonResponse = json.decode(response.body);
               final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();
@@ -1000,8 +976,6 @@ class ServiceRequest {
             var response = await http.delete(
                 Uri.parse(removeItemCartMaio + list_item[i]),
                 headers: <String, String>{'authorization': basicAuth});
-            // print(response.body);
-
             if (response.statusCode == 200) {
               final jsonResponse = json.decode(response.body);
               final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();
@@ -1022,8 +996,6 @@ class ServiceRequest {
             var response = await http.delete(
                 Uri.parse(removeItemCartSantiago + list_item[i]),
                 headers: <String, String>{'authorization': basicAuth});
-            // print(response.body);
-
             if (response.statusCode == 200) {
               final jsonResponse = json.decode(response.body);
               final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();
@@ -1044,8 +1016,6 @@ class ServiceRequest {
             var response = await http.delete(
                 Uri.parse(removeItemCartFogo + list_item[i]),
                 headers: <String, String>{'authorization': basicAuth});
-            // print(response.body);
-
             if (response.statusCode == 200) {
               final jsonResponse = json.decode(response.body);
               final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();
@@ -1067,8 +1037,6 @@ class ServiceRequest {
             var response = await http.delete(
                 Uri.parse(removeItemCartBrava + list_item[i]),
                 headers: <String, String>{'authorization': basicAuth});
-            // print(response.body);
-
             if (response.statusCode == 200) {
               final jsonResponse = json.decode(response.body);
               final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();
@@ -1146,9 +1114,7 @@ class ServiceRequest {
               body: {'id': item.toString(), 'quantity': quant.toString()});
           break;
       }
-
       if (response.statusCode == 200) {
-        //  final jsonResponse = json.decode(response.body);
         return true;
       } else if (response.statusCode == 503) {
         print("Erro de serviço");
@@ -1223,8 +1189,6 @@ class ServiceRequest {
         if (listFavorites[i].island == island) {
           var response = await http.get(Uri.parse(
               get_Produto + listFavorites[i].id.toString() + "?" + key));
-
-          //  print(response.body);
           if (response.statusCode == 200) {
             final jsonResponse = json.decode(response.body);
             list.add(Product(
@@ -1255,16 +1219,11 @@ class ServiceRequest {
     List<Location> list = [];
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    // await prefs.remove('itens_location');
     final String? itemLocationString = prefs.getString('itens_location');
     if (itemLocationString != null) {
-      //  print("nao vazio");
       // decode and store data in SharedPreferencesSS
       List<Location> list = Location.decode(itemLocationString);
       return list;
-    } else {
-      print("vaziooo");
     }
     return list;
   }
@@ -1297,7 +1256,6 @@ class ServiceRequest {
     if (itemLocationString != null) {
       List<Location> list = Location.decode(itemLocationString);
       for (int i = 0; i < list.length; i++) {
-        // print("-" + list[i].name);
         if (list[i].id == new_location.id) {
           return true;
         }
@@ -1438,7 +1396,7 @@ class ServiceRequest {
           }
       }
       if (response.statusCode == 200) {
-        print("login:"+response.body);
+      //  print("login:"+response.body);
         final jsonResponse = json.decode(response.body);
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         id = jsonResponse["data"]["ID"].toString();
@@ -1483,7 +1441,6 @@ class ServiceRequest {
             .get(Uri.parse(getOrderBrava + "&customer=" + id.toString()));
         break;
     }
-      print("pedidos:"+response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       final _cats = jsonResponse.cast<Map<String, dynamic>>();
@@ -1562,7 +1519,6 @@ class ServiceRequest {
         ]
       });
     } else {
-      print("cupon" + isCheckedPromocao.toString());
       if (isCheckedPromocao == true) {
         data = json.encode({
           "customer_id": id.toString(),
@@ -1648,8 +1604,6 @@ class ServiceRequest {
         });
       }
     }
-
-    print("order:" + data.toString());
     /*   var response =
         await http.post(Uri.parse(getOrder), headers: headers, body: data);*/
     var island = prefs.getString('island');
@@ -1692,8 +1646,6 @@ class ServiceRequest {
             headers: headers, body: data);
         break;
     }
-    print(response.statusCode);
-    print(response.body);
     if (response.statusCode == 201) {
       final jsonResponse = json.decode(response.body);
       return jsonResponse["id"];
@@ -1752,7 +1704,6 @@ class ServiceRequest {
         break;
     }
     // var response = await http.get(Uri.parse(getOrderId + order + "?" + key));
-    print(response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       return jsonResponse["status"];
@@ -1768,8 +1719,6 @@ class ServiceRequest {
   static Future loadProductbyId(id) async {
     var response =
         await http.get(Uri.parse(get_Produto + id.toString() + "?" + key));
-
-    //  print(response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       Product novo = new Product(

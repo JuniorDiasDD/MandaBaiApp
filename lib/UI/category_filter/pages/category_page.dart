@@ -33,7 +33,6 @@ class _CategoryPageState extends State<CategoryPage> {
   String dropdownValue = '';
   List<String> list_filter = [];
   _search() {
-    // print("click");
     list_product = [];
     setState(() {
       for (int i = 0; i < list_product_full.length; i++) {

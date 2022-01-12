@@ -59,7 +59,7 @@ class _ItemLocationState extends State<ItemLocation> {
                 color: Theme.of(context).cardColor,
                 blurRadius: 1.0,
                 spreadRadius: 0.0,
-                offset: Offset(0.5, 0.5),
+                offset: const Offset(0.5, 0.5),
               ),
             ],
           ),
@@ -122,7 +122,7 @@ class _ItemLocationState extends State<ItemLocation> {
                 ),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.location_on_outlined,
                     ),
                     Text(
@@ -146,7 +146,7 @@ class _ItemLocationState extends State<ItemLocation> {
                 ),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.phone,
                     ),
                     Text(
@@ -158,17 +158,6 @@ class _ItemLocationState extends State<ItemLocation> {
                 SizedBox(
                   height: Get.height * 0.01,
                 ),
-               /* Row(
-                  children: [
-                    Icon(
-                      Icons.email,
-                    ),
-                    Text(
-                      widget.location.email,
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
-                  ],
-                ),*/
               ],
             ),
           ),

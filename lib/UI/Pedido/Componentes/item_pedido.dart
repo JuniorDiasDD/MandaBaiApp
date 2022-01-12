@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/order.dart';
-import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/Pedido/Componentes/item_list_order.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -17,7 +16,7 @@ class _Item_PedidoState extends State<Item_Pedido> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(10.0),
       child: Container(
         margin: EdgeInsets.only(
           left: Get.width * 0.01,
@@ -31,7 +30,7 @@ class _Item_PedidoState extends State<Item_Pedido> {
               color: Theme.of(context).cardColor,
               blurRadius: 1.0,
               spreadRadius: 0.0,
-              offset: Offset(0.5, 0.5),
+              offset: const Offset(0.5, 0.5),
             ),
           ],
         ),

@@ -132,9 +132,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                   builder: (context) => HomePage(index: 3)));
         }
       }
-      // print('Form is valid');
-    } else {
-      print('Form is invalid');
+
     }
   }
 

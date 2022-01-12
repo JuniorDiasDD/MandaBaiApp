@@ -15,7 +15,6 @@ import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 import 'package:readmore/readmore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class CheckoutPageStep2 extends StatefulWidget {
   var location;
@@ -56,14 +55,6 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                     icon: Icons.error,
                     caminho: "erro");
               });
-          /* return showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return Pop_up_Message(
-                    mensagem: AppLocalizations.of(context)!.message_success_order,
-                    icon: Icons.check,
-                    caminho: "encomenda");
-              });*/
         } else if (check == "Erro de cupom") {
           cartPageController.loading = false;
           return showDialog(
@@ -86,31 +77,14 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
               });
         } else {
           cartPageController.loading = false;
-          cartPageController.order=check.toString();
+          cartPageController.order = check.toString();
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => WebViewPage(sub:island),
+              builder: (context) => WebViewPage(sub: island),
             ),
           );
-          /*            var response= await launch("https://mandabai.herokuapp.com/site/checkout?order="+check.toString());
-         if(response=="https://mandabai.herokuapp.com/site/completed"){
-           return showDialog(
-               context: context,
-               builder: (BuildContext context) {
-                 return Pop_up_Message(
-                     mensagem: AppLocalizations.of(context)!.message_success_order,
-                     icon: Icons.check,
-                     caminho: "encomenda");
-               });
-         }*/
         }
-        /*Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => CheckoutPageStep3(location: widget.location),
-          ),
-        );*/
       } else {
         return showDialog(
             context: context,
@@ -122,24 +96,10 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                   caminho: "erro");
             });
       }
-      print('Form is valid');
-    } else {
-      print('Form is invalid');
     }
   }
 
   List<Location> list_location = [];
-  Future _carregarLocation() async {
-    if (list_location.isEmpty) {
-      list_location = await ServiceRequest.loadLocation();
-
-      if (list_location.isEmpty) {
-        return null;
-      }
-    }
-    return list_location;
-  }
-
   String island = "";
   Future _carregarIsland() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

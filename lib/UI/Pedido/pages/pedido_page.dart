@@ -15,7 +15,6 @@ class PedidoPage extends StatefulWidget {
 class _PedidoPageState extends State<PedidoPage> {
   List<Order> list_order = [];
   Future _carregar() async {
-    print("entrou crregar");
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var island = prefs.getString('island');
     if (dropdownValue == island.toString()) {
@@ -26,7 +25,6 @@ class _PedidoPageState extends State<PedidoPage> {
         }
       }
     }
-
     return list_order;
   }
 
@@ -44,8 +42,6 @@ class _PedidoPageState extends State<PedidoPage> {
         loading = true;
       });
     }
-
-    print("filter");
     list_order = await ServiceRequest.loadOrder(dropdownValue);
     if (list_order.isEmpty) {
       setState(() {
@@ -61,7 +57,6 @@ class _PedidoPageState extends State<PedidoPage> {
 
     return list_order;
   }
-
   String dropdownValue = 'Santiago';
   List<String> list_island = [
     'Santo Antão',
@@ -97,16 +92,14 @@ class _PedidoPageState extends State<PedidoPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      child: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back,
-                        ),
-                        alignment: Alignment.centerRight,
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back,
                       ),
+                      alignment: Alignment.centerRight,
                     ),
                     Text(
                       AppLocalizations.of(context)!.text_my_orders,
@@ -118,11 +111,11 @@ class _PedidoPageState extends State<PedidoPage> {
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.all(15.0),
                   child: Row(
                     //mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.circle,
                         color: Colors.orange,
                         size: 10,
@@ -134,8 +127,8 @@ class _PedidoPageState extends State<PedidoPage> {
                             .headline4!
                             .copyWith(fontSize: Get.width * 0.03),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 8.0),
                         child: Icon(
                           Icons.circle,
                           color: Colors.green,
@@ -235,7 +228,7 @@ class _PedidoPageState extends State<PedidoPage> {
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.waiting:
-                        return Container(
+                        return SizedBox(
                           height: Get.height * 0.2,
                           width: Get.width,
                           child: Center(
@@ -249,7 +242,7 @@ class _PedidoPageState extends State<PedidoPage> {
                         );
                       default:
                         if (snapshot.data == null) {
-                          return Container(
+                          return SizedBox(
                             height: Get.height * 0.5,
                             width: Get.width,
                             child: Center(
@@ -260,7 +253,7 @@ class _PedidoPageState extends State<PedidoPage> {
                             ),
                           );
                         } else {
-                          return Container(
+                          return SizedBox(
                             height: Get.height * 0.85,
                             child: ListView.builder(
                               padding: EdgeInsets.only(

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
@@ -229,58 +228,6 @@ class _ContactPageState extends State<ContactPage> {
                     ),
                   ),
                 ),
-                /*  SizedBox(height: Get.height * 0.02),
-                Container(
-                  height: Get.height * 0.07,
-                  width: Get.width * 0.7,
-                  decoration: BoxDecoration(
-                    color: AppColors.greenColor,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).cardColor,
-                        blurRadius: 4.0,
-                        spreadRadius: 0.0,
-                        offset: Offset(2.0, 2.0), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: TextButton(
-                      onPressed: () {
-                        abrirViber();
-                      },
-                      child: Row(
-                        children: [
-                          Flexible(
-                            flex: 1,
-                            child: Image.asset(
-                              AppImages.viber_logo,
-                              height: Get.height * 0.08,
-                              width: Get.width * 0.08,
-                            ),
-                          ),
-                          Flexible(
-                            flex: 4,
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                'Conversar pelo Viber',
-                                style: TextStyle(
-                                    fontFamily: AppFonts.poppinsBoldFont,
-                                    fontSize: Get.width * 0.035,
-                                    color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),*/
                 SizedBox(height: Get.height * 0.02),
                 Container(
                   height: Get.height * 0.07,

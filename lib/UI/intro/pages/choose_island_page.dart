@@ -2,14 +2,11 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Core/app_colors.dart';
-import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:websafe_svg/websafe_svg.dart';
 
 
 class ChooseIsland extends StatefulWidget {
@@ -34,7 +31,6 @@ class _ChooseIslandState extends State<ChooseIsland> {
   ];
   @override
   Widget build(BuildContext context) {
-    var child;
     return Scaffold(
       body: Column(
        
@@ -56,18 +52,6 @@ class _ChooseIslandState extends State<ChooseIsland> {
                     width: Get.width * 0.99,
                   ),
                 ),
-               /* Padding(
-                  padding:
-                      const EdgeInsets.only(top: 5.0, right: 150.0, left: 1.0),
-                  child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: WebsafeSvg.asset(
-                      AppImages.homem,
-                      height: Get.height * 0.4,
-                      width: Get.width * 0.01,
-                    ),
-                  ),
-                ),*/
               ],
             ),
           ),
@@ -123,7 +107,7 @@ class _ChooseIslandState extends State<ChooseIsland> {
       bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(" "),
+          const Spacer(),
           Padding(
             padding: EdgeInsets.only(
               right: 15,
@@ -146,7 +130,6 @@ class _ChooseIslandState extends State<ChooseIsland> {
 
   _navigacao() async {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-  
     await prefs.setString('onboarding', 'true');
     await prefs.setString('island', dropdownValue);
     Navigator.pushReplacementNamed(context, '/home');

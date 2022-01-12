@@ -11,13 +11,7 @@ User user = new User(
     city: "",
     country: "");
 
-String ver_dados_pessoais = "Dados Pessoais \n Nome: " +
-    user.name +
-    "\n Email: " +
-    user.email +
-    "\n Telefone: " +
-    user.telefone +
-    "\n Morada: \n"+user.city;
+
 
 //! Configuração de serviços
 //?links- urls

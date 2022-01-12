@@ -3,14 +3,12 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/Favorite/controller/favorite_controller.dart';
-import 'package:manda_bai/UI/home/pages/home_page.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ItemFavoriteComponent extends StatefulWidget {
-  // final CartPageController cartPageController = Get.find();
   Product product;
   ItemFavoriteComponent({Key? key, required this.product}) : super(key: key);
 
@@ -97,10 +95,14 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                                       children: [
                                         Text(
                                           money == "ECV"
-                                              ? widget.product.price.toStringAsFixed(0)
-                                              : widget.product.price.toStringAsFixed(2),
+                                              ? widget.product.price
+                                                  .toStringAsFixed(0)
+                                              : widget.product.price
+                                                  .toStringAsFixed(2),
                                           textAlign: TextAlign.center,
-                                          style: Theme.of(context).textTheme.headline5,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline5,
                                         ),
                                         Text(
                                           " " + money,
@@ -134,7 +136,6 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                                   controller.loading = true;
                                 });
                                 var check = await _addCart(widget.product.id);
-                                print(check.toString());
                                 if (check == true) {
                                   setState(() {
                                     controller.loading = false;
@@ -177,16 +178,10 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                               setState(() {
                                 ServiceRequest.removeFavrite(widget.product.id);
                                 setState(() {
-                                  bool check=controller.remover(widget.product.id);
-                                  controller.vazio=check;
+                                  bool check =
+                                      controller.remover(widget.product.id);
+                                  controller.vazio = check;
                                 });
-
-
-                                /*Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            HomePage(index: 2)));*/
                               });
                             },
                             icon: const Icon(

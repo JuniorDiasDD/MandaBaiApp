@@ -202,7 +202,6 @@ class _ProductListComponentState extends State<ProductListComponent> {
                                     });
                                     var check =
                                         await _addCart(widget.product.id);
-                                    print(check.toString());
                                     if (check == true) {
                                       setState(() {
                                         controller.loading = false;

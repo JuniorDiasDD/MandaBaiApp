@@ -20,8 +20,6 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
-    } else {
-      print('Form is invalid');
     }
   }
 

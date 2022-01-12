@@ -1,11 +1,9 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Model/location.dart';
-import 'package:manda_bai/UI/cart/pages/checkout_page_step_2.dart';
 import 'package:manda_bai/UI/location_destination/components/popup_info.dart';
 import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -42,7 +40,7 @@ class _NewDestinationState extends State<NewDestination> {
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
-      Location novo = new Location(
+      Location novo = Location(
           id: 1,
           name: input_nome.text,
           city: input_cidade.text,
@@ -60,15 +58,11 @@ class _NewDestinationState extends State<NewDestination> {
             MaterialPageRoute(
                 builder: (context) => Destination_Page(route: widget.route)));
       }
-      print('Form is valid');
-    } else {
-      print('Form is invalid');
     }
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     if (widget.location != null) {
       input_nome.text = widget.location!.name;
@@ -115,7 +109,7 @@ class _NewDestinationState extends State<NewDestination> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return PopupInfo();
+                          return const PopupInfo();
                         },
                       );
                     },
@@ -162,10 +156,10 @@ class _NewDestinationState extends State<NewDestination> {
                           labelStyle: Theme.of(context).textTheme.headline4,
                           filled: true,
                           fillColor: Theme.of(context).backgroundColor,
-                          border: OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(15.0),
+                          border:  OutlineInputBorder(
+                            borderRadius:  BorderRadius.circular(15.0),
                             borderSide:
-                                new BorderSide(color: Colors.red, width: 2.0),
+                                 const BorderSide(color: Colors.red, width: 2.0),
                           ),
                         ),
                         validator: (value) => value!.isEmpty
@@ -231,8 +225,8 @@ class _NewDestinationState extends State<NewDestination> {
                           filled: true,
                           fillColor: Theme.of(context).backgroundColor,
                           border: OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(15.0),
-                            borderSide: new BorderSide(),
+                            borderRadius:  BorderRadius.circular(15.0),
+                            borderSide: const BorderSide(),
                           ),
                         ),
                         validator: (value) => value!.isEmpty
@@ -252,8 +246,8 @@ class _NewDestinationState extends State<NewDestination> {
                           filled: true,
                           fillColor: Theme.of(context).backgroundColor,
                           border: OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(15.0),
-                            borderSide: new BorderSide(),
+                            borderRadius:  BorderRadius.circular(15.0),
+                            borderSide: const BorderSide(),
                           ),
                         ),
                         validator: (value) => value!.isEmpty
@@ -283,8 +277,8 @@ class _NewDestinationState extends State<NewDestination> {
                             ), // icon is 48px widget.
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(15.0),
-                            borderSide: new BorderSide(
+                            borderRadius:  BorderRadius.circular(15.0),
+                            borderSide: const BorderSide(
                               color: Colors.red,
                             ),
                           ),
@@ -302,11 +296,10 @@ class _NewDestinationState extends State<NewDestination> {
         ),
       ),
       bottomNavigationBar: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(" "),
+          const Spacer(),
           Padding(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               right: 15,
               bottom: 10,
             ),
@@ -315,7 +308,7 @@ class _NewDestinationState extends State<NewDestination> {
               width: Get.width * 0.4,
               decoration: BoxDecoration(
                 color: AppColors.greenColor,
-                borderRadius: BorderRadius.all(
+                borderRadius:const BorderRadius.all(
                   Radius.circular(35),
                 ),
                 boxShadow: [
@@ -323,7 +316,7 @@ class _NewDestinationState extends State<NewDestination> {
                     color: Theme.of(context).cardColor,
                     blurRadius: 2.0,
                     spreadRadius: 0.0,
-                    offset: Offset(2.0, 2.0), // changes position of shadow
+                    offset: const Offset(2.0, 2.0), // changes position of shadow
                   ),
                 ],
               ),

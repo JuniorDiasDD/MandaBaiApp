@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
 import 'package:manda_bai/Model/order.dart';
 import 'package:manda_bai/UI/Pedido/pages/pedido_description_product.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -26,8 +25,8 @@ class _ItemListOrderState extends State<ItemListOrder> {
         );
       },
       child: Padding(
-        padding: EdgeInsets.only(left: 20.0, right: 20.0),
-        child: Container(
+        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+        child: SizedBox(
           width: Get.width,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -47,7 +46,7 @@ class _ItemListOrderState extends State<ItemListOrder> {
                     ),
                   ],
                 ),
-                SizedBox(height: 5.0),
+                const SizedBox(height: 5.0),
                 Text(
                    AppLocalizations.of(context)!
                                         .text_amount+ widget.items.quantity.toString(),

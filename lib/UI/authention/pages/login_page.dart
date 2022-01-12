@@ -56,10 +56,6 @@ class _LoginPageState extends State<LoginPage> {
                   caminho: "erro");
             });
       }
-
-      //print('Form is valid');
-    } else {
-      print('Form is invalid');
     }
   }
 
@@ -281,7 +277,7 @@ class _LoginPageState extends State<LoginPage> {
                                       setState(() {
                                         _isLoggedIn = true;
                                         _userObj = userData!;
-                                        print('--' + _userObj.email);
+
                                       });
                                     }).catchError((e) {
                                       print(e);

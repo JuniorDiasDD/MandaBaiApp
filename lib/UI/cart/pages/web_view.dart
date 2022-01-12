@@ -136,19 +136,6 @@ class _WebViewPageState extends State<WebViewPage> {
               },
               javascriptMode: JavascriptMode.unrestricted,
               gestureNavigationEnabled: false,
-
-              /* navigationDelegate: (NavigationRequest request) {
-                  print(request.url);
-                  if (request.url == 'http://destination.com/') {
-                    setState(() {
-                      print("entrour");
-                    });
-                    // do not navigate
-                    return NavigationDecision.prevent;
-                  }
-
-                  return NavigationDecision.navigate;
-                }*/
             ),
             Obx(
               () => SizedBox(

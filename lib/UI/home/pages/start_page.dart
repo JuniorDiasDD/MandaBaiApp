@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,6 @@ import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/about/pages/info_page.dart';
 import 'package:manda_bai/UI/home/components/item_category.dart';
-import 'package:manda_bai/UI/home/components/item_new.dart';
 import 'package:manda_bai/data/madaBaiData.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -26,15 +24,13 @@ class _StartPageState extends State<StartPage> {
     "https://www.mandabai.com/wp-content/uploads/2021/08/post-mandabai-facebook-17.png",
     "https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_12-16-09.28.55-scaled.jpg",
     "https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_12-07-05.43.14-scaled.jpg",
-//"https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_11-25-08.04.52.jpg",
-   // "https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_11-20-12.59.37.jpg",
     "https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_12-12-04.13.45-scaled.jpg"
   ];
 
   Future _carregarCategory() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var island_atualizar = prefs.getString('island_atualizar');
-   // print(island_atualizar);
+
     if (island_atualizar != null && island_atualizar == "true") {
       list_category = await ServiceRequest.loadCategory(true);
       if (list_category.isEmpty) {
@@ -43,7 +39,6 @@ class _StartPageState extends State<StartPage> {
       await prefs.setString('island_atualizar', "false");
     } else {
       if (list_category.isEmpty) {
-        // print("entrou");
         list_category = await ServiceRequest.loadCategory(false);
 
         if (list_category.isEmpty) {
@@ -127,9 +122,8 @@ class _StartPageState extends State<StartPage> {
                     CarouselSlider(
                       options: CarouselOptions(
                           viewportFraction: 1,
-                          autoPlayInterval : const Duration(seconds: 10),
-                          autoPlayAnimationDuration:
-                              const Duration(seconds: 1),
+                          autoPlayInterval: const Duration(seconds: 10),
+                          autoPlayAnimationDuration: const Duration(seconds: 1),
                           autoPlay: true,
                           enlargeCenterPage: true,
                           onPageChanged: (index, reason) {
@@ -179,8 +173,8 @@ class _StartPageState extends State<StartPage> {
                 SizedBox(
                   height: Get.height * 0.01,
                 ),
-               //NEW SERVICES
-             /*   Align(
+                //NEW SERVICES
+                /*   Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
                     padding: EdgeInsets.only(
@@ -213,16 +207,17 @@ class _StartPageState extends State<StartPage> {
                       const Spacer(),
                       GestureDetector(
                           onTap: () {
-
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => InfoPage(),
                               ),
                             );
-
                           },
-                          child: Image.asset(AppImages.appLogoSem,width: Get.width*0.3,)),
+                          child: Image.asset(
+                            AppImages.appLogoSem,
+                            width: Get.width * 0.3,
+                          )),
                     ],
                   ),
                 ),

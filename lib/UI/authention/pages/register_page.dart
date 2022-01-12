@@ -77,8 +77,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   caminho: "erro");
             });
       }
-    } else {
-      print('Form is invalid');
     }
   }
 

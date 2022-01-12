@@ -33,7 +33,7 @@ class PopupInfo extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline1,
                     ),
                     IconButton(
-                      icon: Icon(Icons.close),
+                      icon: const Icon(Icons.close),
                       onPressed: () {
                         Navigator.pop(context);
                       },

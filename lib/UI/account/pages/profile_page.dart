@@ -46,18 +46,13 @@ class _StartPageState extends State<ProfilePage> {
     return money;
   }
 
-  Future _carregarLanguage() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    language = prefs.getString('language')!;
-    return language;
-  }
 
   Uint8List? image;
   bool image_check = false;
   Future _carregarUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var id = prefs.getString('id');
-    print(id.toString());
+
     if (id != 'null' && id != null) {
       bool check = await ServiceRequest.GetUser();
       if (check == false) {
@@ -75,8 +70,6 @@ class _StartPageState extends State<ProfilePage> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var image_save = prefs.getString("image");
     if (image_save != null) {
-      print("entrr");
-
       image = base64Decode(image_save);
       image_check = true;
       return image;
@@ -185,13 +178,6 @@ class _StartPageState extends State<ProfilePage> {
                                             image: NetworkImage(user.avatar),
                                           ),
                                         ),
-                                        /*child: comprovante != null
-                        ? Image.file(File(comprovante!.path), width: Get.width * 0.2,)
-                        : Image.network(
-                            user.avatar,
-                            width: Get.width * 0.2,
-                            alignment: Alignment.center,
-                          ),*/
                                       ),
                               ),
                               SizedBox(height: Get.height * 0.03),

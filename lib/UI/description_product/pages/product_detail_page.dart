@@ -240,32 +240,6 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                       ),
                     ],
                   ),
-                  /*   Padding(
-                padding: EdgeInsets.only(
-                  left: Get.width * 0.03,
-                  right: Get.width * 0.04,
-                ),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: RatingBar.builder(
-                    unratedColor: Colors.grey,
-                    initialRating: widget.product.rating_count.toDouble(),
-                    minRating: 0,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemSize: Get.height * 0.025,
-                    itemPadding: const EdgeInsets.all(0.0),
-                    itemBuilder: (context, _) => const Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    ),
-                    onRatingUpdate: (rating) {
-                      //print(rating);
-                    },
-                  ),
-                ),
-              ),*/
                 ],
               ),
               SizedBox(
