@@ -1,6 +1,5 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 import 'Core/app_themes.dart';
 import 'UI/about/pages/info_app.dart';

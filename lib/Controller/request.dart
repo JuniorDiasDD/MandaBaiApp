@@ -52,6 +52,50 @@ class ServiceRequest {
         break;
     }
     if (response.statusCode == 200) {
+
+      var page = response.headers['x-wp-totalpages'];
+      int pages = int.parse(page);
+      if (pages > 1) {
+        var quantidade = response.headers['x-wp-total'];
+        switch (island) {
+          case "Santo Antão":
+            response = await http.get(Uri.parse(
+                categoriasSaoAntao + "&per_page=" + quantidade.toString()));
+            break;
+          case "São Vicente":
+            response = await http.get(Uri.parse(
+                categoriasSaoVicente + "&per_page=" + quantidade.toString()));
+            break;
+          case "São Nicolau":
+            response = await http.get(Uri.parse(
+                categoriasSaoNicolau + "&per_page=" + quantidade.toString()));
+            break;
+          case "Boa Vista":
+            response = await http.get(Uri.parse(
+                categoriasBoaVista + "&per_page=" + quantidade.toString()));
+            break;
+          case "Sal":
+            response = await http.get(Uri.parse(
+                categoriasSal + "&per_page=" + quantidade.toString()));
+            break;
+          case "Maio":
+            response = await http.get(Uri.parse(
+                categoriasMaio + "&per_page=" + quantidade.toString()));
+            break;
+          case "Santiago":
+            response = await http.get(Uri.parse(
+                categoriasSantiago + "&per_page=" + quantidade.toString()));
+            break;
+          case "Fogo":
+            response = await http.get(Uri.parse(
+                categoriasFogo + "&per_page=" + quantidade.toString()));
+            break;
+          case "Brava":
+            response = await http.get(Uri.parse(
+                categoriasBrava + "&per_page=" + quantidade.toString()));
+            break;
+        }
+      }
       var jsonResponse = json.decode(response.body);
       final _cats = jsonResponse.cast<Map<String, dynamic>>();
       list = _cats.map<Category>((cat) => Category.fromJson(cat)).toList();
@@ -376,47 +420,47 @@ class ServiceRequest {
     });
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var id = prefs.getString('id');
-     await http.post(Uri.parse(request_login),
-      body: {'username': user.username, 'password': user.senha});
+    await http.post(Uri.parse(request_login),
+        body: {'username': user.username, 'password': user.senha});
 
-    var response= await http.put(
+    var response = await http.put(
         Uri.parse(updateUser + id.toString() + "?" + key),
         headers: headers,
         body: data);
 
     if (response.statusCode == 200) {
-     await http.post(Uri.parse(request_login_SantoAntao),
+      await http.post(Uri.parse(request_login_SantoAntao),
           body: {'username': user.username, 'password': user.senha});
       await http.put(Uri.parse(getUserSantoAntao + id.toString() + "?" + key),
           headers: headers, body: data);
-     await http.post(Uri.parse(request_login_SaoNicolau),
-         body: {'username': user.username, 'password': user.senha});
+      await http.post(Uri.parse(request_login_SaoNicolau),
+          body: {'username': user.username, 'password': user.senha});
       await http.put(Uri.parse(getUserSaoNicolau + id.toString() + "?" + key),
           headers: headers, body: data);
-     await http.post(Uri.parse(request_login_SaoVicente),
-         body: {'username': user.username, 'password': user.senha});
+      await http.post(Uri.parse(request_login_SaoVicente),
+          body: {'username': user.username, 'password': user.senha});
       await http.put(Uri.parse(getUserSaoVicente + id.toString() + "?" + key),
           headers: headers, body: data);
-     await http.post(Uri.parse(request_login_BoaVista),
-         body: {'username': user.username, 'password': user.senha});
+      await http.post(Uri.parse(request_login_BoaVista),
+          body: {'username': user.username, 'password': user.senha});
       await http.put(Uri.parse(getUserBoaVista + id.toString() + "?" + key),
           headers: headers, body: data);
-     await http.post(Uri.parse(request_login_Sal),
-         body: {'username': user.username, 'password': user.senha});
+      await http.post(Uri.parse(request_login_Sal),
+          body: {'username': user.username, 'password': user.senha});
       await http.put(Uri.parse(getUserSal + id.toString() + "?" + key),
           headers: headers, body: data);
-     await http.post(Uri.parse(request_login_Maio),
-         body: {'username': user.username, 'password': user.senha});
+      await http.post(Uri.parse(request_login_Maio),
+          body: {'username': user.username, 'password': user.senha});
       await http.put(Uri.parse(getUserMaio + id.toString() + "?" + key),
           headers: headers, body: data);
-     await http.post(Uri.parse(request_login_Fogo),
-         body: {'username': user.username, 'password': user.senha});
+      await http.post(Uri.parse(request_login_Fogo),
+          body: {'username': user.username, 'password': user.senha});
       await http.put(Uri.parse(getUserSantiago + id.toString() + "?" + key),
           headers: headers, body: data);
       await http.put(Uri.parse(getUserFogo + id.toString() + "?" + key),
           headers: headers, body: data);
-     await http.post(Uri.parse(request_login_Brava),
-         body: {'username': user.username, 'password': user.senha});
+      await http.post(Uri.parse(request_login_Brava),
+          body: {'username': user.username, 'password': user.senha});
       await http.put(Uri.parse(getUserBrava + id.toString() + "?" + key),
           headers: headers, body: data);
       return true;
@@ -874,7 +918,6 @@ class ServiceRequest {
             var response = await http.delete(
                 Uri.parse(removeItemCartSantoAntao + list_item[i]),
                 headers: <String, String>{'authorization': basicAuth});
-
 
             if (response.statusCode == 200) {
               final jsonResponse = json.decode(response.body);
@@ -1396,7 +1439,7 @@ class ServiceRequest {
           }
       }
       if (response.statusCode == 200) {
-      //  print("login:"+response.body);
+        //  print("login:"+response.body);
         final jsonResponse = json.decode(response.body);
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         id = jsonResponse["data"]["ID"].toString();

@@ -48,7 +48,6 @@ dependencies:
   rxdart: ^0.27.3
   flutter_email_sender: ^5.0.0-nullsafety
   url_launcher: ^6.0.17
-  google_sign_in: ^5.2.1
   email_validator: ^2.0.1
   flutter_translate: ^3.0.1
   onboarding: ^2.1.0
