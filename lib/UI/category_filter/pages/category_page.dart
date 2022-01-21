@@ -32,12 +32,14 @@ class _CategoryPageState extends State<CategoryPage> {
   List<Product> list_product_full = [];
   String dropdownValue = '';
   List<String> list_filter = [];
+  int size_list=0;
   _search() {
     list_product = [];
     setState(() {
       for (int i = 0; i < list_product_full.length; i++) {
         if (list_product_full[i].name.contains(pesquisa.text)) {
           list_product.add(list_product_full[i]);
+          size_list=list_product.length;
         }
       }
     });
@@ -51,10 +53,12 @@ class _CategoryPageState extends State<CategoryPage> {
         Comparator<Product> pesagemComparator =
             (a, b) => a.price.compareTo(b.price);
         list_product.sort(pesagemComparator);
+        size_list=list_product.length;
       } else if (dropdownValue == widget.filter_most) {
         Comparator<Product> pesagemComparator =
             (a, b) => b.price.compareTo(a.price);
         list_product.sort(pesagemComparator);
+        size_list=list_product.length;
       }
     });
   }
@@ -104,6 +108,9 @@ class _CategoryPageState extends State<CategoryPage> {
         }
       }
     }
+   setState(() {
+     size_list=list_product.length;
+   });
 
     return list_product;
   }
@@ -221,7 +228,7 @@ class _CategoryPageState extends State<CategoryPage> {
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      widget.category.name,
+                      widget.category.name+" ("+size_list.toString()+")",
                       style: Theme.of(context).textTheme.headline1,
                     ),
                   ),

@@ -190,5 +190,7 @@
     "message_error_order_pending": "Commande en attente de paiement",
     "message_success_cart": "Ajouté au panier",
     "message_error_cart": "Erreur lors de l'ajout au panier\nréessayer dans quelques secondes!",
-    "message_error_order_cuppon": "Erreur lors de la passation de la commande\nVérifiez le coupon!"
+    "message_error_order_cuppon": "Erreur lors de la passation de la commande\nVérifiez le coupon!",
+    "no_stock": "rein stock",
+    "no_stock_description": "Ce produit n'est pas disponible pour le moment"
 }

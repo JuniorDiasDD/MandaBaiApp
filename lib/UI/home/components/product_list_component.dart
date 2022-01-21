@@ -55,7 +55,7 @@ class _ProductListComponentState extends State<ProductListComponent> {
             top: Get.height * 0.009,
             bottom: Get.height * 0.005),
         child: Container(
-            height: Get.height * 0.05,
+          height: Get.height * 0.05,
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(12),
@@ -116,41 +116,55 @@ class _ProductListComponentState extends State<ProductListComponent> {
                                     if (snapshot.data == null) {
                                       return const Text(" ");
                                     } else {
-                                      switch (money_txt) {
-                                        case 'EUR':
-                                          {
-                                            return Text(
-                                              widget.product.price
-                                                      .toStringAsFixed(2) +
-                                                  " €",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline5,
-                                            );
-                                          }
-                                        case 'ECV':
-                                          {
-                                            return Text(
-                                              widget.product.price
-                                                      .toStringAsFixed(0) +
-                                                  " \$",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline5,
-                                            );
-                                          }
-                                        case 'USD':
-                                          {
-                                            return Text(
-                                              "\$ " +
-                                                  widget.product.price
-                                                      .toStringAsFixed(2),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline5,
-                                            );
-                                          }
+                                      if (widget.product.price == 0.0) {
+                                        return Text(
+                                          AppLocalizations.of(context)!
+                                              .no_stock,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline6!
+                                              .copyWith(
+                                                color: Colors.red,
+                                              ),
+                                        );
+                                      } else {
+                                        switch (money_txt) {
+                                          case 'EUR':
+                                            {
+                                              return Text(
+                                                widget.product.price
+                                                        .toStringAsFixed(2) +
+                                                    " €",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline5,
+                                              );
+                                            }
+                                          case 'ECV':
+                                            {
+                                              return Text(
+                                                widget.product.price
+                                                        .toStringAsFixed(0) +
+                                                    " \$",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline5,
+                                              );
+                                            }
+                                          case 'USD':
+                                            {
+                                              return Text(
+                                                "\$ " +
+                                                    widget.product.price
+                                                        .toStringAsFixed(2),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline5,
+                                              );
+                                            }
+                                        }
                                       }
+
                                       return Container();
                                     }
                                   }),
@@ -197,37 +211,50 @@ class _ProductListComponentState extends State<ProductListComponent> {
                                           return const Pop_Login();
                                         });
                                   } else {
-                                    setState(() {
-                                      controller.loading = true;
-                                    });
-                                    var check =
-                                        await _addCart(widget.product.id);
-                                    if (check == true) {
+
+                                    if (widget.product.price != 0.0) {
                                       setState(() {
-                                        controller.loading = false;
+                                        controller.loading = true;
                                       });
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return Pop_up_Message(
-                                                mensagem:
-                                                    AppLocalizations.of(context)!
-                                        .message_success_cart,
-                                                icon: Icons.check,
-                                                caminho: "addCarrinho");
-                                          });
+                                      var check =
+                                          await _addCart(widget.product.id);
+                                      if (check == true) {
+                                        setState(() {
+                                          controller.loading = false;
+                                        });
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return Pop_up_Message(
+                                                  mensagem: AppLocalizations.of(
+                                                          context)!
+                                                      .message_success_cart,
+                                                  icon: Icons.check,
+                                                  caminho: "addCarrinho");
+                                            });
+                                      } else {
+                                        setState(() {
+                                          controller.loading = false;
+                                        });
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return Pop_up_Message(
+                                                  mensagem: AppLocalizations.of(
+                                                          context)!
+                                                      .message_error_cart,
+                                                  icon: Icons.error,
+                                                  caminho: "erro");
+                                            });
+                                      }
                                     } else {
-                                      setState(() {
-                                        controller.loading = false;
-                                      });
                                       showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
                                             return Pop_up_Message(
                                                 mensagem:
-                                                    AppLocalizations.of(context)!
-                                        .message_error_cart,
-                                                icon: Icons.error,
+                                                AppLocalizations.of(context)!.no_stock_description,
+                                                icon: Icons.home_filled,
                                                 caminho: "erro");
                                           });
                                     }

@@ -190,5 +190,7 @@
     "message_error_order_pending": "Order Pending Payment",
     "message_success_cart": "Added to cart",
     "message_error_cart": "Error adding to cart\nPlease try again in seconds",
-    "message_error_order_cuppon": "Error in placing the order\nCheck coupon!!"
+    "message_error_order_cuppon": "Error in placing the order\nCheck coupon!!",
+    "no_stock": "out of stock",
+    "no_stock_description": "This product is currently not available"
 }

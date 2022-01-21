@@ -52,7 +52,6 @@ class ServiceRequest {
         break;
     }
     if (response.statusCode == 200) {
-
       var page = response.headers['x-wp-totalpages'];
       int pages = int.parse(page);
       if (pages > 1) {
@@ -111,6 +110,7 @@ class ServiceRequest {
 
   //! Load Products
   static Future<List<Product>> loadProduct(id) async {
+    print(id);
     List<Product> list = [];
     List<Product> list_page = [];
 
@@ -146,6 +146,7 @@ class ServiceRequest {
       case "Santiago":
         response = await http
             .get(Uri.parse(productCategoriasSantiago + id.toString()));
+        print(productCategoriasSantiago + id.toString());
         break;
       case "Fogo":
         response =
@@ -161,6 +162,9 @@ class ServiceRequest {
       final jsonResponse = json.decode(response.body);
       if (jsonResponse != "[]") {
         var quantidade = response.headers['x-wp-total'];
+        var page = response.headers['x-wp-totalpages'];
+        int pages = int.parse(page);
+        if (pages > 1) {
         int total_wp = int.parse(quantidade);
         if (total_wp < 101) {
           switch (island) {
@@ -190,7 +194,9 @@ class ServiceRequest {
               break;
             case "Sal":
               response = await http
-                  .get(Uri.parse(productCategoriasSal + id.toString()));
+                  .get(Uri.parse(productCategoriasSal + id.toString() +
+                  "&per_page=" +
+                  total_wp.toString()));
               break;
             case "Maio":
               response = await http.get(Uri.parse(productCategoriasMaio +
@@ -221,7 +227,8 @@ class ServiceRequest {
           final _cats = jsonResponse.cast<Map<String, dynamic>>();
           list = _cats.map<Product>((cat) => Product.fromJson(cat)).toList();
         } else {
-          int cont = 1, falta = 0;
+          int cont = 1,
+              falta = 0;
           if (total_wp < 200) {
             cont = 2;
             falta = total_wp - 100;
@@ -300,6 +307,10 @@ class ServiceRequest {
               print("Erro em carregar products da page=" + i.toString());
             }
           }
+        }
+      }else{
+          final _cats = jsonResponse.cast<Map<String, dynamic>>();
+          list = _cats.map<Product>((cat) => Product.fromJson(cat)).toList();
         }
       }
     } else if (response.statusCode == 503) {
@@ -1239,7 +1250,6 @@ class ServiceRequest {
                 name: jsonResponse['name'].toString(),
                 description: jsonResponse['description'].toString(),
                 price: double.parse(jsonResponse['price']),
-                rating_count: jsonResponse['rating_count'] ?? 0,
                 sale_price: jsonResponse['sale_price'].toString(),
                 in_stock: jsonResponse['manage_stock'].toString(),
                 on_sale: jsonResponse['on_sale'].toString(),
@@ -1769,7 +1779,6 @@ class ServiceRequest {
           name: jsonResponse['name'].toString(),
           description: jsonResponse['description'].toString(),
           price: double.parse(jsonResponse['price']),
-          rating_count: jsonResponse['rating_count'] ?? 0,
           sale_price: jsonResponse['sale_price'].toString(),
           in_stock: jsonResponse['manage_stock'].toString(),
           on_sale: jsonResponse['on_sale'].toString(),

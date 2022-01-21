@@ -91,27 +91,39 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                                   if (snapshot.data == null) {
                                     return const Text(" ");
                                   } else {
-                                    return Row(
-                                      children: [
-                                        Text(
-                                          money == "ECV"
-                                              ? widget.product.price
-                                                  .toStringAsFixed(0)
-                                              : widget.product.price
-                                                  .toStringAsFixed(2),
-                                          textAlign: TextAlign.center,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline5,
-                                        ),
-                                        Text(
-                                          " " + money,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline5,
-                                        ),
-                                      ],
-                                    );
+                                    if (widget.product.price == 0.0) {
+                                      return Text(
+                                        AppLocalizations.of(context)!.no_stock,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline6!
+                                            .copyWith(
+                                              color: Colors.red,
+                                            ),
+                                      );
+                                    } else {
+                                      return Row(
+                                        children: [
+                                          Text(
+                                            money == "ECV"
+                                                ? widget.product.price
+                                                    .toStringAsFixed(0)
+                                                : widget.product.price
+                                                    .toStringAsFixed(2),
+                                            textAlign: TextAlign.center,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline5,
+                                          ),
+                                          Text(
+                                            " " + money,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline5,
+                                          ),
+                                        ],
+                                      );
+                                    }
                                   }
                                 }),
                           ],
@@ -132,36 +144,49 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                                       return Pop_Login();
                                     });
                               } else {
-                                setState(() {
-                                  controller.loading = true;
-                                });
-                                var check = await _addCart(widget.product.id);
-                                if (check == true) {
+                                if (widget.product.price != 0.0) {
                                   setState(() {
-                                    controller.loading = false;
+                                    controller.loading = true;
                                   });
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return Pop_up_Message(
-                                            mensagem:
-                                                AppLocalizations.of(context)!
-                                                    .message_success_cart,
-                                            icon: Icons.check,
-                                            caminho: "addCarrinho");
-                                      });
+                                  var check = await _addCart(widget.product.id);
+                                  if (check == true) {
+                                    setState(() {
+                                      controller.loading = false;
+                                    });
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return Pop_up_Message(
+                                              mensagem:
+                                                  AppLocalizations.of(context)!
+                                                      .message_success_cart,
+                                              icon: Icons.check,
+                                              caminho: "addCarrinho");
+                                        });
+                                  } else {
+                                    setState(() {
+                                      controller.loading = false;
+                                    });
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return Pop_up_Message(
+                                              mensagem:
+                                                  AppLocalizations.of(context)!
+                                                      .message_error_cart,
+                                              icon: Icons.error,
+                                              caminho: "erro");
+                                        });
+                                  }
                                 } else {
-                                  setState(() {
-                                    controller.loading = false;
-                                  });
                                   showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
                                         return Pop_up_Message(
                                             mensagem:
                                                 AppLocalizations.of(context)!
-                                                    .message_error_cart,
-                                            icon: Icons.error,
+                                                    .no_stock_description,
+                                            icon: Icons.home_filled,
                                             caminho: "erro");
                                       });
                                 }

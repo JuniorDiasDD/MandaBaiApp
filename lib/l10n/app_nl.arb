@@ -190,5 +190,7 @@
     "message_error_order_pending": "Bestelling in afwachting van betaling",
     "message_success_cart": "Toegevoegd aan winkelwagen",
     "message_error_cart": "Fout bij toevoegen aan winkelwagen\nprobeer het over enkele seconden opnieuw!",
-    "message_error_order_cuppon": "Fout bij het plaatsen van de bestelling\nControleer bon!!"
+    "message_error_order_cuppon": "Fout bij het plaatsen van de bestelling\nControleer bon!!",
+    "no_stock": "uitverkocht",
+    "no_stock_description": "Dit produto é momenteel niet beschikbaar"
 }

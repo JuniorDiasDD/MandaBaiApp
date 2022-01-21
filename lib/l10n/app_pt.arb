@@ -190,5 +190,7 @@
     "message_error_order_pending": "Encomenda Pendente de Pagamento",
     "message_success_cart": "Adicionado no carrinho",
     "message_error_cart": "Erro em adicionar no carrinho\nTente novamente em segundos!",
-    "message_error_order_cuppon": "Erro em efetuar a encomenda \nVerificar cupom!"
+    "message_error_order_cuppon": "Erro em efetuar a encomenda \nVerificar cupom!",
+    "no_stock": "sem stock",
+    "no_stock_description": "Esse produto não se encontra disponível no momento"
 }

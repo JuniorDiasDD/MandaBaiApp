@@ -25,6 +25,8 @@ class _PedidoPageState extends State<PedidoPage> {
         }
       }
     }
+
+
     return list_order;
   }
 
@@ -44,10 +46,17 @@ class _PedidoPageState extends State<PedidoPage> {
     }
     list_order = await ServiceRequest.loadOrder(dropdownValue);
     if (list_order.isEmpty) {
-      setState(() {
-        vazio = true;
-        loading = false;
-      });
+      if (dropdownValue == island.toString()) {
+        setState(() {
+          vazio = false;
+          loading = false;
+        });
+      }else {
+        setState(() {
+          vazio = true;
+          loading = false;
+        });
+      }
       return null;
     }
 
@@ -242,6 +251,7 @@ class _PedidoPageState extends State<PedidoPage> {
                         );
                       default:
                         if (snapshot.data == null) {
+
                           return SizedBox(
                             height: Get.height * 0.5,
                             width: Get.width,

@@ -129,52 +129,65 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                                       if (snapshot.data == null) {
                                         return const Text(" ");
                                       } else {
-                                        switch (money_txt) {
-                                          case 'EUR':
-                                            {
-                                              return Text(
-                                                widget.product.price
-                                                        .toStringAsFixed(2) +
-                                                    " €",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline5!
-                                                    .copyWith(
-                                                      fontSize:
-                                                          Get.width * 0.04,
-                                                    ),
-                                              );
-                                            }
-                                          case 'ECV':
-                                            {
-                                              return Text(
-                                                widget.product.price
-                                                        .toStringAsFixed(0) +
-                                                    " \$",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline5!
-                                                    .copyWith(
-                                                      fontSize:
-                                                          Get.width * 0.04,
-                                                    ),
-                                              );
-                                            }
-                                          case 'USD':
-                                            {
-                                              return Text(
-                                                "\$ " +
-                                                    widget.product.price
-                                                        .toStringAsFixed(2),
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline5!
-                                                    .copyWith(
-                                                      fontSize:
-                                                          Get.width * 0.04,
-                                                    ),
-                                              );
-                                            }
+                                        if (widget.product.price == 0.0) {
+                                          return Text(
+                                            AppLocalizations.of(context)!
+                                                .no_stock,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline6!
+                                                .copyWith(
+                                                  color: Colors.red,
+                                                ),
+                                          );
+                                        } else {
+                                          switch (money_txt) {
+                                            case 'EUR':
+                                              {
+                                                return Text(
+                                                  widget.product.price
+                                                          .toStringAsFixed(2) +
+                                                      " €",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline5!
+                                                      .copyWith(
+                                                        fontSize:
+                                                            Get.width * 0.04,
+                                                      ),
+                                                );
+                                              }
+                                            case 'ECV':
+                                              {
+                                                return Text(
+                                                  widget.product.price
+                                                          .toStringAsFixed(0) +
+                                                      " \$",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline5!
+                                                      .copyWith(
+                                                        fontSize:
+                                                            Get.width * 0.04,
+                                                      ),
+                                                );
+                                              }
+                                            case 'USD':
+                                              {
+                                                return Text(
+                                                  "\$ " +
+                                                      widget.product.price
+                                                          .toStringAsFixed(2),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline5!
+                                                      .copyWith(
+                                                        fontSize:
+                                                            Get.width * 0.04,
+                                                      ),
+                                                );
+                                              }
+                                          }
                                         }
                                         return Container();
                                       }
@@ -185,20 +198,22 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                             IconButton(
                               padding: const EdgeInsets.all(0.0),
                               onPressed: () {
-                                if (widget.product.favorite == false) {
-                                  ServiceRequest.addFavrite(
-                                      widget.product.id);
-                                  setState(() {
-                                    widget.product.favorite =
-                                        !widget.product.favorite;
-                                  });
-                                } else {
-                                  ServiceRequest.removeFavrite(
-                                      widget.product.id);
-                                  setState(() {
-                                    widget.product.favorite =
-                                        !widget.product.favorite;
-                                  });
+                                if (widget.product.price != 0.0) {
+                                  if (widget.product.favorite == false) {
+                                    ServiceRequest.addFavrite(
+                                        widget.product.id);
+                                    setState(() {
+                                      widget.product.favorite =
+                                          !widget.product.favorite;
+                                    });
+                                  } else {
+                                    ServiceRequest.removeFavrite(
+                                        widget.product.id);
+                                    setState(() {
+                                      widget.product.favorite =
+                                          !widget.product.favorite;
+                                    });
+                                  }
                                 }
                               },
                               icon: const Icon(Icons.favorite),
@@ -218,8 +233,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                AppLocalizations.of(context)!
-                                    .text_description,
+                                AppLocalizations.of(context)!.text_description,
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline2!
@@ -302,7 +316,20 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                         return const Pop_Login();
                       });
                 } else {
-                  _addCart(widget.product.id);
+                  if (widget.product.price != 0.0) {
+                    _addCart(widget.product.id);
+                  } else {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Pop_up_Message(
+                              mensagem:
+                              AppLocalizations.of(context)!.no_stock_description,
+                              icon: Icons.home_filled,
+                              caminho: "erro");
+                        });
+
+                  }
                 }
               },
             ),
