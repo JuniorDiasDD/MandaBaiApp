@@ -192,5 +192,8 @@
     "message_error_cart": "Erreur lors de l'ajout au panier\nréessayer dans quelques secondes!",
     "message_error_order_cuppon": "Erreur lors de la passation de la commande\nVérifiez le coupon!",
     "no_stock": "rein stock",
-    "no_stock_description": "Ce produit n'est pas disponible pour le moment"
+    "no_stock_description": "Ce produit n'est pas disponible pour le moment",
+    "load_more": "chargement d'autres produits...",
+    "loading_time": "Tenir...\nCela peut prendre quelques instants",
+    "message_update_island": "Vous devez d'abord changer l'îlot dans les paramètres pour effectuer cette opération"
 }

@@ -192,5 +192,8 @@
     "message_error_cart": "Error adding to cart\nPlease try again in seconds",
     "message_error_order_cuppon": "Error in placing the order\nCheck coupon!!",
     "no_stock": "out of stock",
-    "no_stock_description": "This product is currently not available"
+    "no_stock_description": "This product is currently not available",
+    "load_more": "loading more product...",
+    "loading_time": "Hold...\nIt may take a few moments",
+    "message_update_island": "You must first change the island in the settings to carry out this operation"
 }

@@ -5,6 +5,7 @@ import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/order.dart';
 import 'package:manda_bai/UI/Pedido/Componentes/item_pedido.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:manda_bai/UI/Pedido/controller/pedidoController.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PedidoPage extends StatefulWidget {
@@ -13,6 +14,7 @@ class PedidoPage extends StatefulWidget {
 }
 
 class _PedidoPageState extends State<PedidoPage> {
+  final PedidoController controller = Get.put(PedidoController());
   List<Order> list_order = [];
   Future _carregar() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -25,8 +27,6 @@ class _PedidoPageState extends State<PedidoPage> {
         }
       }
     }
-
-
     return list_order;
   }
 
@@ -36,12 +36,13 @@ class _PedidoPageState extends State<PedidoPage> {
     if (dropdownValue == island.toString()) {
       setState(() {
         vazio = false;
-        loading = false;
+        controller.loading = false;
       });
     } else {
       setState(() {
         vazio = false;
-        loading = true;
+        controller.loading = true;
+        controller.island=dropdownValue;
       });
     }
     list_order = await ServiceRequest.loadOrder(dropdownValue);
@@ -49,19 +50,21 @@ class _PedidoPageState extends State<PedidoPage> {
       if (dropdownValue == island.toString()) {
         setState(() {
           vazio = false;
-          loading = false;
+          controller.loading = false;
+
         });
       }else {
         setState(() {
           vazio = true;
-          loading = false;
+          controller.loading = false;
+
         });
       }
       return null;
     }
 
     setState(() {
-      loading = false;
+      controller.loading = false;
     });
 
     return list_order;
@@ -78,17 +81,23 @@ class _PedidoPageState extends State<PedidoPage> {
     'Fogo',
     'Brava',
   ];
-  bool check = false, vazio = false, loading = false;
+  bool check = false, vazio = false;
   carregarIsland() async {
     if (!check) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       var island = prefs.getString('island');
       dropdownValue = island.toString();
+      controller.island=dropdownValue;
       check = true;
     }
     return dropdownValue;
   }
-
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.island=dropdownValue;
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -284,21 +293,35 @@ class _PedidoPageState extends State<PedidoPage> {
                 ),
               ],
             ),
-            SizedBox(
-              child: loading
-                  ? Container(
-                      color: Colors.black54,
-                      height: Get.height,
-                      child: Center(
-                        child: Image.network(
+            Obx(
+                  () => SizedBox(
+                child: controller.loading
+                    ? Container(
+                  color: Colors.black54,
+                  height: Get.height,
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+
+                      children: [
+                        Image.network(
                           AppImages.loading,
                           width: Get.width * 0.2,
                           height: Get.height * 0.2,
                           alignment: Alignment.center,
                         ),
-                      ),
-                    )
-                  : null,
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(AppLocalizations.of(context)!.loading_time,textAlign: TextAlign.center,style:Theme.of(context).textTheme.headline3!.copyWith(color:Colors.white),),
+
+                      ],
+                    ),
+                  ),
+                )
+                    : null,
+              ),
             ),
           ],
         ),

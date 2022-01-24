@@ -205,3 +205,8 @@ const String getOrderIdMaio =linkMaio+"orders/";
 const String getOrderIdSantiago =linkSantiago+"orders/";
 const String getOrderIdFogo =linkFogo+"orders/";
 const String getOrderIdBrava =linkBrava+"orders/";
+
+
+int loadProdutoPage=1;
+int loadProdutoTotal=0;
+String statusLoadProdutoPage="init";

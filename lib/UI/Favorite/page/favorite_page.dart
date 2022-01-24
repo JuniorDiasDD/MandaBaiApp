@@ -147,14 +147,22 @@ class _FavoritePageState extends State<FavoritePage> {
                         switch (snapshot.connectionState) {
                           case ConnectionState.waiting:
                             return Container(
-                              height: Get.height * 0.2,
+                              height: Get.height * 0.3,
                               width: Get.width,
                               child: Center(
-                                child: Image.network(
-                                  AppImages.loading,
-                                  width: Get.width * 0.2,
-                                  height: Get.height * 0.2,
-                                  alignment: Alignment.center,
+                                child: Column(
+                                  children: [
+                                    Image.network(
+                                      AppImages.loading,
+                                      width: Get.width * 0.2,
+                                      height: Get.height * 0.2,
+                                      alignment: Alignment.center,
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(AppLocalizations.of(context)!.loading_time,textAlign: TextAlign.center,style:Theme.of(context).textTheme.headline3,),
+                                  ],
                                 ),
                               ),
                             );
