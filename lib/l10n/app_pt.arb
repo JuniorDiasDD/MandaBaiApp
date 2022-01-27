@@ -195,5 +195,6 @@
     "no_stock_description": "Esse produto não se encontra disponível no momento",
     "load_more": "carregando mais produto...",
     "loading_time": "Aguarde...\nPoderá demorar alguns instantes",
-    "message_update_island": "Deverás antes alterar a ilha nas configuracões para efetuar está operação"
+    "message_update_island": "Deverás antes alterar a ilha nas configuracões para efetuar está operação",
+    "message_erro_internet": "sem Internet"
 }

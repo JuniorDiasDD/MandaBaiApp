@@ -195,5 +195,6 @@
     "no_stock_description": "Dit produto é momenteel niet beschikbaar",
     "load_more": "meer product laden...",
     "loading_time": "Houden...\nHet kan even duren",
-    "message_update_island": "\nU moet eerst het eiland in de instellingen wijzigen om deze bewerking uit te voeren"
+    "message_update_island": "\nU moet eerst het eiland in de instellingen wijzigen om deze bewerking uit te voeren",
+    "message_erro_internet": "zonder internet"
 }

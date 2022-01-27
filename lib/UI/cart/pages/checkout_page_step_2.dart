@@ -278,8 +278,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: Get.height * 0.25,
+                    Container(
+                      height: Get.height * 0.35,
                       child: widget.location == null
                           ? TextButton(
                               onPressed: () {
@@ -316,128 +316,120 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                 ],
                               ),
                             )
-                          : Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Column(
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  Destination_Page(
-                                                      route: "checkout")));
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          AppLocalizations.of(context)!
-                                              .text_delivery_address,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline1,
-                                        ),
-                                        const Spacer(),
-                                        Text(
-                                          AppLocalizations.of(context)!
-                                              .text_change,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline3,
-                                        ),
-                                        const Icon(
-                                          Icons.add,
-                                        ),
-                                      ],
+                          : Column(
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Destination_Page(
+                                                  route: "checkout")));
+                                },
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      AppLocalizations.of(context)!
+                                          .text_delivery_address,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline1,
                                     ),
-                                  ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context)
-                                          .dialogBackgroundColor,
-                                      borderRadius: BorderRadius.circular(10),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Theme.of(context).cardColor,
-                                          blurRadius: 1.0,
-                                          spreadRadius: 0.0,
-                                          offset: const Offset(0.5, 0.5),
-                                        ),
-                                      ],
+                                    const Spacer(),
+                                    Text(
+                                      AppLocalizations.of(context)!
+                                          .text_change,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline3,
                                     ),
-                                    height: Get.height * 0.15,
-                                    child: ListView(
-                                      padding: const EdgeInsets.all(0.0),
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(15.0),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                widget.location.name,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline2,
-                                              ),
-                                              SizedBox(
-                                                height: Get.height * 0.01,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  const Icon(
-                                                    Icons.location_on_outlined,
-                                                  ),
-                                                  Text(
-                                                    widget.location.island,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline3,
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: Get.height * 0.01,
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 15.0),
-                                                child: Text(
-                                                  widget.location.city +
-                                                      ',' +
-                                                      widget.location.endereco,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline4,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: Get.height * 0.01,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  const Icon(
-                                                    Icons.phone,
-                                                  ),
-                                                  Text(
-                                                    widget.location.phone,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline4,
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
+                                    const Icon(
+                                      Icons.add,
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context)
+                                      .dialogBackgroundColor,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Theme.of(context).cardColor,
+                                      blurRadius: 1.0,
+                                      spreadRadius: 0.0,
+                                      offset: const Offset(0.5, 0.5),
+                                    ),
+                                  ],
+                                ),
+                                height: Get.height * 0.25,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        widget.location.name,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline2,
+                                      ),
+                                      SizedBox(
+                                        height: Get.height * 0.01,
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.location_on_outlined,
+                                          ),
+                                          Text(
+                                            widget.location.island,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline3,
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: Get.height * 0.01,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 15.0),
+                                        child: Text(
+                                          widget.location.city +
+                                              ',' +
+                                              widget.location.endereco,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline4,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: Get.height * 0.01,
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.phone,
+                                          ),
+                                          Text(
+                                            widget.location.phone,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline4,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                     ),
                     Row(
                       children: [
