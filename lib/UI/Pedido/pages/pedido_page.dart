@@ -1,4 +1,8 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_images.dart';
@@ -6,6 +10,7 @@ import 'package:manda_bai/Model/order.dart';
 import 'package:manda_bai/UI/Pedido/Componentes/item_pedido.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:manda_bai/UI/Pedido/controller/pedidoController.dart';
+import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PedidoPage extends StatefulWidget {
@@ -14,6 +19,63 @@ class PedidoPage extends StatefulWidget {
 }
 
 class _PedidoPageState extends State<PedidoPage> {
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
+  int net = 0;
+
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      print('Couldn\'t check connectivity status' + e.toString());
+      return;
+    }
+
+    if (!mounted) {
+      return Future.value(null);
+    }
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+      print(_connectionStatus.toString());
+      if (_connectionStatus == ConnectivityResult.none) {
+        net = 1;
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return PopupMessageInternet(
+                  mensagem: AppLocalizations.of(context)!.message_erro_internet,
+                  icon: Icons.signal_wifi_off);
+            });
+      } else {
+        if (net != 0) {
+          Navigator.pop(context);
+        }
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initConnectivity();
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    controller.island = dropdownValue;
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
+
   final PedidoController controller = Get.put(PedidoController());
   List<Order> list_order = [];
   Future _carregar() async {
@@ -42,7 +104,7 @@ class _PedidoPageState extends State<PedidoPage> {
       setState(() {
         vazio = false;
         controller.loading = true;
-        controller.island=dropdownValue;
+        controller.island = dropdownValue;
       });
     }
     list_order = await ServiceRequest.loadOrder(dropdownValue);
@@ -51,13 +113,11 @@ class _PedidoPageState extends State<PedidoPage> {
         setState(() {
           vazio = false;
           controller.loading = false;
-
         });
-      }else {
+      } else {
         setState(() {
           vazio = true;
           controller.loading = false;
-
         });
       }
       return null;
@@ -69,6 +129,7 @@ class _PedidoPageState extends State<PedidoPage> {
 
     return list_order;
   }
+
   String dropdownValue = 'Santiago';
   List<String> list_island = [
     'Santo Antão',
@@ -87,17 +148,12 @@ class _PedidoPageState extends State<PedidoPage> {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       var island = prefs.getString('island');
       dropdownValue = island.toString();
-      controller.island=dropdownValue;
+      controller.island = dropdownValue;
       check = true;
     }
     return dropdownValue;
   }
-@override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    controller.island=dropdownValue;
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -260,7 +316,6 @@ class _PedidoPageState extends State<PedidoPage> {
                         );
                       default:
                         if (snapshot.data == null) {
-
                           return SizedBox(
                             height: Get.height * 0.5,
                             width: Get.width,
@@ -294,32 +349,37 @@ class _PedidoPageState extends State<PedidoPage> {
               ],
             ),
             Obx(
-                  () => SizedBox(
+              () => SizedBox(
                 child: controller.loading
                     ? Container(
-                  color: Colors.black54,
-                  height: Get.height,
-                  child: Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-
-                      children: [
-                        Image.network(
-                          AppImages.loading,
-                          width: Get.width * 0.2,
-                          height: Get.height * 0.2,
-                          alignment: Alignment.center,
+                        color: Colors.black54,
+                        height: Get.height,
+                        child: Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.network(
+                                AppImages.loading,
+                                width: Get.width * 0.2,
+                                height: Get.height * 0.2,
+                                alignment: Alignment.center,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                AppLocalizations.of(context)!.loading_time,
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline3!
+                                    .copyWith(color: Colors.white),
+                              ),
+                            ],
+                          ),
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(AppLocalizations.of(context)!.loading_time,textAlign: TextAlign.center,style:Theme.of(context).textTheme.headline3!.copyWith(color:Colors.white),),
-
-                      ],
-                    ),
-                  ),
-                )
+                      )
                     : null,
               ),
             ),

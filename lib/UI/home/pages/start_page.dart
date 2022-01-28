@@ -1,14 +1,19 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Controller/full_controller.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/about/pages/info_page.dart';
 import 'package:manda_bai/UI/home/components/item_category.dart';
+import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:manda_bai/data/madaBaiData.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -19,6 +24,47 @@ class StartPage extends StatefulWidget {
 }
 
 class _StartPageState extends State<StartPage> {
+  final FullController controller = Get.find();
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  int net = 0;
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      print('Couldn\'t check connectivity status' + e.toString());
+      return;
+    }
+
+    if (!mounted) {
+      return Future.value(null);
+    }
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+      print(_connectionStatus.toString());
+      if (_connectionStatus == ConnectivityResult.none) {
+        net = 1;
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return PopupMessageInternet(
+                  mensagem: AppLocalizations.of(context)!.message_erro_internet,
+                  icon: Icons.signal_wifi_off);
+            });
+      } else {
+        if (net != 0) {
+          Navigator.pop(context);
+        }
+      }
+    });
+  }
+
   final List<String> imagesList = [
     "https://www.mandabai.com/wp-content/uploads/2021/08/post-mandabai-facebook-05.jpg",
     "https://www.mandabai.com/wp-content/uploads/2021/08/post-mandabai-facebook-17.png",
@@ -29,6 +75,7 @@ class _StartPageState extends State<StartPage> {
 
   Future _carregarCategory() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+    controller.ilha=prefs.getString('island')!;
     var island_atualizar = prefs.getString('island_atualizar');
 
     if (island_atualizar != null && island_atualizar == "true") {
@@ -98,10 +145,20 @@ class _StartPageState extends State<StartPage> {
   @override
   void initState() {
     super.initState();
+    initConnectivity();
+
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
     validateMoney();
     validateLanguage();
     validateDados();
     //removerId();
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
   }
 
   int _current = 0;

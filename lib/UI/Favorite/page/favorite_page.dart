@@ -1,10 +1,15 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/Favorite/components/listview_item_favorite.dart';
 import 'package:manda_bai/UI/Favorite/controller/favorite_controller.dart';
+import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -18,6 +23,65 @@ class FavoritePage extends StatefulWidget {
 
 class _FavoritePageState extends State<FavoritePage> {
   final FavoriteController controller = Get.put(FavoriteController());
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
+  int net = 0;
+
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      print('Couldn\'t check connectivity status' + e.toString());
+      return;
+    }
+
+    if (!mounted) {
+      return Future.value(null);
+    }
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+      print(_connectionStatus.toString());
+      if (_connectionStatus == ConnectivityResult.none) {
+        net = 1;
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return PopupMessageInternet(
+                  mensagem: AppLocalizations.of(context)!.message_erro_internet,
+                  icon: Icons.signal_wifi_off);
+            });
+      } else {
+        if (net != 0) {
+          Navigator.pop(context);
+        }
+      }
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    initConnectivity();
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    controller.loading = false;
+    controller.vazio = false;
+    controller.list_product = [];
+    controller.list_product_full = [];
+
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
   bool isChecked = false;
   TextEditingController pesquisa = TextEditingController();
   Future _carregar() async {
@@ -71,15 +135,6 @@ class _FavoritePageState extends State<FavoritePage> {
     });
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    controller.loading = false;
-    controller.vazio = false;
-    controller.list_product = [];
-    controller.list_product_full = [];
-  }
 
   @override
   Widget build(BuildContext context) {

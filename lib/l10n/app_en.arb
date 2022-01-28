@@ -196,5 +196,5 @@
     "load_more": "loading more product...",
     "loading_time": "Hold...\nIt may take a few moments",
     "message_update_island": "You must first change the island in the settings to carry out this operation",
-    "message_erro_internet": "without Internet"
+    "message_erro_internet": "You are off right now"
 }

@@ -1,9 +1,14 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
+import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ContactPage extends StatefulWidget {
@@ -14,6 +19,62 @@ class ContactPage extends StatefulWidget {
 }
 
 class _ContactPageState extends State<ContactPage> {
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
+  int net = 0;
+
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      print('Couldn\'t check connectivity status' + e.toString());
+      return;
+    }
+
+    if (!mounted) {
+      return Future.value(null);
+    }
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+      print(_connectionStatus.toString());
+      if (_connectionStatus == ConnectivityResult.none) {
+        net = 1;
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return PopupMessageInternet(
+                  mensagem: AppLocalizations.of(context)!.message_erro_internet,
+                  icon: Icons.signal_wifi_off);
+            });
+      } else {
+        if (net != 0) {
+          Navigator.pop(context);
+        }
+      }
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    initConnectivity();
+
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
   Future<void> openwhatsapp() async {
     var whatsapp = "+2389149439";
     var whatsappURl_android = "whatsapp://send?phone=" + whatsapp;

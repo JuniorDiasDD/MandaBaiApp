@@ -1,5 +1,9 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
@@ -11,6 +15,7 @@ import 'package:manda_bai/Model/favorite.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/category_filter/controller/categoryController.dart';
 import 'package:manda_bai/UI/home/components/product_list_component.dart';
+import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -28,6 +33,71 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage> {
   final CategoryController controller = Get.put(CategoryController());
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
+  int net = 0;
+
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      print('Couldn\'t check connectivity status' + e.toString());
+      return;
+    }
+
+    if (!mounted) {
+      return Future.value(null);
+    }
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+      print(_connectionStatus.toString());
+      if (_connectionStatus == ConnectivityResult.none) {
+        net = 1;
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return PopupMessageInternet(
+                  mensagem: AppLocalizations.of(context)!.message_erro_internet,
+                  icon: Icons.signal_wifi_off);
+            });
+      } else {
+        if (net != 0) {
+          Navigator.pop(context);
+        }
+      }
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    initConnectivity();
+
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    statusLoadProdutoPage = "init";
+    loadProdutoPage = 1;
+    controller.loading = false;
+    controller.loadingMais=false;
+    _controller = ScrollController();
+    _controller.addListener(_scrollListener);
+    setState(() {
+      dropdownValue = widget.filter_less;
+      list_filter = [widget.filter_less, widget.filter_most];
+    });
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
   TextEditingController pesquisa = TextEditingController();
   List<Product> list_product = [];
   List<Product> list_product_cont = [];
@@ -215,20 +285,7 @@ class _CategoryPageState extends State<CategoryPage> {
 
 
 
-  @override
-  void initState() {
-    super.initState();
-    statusLoadProdutoPage = "init";
-    loadProdutoPage = 1;
-    controller.loading = false;
-    controller.loadingMais=false;
-    _controller = ScrollController();
-    _controller.addListener(_scrollListener);
-    setState(() {
-      dropdownValue = widget.filter_less;
-      list_filter = [widget.filter_less, widget.filter_most];
-    });
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -256,90 +313,93 @@ class _CategoryPageState extends State<CategoryPage> {
           children: [
             Column(
               children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: Get.height * 0.045,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: IconButton(
-                          onPressed: () {
-                             Navigator.pop(context);
-                            //_controller.jumpTo(position);
+                Container(
+                  color:Theme.of(context).primaryColor,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: Get.height * 0.045,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: IconButton(
+                            onPressed: () {
+                               Navigator.pop(context);
+                              //_controller.jumpTo(position);
 
-                          },
-                          icon: const Icon(Icons.arrow_back),
+                            },
+                            icon: const Icon(Icons.arrow_back,color:Colors.white),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: Get.width * 0.7,
-                        height: 40,
-                        child: TextField(
-                          cursorColor: AppColors.greenColor,
-                          controller: pesquisa,
-                          style: Theme.of(context).textTheme.headline4,
-                          decoration: InputDecoration(
-                            focusedBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30.0)),
-                                borderSide:
-                                    BorderSide(color: AppColors.greenColor)),
-                            hintText: AppLocalizations.of(context)!.search,
-                            hintStyle: Theme.of(context).textTheme.headline4,
-                            contentPadding:
-                                const EdgeInsets.only(top: 10, left: 15),
-                            suffixIcon: const Icon(
-                              Icons.search,
-                              color: AppColors.greenColor,
-                            ),
-                            filled: true,
-                            fillColor: Theme.of(context).backgroundColor,
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(30.0),
+                        SizedBox(
+                          width: Get.width * 0.7,
+                          height: 40,
+                          child: TextField(
+                            cursorColor: AppColors.greenColor,
+                            controller: pesquisa,
+                            style: Theme.of(context).textTheme.headline4,
+                            decoration: InputDecoration(
+                              focusedBorder: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30.0)),
+                                  borderSide:
+                                      BorderSide(color: AppColors.greenColor)),
+                              hintText: AppLocalizations.of(context)!.search,
+                              hintStyle: Theme.of(context).textTheme.headline4,
+                              contentPadding:
+                                  const EdgeInsets.only(top: 10, left: 15),
+                              suffixIcon: const Icon(
+                                Icons.search,
+                                color: AppColors.greenColor,
+                              ),
+                              filled: true,
+                              fillColor: Theme.of(context).backgroundColor,
+                              border: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(30.0),
+                                ),
                               ),
                             ),
+                            onChanged: (text) {
+                              _search();
+                            },
                           ),
-                          onChanged: (text) {
-                            _search();
-                          },
                         ),
-                      ),
-                      Container(
-                        width: Get.width * 0.1,
-                        height: Get.height * 0.06,
-                        margin: EdgeInsets.only(
-                          right: Get.width * 0.04,
-                        ),
-                        child: DropdownButton(
-                          icon: Icon(
-                            Icons.filter_alt_sharp,
-                            color: AppColors.greenColor,
-                            size: 20.09,
+                        Container(
+                          width: Get.width * 0.1,
+                          height: Get.height * 0.06,
+                          margin: EdgeInsets.only(
+                            right: Get.width * 0.04,
                           ),
+                          child: DropdownButton(
+                            icon: Icon(
+                              Icons.filter_alt_sharp,
+                              color: Colors.white,
+                              size: 20.09,
+                            ),
 
-                          isExpanded: true,
-                          underline:
-                              DropdownButtonHideUnderline(child: Container()),
-                          items: list_filter.map((val) {
-                            return DropdownMenuItem(
-                              value: val,
-                              child: Text(val),
-                            );
-                          }).toList(),
-                          //  value: dropdownValue,
-                          onChanged: (String? value) {
-                            setState(() {
-                              dropdownValue = value!;
-                              _ordenar();
-                            });
-                          },
+                            isExpanded: true,
+                            underline:
+                                DropdownButtonHideUnderline(child: Container()),
+                            items: list_filter.map((val) {
+                              return DropdownMenuItem(
+                                value: val,
+                                child: Text(val),
+                              );
+                            }).toList(),
+                            //  value: dropdownValue,
+                            onChanged: (String? value) {
+                              setState(() {
+                                dropdownValue = value!;
+                                _ordenar();
+                              });
+                            },
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -393,22 +453,25 @@ class _CategoryPageState extends State<CategoryPage> {
                               left: Get.width * 0.05,
                               right: Get.width * 0.05,
                             ),
-                            child: GridView.builder(
+                            child: GridView(
                                 padding: EdgeInsets.only(
                                   top: 0.0,
                                 ),
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: crossAxisCount,
-                                  childAspectRatio: (itemWidth / itemHeight),
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 20,
+                                      mainAxisSpacing: 5,
+                                      mainAxisExtent: 200,
+                                      childAspectRatio: 8.0 / 9.0,
                                 ),
-                                itemCount: list_product.length,
-                                controller: _controller,
-                                itemBuilder: (BuildContext ctx, index) {
-                                  var list = list_product[index];
-                                  return ProductListComponent(product: list);
-                                }),
-                          );
+                                children:list_product
+                                    .map(
+                                      (e) =>
+                                    ProductListComponent(product: e),
+
+                                ).toList(),
+                          ),);
                         }
                     }
                   },

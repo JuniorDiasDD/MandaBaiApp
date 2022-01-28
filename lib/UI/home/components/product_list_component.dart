@@ -61,7 +61,7 @@ class _ProductListComponentState extends State<ProductListComponent> {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: Theme.of(context).cardColor,
+                color: Theme.of(context).indicatorColor,
                 blurRadius: 1.0,
                 spreadRadius: 0.0,
                 offset: const Offset(1.0, 1.0),
@@ -70,24 +70,22 @@ class _ProductListComponentState extends State<ProductListComponent> {
           ),
           child: Column(
             children: [
-              Flexible(
-                flex: 2,
-                child: Container(
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(10.0),
-                        topRight: Radius.circular(10.0)),
-                    color: Colors.white,
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: NetworkImage(widget.product.image),
-                    ),
+              Container(
+                width: Get.width,
+                height: Get.height*0.14,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(10.0),
+                      topRight: Radius.circular(10.0)),
+                  color: Colors.white,
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: NetworkImage(widget.product.image),
                   ),
                 ),
               ),
-              Flexible(
-                flex: 1,
+              SizedBox(
+               height: Get.height*0.06,
                 child: Column(
                   children: [
                     Flexible(

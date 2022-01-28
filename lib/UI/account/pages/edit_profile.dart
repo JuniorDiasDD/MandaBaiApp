@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:manda_bai/Controller/request.dart';
@@ -14,6 +17,7 @@ import 'package:manda_bai/UI/home/pages/home_page.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditPorfilePage extends StatefulWidget {
@@ -22,6 +26,68 @@ class EditPorfilePage extends StatefulWidget {
 }
 
 class _EditPorfilePageState extends State<EditPorfilePage> {
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
+  int net = 0;
+
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      print('Couldn\'t check connectivity status' + e.toString());
+      return;
+    }
+
+    if (!mounted) {
+      return Future.value(null);
+    }
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+      print(_connectionStatus.toString());
+      if (_connectionStatus == ConnectivityResult.none) {
+        net = 1;
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return PopupMessageInternet(
+                  mensagem: AppLocalizations.of(context)!.message_erro_internet,
+                  icon: Icons.signal_wifi_off);
+            });
+      } else {
+        if (net != 0) {
+          Navigator.pop(context);
+        }
+      }
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    initConnectivity();
+
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    input_email.text = user.email;
+    input_numero.text = user.telefone;
+    input_senha.text = user.senha;
+    input_senha_conf.text = user.senha;
+    input_nome.text = user.name;
+    input_country.text = user.country;
+    input_city.text = user.city;
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final input_email = TextEditingController();
   final input_numero = TextEditingController();
@@ -148,17 +214,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
     return null;
   }
 
-  @override
-  void initState() {
-    super.initState();
-    input_email.text = user.email;
-    input_numero.text = user.telefone;
-    input_senha.text = user.senha;
-    input_senha_conf.text = user.senha;
-    input_nome.text = user.name;
-    input_country.text = user.country;
-    input_city.text = user.city;
-  }
+
 
   @override
   Widget build(BuildContext context) {

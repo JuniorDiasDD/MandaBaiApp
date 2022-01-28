@@ -1,4 +1,8 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/cart_controller.dart';
 import 'package:manda_bai/Controller/request.dart';
@@ -6,6 +10,7 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/cart_model.dart';
 import 'package:manda_bai/UI/cart/components/listview_item_cart.dart';
+import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 import 'checkout_page_step_2.dart';
@@ -19,7 +24,65 @@ class CartPage extends StatefulWidget {
 
 class _StartPageState extends State<CartPage> {
   final CartPageController cartPageController = Get.put(CartPageController());
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
 
+  int net = 0;
+
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      print('Couldn\'t check connectivity status' + e.toString());
+      return;
+    }
+
+    if (!mounted) {
+      return Future.value(null);
+    }
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+      print(_connectionStatus.toString());
+      if (_connectionStatus == ConnectivityResult.none) {
+        net = 1;
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return PopupMessageInternet(
+                  mensagem: AppLocalizations.of(context)!.message_erro_internet,
+                  icon: Icons.signal_wifi_off);
+            });
+      } else {
+        if (net != 0) {
+          Navigator.pop(context);
+        }
+      }
+    });
+  }
+  @override
+  void initState() {
+
+    initConnectivity();
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    list_cart = [];
+    cartPageController.total = 0;
+    cartPageController.subTotal = 0;
+    cartPageController.loading = false;
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
   bool isChecked = false;
   String money = "";
   List<CartModel> list_cart = [];
@@ -111,14 +174,6 @@ class _StartPageState extends State<CartPage> {
     }
   }
 
-  @override
-  void initState() {
-    list_cart = [];
-    cartPageController.total = 0;
-    cartPageController.subTotal = 0;
-    cartPageController.loading = false;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

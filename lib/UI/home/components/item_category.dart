@@ -1,5 +1,7 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Controller/full_controller.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Model/category.dart';
 import 'package:manda_bai/UI/category_filter/pages/category_page.dart';
@@ -13,6 +15,7 @@ class ListViewItemComponent extends StatefulWidget {
 }
 
 class _ListViewItemComponentState extends State<ListViewItemComponent> {
+  final FullController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -50,18 +53,60 @@ class _ListViewItemComponentState extends State<ListViewItemComponent> {
           ),
           width: Get.width,
           height: Get.height * 0.2,
-          child: Padding(
-            padding:
-                EdgeInsets.only(left: Get.width * 0.01, top: Get.height * 0.15),
-            child: Text(
-              widget.category.name,
-              textAlign: TextAlign.start,
-              style: TextStyle(
-                fontFamily: AppFonts.poppinsBoldFont,
-                fontSize: Get.height * 0.026,
-                color: Colors.white,
-                backgroundColor: Colors.black26,
-              ),
+          child: Container(
+            width: Get.width,
+            height: Get.height * 0.2,
+            decoration: BoxDecoration(
+              color: Colors.black26,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 1.0,
+                  spreadRadius: 0.0,
+                  offset: Offset(0.5, 0.5), // changes position of shadow
+                ),
+              ],
+
+            ),
+            child: Center(
+              child: AnimatedTextKit(
+                animatedTexts: [
+                  RotateAnimatedText(
+                    widget.category.name,
+                    textStyle: TextStyle(
+                      fontFamily: AppFonts.poppinsBoldFont,
+                      fontSize: Get.height * 0.026,
+                      color: Colors.white,
+                    ),
+                   // speed: const Duration(milliseconds: 2000),
+                  ),
+                  RotateAnimatedText(
+                    controller.ilha,
+                    textStyle: TextStyle(
+                      fontFamily: AppFonts.poppinsBoldFont,
+                      fontSize: Get.height * 0.026,
+                      color: Colors.white,
+                    ),
+                    // speed: const Duration(milliseconds: 2000),
+                  ),
+                ],
+
+                repeatForever: true,
+                pause: const Duration(seconds: 1),
+                displayFullTextOnTap: true,
+                stopPauseOnTap: false,
+              )
+
+             /* Text(
+                widget.category.name,
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  fontFamily: AppFonts.poppinsBoldFont,
+                  fontSize: Get.height * 0.026,
+                  color: Colors.white,
+                ),
+              ),*/
             ),
           ),
         ),

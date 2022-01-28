@@ -9,6 +9,7 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
+import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:manda_bai/UI/intro/pages/onboarding_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -26,6 +27,7 @@ class _SplashPageState extends State<SplashPage> {
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  int net=0;
 
   @override
   void initState() {
@@ -44,7 +46,6 @@ class _SplashPageState extends State<SplashPage> {
 
   Future<void> initConnectivity() async {
     late ConnectivityResult result;
-    // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       result = await _connectivity.checkConnectivity();
     } on PlatformException catch (e) {
@@ -63,15 +64,20 @@ class _SplashPageState extends State<SplashPage> {
       _connectionStatus = result;
       print(_connectionStatus.toString());
       if (_connectionStatus == ConnectivityResult.none) {
+        setState(() {
+          net=1;
+        });
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return Pop_up_Message(
+              return PopupMessageInternet(
                   mensagem: AppLocalizations.of(context)!.message_erro_internet,
-                  icon: Icons.signal_wifi_bad,
-                  caminho: "erro");
+                  icon: Icons.signal_wifi_off);
             });
       } else {
+        if(net==1){
+          Navigator.pop(context);
+        }
         Future.delayed(Duration(seconds: 2)).then((_) async {
           final SharedPreferences prefs = await SharedPreferences.getInstance();
           var check = prefs.getString('onboarding');

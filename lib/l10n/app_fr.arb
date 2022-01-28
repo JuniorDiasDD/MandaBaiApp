@@ -196,5 +196,5 @@
     "load_more": "chargement d'autres produits...",
     "loading_time": "Tenir...\nCela peut prendre quelques instants",
     "message_update_island": "Vous devez d'abord changer l'îlot dans les paramètres pour effectuer cette opération",
-    "message_erro_internet": "sans internet"
+    "message_erro_internet": "Vous êtes absent en ce moment"
 }
