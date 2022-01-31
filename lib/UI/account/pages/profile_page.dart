@@ -437,6 +437,7 @@ class _StartPageState extends State<ProfilePage> {
                         width: Get.width * 0.1,
                         child: Divider(
                           height: 36,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                     ),
@@ -453,8 +454,9 @@ class _StartPageState extends State<ProfilePage> {
                     Expanded(
                       child: SizedBox(
                         width: Get.width * 0.4,
-                        child: const Divider(
+                        child:  Divider(
                           height: 36,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                     ),
@@ -639,65 +641,7 @@ class _StartPageState extends State<ProfilePage> {
                       ),
                     ),
                     SizedBox(height: Get.height * 0.01),
-                    Container(
-                      height: Get.height * 0.06,
-                      child: GestureDetector(
-                        onTap: () async {
-                          final SharedPreferences prefs =
-                              await SharedPreferences.getInstance();
-                          var check = prefs.getString('id');
-                          if (check == 'null' || check == null) {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return Pop_Login();
-                                });
-                          } else {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PedidoPage(),
-                              ),
-                            );
-                          }
-                        },
-                        child: Row(
-                          children: [
-                            Container(
-                              height: Get.height * 0.042,
-                              width: Get.height * 0.042,
-                              decoration: BoxDecoration(
-                                color: Colors.lightGreen,
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(100),
-                                ),
-                                border: Border.all(color: Colors.lightGreen),
-                              ),
-                              child: Icon(
-                                Icons.description_outlined,
-                                color: Colors.white,
-                                size: Get.height * 0.025,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                left: Get.width * 0.02,
-                              ),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    AppLocalizations.of(context)!
-                                        .text_my_orders,
-                                    style:
-                                        Theme.of(context).textTheme.headline3,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+
                     Row(
                       children: <Widget>[
                         Expanded(
@@ -705,6 +649,7 @@ class _StartPageState extends State<ProfilePage> {
                             width: Get.width * 0.1,
                             child: Divider(
                               height: 36,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),
@@ -721,8 +666,9 @@ class _StartPageState extends State<ProfilePage> {
                         Expanded(
                           child: SizedBox(
                             width: Get.width * 0.4,
-                            child: const Divider(
+                            child:  Divider(
                               height: 36,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),
@@ -816,6 +762,7 @@ class _StartPageState extends State<ProfilePage> {
                             width: Get.width * 0.1,
                             child: Divider(
                               height: 36,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),
@@ -832,8 +779,9 @@ class _StartPageState extends State<ProfilePage> {
                         Expanded(
                           child: SizedBox(
                             width: Get.width * 0.4,
-                            child: const Divider(
+                            child:  Divider(
                               height: 36,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),

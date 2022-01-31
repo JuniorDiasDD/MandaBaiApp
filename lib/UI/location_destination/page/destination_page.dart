@@ -61,6 +61,7 @@ class _Destination_PageState extends State<Destination_Page> {
       }
     });
   }
+
   @override
   void initState() {
     super.initState();
@@ -68,7 +69,6 @@ class _Destination_PageState extends State<Destination_Page> {
 
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
-
   }
 
   @override
@@ -76,6 +76,7 @@ class _Destination_PageState extends State<Destination_Page> {
     _connectivitySubscription.cancel();
     super.dispose();
   }
+
   List<Location> list_location = [];
 
   Future _carregarLocation() async {
@@ -87,61 +88,85 @@ class _Destination_PageState extends State<Destination_Page> {
     }
     return list_location;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding:
-            EdgeInsets.only(left: Get.width * 0.04, right: Get.width * 0.04),
+      body: SizedBox(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: Get.height * 0.08),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      if (widget.route == "checkout") {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                CheckoutPageStep2(location: null),
+              Container(
+                color: Theme.of(context).primaryColor,
+                width: double.infinity,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: Get.height * 0.045,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          if (widget.route == "checkout") {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    CheckoutPageStep2(location: null),
+                              ),
+                            );
+                          } else {
+                            Navigator.pop(context);
+                          }
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        ),
+                        alignment: Alignment.centerRight,
+                      ),
+                      Text(
+                        AppLocalizations.of(context)!.text_delivery_location,
+                        style: Theme.of(context).textTheme.headline3!.copyWith(
+                              color: Colors.white,
+                            ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NewDestination(
+                                      route: widget.route, location: null)));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.add,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                AppLocalizations.of(context)!.text_new,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline4!
+                                    .copyWith(
+                                      color: Colors.white,
+                                    ),
+                              ),
+                            ],
                           ),
-                        );
-                      } else {
-                        Navigator.pop(context);
-                      }
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back,
-                    ),
-                    alignment: Alignment.centerRight,
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    AppLocalizations.of(context)!.text_delivery_location,
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
-                  IconButton(
-                    padding: const EdgeInsets.all(0.0),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  NewDestination(route: widget.route,location:null)));
-                    },
-                    icon: const Icon(
-                      Icons.add,
-                    ),
-                    iconSize: Get.width * 0.05,
-                    alignment: Alignment.centerRight,
-                  ),
-                ],
+                ),
               ),
               SizedBox(
-                height: Get.height * 0.8,
+                height: Get.height,
                 child: FutureBuilder(
                   future: _carregarLocation(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -160,7 +185,6 @@ class _Destination_PageState extends State<Destination_Page> {
                           ),
                         );
                       default:
-
                         if (snapshot.data == null) {
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -173,7 +197,8 @@ class _Destination_PageState extends State<Destination_Page> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    AppLocalizations.of(context)!.text_add_new_location,
+                                    AppLocalizations.of(context)!
+                                        .text_add_new_location,
                                     style:
                                         Theme.of(context).textTheme.headline3,
                                   ),
@@ -186,7 +211,7 @@ class _Destination_PageState extends State<Destination_Page> {
                           );
                         } else {
                           return SizedBox(
-                            height: Get.height * 0.85,
+
                             child: ListView.builder(
                               padding: EdgeInsets.only(
                                 top: 0.0,

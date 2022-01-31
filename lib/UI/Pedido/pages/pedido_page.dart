@@ -162,27 +162,23 @@ class _PedidoPageState extends State<PedidoPage> {
           children: [
             Column(
               children: [
-                SizedBox(height: Get.height * 0.08),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(
-                        Icons.arrow_back,
+                Container(
+                  color: Theme.of(context).primaryColor,
+                  width: double.infinity,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: Get.height * 0.045,
+                    ),
+                    child:  Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          AppLocalizations.of(context)!.text_my_orders,
+                          style: Theme.of(context).textTheme.headline3!.copyWith(color:Colors.white,),
+                        ),
                       ),
-                      alignment: Alignment.centerRight,
                     ),
-                    Text(
-                      AppLocalizations.of(context)!.text_my_orders,
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                    Container(
-                      width: Get.width * 0.1,
-                    ),
-                  ],
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(15.0),

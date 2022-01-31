@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:animations/animations.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,8 +12,10 @@ import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
+import 'package:manda_bai/Model/category.dart';
 import 'package:manda_bai/UI/about/pages/info_page.dart';
 import 'package:manda_bai/UI/home/components/item_category.dart';
+import 'package:manda_bai/UI/home/components/item_filter.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:manda_bai/data/madaBaiData.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,6 +32,7 @@ class _StartPageState extends State<StartPage> {
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   int net = 0;
+  bool _onFirstPage=true;
   Future<void> initConnectivity() async {
     late ConnectivityResult result;
     try {
@@ -47,7 +51,7 @@ class _StartPageState extends State<StartPage> {
   Future<void> _updateConnectionStatus(ConnectivityResult result) async {
     setState(() {
       _connectionStatus = result;
-      print(_connectionStatus.toString());
+      //  print(_connectionStatus.toString());
       if (_connectionStatus == ConnectivityResult.none) {
         net = 1;
         showDialog(
@@ -73,23 +77,34 @@ class _StartPageState extends State<StartPage> {
     "https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_12-12-04.13.45-scaled.jpg"
   ];
 
+  List<Category> list_full_category = [];
   Future _carregarCategory() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    controller.ilha=prefs.getString('island')!;
+    controller.ilha = prefs.getString('island')!;
     var island_atualizar = prefs.getString('island_atualizar');
-
     if (island_atualizar != null && island_atualizar == "true") {
       list_category = await ServiceRequest.loadCategory(true);
+      await prefs.setString('island_atualizar', "false");
       if (list_category.isEmpty) {
         return null;
+      } else {
+        setState(() {
+          list_full_category = list_category;
+        });
       }
-      await prefs.setString('island_atualizar', "false");
     } else {
-      if (list_category.isEmpty) {
-        list_category = await ServiceRequest.loadCategory(false);
-
+      if (list_full_category.isEmpty) {
+        //  print("entrou");
         if (list_category.isEmpty) {
-          return null;
+          list_category = await ServiceRequest.loadCategory(false);
+
+          if (list_category.isEmpty) {
+            return null;
+          } else {
+            setState(() {
+              list_full_category = list_category;
+            });
+          }
         }
       }
     }
@@ -142,6 +157,23 @@ class _StartPageState extends State<StartPage> {
     prefs.remove('onboarding');
   }
 
+  Future getFilter(value) async {
+    setState(() {
+      list_category = [];
+      if (!list_full_category.isEmpty) {
+        if (value == "Todos") {
+          list_category = list_full_category;
+        } else {
+          for (var i = 0; i < list_full_category.length; i++) {
+            if (list_full_category[i].name == value) {
+              list_category.add(list_full_category[i]);
+            }
+          }
+        }
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -168,7 +200,7 @@ class _StartPageState extends State<StartPage> {
       onRefresh: () => Navigator.pushReplacementNamed(context, '/home'),
       child: WillPopScope(
         onWillPop: () {
-          return new Future(() => false);
+          return Future(() => false);
         },
         child: Scaffold(
           body: SingleChildScrollView(
@@ -253,6 +285,34 @@ class _StartPageState extends State<StartPage> {
                     ],
                   ),
                 ),*/
+                FutureBuilder(
+                  future: controller.carregarFilter(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.data == null) {
+                      return const SizedBox();
+                    } else {
+                      return Container(
+                        height: Get.height * 0.1,
+                        child: ListView.builder(
+                          padding: EdgeInsets.only(
+                            top: 0.0,
+                          ),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (BuildContext context, index) {
+                            var list = controller.listFilter[index];
+                            return GestureDetector(
+                                onTap: () {
+                                  getFilter(list.name);
+                                },
+                                child: ItemFilter(filter: list));
+                          },
+                        ),
+                      );
+                    }
+                  },
+                ),
+
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -267,7 +327,7 @@ class _StartPageState extends State<StartPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => InfoPage(),
+                                builder: (context) => const InfoPage(),
                               ),
                             );
                           },
@@ -281,64 +341,66 @@ class _StartPageState extends State<StartPage> {
                 FutureBuilder(
                   future: _carregarCategory(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (!snapshot.hasData) {
-                      return Container(
-                        height: Get.height * 0.2,
-                        width: Get.width,
-                        child: Center(
-                          child: Image.network(
-                            AppImages.loading,
-                            width: Get.width * 0.15,
-                            height: Get.height * 0.2,
-                            alignment: Alignment.center,
-                          ),
-                        ),
-                      );
-                    } else {
-                      if (snapshot.data == null) {
-                        return Container(
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return SizedBox(
                           height: Get.height * 0.2,
                           width: Get.width,
                           child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.public_off_outlined,
-                                  color: Colors.grey,
-                                  size: Get.height * 0.06,
-                                ),
-                                Text(
-                                  AppLocalizations.of(context)!
-                                      .text_unavailable_service,
-                                  style: TextStyle(
-                                    fontFamily: AppFonts.poppinsBoldFont,
-                                    fontSize: Get.width * 0.035,
+                            child: Image.network(
+                              AppImages.loading,
+                              width: Get.width * 0.15,
+                              height: Get.height * 0.2,
+                              alignment: Alignment.center,
+                            ),
+                          ),
+                        );
+                      default:
+                        if (snapshot.data == null) {
+                          print("vazio");
+                          return SizedBox(
+                            height: Get.height * 0.2,
+                            width: Get.width,
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.public_off_outlined,
                                     color: Colors.grey,
+                                    size: Get.height * 0.06,
                                   ),
-                                ),
-                              ],
+                                  Text(
+                                    AppLocalizations.of(context)!
+                                        .text_unavailable_service,
+                                    style: TextStyle(
+                                      fontFamily: AppFonts.poppinsBoldFont,
+                                      fontSize: Get.width * 0.035,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      } else {
-                        return Container(
-                          margin: EdgeInsets.only(top: Get.height * 0.012),
-                          height: Get.height * 0.62,
-                          child: ListView.builder(
-                            padding: EdgeInsets.only(
-                              top: 0.0,
-                              bottom: Get.height * 0.03,
+                          );
+                        } else {
+                          return Container(
+                            margin: EdgeInsets.only(top: Get.height * 0.012),
+                            height: Get.height * 0.5,
+                            child: ListView.builder(
+                              padding: EdgeInsets.only(
+                                top: 0.0,
+                                bottom: Get.height * 0.03,
+                              ),
+                              scrollDirection: Axis.vertical,
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (BuildContext context, index) {
+                                var list = list_category[index];
+                                return ListViewItemComponent(category: list);
+                              },
                             ),
-                            scrollDirection: Axis.vertical,
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (BuildContext context, index) {
-                              var list = list_category[index];
-                              return ListViewItemComponent(category: list);
-                            },
-                          ),
-                        );
-                      }
+                          );
+                        }
                     }
                   },
                 ),

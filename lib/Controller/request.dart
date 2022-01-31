@@ -111,7 +111,7 @@ class ServiceRequest {
 
   //! Load Products
   static Future<List<Product>> loadProduct(id) async {
-    print(id);
+   // print(id);
     List<Product> list = [];
     // List<Product> list_page = [];
 
@@ -148,7 +148,7 @@ class ServiceRequest {
         case "Santiago":
           response = await http
               .get(Uri.parse(productCategoriasSantiago + id.toString()));
-          print(productCategoriasSantiago + id.toString());
+        //  print(productCategoriasSantiago + id.toString());
           break;
         case "Fogo":
           response =

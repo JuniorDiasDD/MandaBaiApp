@@ -195,7 +195,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                  builder: (context) => HomePage(index: 3)));
+                  builder: (context) => HomePage(index: 4)));
         }
       }
 

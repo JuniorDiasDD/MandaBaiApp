@@ -83,61 +83,56 @@ class _InfoPageState extends State<InfoPage> {
   List<Employee> list_employee = [];
   List<Employee> list_employee_Mandatarios = [];
   Future _carregar(context) async {
-    list_employee.add(Employee(
-      name: 'Carlos Pereira',
-      cargo: AppLocalizations.of(context)!.text_role_carlos,
-      image:
-          'https://www.mandabai.com/wp-content/uploads/elementor/thumbs/img-16-pbkbaaof0qxdaun3rdjj72eggo8xuf1tzefuxajdjk.jpg',
-      description: AppLocalizations.of(context)!.text_description_carlos,
-      tel: '+31639838997',
-      email: 'pereirac2207@gmail.com',
-    ));
-    list_employee.add(Employee(
-      name: 'Eveline Tavares',
-      cargo: AppLocalizations.of(context)!.text_role_eveline,
-      image:
-          'https://www.mandabai.com/wp-content/uploads/elementor/thumbs/Design-sem-nome-4-pbwjcdm6kbjiw14u4pb8kvevyan7bq0lqfaqzjbqds.jpg',
-      description: AppLocalizations.of(context)!.text_description_eveline,
-      tel: '+2389724140',
-      email: 'eveline.mandabai@gmail.com',
-    ));
-
-    if (list_employee.isEmpty) {
-      return null;
+    if(list_employee.isEmpty){
+      list_employee.add(Employee(
+        name: 'Carlos Pereira',
+        cargo: AppLocalizations.of(context)!.text_role_carlos,
+        image:
+        'https://www.mandabai.com/wp-content/uploads/elementor/thumbs/img-16-pbkbaaof0qxdaun3rdjj72eggo8xuf1tzefuxajdjk.jpg',
+        description: AppLocalizations.of(context)!.text_description_carlos,
+        tel: '+31639838997',
+        email: 'pereirac2207@gmail.com',
+      ));
+      list_employee.add(Employee(
+        name: 'Eveline Tavares',
+        cargo: AppLocalizations.of(context)!.text_role_eveline,
+        image:
+        'https://www.mandabai.com/wp-content/uploads/elementor/thumbs/Design-sem-nome-4-pbwjcdm6kbjiw14u4pb8kvevyan7bq0lqfaqzjbqds.jpg',
+        description: AppLocalizations.of(context)!.text_description_eveline,
+        tel: '+2389724140',
+        email: 'eveline.mandabai@gmail.com',
+      ));
     }
 
     return list_employee;
   }
 
   Future _carregarMandatarios(context) async {
-    list_employee_Mandatarios.add(Employee(
-        name: 'Celly Fontes',
-        cargo: AppLocalizations.of(context)!.text_role_antonio,
-        image:
-        'https://www.mandabai.com/wp-content/uploads/2021/12/1_orig-1000x1000.jpg',
-        description: AppLocalizations.of(context)!.text_description_antonio,
-        tel: '+774 3812002 ',
-        email: 'bellisimacosmeticsusa@gmail.com'));
-    list_employee_Mandatarios.add(Employee(
-        name: 'António Coelho Monteiro',
-        cargo: AppLocalizations.of(context)!.text_role_antonio,
-        image:
-            'https://www.mandabai.com/wp-content/uploads/2021/12/Antonio_SemFundo-2.png',
-        description: AppLocalizations.of(context)!.text_description_antonio,
-        tel: '+1 3057786138',
-        email: 'acmonteiro48@gmail.com'));
-    list_employee_Mandatarios.add(Employee(
-        name: 'Francisco de Pina',
-        cargo: AppLocalizations.of(context)!.text_role_estevao,
-        image:
-            'https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_12-20-08.16.39-scaled.jpg',
-        description: AppLocalizations.of(context)!.text_description_estevao,
-        tel: '+351913098511\n+351938880906',
-        email: 'francisco.r.depina@gmail.com'));
-
-
-    if (list_employee_Mandatarios.isEmpty) {
-      return null;
+    if(list_employee_Mandatarios.isEmpty){
+      list_employee_Mandatarios.add(Employee(
+          name: 'Celly Fontes',
+          cargo: AppLocalizations.of(context)!.text_role_antonio,
+          image:
+          'https://www.mandabai.com/wp-content/uploads/2021/12/1_orig-1000x1000.jpg',
+          description: AppLocalizations.of(context)!.text_description_antonio,
+          tel: '+774 3812002 ',
+          email: 'bellisimacosmeticsusa@gmail.com'));
+      list_employee_Mandatarios.add(Employee(
+          name: 'António Coelho Monteiro',
+          cargo: AppLocalizations.of(context)!.text_role_antonio,
+          image:
+          'https://www.mandabai.com/wp-content/uploads/2021/12/Antonio_SemFundo-2.png',
+          description: AppLocalizations.of(context)!.text_description_antonio,
+          tel: '+1 3057786138',
+          email: 'acmonteiro48@gmail.com'));
+      list_employee_Mandatarios.add(Employee(
+          name: 'Francisco de Pina',
+          cargo: AppLocalizations.of(context)!.text_role_estevao,
+          image:
+          'https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_12-20-08.16.39-scaled.jpg',
+          description: AppLocalizations.of(context)!.text_description_estevao,
+          tel: '+351913098511\n+351938880906',
+          email: 'francisco.r.depina@gmail.com'));
     }
 
     return list_employee_Mandatarios;
@@ -146,14 +141,16 @@ class _InfoPageState extends State<InfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding:
-            EdgeInsets.only(left: Get.width * 0.04, right: Get.width * 0.04),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: Get.height * 0.08),
-              Row(
+      body: Column(
+        children: [
+          Container(
+            color:Theme.of(context).primaryColor,
+            width: double.infinity,
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: Get.height * 0.045,
+              ),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
@@ -164,23 +161,30 @@ class _InfoPageState extends State<InfoPage> {
                       },
                       icon: const Icon(
                         Icons.arrow_back,
+                        color:Colors.white,
                       ),
                       alignment: Alignment.centerRight,
                     ),
                   ),
                   Text(
                     AppLocalizations.of(context)!.title_about_us,
-                    style: Theme.of(context).textTheme.headline1,
+                    style: Theme.of(context).textTheme.headline3!.copyWith(color:Colors.white,),
                   ),
                   Container(
                     width: Get.width * 0.08,
                   ),
                 ],
               ),
-              SizedBox(height: Get.height * 0.02),
-              Padding(
-                padding: EdgeInsets.only(
-                    left: Get.width * 0.01, right: Get.width * 0.01),
+            ),
+          ),
+
+          SizedBox(height: Get.height * 0.02),
+          Padding(
+            padding: EdgeInsets.only(
+                left: Get.width * 0.04, right: Get.width * 0.04),
+            child: SizedBox(
+              height: Get.height*0.87,
+              child: SingleChildScrollView(
                 child: Column(
                   children: [
                     Align(
@@ -571,9 +575,9 @@ class _InfoPageState extends State<InfoPage> {
                   ],
                 ),
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

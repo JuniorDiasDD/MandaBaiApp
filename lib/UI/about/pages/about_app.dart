@@ -83,14 +83,16 @@ class _Privacy_PolicyState extends State<Privacy_Policy> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding:
-            EdgeInsets.only(left: Get.width * 0.04, right: Get.width * 0.04),
-        child: SingleChildScrollView(
-          child: Column(children: [
-            SizedBox(height: Get.height * 0.08),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Column(children: [
+        Container(
+          color:Theme.of(context).primaryColor,
+          width: double.infinity,
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: Get.height * 0.045,
+            ),
+            child: Row(
+
               children: [
                 Container(
                   child: IconButton(
@@ -100,6 +102,7 @@ class _Privacy_PolicyState extends State<Privacy_Policy> {
                     },
                     icon: const Icon(
                       Icons.arrow_back,
+                      color:Colors.white,
                     ),
                     alignment: Alignment.centerRight,
                   ),
@@ -109,17 +112,21 @@ class _Privacy_PolicyState extends State<Privacy_Policy> {
                   widget.info==0?AppLocalizations.of(context)!
                       .title_privacy_police:AppLocalizations.of(context)!
                       .title_terms_of_use,
-                  style: Theme.of(context).textTheme.headline1,
+                  style: Theme.of(context).textTheme.headline3!.copyWith(color:Colors.white,),
                 ),
-                Container(
-                  width: Get.width * 0.03,
-                ),
+                const Spacer(),
               ],
             ),
-            SizedBox(height: Get.height * 0.03),
-            Padding(
-              padding:  EdgeInsets.only(
-                left: Get.width * 0.01, right: Get.width * 0.01,),
+          ),
+        ),
+
+        SizedBox(height: Get.height * 0.03),
+        Padding(
+          padding:  EdgeInsets.only(
+            left: Get.width * 0.04, right: Get.width * 0.04,),
+          child: SizedBox(
+            height: Get.height*0.87,
+            child: SingleChildScrollView(
               child: Column(
                 children: [
                   Align(
@@ -141,10 +148,10 @@ class _Privacy_PolicyState extends State<Privacy_Policy> {
                   ),
                 ],
               ),
-            )
-          ],
+            ),
           ),
-        ),
+        )
+      ],
       ),
     );
   }

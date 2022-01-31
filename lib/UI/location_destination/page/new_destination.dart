@@ -136,48 +136,57 @@ class _NewDestinationState extends State<NewDestination> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: Get.height * 0.08),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  Destination_Page(route: widget.route)));
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back,
-                    ),
-                    alignment: Alignment.centerRight,
-                  ),
-                  const Spacer(),
-                  Text(
-                    AppLocalizations.of(context)!.title_new_destiny,
-                    style: Theme.of(context).textTheme.headline1,
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const PopupInfo();
+            Container(
+              color: Theme.of(context).primaryColor,
+              width: double.infinity,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: Get.height * 0.045,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(right:8.0),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      Destination_Page(route: widget.route)));
                         },
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.info,
-                    ),
-                    iconSize: Get.width * 0.05,
-                    alignment: Alignment.centerRight,
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color:Colors.white,
+                        ),
+
+                      ),
+                      const Spacer(),
+                      Text(
+                        AppLocalizations.of(context)!.title_new_destiny,
+                        style: Theme.of(context).textTheme.headline3!.copyWith(color:Colors.white,),
+                      ),
+                      const Spacer(),
+                      IconButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const PopupInfo();
+                            },
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.info_outline,
+                          color:Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
+
             Padding(
               padding: EdgeInsets.only(
                 left: Get.width * 0.05,

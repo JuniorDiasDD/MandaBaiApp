@@ -145,54 +145,50 @@ class _FavoritePageState extends State<FavoritePage> {
       child: Scaffold(
         body: Stack(
           children: [
-            Padding(
-              padding: EdgeInsets.only(
-                  left: Get.width * 0.02, right: Get.width * 0.02),
+            SizedBox(
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(height: Get.height * 0.08),
-                    Text(
-                      AppLocalizations.of(context)!.title_my_favorites,
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                    SizedBox(height: Get.height * 0.03),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: Container(
-                        width: Get.width * 0.4,
-                        height: Get.width * 0.1,
-                        margin: EdgeInsets.only(
-                          right: Get.width * 0.02,
+                    Container(
+                      color:Theme.of(context).primaryColor,
+                      width: double.infinity,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          top: Get.height * 0.045,
                         ),
-                        child: TextField(
-                          cursorColor: AppColors.greenColor,
-                          controller: pesquisa,
-                          style: Theme.of(context).textTheme.headline4,
-                          decoration: InputDecoration(
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30.0)),
-                                borderSide:
-                                    BorderSide(color: AppColors.greenColor)),
-                            hintText: AppLocalizations.of(context)!.search,
-                            hintStyle: Theme.of(context).textTheme.headline4,
-                            contentPadding: EdgeInsets.only(top: 10, left: 15),
-                            suffixIcon: Icon(
-                              Icons.search,
-                              color: AppColors.greenColor,
-                            ),
-                            filled: true,
-                            fillColor: Theme.of(context).backgroundColor,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(30.0),
+                        child: Container(
+                          width: Get.width * 0.4,
+                          height: Get.width * 0.1,
+                         margin: EdgeInsets.all(10.0),
+                          child: TextField(
+                            cursorColor: AppColors.greenColor,
+                            controller: pesquisa,
+                            style: Theme.of(context).textTheme.headline4,
+                            decoration: InputDecoration(
+                              focusedBorder: const OutlineInputBorder(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(30.0)),
+                                  borderSide:
+                                  BorderSide(color: AppColors.greenColor)),
+                              hintText: AppLocalizations.of(context)!.search,
+                              hintStyle: Theme.of(context).textTheme.headline4,
+                              contentPadding: const EdgeInsets.only(top: 10, left: 15),
+                              suffixIcon: const Icon(
+                                Icons.search,
+                                color: AppColors.greenColor,
+                              ),
+                              filled: true,
+                              fillColor: Theme.of(context).backgroundColor,
+                              border: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(30.0),
+                                ),
                               ),
                             ),
+                            onChanged: (text) {
+                              _search();
+                            },
                           ),
-                          onChanged: (text) {
-                            _search();
-                          },
                         ),
                       ),
                     ),
@@ -232,7 +228,7 @@ class _FavoritePageState extends State<FavoritePage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     WebsafeSvg.asset(AppImages.favorite_empyt),
-                                    SizedBox(height: Get.height * 0.08),
+                                    SizedBox(height: 10),
                                     Text(
                                       AppLocalizations.of(context)!
                                           .text_no_favorite_product,
@@ -244,7 +240,7 @@ class _FavoritePageState extends State<FavoritePage> {
                               );
                             } else {
                               return Container(
-                                height: Get.height * 0.85,
+                                height: Get.height * 0.82,
                                 child: Obx(
                                   () => ListView.builder(
                                     padding: EdgeInsets.only(

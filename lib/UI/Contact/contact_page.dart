@@ -138,30 +138,40 @@ class _ContactPageState extends State<ContactPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: Get.height * 0.08),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back,
+            Container(
+              color:Theme.of(context).primaryColor,
+              width: double.infinity,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: Get.height * 0.045,
+                ),
+                child:  Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color:Colors.white,
+                        ),
+                        alignment: Alignment.centerRight,
+                      ),
                     ),
-                    alignment: Alignment.centerRight,
-                  ),
+                    Text(
+                      AppLocalizations.of(context)!.text_talk_to_us,
+                      style: Theme.of(context).textTheme.headline3!.copyWith(color:Colors.white,),
+                    ),
+                    Container(
+                      width: Get.width * 0.08,
+                    ),
+                  ],
                 ),
-                Text(
-                AppLocalizations.of(context)!.text_talk_to_us,
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-                Container(
-                  width: Get.width * 0.08,
-                ),
-              ],
+              ),
             ),
+
             SizedBox(height: Get.height * 0.06),
             Padding(
               padding: EdgeInsets.only(

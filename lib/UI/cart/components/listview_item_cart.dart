@@ -10,14 +10,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ItemCart extends StatefulWidget {
   final CartPageController cartPageController = Get.find();
   CartModel cartModel;
-  ItemCart({required this.cartModel});
+  int index;
+  ItemCart({required this.cartModel,required this.index});
 
   @override
   _ItemCartState createState() => _ItemCartState();
 }
 
 class _ItemCartState extends State<ItemCart> {
-  bool isChecked = false;
+
   int quant = 0;
   double price = 0.0;
   String money = "";
@@ -98,17 +99,27 @@ class _ItemCartState extends State<ItemCart> {
                             ),
                           ),
                           const Spacer(),
-                          Checkbox(
-                            checkColor: Colors.white,
-                            activeColor: AppColors.greenColor,
-                            value: isChecked,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                isChecked = value!;
-                                widget.cartPageController
-                                    .checkBox(widget.cartModel.id, isChecked);
-                              });
-                            },
+                          Obx(
+                                () => Checkbox(
+                              checkColor: Colors.white,
+                              activeColor: AppColors.greenColor,
+                              value: widget.cartPageController.list[widget.index].checkout,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                 // isChecked = value!;
+                                  widget.cartPageController
+                                      .checkBox(widget.cartModel.id, value);
+
+                                  if(widget.cartPageController.deleteFull==true){
+                                    if(value==false){
+                                      print(value.toString());
+                                      widget.cartPageController.deleteFull=false;
+                                    }
+                                  }
+
+                                });
+                              },
+                            ),
                           ),
                         ],
                       ),
@@ -148,6 +159,7 @@ class _ItemCartState extends State<ItemCart> {
                             width: Get.width * 0.08,
                             child: FloatingActionButton(
                               onPressed: () {
+
                                 setState(
                                   () {
                                     if (quant != 1) {
@@ -163,11 +175,11 @@ class _ItemCartState extends State<ItemCart> {
                                   },
                                 );
                               },
-                              child: Icon(
+                              child: const Icon(
                                 Icons.remove,
                                 color: Colors.white,
                               ),
-                              backgroundColor: AppColors.greenColor,
+                              backgroundColor: quant>1 ? AppColors.greenColor: Colors.grey,
                               elevation: 0,
                             ),
                           ),

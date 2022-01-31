@@ -192,8 +192,9 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                                 }
                               }
                             },
-                            icon: const Icon(
+                            icon:  Icon(
                               Icons.shopping_cart,
+                              color:controller.loading? Colors.green:Colors.black,
                             ),
                             iconSize: Get.width * 0.05,
                           ),

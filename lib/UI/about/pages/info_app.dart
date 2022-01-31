@@ -77,15 +77,17 @@ class _InfoAppState extends State<InfoApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding:
-            EdgeInsets.only(left: Get.width * 0.04, right: Get.width * 0.04),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: Get.height * 0.08),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Column(
+        children: [
+          Container(
+            color:Theme.of(context).primaryColor,
+            width: double.infinity,
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: Get.height * 0.045,
+              ),
+              child:   Row(
+
                 children: [
                   IconButton(
                     onPressed: () {
@@ -93,24 +95,29 @@ class _InfoAppState extends State<InfoApp> {
                     },
                     icon: const Icon(
                       Icons.arrow_back,
+                      color:Colors.white,
                     ),
                     alignment: Alignment.centerRight,
                   ),
                   Text(
                     AppLocalizations.of(context)!.info_app_title,
-                    style: Theme.of(context).textTheme.headline1,
+                    style: Theme.of(context).textTheme.headline3!.copyWith(color:Colors.white,),
                   ),
-                  Container(
-                    width: Get.width * 0.03,
-                  ),
+                  const Spacer(),
                 ],
               ),
-              SizedBox(height: Get.height * 0.03),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: Get.width * 0.01,
-                  right: Get.width * 0.01,
-                ),
+            ),
+          ),
+
+          SizedBox(height: Get.height * 0.03),
+          Padding(
+            padding: EdgeInsets.only(
+              left: Get.width * 0.04,
+              right: Get.width * 0.04,
+            ),
+            child: SizedBox(
+              height: Get.height*0.85,
+              child: SingleChildScrollView(
                 child: Column(
                   children: [
                     Image.asset(
@@ -197,10 +204,10 @@ class _InfoAppState extends State<InfoApp> {
                     ),
                   ],
                 ),
-              )
-            ],
-          ),
-        ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

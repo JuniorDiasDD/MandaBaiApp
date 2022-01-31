@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/full_controller.dart';
@@ -18,19 +19,11 @@ class _ListViewItemComponentState extends State<ListViewItemComponent> {
   final FullController controller = Get.find();
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => CategoryPage(
-              category: widget.category,
-              filter_most: AppLocalizations.of(context)!.filter_more_price,
-              filter_less: AppLocalizations.of(context)!.filter_less_price),
-        ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.only(top:8.0,bottom: 8.0,left: 15.0,right: 15.0),
-        child: Container(
+    return Padding(
+      padding: EdgeInsets.only(top:8.0,bottom: 8.0,left: 15.0,right: 15.0),
+      child: OpenContainer(
+          closedBuilder: (context, action) {
+            return Container(
           alignment: Alignment.topLeft,
           decoration: BoxDecoration(
             color: Theme.of(context).dialogBackgroundColor,
@@ -98,18 +91,21 @@ class _ListViewItemComponentState extends State<ListViewItemComponent> {
                 stopPauseOnTap: false,
               )
 
-             /* Text(
-                widget.category.name,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontFamily: AppFonts.poppinsBoldFont,
-                  fontSize: Get.height * 0.026,
-                  color: Colors.white,
-                ),
-              ),*/
             ),
           ),
-        ),
+        );
+          },
+          closedElevation: 5.0,
+          closedShape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10)
+          ),
+
+          openBuilder: (context, action){
+            return CategoryPage(
+                category: widget.category,
+                filter_most: AppLocalizations.of(context)!.filter_more_price,
+                filter_less: AppLocalizations.of(context)!.filter_less_price);
+          }
       ),
     );
   }

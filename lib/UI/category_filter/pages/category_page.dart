@@ -161,7 +161,7 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   Future _carregar() async {
-    print("carregar");
+   // print("carregar");
     if (statusLoadProdutoPage == "init" && pesquisa.text.isEmpty) {
       if (list_product.isEmpty) {
         list_product = await ServiceRequest.loadProduct(widget.category.id);
@@ -453,24 +453,25 @@ class _CategoryPageState extends State<CategoryPage> {
                               left: Get.width * 0.05,
                               right: Get.width * 0.05,
                             ),
-                            child: GridView(
-                                padding: EdgeInsets.only(
+                            child: GridView.builder(
+                                padding: const EdgeInsets.only(
                                   top: 0.0,
                                 ),
                                 gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 20,
                                       mainAxisSpacing: 5,
                                       mainAxisExtent: 200,
                                       childAspectRatio: 8.0 / 9.0,
                                 ),
-                                children:list_product
-                                    .map(
-                                      (e) =>
-                                    ProductListComponent(product: e),
+                                itemCount: list_product.length,
+                                controller: _controller,
+                                itemBuilder: (BuildContext ctx,index){
+                                  var list=list_product[index];
+                                  return  ProductListComponent(product:list);
+                                },
 
-                                ).toList(),
                           ),);
                         }
                     }
