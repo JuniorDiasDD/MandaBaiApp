@@ -21,6 +21,8 @@ import 'package:manda_bai/data/madaBaiData.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'home_page.dart';
+
 class StartPage extends StatefulWidget {
   @override
   _StartPageState createState() => _StartPageState();
@@ -32,7 +34,7 @@ class _StartPageState extends State<StartPage> {
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   int net = 0;
-  bool _onFirstPage=true;
+  bool _onFirstPage = true;
   Future<void> initConnectivity() async {
     late ConnectivityResult result;
     try {
@@ -70,11 +72,10 @@ class _StartPageState extends State<StartPage> {
   }
 
   final List<String> imagesList = [
-    "https://www.mandabai.com/wp-content/uploads/2021/08/post-mandabai-facebook-05.jpg",
-    "https://www.mandabai.com/wp-content/uploads/2021/08/post-mandabai-facebook-17.png",
-    "https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_12-16-09.28.55-scaled.jpg",
-    "https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_12-07-05.43.14-scaled.jpg",
-    "https://www.mandabai.com/wp-content/uploads/2021/12/PicsArt_12-12-04.13.45-scaled.jpg"
+    "https://www.mandabai.com/wp-content/uploads/2022/02/received_1150641802018430-scaled.jpeg",
+    "https://www.mandabai.com/wp-content/uploads/2022/02/banner2.png",
+    "https://www.mandabai.com/wp-content/uploads/2022/02/banner3.png",
+    "https://www.mandabai.com/wp-content/uploads/2022/02/banner1.jpg"
   ];
 
   List<Category> list_full_category = [];
@@ -206,6 +207,10 @@ class _StartPageState extends State<StartPage> {
           body: SingleChildScrollView(
             child: Column(
               children: [
+                Container(
+                  height: Get.height * 0.04,
+                  color: Theme.of(context).primaryColor,
+                ),
                 Stack(
                   children: [
                     CarouselSlider(
@@ -249,19 +254,94 @@ class _StartPageState extends State<StartPage> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: _current == index
-                                    ? Colors.green
-                                    : Colors.green[50],
+                                    ? Theme.of(context).primaryColor
+                                    : Colors.green[100],
                               ),
                             );
                           },
                         ).toList(), // this was the part the I had to add
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const InfoPage(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              width: Get.width * 0.1,
+                              height: Get.width * 0.1,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Theme.of(context).cardColor,
+                                    blurRadius: 1.0,
+                                    spreadRadius: 0.0,
+                                    offset: Offset(0.5, 0.5),
+                                  ),
+                                ],
+                                color: Theme.of(context).dialogBackgroundColor,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Image.asset(
+                                  AppImages.appLogoIcon,
+                                  width: Get.width * 0.3,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const Spacer(),
+                          GestureDetector(
+                            onTap: () async {
+                              final SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              var check = prefs.getString('id');
+                              if (check != 'null' && check != null) {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomePage(index: 4)));
+                              }else{
+                                Navigator.pushNamed(context, '/login');
+                              }
+
+                            },
+                            child: Container(
+                              width: Get.width * 0.1,
+                              height: Get.width * 0.1,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Theme.of(context).cardColor,
+                                    blurRadius: 1.0,
+                                    spreadRadius: 0.0,
+                                    offset: Offset(0.5, 0.5),
+                                  ),
+                                ],
+                                color: Theme.of(context).dialogBackgroundColor,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Icon(Icons.person),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-                SizedBox(
-                  height: Get.height * 0.01,
-                ),
+
                 //NEW SERVICES
                 /*   Align(
                   alignment: Alignment.topLeft,
@@ -291,10 +371,10 @@ class _StartPageState extends State<StartPage> {
                     if (snapshot.data == null) {
                       return const SizedBox();
                     } else {
-                      return Container(
-                        height: Get.height * 0.1,
+                      return SizedBox(
+                        height: Get.height * 0.12,
                         child: ListView.builder(
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                             top: 0.0,
                           ),
                           scrollDirection: Axis.horizontal,
@@ -313,29 +393,14 @@ class _StartPageState extends State<StartPage> {
                   },
                 ),
 
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.title_categories,
-                        style: Theme.of(context).textTheme.headline1,
-                      ),
-                      const Spacer(),
-                      GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const InfoPage(),
-                              ),
-                            );
-                          },
-                          child: Image.asset(
-                            AppImages.appLogoSem,
-                            width: Get.width * 0.3,
-                          )),
-                    ],
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: Get.width * 0.05),
+                    child: Text(
+                      AppLocalizations.of(context)!.title_categories,
+                      style: Theme.of(context).textTheme.headline1,
+                    ),
                   ),
                 ),
                 FutureBuilder(
@@ -385,8 +450,7 @@ class _StartPageState extends State<StartPage> {
                           );
                         } else {
                           return Container(
-                            margin: EdgeInsets.only(top: Get.height * 0.012),
-                            height: Get.height * 0.5,
+                            height: Get.height * 0.485,
                             child: ListView.builder(
                               padding: EdgeInsets.only(
                                 top: 0.0,
