@@ -19,8 +19,9 @@ class _ItemListOrderState extends State<ItemListOrder> {
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 20.0,top:10),
       child: OpenContainer(closedBuilder: (context, action) {
-        return SizedBox(
+        return Container(
           width: Get.width,
+          color:Theme.of(context).backgroundColor,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -54,6 +55,7 @@ class _ItemListOrderState extends State<ItemListOrder> {
           closedShape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10)
           ),
+        //  openColor: Theme.of(context).primaryColor,
 
           openBuilder: (context, action){
             return PedidoDescriptionProduct(idProduct: widget.items.product_id);

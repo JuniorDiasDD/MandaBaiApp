@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
+import 'package:manda_bai/Core/app_themes.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/Favorite/controller/favorite_controller.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
@@ -192,7 +193,10 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                                 }
                               }
                             },
-                            icon:  Icon(
+                            icon: Theme.of(context).brightness==Brightness.dark ? Icon(
+                              Icons.shopping_cart,
+                              color:controller.loading? Colors.green:Colors.white,
+                            ) : Icon(
                               Icons.shopping_cart,
                               color:controller.loading? Colors.green:Colors.black,
                             ),
