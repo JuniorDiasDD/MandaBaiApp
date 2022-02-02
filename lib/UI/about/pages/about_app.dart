@@ -82,15 +82,12 @@ class _Privacy_PolicyState extends State<Privacy_Policy> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(children: [
-        Container(
-          color:Theme.of(context).primaryColor,
-          width: double.infinity,
-          child: Padding(
-            padding: EdgeInsets.only(
-              top: Get.height * 0.045,
-            ),
+    return SafeArea(
+      child: Scaffold(
+        body: Column(children: [
+          Container(
+            color:Theme.of(context).primaryColor,
+            width: double.infinity,
             child: Row(
 
               children: [
@@ -118,40 +115,40 @@ class _Privacy_PolicyState extends State<Privacy_Policy> {
               ],
             ),
           ),
-        ),
 
-        SizedBox(height: Get.height * 0.03),
-        Padding(
-          padding:  EdgeInsets.only(
-            left: Get.width * 0.04, right: Get.width * 0.04,),
-          child: SizedBox(
-            height: Get.height*0.87,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      widget.info==0?AppLocalizations.of(context)!
-                          .subtitle_privacy_police:AppLocalizations.of(context)!
-                          .subtitle_terms_of_use,
-                        style: Theme.of(context).textTheme.headline2,
+          SizedBox(height: Get.height * 0.03),
+          Padding(
+            padding:  EdgeInsets.only(
+              left: Get.width * 0.04, right: Get.width * 0.04,),
+            child: SizedBox(
+              height: Get.height*0.87,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        widget.info==0?AppLocalizations.of(context)!
+                            .subtitle_privacy_police:AppLocalizations.of(context)!
+                            .subtitle_terms_of_use,
+                          style: Theme.of(context).textTheme.headline2,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: Get.height * 0.01),
-                   Html(
-                    data: widget.info == 0
-                        ? AppLocalizations.of(context)!
-                        .text_privacy_police:AppLocalizations.of(context)!
-                        .text_terms_of_use,
-                       //  style: TextStyle(Theme.of(context).textTheme.headline1),
-                  ),
-                ],
+                    SizedBox(height: Get.height * 0.01),
+                     Html(
+                      data: widget.info == 0
+                          ? AppLocalizations.of(context)!
+                          .text_privacy_police:AppLocalizations.of(context)!
+                          .text_terms_of_use,
+                         //  style: TextStyle(Theme.of(context).textTheme.headline1),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+        ),
       ),
     );
   }

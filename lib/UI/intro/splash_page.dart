@@ -8,7 +8,7 @@ import 'package:manda_bai/Controller/full_controller.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
-import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
+import 'package:flutter/services.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:manda_bai/UI/intro/pages/onboarding_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,7 +31,9 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   void initState() {
+
     super.initState();
+
     initConnectivity();
 
     _connectivitySubscription =

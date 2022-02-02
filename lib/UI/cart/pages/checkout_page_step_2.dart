@@ -195,21 +195,18 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    color: Theme.of(context).primaryColor,
-                    width: double.infinity,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        top: Get.height * 0.045,
-                      ),
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      color: Theme.of(context).primaryColor,
+                      width: double.infinity,
                       child: Padding(
                         padding: const EdgeInsets.only(
                           right: 10.0,
@@ -272,404 +269,404 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: Get.height * 0.83,
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: Get.width * 0.03, right: Get.width * 0.03),
-                        child: Column(
-                          children: [
-                            SizedBox(height: Get.height * 0.02),
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                AppLocalizations.of(context)!
-                                    .subtitle_billing_and_shipping,
-                                style: Theme.of(context).textTheme.headline1,
+                    SizedBox(
+                      height: Get.height * 0.83,
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: Get.width * 0.03, right: Get.width * 0.03),
+                          child: Column(
+                            children: [
+                              SizedBox(height: Get.height * 0.02),
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .subtitle_billing_and_shipping,
+                                  style: Theme.of(context).textTheme.headline1,
+                                ),
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  FutureBuilder(
-                                      future: _carregarDados(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot snapshot) {
-                                        if (snapshot.data == null) {
-                                          return const Text(" ");
-                                        } else {
-                                          return ReadMoreText(
-                                            dataPersone,
-                                            trimLines: 2,
-                                            colorClickableText:
-                                                AppColors.greenColor,
-                                            trimMode: TrimMode.Line,
-                                            trimCollapsedText:
-                                                AppLocalizations.of(context)!
-                                                    .readmoretext_data,
-                                            trimExpandedText:
-                                                AppLocalizations.of(context)!
-                                                    .readmoretext_close,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline4,
-                                            moreStyle: Theme.of(context)
-                                                .textTheme
-                                                .headline6,
-                                          );
-                                        }
-                                      }),
-                                  SizedBox(height: Get.height * 0.01),
-                                  Text(
-                                    AppLocalizations.of(context)!
-                                        .subtitle_recipient_data,
-                                    style: Theme.of(context).textTheme.headline1,
-                                  ),
-                                  SizedBox(height: Get.height * 0.01),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        AppLocalizations.of(context)!
-                                                .text_island +
-                                            " ",
-                                        style:
-                                            Theme.of(context).textTheme.headline2,
-                                      ),
-                                      FutureBuilder(
-                                          future: _carregarIsland(),
-                                          builder: (BuildContext context,
-                                              AsyncSnapshot snapshot) {
-                                            if (snapshot.data == null) {
-                                              return const Text(" ");
-                                            } else {
-                                              return Text(
-                                                island,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline2,
-                                              );
-                                            }
-                                          }),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              height: Get.height * 0.3,
-                              child: widget.location == null
-                                  ? TextButton(
-                                      onPressed: () {
-                                        Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Destination_Page(
-                                                        route: "checkout")));
-                                      },
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            AppLocalizations.of(context)!
-                                                .text_no_delivery_locations,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline3,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                AppLocalizations.of(context)!
-                                                    .text_enter_destiny,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline3,
-                                              ),
-                                              const Icon(
-                                                Icons.add,
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  : Column(
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    FutureBuilder(
+                                        future: _carregarDados(),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot snapshot) {
+                                          if (snapshot.data == null) {
+                                            return const Text(" ");
+                                          } else {
+                                            return ReadMoreText(
+                                              dataPersone,
+                                              trimLines: 2,
+                                              colorClickableText:
+                                                  AppColors.greenColor,
+                                              trimMode: TrimMode.Line,
+                                              trimCollapsedText:
+                                                  AppLocalizations.of(context)!
+                                                      .readmoretext_data,
+                                              trimExpandedText:
+                                                  AppLocalizations.of(context)!
+                                                      .readmoretext_close,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline4,
+                                              moreStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .headline6,
+                                            );
+                                          }
+                                        }),
+                                    SizedBox(height: Get.height * 0.01),
+                                    Text(
+                                      AppLocalizations.of(context)!
+                                          .subtitle_recipient_data,
+                                      style: Theme.of(context).textTheme.headline1,
+                                    ),
+                                    SizedBox(height: Get.height * 0.01),
+                                    Row(
                                       children: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        Destination_Page(
-                                                            route: "checkout")));
-                                          },
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                AppLocalizations.of(context)!
-                                                    .text_delivery_address,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline2,
-                                              ),
-                                              const Spacer(),
-                                              Text(
-                                                AppLocalizations.of(context)!
-                                                    .text_change,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline3,
-                                              ),
-                                              const Icon(
-                                                Icons.add,
-                                              ),
-                                            ],
-                                          ),
+                                        Text(
+                                          AppLocalizations.of(context)!
+                                                  .text_island +
+                                              " ",
+                                          style:
+                                              Theme.of(context).textTheme.headline2,
                                         ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: Theme.of(context)
-                                                .dialogBackgroundColor,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color:
-                                                    Theme.of(context).cardColor,
-                                                blurRadius: 1.0,
-                                                spreadRadius: 0.0,
-                                                offset: const Offset(0.5, 0.5),
-                                              ),
-                                            ],
-                                          ),
-                                          height: Get.height * 0.2,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(15.0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                        FutureBuilder(
+                                            future: _carregarIsland(),
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot snapshot) {
+                                              if (snapshot.data == null) {
+                                                return const Text(" ");
+                                              } else {
+                                                return Text(
+                                                  island,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline2,
+                                                );
+                                              }
+                                            }),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                height: Get.height * 0.3,
+                                child: widget.location == null
+                                    ? TextButton(
+                                        onPressed: () {
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Destination_Page(
+                                                          route: "checkout")));
+                                        },
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              AppLocalizations.of(context)!
+                                                  .text_no_delivery_locations,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline3,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  widget.location.name,
+                                                  AppLocalizations.of(context)!
+                                                      .text_enter_destiny,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline3,
+                                                ),
+                                                const Icon(
+                                                  Icons.add,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : Column(
+                                        children: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Destination_Page(
+                                                              route: "checkout")));
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  AppLocalizations.of(context)!
+                                                      .text_delivery_address,
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .headline2,
                                                 ),
-                                                SizedBox(
-                                                  height: Get.height * 0.01,
+                                                const Spacer(),
+                                                Text(
+                                                  AppLocalizations.of(context)!
+                                                      .text_change,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline3,
                                                 ),
-                                                Row(
-                                                  children: [
-                                                    const Icon(
-                                                      Icons.location_on_outlined,
-                                                    ),
-                                                    Text(
-                                                      widget.location.island,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headline3,
-                                                    ),
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                  height: Get.height * 0.01,
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      left: 15.0),
-                                                  child: Text(
-                                                    widget.location.city +
-                                                        ',' +
-                                                        widget.location.endereco,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline4,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: Get.height * 0.01,
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    const Icon(
-                                                      Icons.phone,
-                                                    ),
-                                                    Text(
-                                                      widget.location.phone,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headline4,
-                                                    ),
-                                                  ],
+                                                const Icon(
+                                                  Icons.add,
                                                 ),
                                               ],
                                             ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                            ),
-                            Row(
-                              children: [
-                                Checkbox(
-                                  checkColor: Colors.white,
-                                  activeColor: Colors.green,
-                                  value: isCheckedPromocao,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      isCheckedPromocao = value!;
-                                    });
-                                  },
-                                ),
-                                Text(
-                                  AppLocalizations.of(context)!.text_discount,
-                                  style: Theme.of(context).textTheme.headline6,
-                                ),
-                              ],
-                            ),
-                            Container(
-                              child: isCheckedPromocao == true
-                                  ? Column(
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Text(
-                                            AppLocalizations.of(context)!
-                                                .subtitle_code_discount,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline2,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: Get.height * 0.005,
-                                        ),
-                                        TextFormField(
-                                          controller: input_codigo,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline4,
-                                          decoration: InputDecoration(
-                                            filled: true,
-                                            fillColor:
-                                                Theme.of(context).backgroundColor,
-                                            border: OutlineInputBorder(
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: Theme.of(context)
+                                                  .dialogBackgroundColor,
                                               borderRadius:
-                                                  new BorderRadius.circular(15.0),
-                                              borderSide: new BorderSide(),
+                                                  BorderRadius.circular(10),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color:
+                                                      Theme.of(context).cardColor,
+                                                  blurRadius: 1.0,
+                                                  spreadRadius: 0.0,
+                                                  offset: const Offset(0.5, 0.5),
+                                                ),
+                                              ],
+                                            ),
+                                            height: Get.height * 0.2,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(15.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    widget.location.name,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline2,
+                                                  ),
+                                                  SizedBox(
+                                                    height: Get.height * 0.01,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      const Icon(
+                                                        Icons.location_on_outlined,
+                                                      ),
+                                                      Text(
+                                                        widget.location.island,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline3,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: Get.height * 0.01,
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(
+                                                        left: 15.0),
+                                                    child: Text(
+                                                      widget.location.city +
+                                                          ',' +
+                                                          widget.location.endereco,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline4,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: Get.height * 0.01,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      const Icon(
+                                                        Icons.phone,
+                                                      ),
+                                                      Text(
+                                                        widget.location.phone,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline4,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                          validator: (value) => value!.isEmpty
-                                              ? AppLocalizations.of(context)!
-                                                  .valitador_code_discount
-                                              : null,
-                                        ),
-                                        SizedBox(
-                                          height: Get.height * 0.01,
-                                        ),
-                                      ],
-                                    )
-                                  : Container(),
-                            ),
-                            SizedBox(height: Get.height * 0.02),
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                AppLocalizations.of(context)!
-                                    .subtitle_add_information,
-                                style: Theme.of(context).textTheme.headline2,
+                                        ],
+                                      ),
                               ),
-                            ),
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                AppLocalizations.of(context)!.text_notes,
-                                style: Theme.of(context).textTheme.headline4,
-                              ),
-                            ),
-                            SizedBox(height: Get.height * 0.01),
-                            SizedBox(
-                              height: Get.height * 0.2,
-                              width: Get.width,
-                              child: TextFormField(
-                                maxLines: 10,
-                                controller: input_info,
-                                keyboardType: TextInputType.text,
-                                style: Theme.of(context).textTheme.headline4,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Theme.of(context).backgroundColor,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    borderSide: const BorderSide(),
+                              Row(
+                                children: [
+                                  Checkbox(
+                                    checkColor: Colors.white,
+                                    activeColor: Colors.green,
+                                    value: isCheckedPromocao,
+                                    onChanged: (bool? value) {
+                                      setState(() {
+                                        isCheckedPromocao = value!;
+                                      });
+                                    },
                                   ),
-                                  hintText:
-                                      AppLocalizations.of(context)!.hint_write,
-                                  hintStyle:
-                                      Theme.of(context).textTheme.headline4,
+                                  Text(
+                                    AppLocalizations.of(context)!.text_discount,
+                                    style: Theme.of(context).textTheme.headline6,
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                child: isCheckedPromocao == true
+                                    ? Column(
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.topLeft,
+                                            child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .subtitle_code_discount,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline2,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: Get.height * 0.005,
+                                          ),
+                                          TextFormField(
+                                            controller: input_codigo,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline4,
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor:
+                                                  Theme.of(context).backgroundColor,
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    new BorderRadius.circular(15.0),
+                                                borderSide: new BorderSide(),
+                                              ),
+                                            ),
+                                            validator: (value) => value!.isEmpty
+                                                ? AppLocalizations.of(context)!
+                                                    .valitador_code_discount
+                                                : null,
+                                          ),
+                                          SizedBox(
+                                            height: Get.height * 0.01,
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
+                              ),
+                              SizedBox(height: Get.height * 0.02),
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .subtitle_add_information,
+                                  style: Theme.of(context).textTheme.headline2,
                                 ),
                               ),
-                            ),
-                            SizedBox(height: Get.height * 0.03),
-                          ],
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  AppLocalizations.of(context)!.text_notes,
+                                  style: Theme.of(context).textTheme.headline4,
+                                ),
+                              ),
+                              SizedBox(height: Get.height * 0.01),
+                              SizedBox(
+                                height: Get.height * 0.2,
+                                width: Get.width,
+                                child: TextFormField(
+                                  maxLines: 10,
+                                  controller: input_info,
+                                  keyboardType: TextInputType.text,
+                                  style: Theme.of(context).textTheme.headline4,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Theme.of(context).backgroundColor,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      borderSide: const BorderSide(),
+                                    ),
+                                    hintText:
+                                        AppLocalizations.of(context)!.hint_write,
+                                    hintStyle:
+                                        Theme.of(context).textTheme.headline4,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: Get.height * 0.03),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-          Obx(
-            () => SizedBox(
-              child: cartPageController.loading
-                  ? Container(
-                      color: Colors.black54,
-                      height: Get.height,
-                      child: Center(
-                        child: Image.network(
-                          AppImages.loading,
-                          width: Get.width * 0.2,
-                          height: Get.height * 0.2,
-                          alignment: Alignment.center,
+            Obx(
+              () => SizedBox(
+                child: cartPageController.loading
+                    ? Container(
+                        color: Colors.black54,
+                        height: Get.height,
+                        child: Center(
+                          child: Image.network(
+                            AppImages.loading,
+                            width: Get.width * 0.2,
+                            height: Get.height * 0.2,
+                            alignment: Alignment.center,
+                          ),
                         ),
-                      ),
-                    )
-                  : null,
-            ),
-          ),
-        ],
-      ),
-      bottomNavigationBar: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text(" "),
-          Padding(
-            padding: const EdgeInsets.only(
-              right: 15,
-              bottom: 10,
-            ),
-            child: TextButton(
-              onPressed: validateAndSave,
-              child: Text(
-                AppLocalizations.of(context)!.subtitle_payment + " >",
-                style: const TextStyle(
-                    fontFamily: AppFonts.poppinsRegularFont,
-                    color: AppColors.greenColor),
+                      )
+                    : null,
               ),
             ),
-          ),
-        ],
+          ],
+        ),
+        bottomNavigationBar: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(" "),
+            Padding(
+              padding: const EdgeInsets.only(
+                right: 15,
+                bottom: 10,
+              ),
+              child: TextButton(
+                onPressed: validateAndSave,
+                child: Text(
+                  AppLocalizations.of(context)!.subtitle_payment + " >",
+                  style: const TextStyle(
+                      fontFamily: AppFonts.poppinsRegularFont,
+                      color: AppColors.greenColor),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

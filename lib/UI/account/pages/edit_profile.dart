@@ -218,449 +218,451 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: Get.height * 0.05),
-                  width: Get.width,
-                  child: IconButton(
-                    onPressed: () async {
-                      if(atualizar_image==true){
-                        final SharedPreferences prefs = await SharedPreferences.getInstance();
-                        prefs.remove("image");
-                      }
+    return SafeArea(
+      child: Scaffold(
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: Get.height * 0.01),
+                    width: Get.width,
+                    child: IconButton(
+                      onPressed: () async {
+                        if(atualizar_image==true){
+                          final SharedPreferences prefs = await SharedPreferences.getInstance();
+                          prefs.remove("image");
+                        }
 
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(Icons.arrow_back),
-                    alignment: Alignment.topLeft,
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(Icons.arrow_back),
+                      alignment: Alignment.topLeft,
+                    ),
                   ),
-                ),
-                FutureBuilder(
-                    future: _carregarUserImage(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.waiting:
-                          return SizedBox(
-                            height: Get.height * 0.2,
-                            width: Get.width,
-                            child: Center(
-                              child: Image.network(
-                                AppImages.loading,
-                                width: Get.width * 0.2,
-                                height: Get.height * 0.2,
-                                alignment: Alignment.center,
+                  FutureBuilder(
+                      future: _carregarUserImage(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.waiting:
+                            return SizedBox(
+                              height: Get.height * 0.2,
+                              width: Get.width,
+                              child: Center(
+                                child: Image.network(
+                                  AppImages.loading,
+                                  width: Get.width * 0.2,
+                                  height: Get.height * 0.2,
+                                  alignment: Alignment.center,
+                                ),
                               ),
-                            ),
-                          );
-                        default:
-                          return SizedBox(
-                            child: imageFile != null
-                                ? Container(
-                                    width: Get.width * 0.3,
-                                    height: Get.width * 0.3,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.greenColor,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(100),
-                                      ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Theme.of(context).cardColor,
-                                          blurRadius: 2.0,
-                                          spreadRadius: 0.0,
-                                          offset: Offset(2.0,
-                                              2.0), // changes position of shadow
+                            );
+                          default:
+                            return SizedBox(
+                              child: imageFile != null
+                                  ? Container(
+                                      width: Get.width * 0.3,
+                                      height: Get.width * 0.3,
+                                      decoration: BoxDecoration(
+                                        color: AppColors.greenColor,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(100),
                                         ),
-                                      ],
-                                      image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: MemoryImage(imageFile!),
-                                      ),
-                                    ),
-                                  )
-                                : Container(
-                                    width: Get.width * 0.3,
-                                    height: Get.width * 0.3,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.greenColor,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(100),
-                                      ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Theme.of(context).cardColor,
-                                          blurRadius: 2.0,
-                                          spreadRadius: 0.0,
-                                          offset: Offset(2.0,
-                                              2.0), // changes position of shadow
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Theme.of(context).cardColor,
+                                            blurRadius: 2.0,
+                                            spreadRadius: 0.0,
+                                            offset: Offset(2.0,
+                                                2.0), // changes position of shadow
+                                          ),
+                                        ],
+                                        image: DecorationImage(
+                                          fit: BoxFit.fill,
+                                          image: MemoryImage(imageFile!),
                                         ),
-                                      ],
-                                      image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: NetworkImage(user.avatar),
                                       ),
-                                    ),
+                                    )
+                                  : Container(
+                                      width: Get.width * 0.3,
+                                      height: Get.width * 0.3,
+                                      decoration: BoxDecoration(
+                                        color: AppColors.greenColor,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(100),
+                                        ),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Theme.of(context).cardColor,
+                                            blurRadius: 2.0,
+                                            spreadRadius: 0.0,
+                                            offset: Offset(2.0,
+                                                2.0), // changes position of shadow
+                                          ),
+                                        ],
+                                        image: DecorationImage(
+                                          fit: BoxFit.fill,
+                                          image: NetworkImage(user.avatar),
+                                        ),
+                                      ),
 
-                                  ),
-                          );
-                      }
-                    }),
-                SizedBox(
-                  height: Get.height * 0.05,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: Get.width * 0.05,
-                    right: Get.width * 0.05,
-                  ),
-                  child: Form(
-                    key: _formKey,
-                    child: SizedBox(
-                      height: Get.height * 0.7,
-                      child: ListView(
-                        children: [
-                          Column(
-                            children: [
-                              TextFormField(
-                                controller: input_nome,
-                                obscureText: false,
-                                style: Theme.of(context).textTheme.headline4,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Theme.of(context).backgroundColor,
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(15.0),
-                                    borderSide: new BorderSide(),
-                                  ),
-                                  prefixIcon: Padding(
-                                    padding: EdgeInsets.all(0.0),
-                                    child: Icon(
-                                      Icons.person,
-                                      color: Colors.grey,
-                                    ), // icon is 48px widget.
-                                  ),
-                                  labelText: AppLocalizations.of(context)!
-                                      .textfield_name,
-                                  labelStyle:
-                                      Theme.of(context).textTheme.headline4,
-                                ),
-                                validator: (value) => value!.isEmpty
-                                    ? AppLocalizations.of(context)!
-                                        .validator_name
-                                    : null,
-                              ),
-                              SizedBox(height: Get.height * 0.01),
-                              TextFormField(
-                                controller: input_email,
-                                obscureText: false,
-                                keyboardType: TextInputType.emailAddress,
-                                style: Theme.of(context).textTheme.headline4,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Theme.of(context).backgroundColor,
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(15.0),
-                                    borderSide: new BorderSide(),
-                                  ),
-                                  prefixIcon: Padding(
-                                    padding: EdgeInsets.all(0.0),
-                                    child: Icon(
-                                      Icons.email,
-                                      color: Colors.grey,
-                                    ), // icon is 48px widget.
-                                  ),
-                                  labelText: 'Email',
-                                  labelStyle:
-                                      Theme.of(context).textTheme.headline4,
-                                ),
-                                validator: (value) =>
-                                    EmailValidator.validate(value!)
-                                        ? null
-                                        : AppLocalizations.of(context)!
-                                            .validator_email,
-                              ),
-                              SizedBox(height: Get.height * 0.01),
-                              TextFormField(
-                                controller: input_city,
-                                autocorrect: false,
-                                obscureText: false,
-                                style: Theme.of(context).textTheme.headline4,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Theme.of(context).backgroundColor,
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(15.0),
-                                    borderSide: new BorderSide(),
-                                  ),
-                                  prefixIcon: Padding(
-                                    padding: EdgeInsets.all(0.0),
-                                    child: Icon(
-                                      Icons.location_on,
-                                      color: Colors.grey,
-                                    ), // icon is 48px widget.
-                                  ),
-                                  labelText: AppLocalizations.of(context)!
-                                      .textfield_city,
-                                  labelStyle:
-                                      Theme.of(context).textTheme.headline4,
-                                ),
-                                validator: (value) => value!.isEmpty
-                                    ? AppLocalizations.of(context)!
-                                        .validator_city
-                                    : null,
-                              ),
-                              SizedBox(height: Get.height * 0.01),
-                              TextFormField(
-                                controller: input_country,
-                                autocorrect: false,
-                                obscureText: false,
-                                style: Theme.of(context).textTheme.headline4,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Theme.of(context).backgroundColor,
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(15.0),
-                                    borderSide: new BorderSide(),
-                                  ),
-                                  prefixIcon: Padding(
-                                    padding: EdgeInsets.all(0.0),
-                                    child: Icon(
-                                      Icons.location_on,
-                                      color: Colors.grey,
-                                    ), // icon is 48px widget.
-                                  ),
-                                  labelText: AppLocalizations.of(context)!
-                                      .textfield_country,
-                                  labelStyle:
-                                      Theme.of(context).textTheme.headline4,
-                                ),
-                                validator: (value) => value!.isEmpty
-                                    ? AppLocalizations.of(context)!
-                                        .validator_country
-                                    : null,
-                              ),
-                              SizedBox(height: Get.height * 0.01),
-                              TextFormField(
-                                keyboardType: TextInputType.phone,
-                                controller: input_numero,
-                                autocorrect: false,
-                                obscureText: false,
-                                style: Theme.of(context).textTheme.headline4,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Theme.of(context).backgroundColor,
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(15.0),
-                                    borderSide: new BorderSide(),
-                                  ),
-                                  prefixIcon: Padding(
-                                    padding: EdgeInsets.all(0.0),
-                                    child: Icon(
-                                      Icons.phone,
-                                      color: Colors.grey,
-                                    ), // icon is 48px widget.
-                                  ),
-                                  labelText: AppLocalizations.of(context)!
-                                      .textfield_phone_number,
-                                  labelStyle:
-                                      Theme.of(context).textTheme.headline4,
-                                ),
-                                validator: (value) => value!.isEmpty
-                                    ? AppLocalizations.of(context)!
-                                        .validator_number
-                                    : null,
-                              ),
-                              SizedBox(height: Get.height * 0.01),
-                              TextFormField(
-                                controller: input_senha,
-                                obscureText: statePassword,
-                                style: Theme.of(context).textTheme.headline4,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Theme.of(context).backgroundColor,
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(15.0),
-                                    borderSide: new BorderSide(),
-                                  ),
-                                  prefixIcon: const Padding(
-                                    padding: EdgeInsets.all(0.0),
-                                    child: Icon(
-                                      Icons.lock,
-                                      color: Colors.grey,
-                                    ), // icon is 48px widget.
-                                  ),
-                                  suffixIcon: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        statePassword = !statePassword;
-                                      });
-                                    },
-                                    icon: Icon(
-                                      statePassword
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
-                                      color: Colors.grey,
                                     ),
+                            );
+                        }
+                      }),
+                  SizedBox(
+                    height: Get.height * 0.05,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: Get.width * 0.05,
+                      right: Get.width * 0.05,
+                    ),
+                    child: Form(
+                      key: _formKey,
+                      child: SizedBox(
+                        height: Get.height * 0.7,
+                        child: ListView(
+                          children: [
+                            Column(
+                              children: [
+                                TextFormField(
+                                  controller: input_nome,
+                                  obscureText: false,
+                                  style: Theme.of(context).textTheme.headline4,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Theme.of(context).backgroundColor,
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(15.0),
+                                      borderSide: new BorderSide(),
+                                    ),
+                                    prefixIcon: Padding(
+                                      padding: EdgeInsets.all(0.0),
+                                      child: Icon(
+                                        Icons.person,
+                                        color: Colors.grey,
+                                      ), // icon is 48px widget.
+                                    ),
+                                    labelText: AppLocalizations.of(context)!
+                                        .textfield_name,
+                                    labelStyle:
+                                        Theme.of(context).textTheme.headline4,
                                   ),
-                                  labelText: AppLocalizations.of(context)!
-                                      .textfield_password,
-                                  labelStyle:
-                                      Theme.of(context).textTheme.headline4,
-                                ),
-                                validator: (value) => value!.isEmpty
-                                    ? AppLocalizations.of(context)!
-                                        .validator_password
-                                    : null,
-                              ),
-                              SizedBox(height: Get.height * 0.01),
-                              TextFormField(
-                                controller: input_senha_conf,
-                                obscureText: statePasswordconf,
-                                style: Theme.of(context).textTheme.headline4,
-                                decoration: InputDecoration(
-                                  errorText: checkPassword == false
+                                  validator: (value) => value!.isEmpty
                                       ? AppLocalizations.of(context)!
-                                          .message_error_text
+                                          .validator_name
                                       : null,
-                                  filled: true,
-                                  fillColor: Theme.of(context).backgroundColor,
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(15.0),
-                                    borderSide: new BorderSide(),
-                                  ),
-                                  prefixIcon: Padding(
-                                    padding: EdgeInsets.all(0.0),
-                                    child: Icon(
-                                      Icons.lock,
-                                      color: Colors.grey,
-                                    ), // icon is 48px widget.
-                                  ),
-                                  suffixIcon: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        statePasswordconf = !statePasswordconf;
-                                      });
-                                    },
-                                    icon: Icon(
-                                      statePasswordconf
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
-                                      color: Colors.grey,
+                                ),
+                                SizedBox(height: Get.height * 0.01),
+                                TextFormField(
+                                  controller: input_email,
+                                  obscureText: false,
+                                  keyboardType: TextInputType.emailAddress,
+                                  style: Theme.of(context).textTheme.headline4,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Theme.of(context).backgroundColor,
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(15.0),
+                                      borderSide: new BorderSide(),
                                     ),
-                                  ),
-                                  labelText: AppLocalizations.of(context)!
-                                      .label_confirm_password,
-                                  labelStyle:
-                                      Theme.of(context).textTheme.headline4,
-                                ),
-                                validator: (value) => value!.isEmpty
-                                    ? AppLocalizations.of(context)!
-                                        .validator_empty_field
-                                    : null,
-                              ),
-                              SizedBox(
-                                height: Get.height * 0.02,
-                              ),
-                              Container(
-                                height: Get.height * 0.07,
-                                width: Get.width,
-                                decoration: BoxDecoration(
-                                  color: AppColors.greenColor,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(15),
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Theme.of(context).cardColor,
-                                      blurRadius: 2.0,
-                                      spreadRadius: 0.0,
-                                      offset: Offset(2.0,
-                                          2.0), // changes position of shadow
+                                    prefixIcon: Padding(
+                                      padding: EdgeInsets.all(0.0),
+                                      child: Icon(
+                                        Icons.email,
+                                        color: Colors.grey,
+                                      ), // icon is 48px widget.
                                     ),
-                                  ],
-                                ),
-                                child: TextButton(
-                                  child: Text(
-                                    AppLocalizations.of(context)!.button_update,
-                                    style: TextStyle(
-                                        fontFamily: AppFonts.poppinsRegularFont,
-                                        fontSize: Get.width * 0.035,
-                                        color: Colors.white),
+                                    labelText: 'Email',
+                                    labelStyle:
+                                        Theme.of(context).textTheme.headline4,
                                   ),
-                                  onPressed: validateAndSave,
+                                  validator: (value) =>
+                                      EmailValidator.validate(value!)
+                                          ? null
+                                          : AppLocalizations.of(context)!
+                                              .validator_email,
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                                SizedBox(height: Get.height * 0.01),
+                                TextFormField(
+                                  controller: input_city,
+                                  autocorrect: false,
+                                  obscureText: false,
+                                  style: Theme.of(context).textTheme.headline4,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Theme.of(context).backgroundColor,
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(15.0),
+                                      borderSide: new BorderSide(),
+                                    ),
+                                    prefixIcon: Padding(
+                                      padding: EdgeInsets.all(0.0),
+                                      child: Icon(
+                                        Icons.location_on,
+                                        color: Colors.grey,
+                                      ), // icon is 48px widget.
+                                    ),
+                                    labelText: AppLocalizations.of(context)!
+                                        .textfield_city,
+                                    labelStyle:
+                                        Theme.of(context).textTheme.headline4,
+                                  ),
+                                  validator: (value) => value!.isEmpty
+                                      ? AppLocalizations.of(context)!
+                                          .validator_city
+                                      : null,
+                                ),
+                                SizedBox(height: Get.height * 0.01),
+                                TextFormField(
+                                  controller: input_country,
+                                  autocorrect: false,
+                                  obscureText: false,
+                                  style: Theme.of(context).textTheme.headline4,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Theme.of(context).backgroundColor,
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(15.0),
+                                      borderSide: new BorderSide(),
+                                    ),
+                                    prefixIcon: Padding(
+                                      padding: EdgeInsets.all(0.0),
+                                      child: Icon(
+                                        Icons.location_on,
+                                        color: Colors.grey,
+                                      ), // icon is 48px widget.
+                                    ),
+                                    labelText: AppLocalizations.of(context)!
+                                        .textfield_country,
+                                    labelStyle:
+                                        Theme.of(context).textTheme.headline4,
+                                  ),
+                                  validator: (value) => value!.isEmpty
+                                      ? AppLocalizations.of(context)!
+                                          .validator_country
+                                      : null,
+                                ),
+                                SizedBox(height: Get.height * 0.01),
+                                TextFormField(
+                                  keyboardType: TextInputType.phone,
+                                  controller: input_numero,
+                                  autocorrect: false,
+                                  obscureText: false,
+                                  style: Theme.of(context).textTheme.headline4,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Theme.of(context).backgroundColor,
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(15.0),
+                                      borderSide: new BorderSide(),
+                                    ),
+                                    prefixIcon: Padding(
+                                      padding: EdgeInsets.all(0.0),
+                                      child: Icon(
+                                        Icons.phone,
+                                        color: Colors.grey,
+                                      ), // icon is 48px widget.
+                                    ),
+                                    labelText: AppLocalizations.of(context)!
+                                        .textfield_phone_number,
+                                    labelStyle:
+                                        Theme.of(context).textTheme.headline4,
+                                  ),
+                                  validator: (value) => value!.isEmpty
+                                      ? AppLocalizations.of(context)!
+                                          .validator_number
+                                      : null,
+                                ),
+                                SizedBox(height: Get.height * 0.01),
+                                TextFormField(
+                                  controller: input_senha,
+                                  obscureText: statePassword,
+                                  style: Theme.of(context).textTheme.headline4,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Theme.of(context).backgroundColor,
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(15.0),
+                                      borderSide: new BorderSide(),
+                                    ),
+                                    prefixIcon: const Padding(
+                                      padding: EdgeInsets.all(0.0),
+                                      child: Icon(
+                                        Icons.lock,
+                                        color: Colors.grey,
+                                      ), // icon is 48px widget.
+                                    ),
+                                    suffixIcon: IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          statePassword = !statePassword;
+                                        });
+                                      },
+                                      icon: Icon(
+                                        statePassword
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    labelText: AppLocalizations.of(context)!
+                                        .textfield_password,
+                                    labelStyle:
+                                        Theme.of(context).textTheme.headline4,
+                                  ),
+                                  validator: (value) => value!.isEmpty
+                                      ? AppLocalizations.of(context)!
+                                          .validator_password
+                                      : null,
+                                ),
+                                SizedBox(height: Get.height * 0.01),
+                                TextFormField(
+                                  controller: input_senha_conf,
+                                  obscureText: statePasswordconf,
+                                  style: Theme.of(context).textTheme.headline4,
+                                  decoration: InputDecoration(
+                                    errorText: checkPassword == false
+                                        ? AppLocalizations.of(context)!
+                                            .message_error_text
+                                        : null,
+                                    filled: true,
+                                    fillColor: Theme.of(context).backgroundColor,
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          new BorderRadius.circular(15.0),
+                                      borderSide: new BorderSide(),
+                                    ),
+                                    prefixIcon: Padding(
+                                      padding: EdgeInsets.all(0.0),
+                                      child: Icon(
+                                        Icons.lock,
+                                        color: Colors.grey,
+                                      ), // icon is 48px widget.
+                                    ),
+                                    suffixIcon: IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          statePasswordconf = !statePasswordconf;
+                                        });
+                                      },
+                                      icon: Icon(
+                                        statePasswordconf
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    labelText: AppLocalizations.of(context)!
+                                        .label_confirm_password,
+                                    labelStyle:
+                                        Theme.of(context).textTheme.headline4,
+                                  ),
+                                  validator: (value) => value!.isEmpty
+                                      ? AppLocalizations.of(context)!
+                                          .validator_empty_field
+                                      : null,
+                                ),
+                                SizedBox(
+                                  height: Get.height * 0.02,
+                                ),
+                                Container(
+                                  height: Get.height * 0.07,
+                                  width: Get.width,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.greenColor,
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(15),
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Theme.of(context).cardColor,
+                                        blurRadius: 2.0,
+                                        spreadRadius: 0.0,
+                                        offset: Offset(2.0,
+                                            2.0), // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
+                                  child: TextButton(
+                                    child: Text(
+                                      AppLocalizations.of(context)!.button_update,
+                                      style: TextStyle(
+                                          fontFamily: AppFonts.poppinsRegularFont,
+                                          fontSize: Get.width * 0.035,
+                                          color: Colors.white),
+                                    ),
+                                    onPressed: validateAndSave,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Align(
-            alignment: Alignment.topRight,
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: Get.height * 0.05,
-                right: 15,
+                ],
               ),
-              child: Container(
-                width: 45,
-                height: 45,
-                decoration: BoxDecoration(
-                  color: AppColors.greenColor,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(30),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Theme.of(context).cardColor,
-                      blurRadius: 2.0,
-                      spreadRadius: 0.0,
-                      offset: Offset(2.0, 2.0), // changes position of shadow
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: Get.height * 0.01,
+                  right: 15,
+                ),
+                child: Container(
+                  width: 45,
+                  height: 45,
+                  decoration: BoxDecoration(
+                    color: AppColors.greenColor,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
                     ),
-                  ],
-                ),
-                child: IconButton(
-                  icon: Icon(Icons.photo_camera_rounded),
-                  onPressed: selectImage,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            child: loading
-                ? Container(
-                    color: Colors.black54,
-                    height: Get.height,
-                    child: Center(
-                      child: Image.network(
-                        AppImages.loading,
-                        width: Get.width * 0.2,
-                        height: Get.height * 0.2,
-                        alignment: Alignment.center,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context).cardColor,
+                        blurRadius: 2.0,
+                        spreadRadius: 0.0,
+                        offset: Offset(2.0, 2.0), // changes position of shadow
                       ),
-                    ),
-                  )
-                : null,
-          ),
-        ],
+                    ],
+                  ),
+                  child: IconButton(
+                    icon: const Icon(Icons.photo_camera_rounded,color:Colors.white,),
+                    onPressed: selectImage,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              child: loading
+                  ? Container(
+                      color: Colors.black54,
+                      height: Get.height,
+                      child: Center(
+                        child: Image.network(
+                          AppImages.loading,
+                          width: Get.width * 0.2,
+                          height: Get.height * 0.2,
+                          alignment: Alignment.center,
+                        ),
+                      ),
+                    )
+                  : null,
+            ),
+          ],
+        ),
       ),
     );
   }

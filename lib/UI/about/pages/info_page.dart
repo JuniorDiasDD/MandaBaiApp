@@ -79,16 +79,13 @@ class _InfoPageState extends State<InfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            color:Theme.of(context).primaryColor,
-            width: double.infinity,
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: Get.height * 0.045,
-              ),
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            Container(
+              color:Theme.of(context).primaryColor,
+              width: double.infinity,
               child: Row(
                 children: [
                   Container(
@@ -112,267 +109,267 @@ class _InfoPageState extends State<InfoPage> {
                 ],
               ),
             ),
-          ),
 
-          SizedBox(height: Get.height * 0.02),
-          Padding(
-            padding: EdgeInsets.only(
-              left: Get.width * 0.04,
-              right: Get.width * 0.04,
-            ),
-            child: SizedBox(
-              height: Get.height*0.85,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Image.asset(
-                      AppImages.appLogoIcon,
-                      width: Get.width * 0.5,
-                      height: Get.height * 0.1,
-                      alignment: Alignment.center,
-                    ),
-                    Text(
-                      "MandaBai",
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                    Text(
-                      "V.1.0.0",
-                      style: Theme.of(context).textTheme.headline5,
-                    ),
-                    SizedBox(height: Get.height * 0.01),
-                    Text(
-                      AppLocalizations.of(context)!.info_app_description,
-                      style: Theme.of(context).textTheme.headline4,
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: Get.height * 0.02),
-                    Divider(),
-                    SizedBox(height: Get.height * 0.02),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!
-                              .info_app_published_title,
-                          style: Theme.of(context).textTheme.headline1,
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!
-                              .info_app_published_description,
-                          style: Theme.of(context).textTheme.headline4,
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(height: Get.height * 0.01),
-                        Text(
-                          AppLocalizations.of(context)!
-                              .info_app_developer_title,
-                          style: Theme.of(context).textTheme.headline1,
-                        ),
-                        SizedBox(height: Get.height * 0.01),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ItemDeveloper(
-                                image:
-                                "https://www.mandabai.com/wp-content/uploads/2022/01/fotoPassPorte6.jpg",
-                                name: "Júnior Dias Silva",
-                                cargo: AppLocalizations.of(context)!
-                                    .info_app_func_eng),
-                            ItemDeveloper(
-                                image:
-                                "https://www.mandabai.com/wp-content/uploads/2022/01/avatar_rossana.jpg",
-                                name: "Rossana Mendes de Pina",
-                                cargo: AppLocalizations.of(context)!
-                                    .info_app_func_desn),
-                            ItemDeveloper(
-                                image:
-                                "https://www.mandabai.com/wp-content/uploads/2022/01/avatar_erickson.jpg",
-                                name: "Erickson Carvalho Vaz",
-                                cargo: AppLocalizations.of(context)!
-                                    .info_app_func_eng),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: Get.height * 0.02),
-                    Divider(),
-                    SizedBox(height: Get.height * 0.02),
-                    Text(
-                      AppLocalizations.of(context)!.info_app_license_title,
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                    SizedBox(height: Get.height * 0.01),
-                    Text(
-                      AppLocalizations.of(context)!.info_app_license_decription,
-                      style: Theme.of(context).textTheme.headline4,
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: Get.height * 0.01),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: new Container(
-                            width: Get.width * 0.1,
-                            child: Divider(
-                              color: Theme.of(context).cardColor,
-                              height: 36,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: Get.width * 0.05,
-                            right: Get.width * 0.05,
-                          ),
-                          child: Text(
+            SizedBox(height: Get.height * 0.02),
+            Padding(
+              padding: EdgeInsets.only(
+                left: Get.width * 0.04,
+                right: Get.width * 0.04,
+              ),
+              child: SizedBox(
+                height: Get.height*0.85,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        AppImages.appLogoIcon,
+                        width: Get.width * 0.5,
+                        height: Get.height * 0.1,
+                        alignment: Alignment.center,
+                      ),
+                      Text(
+                        "MandaBai",
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
+                      Text(
+                        "V.1.0.0",
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                      SizedBox(height: Get.height * 0.01),
+                      Text(
+                        AppLocalizations.of(context)!.info_app_description,
+                        style: Theme.of(context).textTheme.headline4,
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: Get.height * 0.02),
+                      Divider(),
+                      SizedBox(height: Get.height * 0.02),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
                             AppLocalizations.of(context)!
-                                .text_about_application,
-                            style: Theme.of(context).textTheme.headline4,
+                                .info_app_published_title,
+                            style: Theme.of(context).textTheme.headline1,
                           ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            width: Get.width * 0.4,
-                            child: Divider(
-                              color: Theme.of(context).cardColor,
-                              height: 36,
+                          Text(
+                            AppLocalizations.of(context)!
+                                .info_app_published_description,
+                            style: Theme.of(context).textTheme.headline4,
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(height: Get.height * 0.01),
+                          Text(
+                            AppLocalizations.of(context)!
+                                .info_app_developer_title,
+                            style: Theme.of(context).textTheme.headline1,
+                          ),
+                          SizedBox(height: Get.height * 0.01),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ItemDeveloper(
+                                  image:
+                                  "https://www.mandabai.com/wp-content/uploads/2022/01/fotoPassPorte6.jpg",
+                                  name: "Júnior Dias Silva",
+                                  cargo: AppLocalizations.of(context)!
+                                      .info_app_func_eng),
+                              ItemDeveloper(
+                                  image:
+                                  "https://www.mandabai.com/wp-content/uploads/2022/01/avatar_rossana.jpg",
+                                  name: "Rossana Mendes de Pina",
+                                  cargo: AppLocalizations.of(context)!
+                                      .info_app_func_desn),
+                              ItemDeveloper(
+                                  image:
+                                  "https://www.mandabai.com/wp-content/uploads/2022/01/avatar_erickson.jpg",
+                                  name: "Erickson Carvalho Vaz",
+                                  cargo: AppLocalizations.of(context)!
+                                      .info_app_func_eng),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: Get.height * 0.02),
+                      Divider(),
+                      SizedBox(height: Get.height * 0.02),
+                      Text(
+                        AppLocalizations.of(context)!.info_app_license_title,
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
+                      SizedBox(height: Get.height * 0.01),
+                      Text(
+                        AppLocalizations.of(context)!.info_app_license_decription,
+                        style: Theme.of(context).textTheme.headline4,
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: Get.height * 0.01),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: new Container(
+                              width: Get.width * 0.1,
+                              child: Divider(
+                                color: Theme.of(context).cardColor,
+                                height: 36,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: Get.height * 0.01),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: Get.width * 0.01, right: Get.width * 0.01),
-                      child: Container(
-                        height: Get.height * 0.06,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                          border: Border.all(
-                            color: Colors.black38,
-                          ),
-                        ),
-                        child: TextButton(
-                          child: Row(
-                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Icon(
-                                Icons.description,
-                                color: Theme.of(context).indicatorColor,
-                                size: Get.height * 0.025,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: Get.width * 0.02,
-                                ),
-                                child: Text(
-                                  AppLocalizations.of(context)!
-                                      .textbutton_termos_of_use,
-                                  style: Theme.of(context).textTheme.headline4,
-                                ),
-                              ),
-                            ],
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    Privacy_Policy(info: 1,),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: Get.height * 0.01),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: Get.width * 0.01, right: Get.width * 0.01),
-                      child: Container(
-                        height: Get.height * 0.06,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                          border: Border.all(
-                            color: Colors.black38,
-                          ),
-                        ),
-                        child: TextButton(
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.security,
-                                color: Theme.of(context).indicatorColor,
-                                size: Get.height * 0.025,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: Get.width * 0.02,
-                                ),
-                                child: Text(
-                                  AppLocalizations.of(context)!
-                                      .textbutton_privacy_police,
-                                  style: Theme.of(context).textTheme.headline4,
-                                ),
-                              ),
-                            ],
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    Privacy_Policy(info: 0,),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: Get.height * 0.01),
-
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: Get.width * 0.01, right: Get.width * 0.01),
-                      child: Container(
-                        height: Get.height * 0.06,
-                        width: Get.width,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                          border: Border.all(
-                            color: Colors.black38,
-                          ),
-                        ),
-                        alignment: Alignment.topLeft,
-                        child: TextButton(
-                          child: Padding(
+                          Padding(
                             padding: EdgeInsets.only(
-                              left: Get.width * 0.02,
+                              left: Get.width * 0.05,
+                              right: Get.width * 0.05,
                             ),
                             child: Text(
                               AppLocalizations.of(context)!
-                                  .textbutton_published_by+' MandaBai',
+                                  .text_about_application,
                               style: Theme.of(context).textTheme.headline4,
                             ),
                           ),
-                          onPressed: () => Navigator.pushNamed(context, '/infoApp'),
+                          Expanded(
+                            child: Container(
+                              width: Get.width * 0.4,
+                              child: Divider(
+                                color: Theme.of(context).cardColor,
+                                height: 36,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: Get.height * 0.01),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: Get.width * 0.01, right: Get.width * 0.01),
+                        child: Container(
+                          height: Get.height * 0.06,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            border: Border.all(
+                              color: Colors.black38,
+                            ),
+                          ),
+                          child: TextButton(
+                            child: Row(
+                              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(
+                                  Icons.description,
+                                  color: Theme.of(context).indicatorColor,
+                                  size: Get.height * 0.025,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: Get.width * 0.02,
+                                  ),
+                                  child: Text(
+                                    AppLocalizations.of(context)!
+                                        .textbutton_termos_of_use,
+                                    style: Theme.of(context).textTheme.headline4,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      Privacy_Policy(info: 1,),
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: Get.height * 0.02),
-                  ],
+                      SizedBox(height: Get.height * 0.01),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: Get.width * 0.01, right: Get.width * 0.01),
+                        child: Container(
+                          height: Get.height * 0.06,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15),
+                            ),
+                            border: Border.all(
+                              color: Colors.black38,
+                            ),
+                          ),
+                          child: TextButton(
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.security,
+                                  color: Theme.of(context).indicatorColor,
+                                  size: Get.height * 0.025,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: Get.width * 0.02,
+                                  ),
+                                  child: Text(
+                                    AppLocalizations.of(context)!
+                                        .textbutton_privacy_police,
+                                    style: Theme.of(context).textTheme.headline4,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      Privacy_Policy(info: 0,),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: Get.height * 0.01),
+
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: Get.width * 0.01, right: Get.width * 0.01),
+                        child: Container(
+                          height: Get.height * 0.06,
+                          width: Get.width,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).cardColor,
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            border: Border.all(
+                              color: Colors.black38,
+                            ),
+                          ),
+                          alignment: Alignment.topLeft,
+                          child: TextButton(
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                left: Get.width * 0.02,
+                              ),
+                              child: Text(
+                                AppLocalizations.of(context)!
+                                    .textbutton_published_by+' MandaBai',
+                                style: Theme.of(context).textTheme.headline4,
+                              ),
+                            ),
+                            onPressed: () => Navigator.pushNamed(context, '/infoApp'),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: Get.height * 0.02),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
 
-        ],
+          ],
+        ),
       ),
     );
   }

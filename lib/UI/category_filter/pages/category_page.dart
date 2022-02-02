@@ -74,6 +74,7 @@ class _CategoryPageState extends State<CategoryPage> {
       }
     });
   }
+
   @override
   void initState() {
     super.initState();
@@ -84,7 +85,7 @@ class _CategoryPageState extends State<CategoryPage> {
     statusLoadProdutoPage = "init";
     loadProdutoPage = 1;
     controller.loading = false;
-    controller.loadingMais=false;
+    controller.loadingMais = false;
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
     setState(() {
@@ -98,6 +99,7 @@ class _CategoryPageState extends State<CategoryPage> {
     _connectivitySubscription.cancel();
     super.dispose();
   }
+
   TextEditingController pesquisa = TextEditingController();
   List<Product> list_product = [];
   List<Product> list_product_cont = [];
@@ -107,20 +109,20 @@ class _CategoryPageState extends State<CategoryPage> {
   List<String> list_filter = [];
   static const int crossAxisCount = 2;
   int size_list = 0;
-  int size_load=0;
-  double position=0.0;
+  int size_load = 0;
+  double position = 0.0;
   var money = "EUR";
-  bool focus=false;
+  bool focus = false;
   late ScrollController _controller;
   _scrollListener() async {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
       if (statusLoadProdutoPage != "close") {
-        controller.loadingMais=true;
+        controller.loadingMais = true;
 
         statusLoadProdutoPage = "next";
 
-        position=_controller.position.maxScrollExtent;
+        position = _controller.position.maxScrollExtent;
         await _carregarAtualizar();
       }
 
@@ -136,7 +138,7 @@ class _CategoryPageState extends State<CategoryPage> {
     list_product = [];
     setState(() {
       for (int i = 0; i < list_product_full.length; i++) {
-        if (list_product_full[i].name.contains(pesquisa.text)) {
+        if (list_product_full[i].name.toLowerCase().contains(pesquisa.text.toLowerCase())) {
           list_product.add(list_product_full[i]);
           size_load = list_product.length;
         }
@@ -161,7 +163,6 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   Future _carregar() async {
-   // print("carregar");
     if (statusLoadProdutoPage == "init" && pesquisa.text.isEmpty) {
       if (list_product.isEmpty) {
         list_product = await ServiceRequest.loadProduct(widget.category.id);
@@ -169,19 +170,24 @@ class _CategoryPageState extends State<CategoryPage> {
           return null;
         } else {
           final SharedPreferences prefs = await SharedPreferences.getInstance();
-          final String? itemFavortiesString =
-              prefs.getString('itens_favorites');
-          money = prefs.getString('money')!;
-          if (itemFavortiesString != null) {
-            list_favorite = Favorite.decode(itemFavortiesString);
-            for (int i = 0; i < list_product.length; i++) {
-              for (int f = 0; f < list_favorite.length; f++) {
-                if (list_product[i].id == list_favorite[f].id) {
-                  list_product[i].favorite = true;
+          var check = prefs.getString('id');
+          if (check != 'null' && check != null) {
+            final String? itemFavortiesString =
+            prefs.getString('itens_favorites');
+            final String? itemUsernameString =
+            prefs.getString('username');
+            if (itemFavortiesString != null) {
+              list_favorite = Favorite.decode(itemFavortiesString);
+              for (int i = 0; i < list_product.length; i++) {
+                for (int f = 0; f < list_favorite.length; f++) {
+                  if (list_product[i].id == list_favorite[f].id && list_favorite[f].username==itemUsernameString) {
+                    list_product[i].favorite = true;
+                  }
                 }
               }
             }
           }
+          money = prefs.getString('money')!;
           var value;
           if (money == "USD") {
             value = await ServiceRequest.loadDolar();
@@ -213,7 +219,7 @@ class _CategoryPageState extends State<CategoryPage> {
       }
       setState(() {
         size_list = loadProdutoTotal;
-        size_load=list_product.length;
+        size_load = list_product.length;
       });
     }
 
@@ -266,7 +272,6 @@ class _CategoryPageState extends State<CategoryPage> {
             for (int m = 0; m < list_product_cont.length; m++) {
               list_product.add(list_product_cont[m]);
             }
-
           });
 
           list_product_full = list_product;
@@ -274,18 +279,13 @@ class _CategoryPageState extends State<CategoryPage> {
       }
     }
     setState(() {
-      controller.loadingMais=false;
-      size_load=list_product.length;
-      focus=true;
+      controller.loadingMais = false;
+      size_load = list_product.length;
+      focus = true;
     });
-
 
     return list_product;
   }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -294,224 +294,250 @@ class _CategoryPageState extends State<CategoryPage> {
     /*24 is for notification bar on Android*/
     final double itemHeight = (size.height) / 3;
     final double itemWidth = size.width / 2;
-    return Scaffold(
-      floatingActionButton: focus?FloatingActionButton.small(
-        backgroundColor: Theme.of(context).primaryColor,
-        onPressed: (){
-          _controller.animateTo(
-            position,
-            duration: Duration(seconds: 1),
-            curve: Curves.easeIn,
-          );
-           focus=false;
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButton: focus
+            ? FloatingActionButton.small(
+                backgroundColor: Theme.of(context).primaryColor,
+                onPressed: () {
+                  _controller.animateTo(
+                    position,
+                    duration: Duration(seconds: 1),
+                    curve: Curves.easeIn,
+                  );
+                  focus = false;
+                },
+                child: const Icon(
+                  Icons.arrow_downward,
+                  color: Colors.white,
+                ),
+              )
+            : null,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
 
-        },
-        child: Icon(Icons.arrow_downward),
-      ): null,
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                Container(
-                  color:Theme.of(context).primaryColor,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      top: Get.height * 0.045,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: IconButton(
-                            onPressed: () {
-                               Navigator.pop(context);
-                              //_controller.jumpTo(position);
-
-                            },
-                            icon: const Icon(Icons.arrow_back,color:Colors.white),
-                          ),
-                        ),
-                        SizedBox(
-                          width: Get.width * 0.7,
-                          height: 40,
-                          child: TextField(
-                            cursorColor: AppColors.greenColor,
-                            controller: pesquisa,
-                            style: Theme.of(context).textTheme.headline4,
-                            decoration: InputDecoration(
-                              focusedBorder: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(30.0)),
-                                  borderSide:
-                                      BorderSide(color: AppColors.greenColor)),
-                              hintText: AppLocalizations.of(context)!.search,
-                              hintStyle: Theme.of(context).textTheme.headline4,
-                              contentPadding:
-                                  const EdgeInsets.only(top: 10, left: 15),
-                              suffixIcon: const Icon(
-                                Icons.search,
-                                color: AppColors.greenColor,
-                              ),
-                              filled: true,
-                              fillColor: Theme.of(context).backgroundColor,
-                              border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(30.0),
-                                ),
+              Stack(
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                        color: Theme.of(context).primaryColor,
+                        child: Row(
+                          children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  //_controller.jumpTo(position);
+                                },
+                                icon: const Icon(Icons.arrow_back,
+                                    color: Colors.white),
                               ),
                             ),
-                            onChanged: (text) {
-                              _search();
-                            },
-                          ),
-                        ),
-                        Container(
-                          width: Get.width * 0.1,
-                          height: Get.height * 0.06,
-                          margin: EdgeInsets.only(
-                            right: Get.width * 0.04,
-                          ),
-                          child: DropdownButton(
-                            icon: Icon(
-                              Icons.filter_alt_sharp,
-                              color: Colors.white,
-                              size: 20.09,
-                            ),
-
-                            isExpanded: true,
-                            underline:
-                                DropdownButtonHideUnderline(child: Container()),
-                            items: list_filter.map((val) {
-                              return DropdownMenuItem(
-                                value: val,
-                                child: Text(val),
-                              );
-                            }).toList(),
-                            //  value: dropdownValue,
-                            onChanged: (String? value) {
-                              setState(() {
-                                dropdownValue = value!;
-                                _ordenar();
-                              });
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(
-                      top: Get.height * 0.01, left: Get.width * 0.04),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      widget.category.name + " (" + size_load.toString()+ "/"+size_list.toString()+")",
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                  ),
-                ),
-                FutureBuilder(
-                  future: _carregar(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return Container(
-                          height: Get.height * 0.2,
-                          width: Get.width,
-                          child: Center(
-                            child: Image.network(
-                              AppImages.loading,
+                            const Spacer(),
+                            Container(
                               width: Get.width * 0.2,
-                              height: Get.height * 0.2,
-                              alignment: Alignment.center,
-                            ),
-                          ),
-                        );
-                      default:
-                        if (snapshot.data == null) {
-                          return Container(
-                            height: Get.height * 0.4,
-                            width: Get.width,
-                            child: Center(
-                              child: Text(
-                                AppLocalizations.of(context)!.text_no_product,
-                                style: TextStyle(
-                                  fontFamily: AppFonts.poppinsBoldFont,
-                                  fontSize: Get.width * 0.035,
-                                  color: Colors.grey,
+                              margin: EdgeInsets.only(
+                                right: Get.width * 0.04,
+                              ),
+                              child: DropdownButton(
+                                icon: const Icon(
+                                  Icons.filter_alt_sharp,
+                                  color: Colors.white,
+                                  size: 20.09,
                                 ),
+                                isExpanded: true,
+                                elevation: 16,
+                                underline: DropdownButtonHideUnderline(
+                                    child: Container()),
+                                items: list_filter.map((val) {
+                                  return DropdownMenuItem(
+                                    value: val,
+                                    child: Text(val,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4),
+                                  );
+                                }).toList(),
+                                //  value: dropdownValue,
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    dropdownValue = value!;
+                                    _ordenar();
+                                  });
+                                },
                               ),
                             ),
-                          );
-                        } else {
-                          return Container(
-                            height: Get.height * 0.85,
-                            margin: EdgeInsets.only(
-                              left: Get.width * 0.05,
-                              right: Get.width * 0.05,
-                            ),
-                            child: GridView.builder(
-                                padding: const EdgeInsets.only(
-                                  top: 0.0,
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(
+                            top: Get.height * 0.01, left: Get.width * 0.04),
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            widget.category.name +
+                                " (" +
+                                size_load.toString() +
+                                "/" +
+                                size_list.toString() +
+                                ")",
+                            style: Theme.of(context).textTheme.headline1,
+                          ),
+                        ),
+                      ),
+                      FutureBuilder(
+                        future: _carregar(),
+                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
+                              return SizedBox(
+                                height: Get.height * 0.2,
+                                width: Get.width,
+                                child: Center(
+                                  child: Image.network(
+                                    AppImages.loading,
+                                    width: Get.width * 0.2,
+                                    height: Get.height * 0.2,
+                                    alignment: Alignment.center,
+                                  ),
                                 ),
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                              );
+                            default:
+                              if (snapshot.data == null) {
+                                return SizedBox(
+                                  height: Get.height * 0.4,
+                                  width: Get.width,
+                                  child: Center(
+                                    child: Text(
+                                      AppLocalizations.of(context)!
+                                          .text_no_product,
+                                      style: TextStyle(
+                                        fontFamily: AppFonts.poppinsBoldFont,
+                                        fontSize: Get.width * 0.035,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return Container(
+                                  height: Get.height * 0.85,
+                                  margin: EdgeInsets.only(
+                                    left: Get.width * 0.05,
+                                    right: Get.width * 0.05,
+                                  ),
+                                  child: GridView.builder(
+                                    padding: const EdgeInsets.only(
+                                      top: 0.0,
+                                    ),
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
                                       crossAxisSpacing: 20,
                                       mainAxisSpacing: 5,
                                       mainAxisExtent: 200,
                                       childAspectRatio: 8.0 / 9.0,
-                                ),
-                                itemCount: list_product.length,
-                                controller: _controller,
-                                itemBuilder: (BuildContext ctx,index){
-                                  var list=list_product[index];
-                                  return  ProductListComponent(product:list);
-                                },
-
-                          ),);
-                        }
-                    }
-                  },
-                ),
-              ],
-            ),
-
-            Obx(
-                  () => SizedBox(
-                child: controller.loadingMais
-                    ? Container(
-                  color: Colors.black54,
-                  height: Get.height,
-                  child: Center(
-                    child: Text(AppLocalizations.of(context)!.load_more,style:Theme.of(context).textTheme.headline4!.copyWith(color:Colors.white,)),
+                                    ),
+                                    itemCount: list_product.length,
+                                    controller: _controller,
+                                    itemBuilder: (BuildContext ctx, index) {
+                                      var list = list_product[index];
+                                      return ProductListComponent(product: list);
+                                    },
+                                  ),
+                                );
+                              }
+                          }
+                        },
+                      ),
+                    ],
                   ),
-                )
-                    : null,
-              ),
-            ),
-            Obx(
-              () => SizedBox(
-                child: controller.loading
-                    ? Container(
-                        color: Colors.black54,
-                        height: Get.height,
-                        child: Center(
-                          child: Image.network(
-                            AppImages.loading,
-                            width: Get.width * 0.2,
-                            height: Get.height * 0.2,
-                            alignment: Alignment.center,
+                  Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5.0),
+                      child: SizedBox(
+                        width: Get.width * 0.7,
+                        height: 40,
+                        child: TextField(
+                          cursorColor: AppColors.greenColor,
+                          controller: pesquisa,
+                          style: Theme.of(context).textTheme.headline4,
+                          decoration: InputDecoration(
+                            focusedBorder: const OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(30.0)),
+                                borderSide:
+                                    BorderSide(color: AppColors.greenColor)),
+                            hintText: AppLocalizations.of(context)!.search,
+                            hintStyle: Theme.of(context).textTheme.headline4,
+                            contentPadding:
+                                const EdgeInsets.only(top: 10, left: 15),
+                            suffixIcon: const Icon(
+                              Icons.search,
+                              color: AppColors.greenColor,
+                            ),
+                            filled: true,
+                            fillColor: Theme.of(context).backgroundColor,
+                            border: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30.0),
+                              ),
+                            ),
                           ),
+                          onChanged: (text) {
+                            _search();
+                          },
                         ),
-                      )
-                    : null,
+                      ),
+                    ),
+                  ),
+                  Obx(
+                    () => SizedBox(
+                      child: controller.loadingMais
+                          ? Container(
+                              color: Colors.black54,
+                              height: Get.height,
+                              child: Center(
+                                child: Text(
+                                    AppLocalizations.of(context)!.load_more,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline4!
+                                        .copyWith(
+                                          color: Colors.white,
+                                        )),
+                              ),
+                            )
+                          : null,
+                    ),
+                  ),
+                  Obx(
+                    () => SizedBox(
+                      child: controller.loading
+                          ? Container(
+                              color: Colors.black54,
+                              height: Get.height,
+                              child: Center(
+                                child: Image.network(
+                                  AppImages.loading,
+                                  width: Get.width * 0.2,
+                                  height: Get.height * 0.2,
+                                  alignment: Alignment.center,
+                                ),
+                              ),
+                            )
+                          : null,
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

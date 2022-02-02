@@ -177,6 +177,7 @@ class _StartPageState extends State<StartPage> {
 
   @override
   void initState() {
+
     super.initState();
     initConnectivity();
 
@@ -203,272 +204,269 @@ class _StartPageState extends State<StartPage> {
         onWillPop: () {
           return Future(() => false);
         },
-        child: Scaffold(
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  height: Get.height * 0.04,
-                  color: Theme.of(context).primaryColor,
-                ),
-                Stack(
-                  children: [
-                    CarouselSlider(
-                      options: CarouselOptions(
-                          viewportFraction: 1,
-                          autoPlayInterval: const Duration(seconds: 10),
-                          autoPlayAnimationDuration: const Duration(seconds: 1),
-                          autoPlay: true,
-                          enlargeCenterPage: true,
-                          onPageChanged: (index, reason) {
-                            setState(() {
-                              _current = index;
-                            });
-                          }),
-                      items: imagesList
-                          .map(
-                            (item) => Center(
-                              child: Image.network(
-                                item,
-                                fit: BoxFit.cover,
-                                width: Get.width,
-                                height: Get.height * 0.25,
+        child: SafeArea(
+          child: Scaffold(
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Stack(
+                    children: [
+                      CarouselSlider(
+                        options: CarouselOptions(
+                            viewportFraction: 1,
+                            autoPlayInterval: const Duration(seconds: 10),
+                            autoPlayAnimationDuration: const Duration(seconds: 1),
+                            autoPlay: true,
+                            enlargeCenterPage: true,
+                            onPageChanged: (index, reason) {
+                              setState(() {
+                                _current = index;
+                              });
+                            }),
+                        items: imagesList
+                            .map(
+                              (item) => Center(
+                                child: Image.network(
+                                  item,
+                                  fit: BoxFit.cover,
+                                  width: Get.width,
+                                  height: Get.height * 0.27,
+                                ),
                               ),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.25,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: imagesList.map(
-                          (image) {
-                            int index = imagesList.indexOf(image);
-                            return Container(
-                              width: 10.0,
-                              height: 10.0,
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 10.0, horizontal: 2.0),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: _current == index
-                                    ? Theme.of(context).primaryColor
-                                    : Colors.green[100],
-                              ),
-                            );
-                          },
-                        ).toList(), // this was the part the I had to add
+                            )
+                            .toList(),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const InfoPage(),
+                      SizedBox(
+                        height: Get.height * 0.25,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: imagesList.map(
+                            (image) {
+                              int index = imagesList.indexOf(image);
+                              return Container(
+                                width: 10.0,
+                                height: 10.0,
+                                margin: const EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 2.0),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: _current == index
+                                      ? Theme.of(context).primaryColor
+                                      : Colors.green[100],
                                 ),
                               );
                             },
-                            child: Container(
-                              width: Get.width * 0.1,
-                              height: Get.width * 0.1,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Theme.of(context).cardColor,
-                                    blurRadius: 1.0,
-                                    spreadRadius: 0.0,
-                                    offset: Offset(0.5, 0.5),
+                          ).toList(), // this was the part the I had to add
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const InfoPage(),
                                   ),
-                                ],
-                                color: Theme.of(context).dialogBackgroundColor,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Image.asset(
-                                  AppImages.appLogoIcon,
-                                  width: Get.width * 0.3,
+                                );
+                              },
+                              child: Container(
+                                width: Get.width * 0.1,
+                                height: Get.width * 0.1,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Theme.of(context).cardColor,
+                                      blurRadius: 1.0,
+                                      spreadRadius: 0.0,
+                                      offset: Offset(0.5, 0.5),
+                                    ),
+                                  ],
+                                  color: Theme.of(context).dialogBackgroundColor,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Image.asset(
+                                    AppImages.appLogoIcon,
+                                    width: Get.width * 0.3,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          const Spacer(),
-                          GestureDetector(
-                            onTap: () async {
-                              final SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
-                              var check = prefs.getString('id');
-                              if (check != 'null' && check != null) {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => HomePage(index: 4)));
-                              }else{
-                                Navigator.pushNamed(context, '/login');
-                              }
+                            const Spacer(),
+                            GestureDetector(
+                              onTap: () async {
+                                final SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                var check = prefs.getString('id');
+                                if (check != 'null' && check != null) {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HomePage(index: 4)));
+                                }else{
+                                  Navigator.pushNamed(context, '/login');
+                                }
 
-                            },
-                            child: Container(
-                              width: Get.width * 0.1,
-                              height: Get.width * 0.1,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Theme.of(context).cardColor,
-                                    blurRadius: 1.0,
-                                    spreadRadius: 0.0,
-                                    offset: Offset(0.5, 0.5),
-                                  ),
-                                ],
-                                color: Theme.of(context).dialogBackgroundColor,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Icon(Icons.person),
+                              },
+                              child: Container(
+                                width: Get.width * 0.1,
+                                height: Get.width * 0.1,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Theme.of(context).cardColor,
+                                      blurRadius: 1.0,
+                                      spreadRadius: 0.0,
+                                      offset: Offset(0.5, 0.5),
+                                    ),
+                                  ],
+                                  color: Theme.of(context).dialogBackgroundColor,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Icon(Icons.person),
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-
-                //NEW SERVICES
-                /*   Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        top: Get.height * 0.01, left: Get.width * 0.02),
-                    child: Text(
-                      AppLocalizations.of(context)!.title_new_services,
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: Get.height * 0.15,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      ItemNew(image: AppImages.cvmovel, title: "Saldo CvMovel"),
-                      ItemNew(
-                          image: AppImages.camara, title: AppLocalizations.of(context)!.text_city_council_services,),
                     ],
                   ),
-                ),*/
-                FutureBuilder(
-                  future: controller.carregarFilter(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.data == null) {
-                      return const SizedBox();
-                    } else {
-                      return SizedBox(
-                        height: Get.height * 0.12,
-                        child: ListView.builder(
-                          padding: const EdgeInsets.only(
-                            top: 0.0,
-                          ),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (BuildContext context, index) {
-                            var list = controller.listFilter[index];
-                            return GestureDetector(
-                                onTap: () {
-                                  getFilter(list.name);
-                                },
-                                child: ItemFilter(filter: list));
-                          },
-                        ),
-                      );
-                    }
-                  },
-                ),
-
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: Get.width * 0.05),
-                    child: Text(
-                      AppLocalizations.of(context)!.title_categories,
-                      style: Theme.of(context).textTheme.headline1,
+                  //NEW SERVICES
+                  /*   Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          top: Get.height * 0.01, left: Get.width * 0.02),
+                      child: Text(
+                        AppLocalizations.of(context)!.title_new_services,
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
                     ),
                   ),
-                ),
-                FutureBuilder(
-                  future: _carregarCategory(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
+                  Container(
+                    height: Get.height * 0.15,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        ItemNew(image: AppImages.cvmovel, title: "Saldo CvMovel"),
+                        ItemNew(
+                            image: AppImages.camara, title: AppLocalizations.of(context)!.text_city_council_services,),
+                      ],
+                    ),
+                  ),*/
+                  SizedBox(height: 10,),
+                  FutureBuilder(
+                    future: controller.carregarFilter(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.data == null) {
+                        return const SizedBox();
+                      } else {
                         return SizedBox(
-                          height: Get.height * 0.2,
-                          width: Get.width,
-                          child: Center(
-                            child: Image.network(
-                              AppImages.loading,
-                              width: Get.width * 0.15,
-                              height: Get.height * 0.2,
-                              alignment: Alignment.center,
+                          height: Get.height * 0.12,
+                          child: ListView.builder(
+                            padding: const EdgeInsets.only(
+                              top: 0.0,
                             ),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: snapshot.data.length,
+                            itemBuilder: (BuildContext context, index) {
+                              var list = controller.listFilter[index];
+                              return GestureDetector(
+                                  onTap: () {
+                                    getFilter(list.name);
+                                  },
+                                  child: ItemFilter(filter: list));
+                            },
                           ),
                         );
-                      default:
-                        if (snapshot.data == null) {
-                          print("vazio");
+                      }
+                    },
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: Get.width * 0.05),
+                      child: Text(
+                        AppLocalizations.of(context)!.title_categories,
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
+                    ),
+                  ),
+                  FutureBuilder(
+                    future: _carregarCategory(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
                           return SizedBox(
                             height: Get.height * 0.2,
                             width: Get.width,
                             child: Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.public_off_outlined,
-                                    color: Colors.grey,
-                                    size: Get.height * 0.06,
-                                  ),
-                                  Text(
-                                    AppLocalizations.of(context)!
-                                        .text_unavailable_service,
-                                    style: TextStyle(
-                                      fontFamily: AppFonts.poppinsBoldFont,
-                                      fontSize: Get.width * 0.035,
+                              child: Image.network(
+                                AppImages.loading,
+                                width: Get.width * 0.15,
+                                height: Get.height * 0.2,
+                                alignment: Alignment.center,
+                              ),
+                            ),
+                          );
+                        default:
+                          if (snapshot.data == null) {
+                            print("vazio");
+                            return SizedBox(
+                              height: Get.height * 0.2,
+                              width: Get.width,
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.public_off_outlined,
                                       color: Colors.grey,
+                                      size: Get.height * 0.06,
                                     ),
-                                  ),
-                                ],
+                                    Text(
+                                      AppLocalizations.of(context)!
+                                          .text_unavailable_service,
+                                      style: TextStyle(
+                                        fontFamily: AppFonts.poppinsBoldFont,
+                                        fontSize: Get.width * 0.035,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        } else {
-                          return Container(
-                            height: Get.height * 0.485,
-                            child: ListView.builder(
-                              padding: EdgeInsets.only(
-                                top: 0.0,
-                                bottom: Get.height * 0.03,
+                            );
+                          } else {
+                            return Container(
+                              height: Get.height * 0.485,
+                              child: ListView.builder(
+                                padding: EdgeInsets.only(
+                                  top: 0.0,
+                                  bottom: Get.height * 0.03,
+                                ),
+                                scrollDirection: Axis.vertical,
+                                itemCount: snapshot.data.length,
+                                itemBuilder: (BuildContext context, index) {
+                                  var list = list_category[index];
+                                  return ListViewItemComponent(category: list);
+                                },
                               ),
-                              scrollDirection: Axis.vertical,
-                              itemCount: snapshot.data.length,
-                              itemBuilder: (BuildContext context, index) {
-                                var list = list_category[index];
-                                return ListViewItemComponent(category: list);
-                              },
-                            ),
-                          );
-                        }
-                    }
-                  },
-                ),
-              ],
+                            );
+                          }
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),

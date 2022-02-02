@@ -94,7 +94,15 @@ const String productCategoriasFogo = linkFogo + "products?" + key + "&category="
 const String productCategoriasBrava = linkBrava + "products?" + key + "&category=";
 
 const String get_Produto = link + "products/";
-
+const String get_ProdutoSantiago = linkSantiago + "products/";
+const String get_ProdutoSaoAntao = linkSantoAntao + "products/";
+const String get_ProdutoSaoVicente = linkSaoVicente + "products/";
+const String get_ProdutoSaoNicolau = linkSaoNicolau + "products/";
+const String get_ProdutoBoaVista = linkBoaVista+ "products/";
+const String get_ProdutoSal = linkSal + "products/";
+const String get_ProdutoMaio = linkMaio + "products/";
+const String get_ProdutoFogo = linkFogo + "products/";
+const String get_ProdutoBrava = linkBrava + "products/";
 
 //! Cart
 const String getCart = link_2 + "cart";

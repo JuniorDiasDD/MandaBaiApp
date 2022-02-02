@@ -231,155 +231,10 @@ class ServiceRequest {
         int pages = int.parse(page);
         if (pages == 1 || pages == loadProdutoPage) {
           statusLoadProdutoPage = "close";
-          /*  int total_wp = int.parse(quantidade);
-        if (total_wp < 101) {
-          switch (island) {
-            case "Santo Antão":
-              response = await http.get(Uri.parse(productCategoriasSaoAntao +
-                  id.toString() +
-                  "&per_page=" +
-                  total_wp.toString()));
-              break;
-            case "São Vicente":
-              response = await http.get(Uri.parse(productCategoriasSaoVicente +
-                  id.toString() +
-                  "&per_page=" +
-                  total_wp.toString()));
-              break;
-            case "São Nicolau":
-              response = await http.get(Uri.parse(productCategoriasSaoNicolau +
-                  id.toString() +
-                  "&per_page=" +
-                  total_wp.toString()));
-              break;
-            case "Boa Vista":
-              response = await http.get(Uri.parse(productCategoriasBoaVista +
-                  id.toString() +
-                  "&per_page=" +
-                  total_wp.toString()));
-              break;
-            case "Sal":
-              response = await http
-                  .get(Uri.parse(productCategoriasSal + id.toString() +
-                  "&per_page=" +
-                  total_wp.toString()));
-              break;
-            case "Maio":
-              response = await http.get(Uri.parse(productCategoriasMaio +
-                  id.toString() +
-                  "&per_page=" +
-                  total_wp.toString()));
-              break;
-            case "Santiago":
-              response = await http.get(Uri.parse(productCategoriasSantiago +
-                  id.toString() +
-                  "&per_page=" +
-                  total_wp.toString()));
-              break;
-            case "Fogo":
-              response = await http.get(Uri.parse(productCategoriasFogo +
-                  id.toString() +
-                  "&per_page=" +
-                  total_wp.toString()));
-              break;
-            case "Brava":
-              response = await http.get(Uri.parse(productCategoriasBrava +
-                  id.toString() +
-                  "&per_page=" +
-                  total_wp.toString()));
-              break;
-          }
-          final jsonResponse = json.decode(response.body);
-          final _cats = jsonResponse.cast<Map<String, dynamic>>();
-          list = _cats.map<Product>((cat) => Product.fromJson(cat)).toList();
-        } else {
-          int cont = 1,
-              falta = 0;
-          if (total_wp < 200) {
-            cont = 2;
-            falta = total_wp - 100;
-          } else {
-            cont = 3;
-            falta = total_wp - 200;
-          }
-          for (int i = 1; i <= cont; i++) {
-            switch (island) {
-              case "Santo Antão":
-                response = await http.get(Uri.parse(productCategoriasSaoAntao +
-                    id.toString() +
-                    "&per_page=100&page=" +
-                    i.toString()));
-                break;
-              case "São Vicente":
-                response = await http.get(Uri.parse(
-                    productCategoriasSaoVicente +
-                        id.toString() +
-                        "&per_page=100&page=" +
-                        i.toString()));
-                break;
-              case "São Nicolau":
-                response = await http.get(Uri.parse(
-                    productCategoriasSaoNicolau +
-                        id.toString() +
-                        "&per_page=100&page=" +
-                        i.toString()));
-                break;
-              case "Boa Vista":
-                response = await http.get(Uri.parse(productCategoriasBoaVista +
-                    id.toString() +
-                    "&per_page=100&page=" +
-                    i.toString()));
-                break;
-              case "Sal":
-                response = await http.get(Uri.parse(productCategoriasSal +
-                    id.toString() +
-                    "&per_page=100&page=" +
-                    i.toString()));
-                break;
-              case "Maio":
-                response = await http.get(Uri.parse(productCategoriasMaio +
-                    id.toString() +
-                    "&per_page=100&page=" +
-                    i.toString()));
-                break;
-              case "Santiago":
-                response = await http.get(Uri.parse(productCategoriasSantiago +
-                    id.toString() +
-                    "&per_page=100&page=" +
-                    i.toString()));
-                break;
-              case "Fogo":
-                response = await http.get(Uri.parse(productCategoriasFogo +
-                    id.toString() +
-                    "&per_page=100&page=" +
-                    i.toString()));
-                break;
-              case "Brava":
-                response = await http.get(Uri.parse(productCategoriasBrava +
-                    id.toString() +
-                    "&per_page=100&page=" +
-                    i.toString()));
-                break;
-            }
-            if (response.statusCode == 200) {
-              final jsonResponse = json.decode(response.body);
-              final _cats = jsonResponse.cast<Map<String, dynamic>>();
-              list_page =
-                  _cats.map<Product>((cat) => Product.fromJson(cat)).toList();
-              for (int d = 0; d < list_page.length; d++) {
-                list.add(list_page[d]);
-              }
-            } else {
-              print("Erro em carregar products da page=" + i.toString());
-            }
-          }
-        }*/
+
         }else{
           loadProdutoPage++;
-        } /*else{
-          final _cats = jsonResponse.cast<Map<String, dynamic>>();
-          list = _cats.map<Product>((cat) => Product.fromJson(cat)).toList();
-        }*/
+        }
       }
     } else if (response.statusCode == 503) {
       print("Erro de serviço");
@@ -558,8 +413,7 @@ class ServiceRequest {
     var island = prefs.getString('island');
 
     var response;
-    // response = await http.post(Uri.parse(request_login),
-    //   body: {'username': username, 'password': password});
+
     switch (island) {
       case "Santo Antão":
         response = await http.post(Uri.parse(request_login_SantoAntao),
@@ -1252,19 +1106,19 @@ class ServiceRequest {
   static Future addFavrite(int id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? itemFavortiesString = prefs.getString('itens_favorites');
+    final String? itemusernameString = prefs.getString('username');
     var island = prefs.getString('island');
     if (itemFavortiesString != null) {
       // decode and store data in SharedPreferences
       List<Favorite> list = Favorite.decode(itemFavortiesString);
-      list.add(new Favorite(id: id, island: island.toString()));
+      list.add( Favorite(id: id, island: island.toString(),username: itemusernameString!));
 
       // Encode and store data in SharedPreferences
       final String encodedData = Favorite.encode(list);
-
       await prefs.setString('itens_favorites', encodedData);
     } else {
       List<Favorite> list = [];
-      list.add(new Favorite(id: id, island: island.toString()));
+      list.add( Favorite(id: id, island: island.toString(),username: itemusernameString!));
       // Encode and store data in SharedPreferences
       final String encodedData = Favorite.encode(list);
 
@@ -1301,32 +1155,76 @@ class ServiceRequest {
   static Future<List<Product>> loadFavorite() async {
     List<Product> list = [];
     final SharedPreferences prefs = await SharedPreferences.getInstance();
+   // prefs.remove('itens_favorites');
     final String? itemFavortiesString = prefs.getString('itens_favorites');
 
     if (itemFavortiesString != null) {
+      final String? itemusernameString = prefs.getString('username');
       // decode and store data in SharedPreferences
       List<Favorite> listFavorites = Favorite.decode(itemFavortiesString);
       var island = prefs.getString('island');
+
       for (int i = 0; i < listFavorites.length; i++) {
+
         if (listFavorites[i].island == island) {
-          var response = await http.get(Uri.parse(
-              get_Produto + listFavorites[i].id.toString() + "?" + key));
-          if (response.statusCode == 200) {
-            final jsonResponse = json.decode(response.body);
-            list.add(Product(
-                id: jsonResponse['id'],
-                name: jsonResponse['name'].toString(),
-                description: jsonResponse['description'].toString(),
-                price: double.parse(jsonResponse['price']),
-                sale_price: jsonResponse['sale_price'].toString(),
-                in_stock: jsonResponse['manage_stock'].toString(),
-                on_sale: jsonResponse['on_sale'].toString(),
-                stock_quantity: jsonResponse['stock_quantity'].toString(),
-                image: jsonResponse['images'][0]["src"],
-                favorite: true));
-          } else {
-            print("Erro em carregar o produto");
-          }
+            if(listFavorites[i].username==itemusernameString){
+              var response;
+              switch (island) {
+                case "Santo Antão":
+                  response = await http.get(Uri.parse(
+                      get_ProdutoSaoAntao + listFavorites[i].id.toString() + "?" + key));
+                  break;
+                case "São Vicente":
+                  response = await http.get(Uri.parse(
+                      get_ProdutoSaoVicente + listFavorites[i].id.toString() + "?" + key));
+                  break;
+                case "São Nicolau":
+                  response = await http.get(Uri.parse(
+                      get_ProdutoSaoNicolau + listFavorites[i].id.toString() + "?" + key));
+                  break;
+                case "Boa Vista":
+                  response = await http.get(Uri.parse(
+                      get_ProdutoBoaVista + listFavorites[i].id.toString() + "?" + key));
+                  break;
+                case "Sal":
+                  response = await http.get(Uri.parse(
+                      get_ProdutoSal + listFavorites[i].id.toString() + "?" + key));
+                  break;
+                case "Maio":
+                  response = await http.get(Uri.parse(
+                      get_ProdutoMaio+ listFavorites[i].id.toString() + "?" + key));
+                  break;
+                case "Santiago":
+                  response = await http.get(Uri.parse(
+                      get_ProdutoSantiago + listFavorites[i].id.toString() + "?" + key));
+                  break;
+                case "Fogo":
+                  response = await http.get(Uri.parse(
+                      get_ProdutoFogo + listFavorites[i].id.toString() + "?" + key));
+                  break;
+                case "Brava":
+                  response = await http.get(Uri.parse(
+                      get_ProdutoBrava + listFavorites[i].id.toString() + "?" + key));
+                  break;
+              }
+              if (response.statusCode == 200) {
+                final jsonResponse = json.decode(response.body);
+                list.add(Product(
+                    id: jsonResponse['id'],
+                    name: jsonResponse['name'].toString(),
+                    description: jsonResponse['description'].toString(),
+                    price: double.parse(jsonResponse['price']),
+                    sale_price: jsonResponse['sale_price'].toString(),
+                    in_stock: jsonResponse['manage_stock'].toString(),
+                    on_sale: jsonResponse['on_sale'].toString(),
+                    stock_quantity: jsonResponse['stock_quantity'].toString(),
+                    image: jsonResponse['images'][0]["src"],
+                    favorite: true));
+              } else {
+                print("Erro em carregar o produto");
+              }
+            }
+
         }
       }
     } else {
@@ -1342,8 +1240,15 @@ class ServiceRequest {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? itemLocationString = prefs.getString('itens_location');
     if (itemLocationString != null) {
+      final String? itemusernameString = prefs.getString('username');
+      List<Location> listApp = Location.decode(itemLocationString);
+      for(int i=0;i<listApp.length;i++){
+        if(listApp[i].username==itemusernameString){
+          list.add(listApp[i]);
+        }
+      }
       // decode and store data in SharedPreferencesSS
-      List<Location> list = Location.decode(itemLocationString);
+
       return list;
     }
     return list;
@@ -2047,11 +1952,50 @@ class ServiceRequest {
 
   //! load product by id
   static Future loadProductbyId(id) async {
-    var response =
-        await http.get(Uri.parse(get_Produto + id.toString() + "?" + key));
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var island = prefs.getString('island');
+    var response;
+    switch (island) {
+      case "Santo Antão":
+        response = await http.get(Uri.parse(
+            get_ProdutoSaoAntao + id.toString() + "?" + key));
+        break;
+      case "São Vicente":
+        response = await http.get(Uri.parse(
+            get_ProdutoSaoVicente + id.toString() + "?" + key));
+        break;
+      case "São Nicolau":
+        response = await http.get(Uri.parse(
+            get_ProdutoSaoNicolau + id.toString() + "?" + key));
+        break;
+      case "Boa Vista":
+        response = await http.get(Uri.parse(
+            get_ProdutoBoaVista + id.toString() + "?" + key));
+        break;
+      case "Sal":
+        response = await http.get(Uri.parse(
+            get_ProdutoSal + id.toString() + "?" + key));
+        break;
+      case "Maio":
+        response = await http.get(Uri.parse(
+            get_ProdutoMaio+ id.toString() + "?" + key));
+        break;
+      case "Santiago":
+        response = await http.get(Uri.parse(
+            get_ProdutoSantiago + id.toString() + "?" + key));
+        break;
+      case "Fogo":
+        response = await http.get(Uri.parse(
+            get_ProdutoFogo + id.toString() + "?" + key));
+        break;
+      case "Brava":
+        response = await http.get(Uri.parse(
+            get_ProdutoBrava + id.toString() + "?" + key));
+        break;
+    }
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
-      Product novo = new Product(
+      Product novo =  Product(
           id: jsonResponse['id'],
           name: jsonResponse['name'].toString(),
           description: jsonResponse['description'].toString(),

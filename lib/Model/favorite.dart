@@ -3,17 +3,19 @@ import 'dart:convert';
 class Favorite {
   int id;
   String island;
-  Favorite({required this.id,required this.island});
+  String username;
+  Favorite({required this.id, required this.island, required this.username});
 
   factory Favorite.fromJson(Map<String, dynamic> jsonData) {
     return Favorite(
-      id: jsonData['id'],
-      island: jsonData['island'],
-    );
+        id: jsonData['id'],
+        island: jsonData['island'],
+        username: jsonData['username']);
   }
   static Map<String, dynamic> toMap(Favorite item) => {
         'id': item.id,
-        'island':item.island,
+        'island': item.island,
+        'username': item.username,
       };
 
   static String encode(List<Favorite> items) => json.encode(

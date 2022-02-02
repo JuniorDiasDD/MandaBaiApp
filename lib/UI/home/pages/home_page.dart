@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   ];
 
   Future<void> _onItemTapped(int index) async {
-    if (index == 1 || index == 3) {
+    if (index == 1 || index == 2 || index==3) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       var check = prefs.getString('id');
       if (check == 'null' || check == null) {

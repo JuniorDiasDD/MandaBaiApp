@@ -16,14 +16,20 @@ class _ItemFilterState extends State<ItemFilter> {
     return Container(
       width: Get.width * 0.23,
      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.network(
-            widget.filter.image,
+          Container(
             width: Get.width * 0.15,
             height: Get.width * 0.15,
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all( Radius.circular(50.0)),
+              color: Theme.of(context).scaffoldBackgroundColor,
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: NetworkImage(widget.filter.image),
+              ),
+            ),
           ),
+
           const SizedBox(
             height: 5,
           ),

@@ -91,18 +91,15 @@ class _Destination_PageState extends State<Destination_Page> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SizedBox(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                color: Theme.of(context).primaryColor,
-                width: double.infinity,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    top: Get.height * 0.045,
-                  ),
+    return SafeArea(
+      child: Scaffold(
+        body: SizedBox(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  color: Theme.of(context).primaryColor,
+                  width: double.infinity,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -164,74 +161,74 @@ class _Destination_PageState extends State<Destination_Page> {
                     ],
                   ),
                 ),
-              ),
-              SizedBox(
-                height: Get.height,
-                child: FutureBuilder(
-                  future: _carregarLocation(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return SizedBox(
-                          height: Get.height * 0.2,
-                          width: Get.width,
-                          child: Center(
-                            child: Image.network(
-                              AppImages.loading,
-                              width: Get.width * 0.2,
-                              height: Get.height * 0.2,
-                              alignment: Alignment.center,
-                            ),
-                          ),
-                        );
-                      default:
-                        if (snapshot.data == null) {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.text_no_locations,
-                                style: Theme.of(context).textTheme.headline3,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    AppLocalizations.of(context)!
-                                        .text_add_new_location,
-                                    style:
-                                        Theme.of(context).textTheme.headline3,
-                                  ),
-                                  const Icon(
-                                    Icons.add,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          );
-                        } else {
+                SizedBox(
+                  height: Get.height,
+                  child: FutureBuilder(
+                    future: _carregarLocation(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
                           return SizedBox(
-
-                            child: ListView.builder(
-                              padding: EdgeInsets.only(
-                                top: 0.0,
-                                bottom: Get.height * 0.03,
+                            height: Get.height * 0.2,
+                            width: Get.width,
+                            child: Center(
+                              child: Image.network(
+                                AppImages.loading,
+                                width: Get.width * 0.2,
+                                height: Get.height * 0.2,
+                                alignment: Alignment.center,
                               ),
-                              scrollDirection: Axis.vertical,
-                              itemCount: list_location.length,
-                              itemBuilder: (BuildContext context, index) {
-                                var list = list_location[index];
-                                return ItemLocation(
-                                    location: list, route: widget.route);
-                              },
                             ),
                           );
-                        }
-                    }
-                  },
+                        default:
+                          if (snapshot.data == null) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context)!.text_no_locations,
+                                  style: Theme.of(context).textTheme.headline3,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      AppLocalizations.of(context)!
+                                          .text_add_new_location,
+                                      style:
+                                          Theme.of(context).textTheme.headline3,
+                                    ),
+                                    const Icon(
+                                      Icons.add,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            );
+                          } else {
+                            return SizedBox(
+
+                              child: ListView.builder(
+                                padding: EdgeInsets.only(
+                                  top: 0.0,
+                                  bottom: Get.height * 0.03,
+                                ),
+                                scrollDirection: Axis.vertical,
+                                itemCount: list_location.length,
+                                itemBuilder: (BuildContext context, index) {
+                                  var list = list_location[index];
+                                  return ItemLocation(
+                                      location: list, route: widget.route);
+                                },
+                              ),
+                            );
+                          }
+                      }
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

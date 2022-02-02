@@ -156,20 +156,17 @@ class _PedidoPageState extends State<PedidoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                Container(
-                  color: Theme.of(context).primaryColor,
-                  width: double.infinity,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      top: Get.height * 0.045,
-                    ),
-                    child:  Center(
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  Container(
+                    color: Theme.of(context).primaryColor,
+                    width: double.infinity,
+                    child: Center(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
@@ -179,207 +176,207 @@ class _PedidoPageState extends State<PedidoPage> {
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Row(
-                    //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Icon(
-                        Icons.circle,
-                        color: Colors.orange,
-                        size: 10,
-                      ),
-                      Text(
-                        AppLocalizations.of(context)!.text_in_process_order,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline4!
-                            .copyWith(fontSize: Get.width * 0.03),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 8.0),
-                        child: Icon(
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Row(
+                      //mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        const Icon(
                           Icons.circle,
-                          color: Colors.green,
+                          color: Colors.orange,
                           size: 10,
                         ),
+                        Text(
+                          AppLocalizations.of(context)!.text_in_process_order,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .copyWith(fontSize: Get.width * 0.03),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 8.0),
+                          child: Icon(
+                            Icons.circle,
+                            color: Colors.green,
+                            size: 10,
+                          ),
+                        ),
+                        Text(
+                          AppLocalizations.of(context)!.text_delivery_order,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .copyWith(fontSize: Get.width * 0.03),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      FutureBuilder(
+                        future: carregarIsland(),
+                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
+                              return Container();
+                            default:
+                              return Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Container(
+                                    padding: EdgeInsets.only(
+                                      left: Get.width * 0.04,
+                                      right: Get.width * 0.04,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      border: Border.all(
+                                          color: Theme.of(context).indicatorColor,
+                                          style: BorderStyle.solid,
+                                          width: 0.80),
+                                    ),
+                                    child: DropdownButton<String>(
+                                      value: dropdownValue,
+                                      icon: const Icon(
+                                        Icons.arrow_drop_down,
+                                      ),
+                                      iconSize: Get.width * 0.05,
+                                      elevation: 16,
+                                      style:
+                                          Theme.of(context).textTheme.headline4,
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      underline: Container(
+                                        height: 0,
+                                        color: Colors.transparent,
+                                      ),
+                                      onChanged: (String? newValue) {
+                                        setState(() {
+                                          dropdownValue = newValue!;
+                                          _atualizar();
+                                        });
+                                      },
+                                      items: list_island
+                                          .map<DropdownMenuItem<String>>(
+                                              (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(
+                                            value,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline4,
+                                          ),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                ),
+                              );
+                          }
+                        },
                       ),
-                      Text(
-                        AppLocalizations.of(context)!.text_delivery_order,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline4!
-                            .copyWith(fontSize: Get.width * 0.03),
+                      SizedBox(
+                        child: vazio == true
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  AppLocalizations.of(context)!.text_empty_order,
+                                  style: Theme.of(context).textTheme.headline3,
+                                ),
+                              )
+                            : null,
                       ),
                     ],
                   ),
-                ),
-                Row(
-                  children: [
-                    FutureBuilder(
-                      future: carregarIsland(),
-                      builder: (BuildContext context, AsyncSnapshot snapshot) {
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.waiting:
-                            return Container();
-                          default:
-                            return Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Align(
-                                alignment: Alignment.topLeft,
-                                child: Container(
-                                  padding: EdgeInsets.only(
-                                    left: Get.width * 0.04,
-                                    right: Get.width * 0.04,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    border: Border.all(
-                                        color: Theme.of(context).indicatorColor,
-                                        style: BorderStyle.solid,
-                                        width: 0.80),
-                                  ),
-                                  child: DropdownButton<String>(
-                                    value: dropdownValue,
-                                    icon: const Icon(
-                                      Icons.arrow_drop_down,
-                                    ),
-                                    iconSize: Get.width * 0.05,
-                                    elevation: 16,
-                                    style:
-                                        Theme.of(context).textTheme.headline4,
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    underline: Container(
-                                      height: 0,
-                                      color: Colors.transparent,
-                                    ),
-                                    onChanged: (String? newValue) {
-                                      setState(() {
-                                        dropdownValue = newValue!;
-                                        _atualizar();
-                                      });
-                                    },
-                                    items: list_island
-                                        .map<DropdownMenuItem<String>>(
-                                            (String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(
-                                          value,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline4,
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),
-                                ),
-                              ),
-                            );
-                        }
-                      },
-                    ),
-                    SizedBox(
-                      child: vazio == true
-                          ? Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                AppLocalizations.of(context)!.text_empty_order,
-                                style: Theme.of(context).textTheme.headline3,
-                              ),
-                            )
-                          : null,
-                    ),
-                  ],
-                ),
-                FutureBuilder(
-                  future: _carregar(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return SizedBox(
-                          height: Get.height * 0.2,
-                          width: Get.width,
-                          child: Center(
-                            child: Image.network(
-                              AppImages.loading,
-                              width: Get.width * 0.2,
-                              height: Get.height * 0.2,
-                              alignment: Alignment.center,
-                            ),
-                          ),
-                        );
-                      default:
-                        if (snapshot.data == null) {
+                  FutureBuilder(
+                    future: _carregar(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
                           return SizedBox(
-                            height: Get.height * 0.5,
+                            height: Get.height * 0.2,
                             width: Get.width,
                             child: Center(
-                              child: Text(
-                                AppLocalizations.of(context)!.text_empty_order,
-                                style: Theme.of(context).textTheme.headline3,
-                              ),
-                            ),
-                          );
-                        } else {
-                          return SizedBox(
-                            height: Get.height * 0.85,
-                            child: ListView.builder(
-                              padding: EdgeInsets.only(
-                                top: 0.0,
-                                bottom: Get.height * 0.03,
-                              ),
-                              scrollDirection: Axis.vertical,
-                              itemCount: list_order.length,
-                              itemBuilder: (BuildContext context, index) {
-                                var list = list_order[index];
-                                return Item_Pedido(order: list);
-                              },
-                            ),
-                          );
-                        }
-                    }
-                  },
-                ),
-              ],
-            ),
-            Obx(
-              () => SizedBox(
-                child: controller.loading
-                    ? Container(
-                        color: Colors.black54,
-                        height: Get.height,
-                        child: Center(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.network(
+                              child: Image.network(
                                 AppImages.loading,
                                 width: Get.width * 0.2,
                                 height: Get.height * 0.2,
                                 alignment: Alignment.center,
                               ),
-                              const SizedBox(
-                                height: 10,
+                            ),
+                          );
+                        default:
+                          if (snapshot.data == null) {
+                            return SizedBox(
+                              height: Get.height * 0.5,
+                              width: Get.width,
+                              child: Center(
+                                child: Text(
+                                  AppLocalizations.of(context)!.text_empty_order,
+                                  style: Theme.of(context).textTheme.headline3,
+                                ),
                               ),
-                              Text(
-                                AppLocalizations.of(context)!.loading_time,
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline3!
-                                    .copyWith(color: Colors.white),
+                            );
+                          } else {
+                            return SizedBox(
+                              height: Get.height * 0.85,
+                              child: ListView.builder(
+                                padding: EdgeInsets.only(
+                                  top: 0.0,
+                                  bottom: Get.height * 0.03,
+                                ),
+                                scrollDirection: Axis.vertical,
+                                itemCount: list_order.length,
+                                itemBuilder: (BuildContext context, index) {
+                                  var list = list_order[index];
+                                  return Item_Pedido(order: list);
+                                },
                               ),
-                            ],
-                          ),
-                        ),
-                      )
-                    : null,
+                            );
+                          }
+                      }
+                    },
+                  ),
+                ],
               ),
-            ),
-          ],
+              Obx(
+                () => SizedBox(
+                  child: controller.loading
+                      ? Container(
+                          color: Colors.black54,
+                          height: Get.height,
+                          child: Center(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.network(
+                                  AppImages.loading,
+                                  width: Get.width * 0.2,
+                                  height: Get.height * 0.2,
+                                  alignment: Alignment.center,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  AppLocalizations.of(context)!.loading_time,
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline3!
+                                      .copyWith(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      : null,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

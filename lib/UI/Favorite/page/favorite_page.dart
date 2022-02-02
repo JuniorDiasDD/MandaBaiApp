@@ -128,34 +128,29 @@ class _FavoritePageState extends State<FavoritePage> {
     controller.list_product = [];
     setState(() {
       for (int i = 0; i < controller.list_product_full.length; i++) {
-        if (controller.list_product_full[i].name.contains(pesquisa.text)) {
+        if (controller.list_product_full[i].name.toLowerCase().contains(pesquisa.text.toLowerCase())) {
           controller.list_product.add(controller.list_product_full[i]);
         }
       }
     });
   }
-
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
         return new Future(() => false);
       },
-      child: Scaffold(
-        body: Stack(
-          children: [
-            SizedBox(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                      color:Theme.of(context).primaryColor,
-                      width: double.infinity,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          top: Get.height * 0.045,
-                        ),
+      child: SafeArea(
+        child: Scaffold(
+          body: Stack(
+            children: [
+              SizedBox(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        color:Theme.of(context).primaryColor,
+                        width: double.infinity,
                         child: Container(
                           width: Get.width * 0.4,
                           height: Get.width * 0.1,
@@ -191,124 +186,124 @@ class _FavoritePageState extends State<FavoritePage> {
                           ),
                         ),
                       ),
-                    ),
-                    FutureBuilder(
-                      future: _carregar(),
-                      builder: (BuildContext context, AsyncSnapshot snapshot) {
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.waiting:
-                            return Container(
-                              height: Get.height * 0.3,
-                              width: Get.width,
-                              child: Center(
-                                child: Column(
-                                  children: [
-                                    Image.network(
-                                      AppImages.loading,
-                                      width: Get.width * 0.2,
-                                      height: Get.height * 0.2,
-                                      alignment: Alignment.center,
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(AppLocalizations.of(context)!.loading_time,textAlign: TextAlign.center,style:Theme.of(context).textTheme.headline3,),
-                                  ],
-                                ),
-                              ),
-                            );
-                          default:
-                            if (snapshot.data == null &&
-                                controller.vazio != true) {
+                      FutureBuilder(
+                        future: _carregar(),
+                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
                               return Container(
-                                height: Get.height * 0.5,
+                                height: Get.height * 0.3,
                                 width: Get.width,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    WebsafeSvg.asset(AppImages.favorite_empyt),
-                                    SizedBox(height: 10),
-                                    Text(
-                                      AppLocalizations.of(context)!
-                                          .text_no_favorite_product,
-                                      style:
-                                          Theme.of(context).textTheme.headline3,
-                                    ),
-                                  ],
-                                ),
-                              );
-                            } else {
-                              return Container(
-                                height: Get.height * 0.82,
-                                child: Obx(
-                                  () => ListView.builder(
-                                    padding: EdgeInsets.only(
-                                      top: 0.0,
-                                      bottom: Get.height * 0.03,
-                                    ),
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: controller.list_product.length,
-                                    itemBuilder: (BuildContext context, index) {
-                                      var list = controller.list_product[index];
-                                      return ItemFavoriteComponent(
-                                          product: list);
-                                    },
+                                child: Center(
+                                  child: Column(
+                                    children: [
+                                      Image.network(
+                                        AppImages.loading,
+                                        width: Get.width * 0.2,
+                                        height: Get.height * 0.2,
+                                        alignment: Alignment.center,
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(AppLocalizations.of(context)!.loading_time,textAlign: TextAlign.center,style:Theme.of(context).textTheme.headline3,),
+                                    ],
                                   ),
                                 ),
                               );
-                            }
-                        }
-                      },
-                    ),
-                  ],
+                            default:
+                              if (snapshot.data == null &&
+                                  controller.vazio != true) {
+                                return Container(
+                                  height: Get.height * 0.5,
+                                  width: Get.width,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      WebsafeSvg.asset(AppImages.favorite_empyt),
+                                      SizedBox(height: 10),
+                                      Text(
+                                        AppLocalizations.of(context)!
+                                            .text_no_favorite_product,
+                                        style:
+                                            Theme.of(context).textTheme.headline3,
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              } else {
+                                return Container(
+                                  height: Get.height * 0.82,
+                                  child: Obx(
+                                    () => ListView.builder(
+                                      padding: EdgeInsets.only(
+                                        top: 0.0,
+                                        bottom: Get.height * 0.03,
+                                      ),
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: controller.list_product.length,
+                                      itemBuilder: (BuildContext context, index) {
+                                        var list = controller.list_product[index];
+                                        return ItemFavoriteComponent(
+                                            product: list);
+                                      },
+                                    ),
+                                  ),
+                                );
+                              }
+                          }
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Obx(
-              () => SizedBox(
-                child: controller.loading
-                    ? Container(
-                        color: Colors.black54,
-                        height: Get.height,
-                        child: Center(
-                          child: Image.network(
-                            AppImages.loading,
-                            width: Get.width * 0.2,
-                            height: Get.height * 0.2,
-                            alignment: Alignment.center,
+              Obx(
+                () => SizedBox(
+                  child: controller.loading
+                      ? Container(
+                          color: Colors.black54,
+                          height: Get.height,
+                          child: Center(
+                            child: Image.network(
+                              AppImages.loading,
+                              width: Get.width * 0.2,
+                              height: Get.height * 0.2,
+                              alignment: Alignment.center,
+                            ),
                           ),
-                        ),
-                      )
-                    : null,
+                        )
+                      : null,
+                ),
               ),
-            ),
-            Obx(
-              () => SizedBox(
-                child: controller.vazio
-                    ? Center(
-                        child: Container(
-                          height: Get.height * 0.5,
-                          width: Get.width,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              WebsafeSvg.asset(AppImages.favorite_empyt),
-                              SizedBox(height: Get.height * 0.08),
-                              Text(
-                                AppLocalizations.of(context)!
-                                    .text_no_favorite_product,
-                                style: Theme.of(context).textTheme.headline3,
-                              ),
-                            ],
+              Obx(
+                () => SizedBox(
+                  child: controller.vazio
+                      ? Center(
+                          child: Container(
+                            height: Get.height * 0.5,
+                            width: Get.width,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                WebsafeSvg.asset(AppImages.favorite_empyt),
+                                SizedBox(height: Get.height * 0.08),
+                                Text(
+                                  AppLocalizations.of(context)!
+                                      .text_no_favorite_product,
+                                  style: Theme.of(context).textTheme.headline3,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      )
-                    : null,
-              ),
-            )
-          ],
+                        )
+                      : null,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -15,7 +15,7 @@ class AppImages {
   static const appLogoSem = 'assets/images/logoMandaBaiSem.png';
   static const appLogoGmail= 'assets/images/gmail_logo.png';
    static const appLogoIcon = 'assets/images/icon @2x.png';
-  static const ilhas = 'https://www.mandabai.com/wp-content/uploads/2022/01/cape-verde-5323223_960_720.png';
+  static const ilhas = 'assets/images/capeverde.png';
   static const messenger_logo = 'https://www.mandabai.com/wp-content/uploads/2021/12/messenger_logo.png';
   static const whatsapp_logo = 'assets/images/whatsapp_logo.png';
   static const gmail_logo = 'https://www.mandabai.com/wp-content/uploads/2021/12/gmail_logo.png';

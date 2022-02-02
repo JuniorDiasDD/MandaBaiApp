@@ -100,8 +100,7 @@ class _ChooseIslandState extends State<ChooseIsland> {
               children: [
                 Align(
                   alignment: Alignment.topRight,
-
-                  child:Image.network(
+                  child:Image.asset(
                     AppImages.ilhas,
                     height: Get.height * 0.4,
                     width: Get.width * 0.99,

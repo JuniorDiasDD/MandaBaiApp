@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
-import 'package:manda_bai/Core/app_themes.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/Favorite/controller/favorite_controller.dart';
-import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -134,17 +132,8 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                         children: [
                           IconButton(
                             padding: const EdgeInsets.all(0.0),
-                            onPressed: () async {
-                              final SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
-                              var check = prefs.getString('id');
-                              if (check == 'null' || check == null) {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return Pop_Login();
-                                    });
-                              } else {
+                            onPressed: ()  async {
+
                                 if (widget.product.price != 0.0) {
                                   setState(() {
                                     controller.loading = true;
@@ -191,7 +180,7 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                                             caminho: "erro");
                                       });
                                 }
-                              }
+
                             },
                             icon: Theme.of(context).brightness==Brightness.dark ? Icon(
                               Icons.shopping_cart,

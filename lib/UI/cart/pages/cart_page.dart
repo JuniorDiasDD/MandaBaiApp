@@ -182,26 +182,20 @@ class _StartPageState extends State<CartPage> {
       onWillPop: () {
         return new Future(() => false);
       },
-      child: Scaffold(
-        body: Stack(
-          children: [
-            SizedBox(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                      color: Theme.of(context).primaryColor,
-                      width: double.infinity,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          top: Get.height * 0.045,
-                        ),
+      child: SafeArea(
+        child: Scaffold(
+          body: Stack(
+            children: [
+              SizedBox(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        color: Theme.of(context).primaryColor,
+                        width: double.infinity,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              width: Get.width * 0.1,
-                            ),
+                           const Spacer(),
                             Text(
                               AppLocalizations.of(context)!.title_my_cart,
                               style: Theme.of(context)
@@ -211,6 +205,7 @@ class _StartPageState extends State<CartPage> {
                                     color: Colors.white,
                                   ),
                             ),
+                            const Spacer(),
                             Container(
                               child: Padding(
                                 padding: const EdgeInsets.only(right: 8.0),
@@ -246,247 +241,126 @@ class _StartPageState extends State<CartPage> {
                           ],
                         ),
                       ),
-                    ),
-                    SizedBox(height: Get.height * 0.01),
-                    SizedBox(
-                      child: list_cart.isEmpty
-                          ? null
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!.text_select_all,
-                                  style: Theme.of(context).textTheme.headline4,
-                                ),
-                                Obx(
-                                  () => Checkbox(
-                                    checkColor: Theme.of(context).cardColor,
-                                    activeColor: AppColors.greenColor,
-                                    value: cartPageController.deleteFull,
-                                    onChanged: (bool? value) {
-                                      setState(() {
-
-                                        cartPageController.deleteFull = value!;
-                                        cartPageController
-                                            .checkBoxFull(value);
-                                      });
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                    ),
-                    FutureBuilder(
-                      future: carregarCart(),
-                      builder: (BuildContext context, AsyncSnapshot snapshot) {
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.waiting:
-                            return Container(
-                              height: Get.height * 0.2,
-                              width: Get.width,
-                              child: Center(
-                                child: Image.network(
-                                  AppImages.loading,
-                                  width: Get.width * 0.2,
-                                  height: Get.height * 0.2,
-                                  alignment: Alignment.center,
-                                ),
-                              ),
-                            );
-                          default:
-                            if (snapshot.data == null) {
-                              return Container(
-                                width: Get.width,
-                                height: Get.height * 0.7,
-                                child: Column(
-                                  children: [
-                                    SizedBox(height: Get.height * 0.2),
-                                    WebsafeSvg.asset(AppImages.cart_empyt),
-                                    SizedBox(height: Get.height * 0.08),
-                                    Text(
-                                      AppLocalizations.of(context)!
-                                          .text_empty_cart,
-                                      style:
-                                          Theme.of(context).textTheme.headline4,
-                                    ),
-                                  ],
-                                ),
-                              );
-                            } else {
-                              return Container(
-                                height: Get.height * 0.45,
-                                child: ListView.builder(
-                                  padding: EdgeInsets.all(0.0),
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: snapshot.data.length,
-                                  itemBuilder: (BuildContext context, index) {
-                                    var list = list_cart[index];
-                                    cartPageController.price =
-                                        list.price * list.amount;
-                                    return ItemCart(
-                                      cartModel: list,
-                                      index: index,
-                                    );
-                                  },
-                                ),
-                              );
-                            }
-                        }
-                      },
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: Get.height * 0.02, right: Get.height * 0.02),
-                      child: SizedBox(
+                      SizedBox(height: Get.height * 0.01),
+                      SizedBox(
                         child: list_cart.isEmpty
                             ? null
-                            : Column(
+                            : Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  SizedBox(height: Get.height * 0.01),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        AppLocalizations.of(context)!
-                                            .text_subtotal,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline2,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Obx(
-                                            () => Text(
-                                              money == "ECV"
-                                                  ? cartPageController.subTotal
-                                                      .toStringAsFixed(0)
-                                                  : cartPageController.subTotal
-                                                      .toStringAsFixed(2),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline2,
-                                            ),
-                                          ),
-                                          FutureBuilder(
-                                              future: _carregarMoney(),
-                                              builder: (BuildContext context,
-                                                  AsyncSnapshot snapshot) {
-                                                if (snapshot.data == null) {
-                                                  return const Text(" ");
-                                                } else {
-                                                  return Text(
-                                                    " " + money,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline3,
-                                                  );
-                                                }
-                                              }),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: Get.height * 0.01),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        AppLocalizations.of(context)!.text_tax,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline2,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Obx(
-                                            () => Text(
-                                              money == "ECV"
-                                                  ? cartPageController.taxa
-                                                      .toStringAsFixed(0)
-                                                  : cartPageController.taxa
-                                                      .toStringAsFixed(2),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline6,
-                                            ),
-                                          ),
-                                          FutureBuilder(
-                                              future: _carregarMoney(),
-                                              builder: (BuildContext context,
-                                                  AsyncSnapshot snapshot) {
-                                                if (snapshot.data == null) {
-                                                  return const Text(" ");
-                                                } else {
-                                                  return Text(
-                                                    " " + money,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline6,
-                                                  );
-                                                }
-                                              }),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: Get.height * 0.01),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        AppLocalizations.of(context)!
-                                            .text_delivery,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline2,
-                                      ),
-                                      Text(
-                                        AppLocalizations.of(context)!.text_free,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline1,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: Get.height * 0.01),
                                   Text(
-                                    AppLocalizations.of(context)!
-                                        .text_description_delivery,
-                                    style:
-                                        Theme.of(context).textTheme.headline4,
+                                    AppLocalizations.of(context)!.text_select_all,
+                                    style: Theme.of(context).textTheme.headline4,
                                   ),
-                                  SizedBox(height: Get.height * 0.01),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                  Obx(
+                                    () => Checkbox(
+                                      checkColor: Theme.of(context).cardColor,
+                                      activeColor: AppColors.greenColor,
+                                      value: cartPageController.deleteFull,
+                                      onChanged: (bool? value) {
+                                        setState(() {
+
+                                          cartPageController.deleteFull = value!;
+                                          cartPageController
+                                              .checkBoxFull(value);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                      ),
+                      FutureBuilder(
+                        future: carregarCart(),
+                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
+                              return Container(
+                                height: Get.height * 0.2,
+                                width: Get.width,
+                                child: Center(
+                                  child: Image.network(
+                                    AppImages.loading,
+                                    width: Get.width * 0.2,
+                                    height: Get.height * 0.2,
+                                    alignment: Alignment.center,
+                                  ),
+                                ),
+                              );
+                            default:
+                              if (snapshot.data == null) {
+                                return Container(
+                                  width: Get.width,
+                                  height: Get.height * 0.7,
+                                  child: Column(
                                     children: [
+                                      SizedBox(height: Get.height * 0.2),
+                                      WebsafeSvg.asset(AppImages.cart_empyt),
+                                      SizedBox(height: Get.height * 0.08),
                                       Text(
                                         AppLocalizations.of(context)!
-                                            .text_total,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline1,
+                                            .text_empty_cart,
+                                        style:
+                                            Theme.of(context).textTheme.headline4,
                                       ),
-                                      Container(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                    ],
+                                  ),
+                                );
+                              } else {
+                                return Container(
+                                  height: Get.height * 0.45,
+                                  child: ListView.builder(
+                                    padding: EdgeInsets.all(0.0),
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: snapshot.data.length,
+                                    itemBuilder: (BuildContext context, index) {
+                                      var list = list_cart[index];
+                                      cartPageController.price =
+                                          list.price * list.amount;
+                                      return ItemCart(
+                                        cartModel: list,
+                                        index: index,
+                                      );
+                                    },
+                                  ),
+                                );
+                              }
+                          }
+                        },
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: Get.height * 0.02, right: Get.height * 0.02),
+                        child: SizedBox(
+                          child: list_cart.isEmpty
+                              ? null
+                              : Column(
+                                  children: [
+                                    SizedBox(height: Get.height * 0.01),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          AppLocalizations.of(context)!
+                                              .text_subtotal,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline2,
+                                        ),
+                                        Row(
                                           children: [
                                             Obx(
                                               () => Text(
                                                 money == "ECV"
-                                                    ? cartPageController.total
+                                                    ? cartPageController.subTotal
                                                         .toStringAsFixed(0)
-                                                    : cartPageController.total
+                                                    : cartPageController.subTotal
                                                         .toStringAsFixed(2),
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .headline5!
-                                                    .copyWith(fontSize: 20),
+                                                    .headline2,
                                               ),
                                             ),
                                             FutureBuilder(
@@ -500,74 +374,195 @@ class _StartPageState extends State<CartPage> {
                                                       " " + money,
                                                       style: Theme.of(context)
                                                           .textTheme
-                                                          .headline5!
-                                                          .copyWith(
-                                                              fontSize: 20),
+                                                          .headline3,
                                                     );
                                                   }
                                                 }),
                                           ],
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: Get.height * 0.02),
-                                  Container(
-                                    height: Get.height * 0.05,
-                                    width: Get.width,
-                                    child: FlatButton(
-                                      padding: EdgeInsets.only(
-                                        left: Get.width * 0.05,
-                                        right: Get.height * 0.05,
-                                      ),
-                                      color: AppColors.greenColor,
-                                      textColor: Colors.white,
-                                      child: Text(AppLocalizations.of(context)!
-                                          .text_checkout),
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                CheckoutPageStep2(
-                                                    location: null),
+                                      ],
+                                    ),
+                                    SizedBox(height: Get.height * 0.01),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          AppLocalizations.of(context)!.text_tax,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline2,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Obx(
+                                              () => Text(
+                                                money == "ECV"
+                                                    ? cartPageController.taxa
+                                                        .toStringAsFixed(0)
+                                                    : cartPageController.taxa
+                                                        .toStringAsFixed(2),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline6,
+                                              ),
+                                            ),
+                                            FutureBuilder(
+                                                future: _carregarMoney(),
+                                                builder: (BuildContext context,
+                                                    AsyncSnapshot snapshot) {
+                                                  if (snapshot.data == null) {
+                                                    return const Text(" ");
+                                                  } else {
+                                                    return Text(
+                                                      " " + money,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline6,
+                                                    );
+                                                  }
+                                                }),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: Get.height * 0.01),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          AppLocalizations.of(context)!
+                                              .text_delivery,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline2,
+                                        ),
+                                        Text(
+                                          AppLocalizations.of(context)!.text_free,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline1,
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: Get.height * 0.01),
+                                    Text(
+                                      AppLocalizations.of(context)!
+                                          .text_description_delivery,
+                                      style:
+                                          Theme.of(context).textTheme.headline4,
+                                    ),
+                                    SizedBox(height: Get.height * 0.01),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          AppLocalizations.of(context)!
+                                              .text_total,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline1,
+                                        ),
+                                        Container(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Obx(
+                                                () => Text(
+                                                  money == "ECV"
+                                                      ? cartPageController.total
+                                                          .toStringAsFixed(0)
+                                                      : cartPageController.total
+                                                          .toStringAsFixed(2),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline5!
+                                                      .copyWith(fontSize: 20),
+                                                ),
+                                              ),
+                                              FutureBuilder(
+                                                  future: _carregarMoney(),
+                                                  builder: (BuildContext context,
+                                                      AsyncSnapshot snapshot) {
+                                                    if (snapshot.data == null) {
+                                                      return const Text(" ");
+                                                    } else {
+                                                      return Text(
+                                                        " " + money,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline5!
+                                                            .copyWith(
+                                                                fontSize: 20),
+                                                      );
+                                                    }
+                                                  }),
+                                            ],
                                           ),
-                                        );
-                                      },
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            new BorderRadius.circular(30.0),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: Get.height * 0.02),
+                                    Container(
+                                      height: Get.height * 0.05,
+                                      width: Get.width,
+                                      child: FlatButton(
+                                        padding: EdgeInsets.only(
+                                          left: Get.width * 0.05,
+                                          right: Get.height * 0.05,
+                                        ),
+                                        color: AppColors.greenColor,
+                                        textColor: Colors.white,
+                                        child: Text(AppLocalizations.of(context)!
+                                            .text_checkout),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  CheckoutPageStep2(
+                                                      location: null),
+                                            ),
+                                          );
+                                        },
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              new BorderRadius.circular(30.0),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(height: Get.height * 0.02),
-                                ],
-                              ),
+                                    SizedBox(height: Get.height * 0.02),
+                                  ],
+                                ),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Obx(
-              () => SizedBox(
-                child: cartPageController.loading
-                    ? Container(
-                        color: Colors.black54,
-                        height: Get.height,
-                        child: Center(
-                          child: Image.network(
-                            AppImages.loading,
-                            width: Get.width * 0.2,
-                            height: Get.height * 0.2,
-                            alignment: Alignment.center,
+              Obx(
+                () => SizedBox(
+                  child: cartPageController.loading
+                      ? Container(
+                          color: Colors.black54,
+                          height: Get.height,
+                          child: Center(
+                            child: Image.network(
+                              AppImages.loading,
+                              width: Get.width * 0.2,
+                              height: Get.height * 0.2,
+                              alignment: Alignment.center,
+                            ),
                           ),
-                        ),
-                      )
-                    : null,
+                        )
+                      : null,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

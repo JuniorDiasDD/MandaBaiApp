@@ -134,18 +134,15 @@ class _ContactPageState extends State<ContactPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              color:Theme.of(context).primaryColor,
-              width: double.infinity,
-              child: Padding(
-                padding: EdgeInsets.only(
-                  top: Get.height * 0.045,
-                ),
-                child:  Row(
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                color:Theme.of(context).primaryColor,
+                width: double.infinity,
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
@@ -170,190 +167,190 @@ class _ContactPageState extends State<ContactPage> {
                   ],
                 ),
               ),
-            ),
 
-            SizedBox(height: Get.height * 0.06),
-            Padding(
-              padding: EdgeInsets.only(
-                  left: Get.width * 0.03, right: Get.width * 0.03),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              SizedBox(height: Get.height * 0.06),
+              Padding(
+                padding: EdgeInsets.only(
+                    left: Get.width * 0.03, right: Get.width * 0.03),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                     AppLocalizations.of(context)!.text_description_contact, style: Theme.of(context).textTheme.headline3,
+                    ),
+                    SizedBox(height: Get.height * 0.018),
+                    Text(
+                    AppLocalizations.of(context)!.text_description2_contact,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5!
+                          .copyWith(fontSize: Get.width * 0.05),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: Get.height * 0.05),
+              Column(
                 children: [
-                  Text(
-                   AppLocalizations.of(context)!.text_description_contact, style: Theme.of(context).textTheme.headline3,
+                  Container(
+                    height: Get.height * 0.07,
+                    width: Get.width * 0.7,
+                    decoration: BoxDecoration(
+                      color: AppColors.greenColor,
+                      borderRadius:const BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Theme.of(context).cardColor,
+                          blurRadius: 2.0,
+                          spreadRadius: 0.0,
+                          offset: Offset(2.0, 2.0), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: TextButton(
+                        onPressed: () {
+                          abrirGmail();
+                        },
+                        child: Row(
+                          children: [
+                            Flexible(
+                              flex: 1,
+                              child: Image.network(
+                                AppImages.gmail_logo,
+                                height: Get.height * 0.08,
+                                width: Get.width * 0.08,
+                              ),
+                            ),
+                            Flexible(
+                              flex: 3,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                 AppLocalizations.of(context)!.button_chat_email,
+                                  style: TextStyle(
+                                      fontFamily: AppFonts.poppinsBoldFont,
+                                      fontSize: Get.width * 0.035,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                  SizedBox(height: Get.height * 0.018),
-                  Text(
-                  AppLocalizations.of(context)!.text_description2_contact,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline5!
-                        .copyWith(fontSize: Get.width * 0.05),
+                  SizedBox(height: Get.height * 0.02),
+                  Container(
+                    height: Get.height * 0.07,
+                    width: Get.width * 0.7,
+                    decoration: BoxDecoration(
+                      color: AppColors.greenColor,
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Theme.of(context).cardColor,
+                          blurRadius: 4.0,
+                          spreadRadius: 0.0,
+                          offset: Offset(2.0, 2.0), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: TextButton(
+                        onPressed: () {
+                          openwhatsapp();
+                        },
+                        child: Row(
+                          children: [
+                            Flexible(
+                              flex: 1,
+                              child: Image.asset(
+                                AppImages.whatsapp_logo,
+                                height: Get.height * 0.08,
+                                width: Get.width * 0.08,
+                              ),
+                            ),
+                            Flexible(
+                              flex: 4,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                AppLocalizations.of(context)!.button_chat_whatsapp,
+                                  style: TextStyle(
+                                      fontFamily: AppFonts.poppinsBoldFont,
+                                      fontSize: Get.width * 0.035,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: Get.height * 0.02),
+                  Container(
+                    height: Get.height * 0.07,
+                    width: Get.width * 0.7,
+                    decoration: BoxDecoration(
+                      color: AppColors.greenColor,
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Theme.of(context).cardColor,
+                          blurRadius: 4.0,
+                          spreadRadius: 0.0,
+                          offset:const Offset(2.0, 2.0), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: TextButton(
+                        onPressed: () {
+                          abrirMessenger();
+                        },
+                        child: Row(
+                          children: [
+                            Flexible(
+                              flex: 1,
+                              child: Image.network(
+                                AppImages.messenger_logo,
+                                height: Get.height * 0.08,
+                                width: Get.width * 0.08,
+                              ),
+                            ),
+                            Flexible(
+                              flex: 4,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  AppLocalizations.of(context)!.button_chat_messenger,
+                                  style: TextStyle(
+                                      fontFamily: AppFonts.poppinsBoldFont,
+                                      fontSize: Get.width * 0.035,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
-            ),
-            SizedBox(height: Get.height * 0.05),
-            Column(
-              children: [
-                Container(
-                  height: Get.height * 0.07,
-                  width: Get.width * 0.7,
-                  decoration: BoxDecoration(
-                    color: AppColors.greenColor,
-                    borderRadius:const BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).cardColor,
-                        blurRadius: 2.0,
-                        spreadRadius: 0.0,
-                        offset: Offset(2.0, 2.0), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: TextButton(
-                      onPressed: () {
-                        abrirGmail();
-                      },
-                      child: Row(
-                        children: [
-                          Flexible(
-                            flex: 1,
-                            child: Image.network(
-                              AppImages.gmail_logo,
-                              height: Get.height * 0.08,
-                              width: Get.width * 0.08,
-                            ),
-                          ),
-                          Flexible(
-                            flex: 3,
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                               AppLocalizations.of(context)!.button_chat_email,
-                                style: TextStyle(
-                                    fontFamily: AppFonts.poppinsBoldFont,
-                                    fontSize: Get.width * 0.035,
-                                    color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: Get.height * 0.02),
-                Container(
-                  height: Get.height * 0.07,
-                  width: Get.width * 0.7,
-                  decoration: BoxDecoration(
-                    color: AppColors.greenColor,
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).cardColor,
-                        blurRadius: 4.0,
-                        spreadRadius: 0.0,
-                        offset: Offset(2.0, 2.0), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: TextButton(
-                      onPressed: () {
-                        openwhatsapp();
-                      },
-                      child: Row(
-                        children: [
-                          Flexible(
-                            flex: 1,
-                            child: Image.asset(
-                              AppImages.whatsapp_logo,
-                              height: Get.height * 0.08,
-                              width: Get.width * 0.08,
-                            ),
-                          ),
-                          Flexible(
-                            flex: 4,
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                              AppLocalizations.of(context)!.button_chat_whatsapp,
-                                style: TextStyle(
-                                    fontFamily: AppFonts.poppinsBoldFont,
-                                    fontSize: Get.width * 0.035,
-                                    color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: Get.height * 0.02),
-                Container(
-                  height: Get.height * 0.07,
-                  width: Get.width * 0.7,
-                  decoration: BoxDecoration(
-                    color: AppColors.greenColor,
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(15),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).cardColor,
-                        blurRadius: 4.0,
-                        spreadRadius: 0.0,
-                        offset:const Offset(2.0, 2.0), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: TextButton(
-                      onPressed: () {
-                        abrirMessenger();
-                      },
-                      child: Row(
-                        children: [
-                          Flexible(
-                            flex: 1,
-                            child: Image.network(
-                              AppImages.messenger_logo,
-                              height: Get.height * 0.08,
-                              width: Get.width * 0.08,
-                            ),
-                          ),
-                          Flexible(
-                            flex: 4,
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                AppLocalizations.of(context)!.button_chat_messenger,
-                                style: TextStyle(
-                                    fontFamily: AppFonts.poppinsBoldFont,
-                                    fontSize: Get.width * 0.035,
-                                    color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -66,7 +66,7 @@ class _ProductListComponentState extends State<ProductListComponent> {
               children: [
                 Container(
                   width: Get.width,
-                  height: Get.height * 0.14,
+                  height: Get.height * 0.145,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(10.0),
@@ -82,20 +82,25 @@ class _ProductListComponentState extends State<ProductListComponent> {
                   height: Get.height * 0.06,
                   child: Column(
                     children: [
-                      Flexible(
-                        flex: 1,
-                        child: Text(
-                          widget.product.name,
-                          maxLines: 1,
-                          textAlign: TextAlign.center,
-                          style: Theme
-                              .of(context)
-                              .textTheme
-                              .headline4,
+                      Align(
+                        alignment:Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 8.0,
+                          ),
+                          child: Text(
+                            widget.product.name,
+                            maxLines: 1,
+                            style: Theme
+                                .of(context)
+                                .textTheme
+                                .headline4,
+                          ),
                         ),
                       ),
-                      Flexible(
-                        flex: 1,
+                      Container(
+
+                        height: Get.height * 0.03,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -173,8 +178,17 @@ class _ProductListComponentState extends State<ProductListComponent> {
                               children: [
                                 IconButton(
                                   padding: const EdgeInsets.all(0.0),
-                                  onPressed: () {
-                                    if (widget.product.favorite == false) {
+                                  onPressed: () async {
+                                    final SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    var check = prefs.getString('id');
+                                    if (check == 'null' || check == null) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return const Pop_Login();
+                                          });
+                                    }else if (widget.product.favorite == false) {
                                       ServiceRequest.addFavrite(
                                           widget.product.id);
                                       setState(() {
@@ -283,7 +297,6 @@ class _ProductListComponentState extends State<ProductListComponent> {
             ),
           );
         },
-
           closedElevation: 5.0,
           closedShape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10)

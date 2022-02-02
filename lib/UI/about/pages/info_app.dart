@@ -139,17 +139,14 @@ class _InfoAppState extends State<InfoApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            color:Theme.of(context).primaryColor,
-            width: double.infinity,
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: Get.height * 0.045,
-              ),
-              child:   Row(
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            Container(
+              color:Theme.of(context).primaryColor,
+              width: double.infinity,
+              child: Row(
 
                 children: [
                   IconButton(
@@ -170,241 +167,241 @@ class _InfoAppState extends State<InfoApp> {
                 ],
               ),
             ),
-          ),
 
-          SizedBox(height: Get.height * 0.03),
-          Padding(
-            padding: EdgeInsets.only(
-                left: Get.width * 0.04, right: Get.width * 0.04),
-            child: SizedBox(
-              height: Get.height*0.87,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        AppLocalizations.of(context)!.text_mandabai,
-                        style: Theme.of(context).textTheme.headline1,
+            SizedBox(height: Get.height * 0.03),
+            Padding(
+              padding: EdgeInsets.only(
+                  left: Get.width * 0.04, right: Get.width * 0.04),
+              child: SizedBox(
+                height: Get.height*0.87,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          AppLocalizations.of(context)!.text_mandabai,
+                          style: Theme.of(context).textTheme.headline1,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: Get.height * 0.02),
-                    ReadMoreText(
-                      AppLocalizations.of(context)!.text_description_mandabai,
-                      trimLines: 8,
-                      colorClickableText: AppColors.greenColor,
-                      trimMode: TrimMode.Line,
-                      trimCollapsedText:
-                      AppLocalizations.of(context)!.readmoretext_see_more,
-                      trimExpandedText:
-                      AppLocalizations.of(context)!.readmoretext_close,
-                      style: Theme.of(context).textTheme.headline4,
-                      moreStyle: Theme.of(context).textTheme.headline6,
-                    ),
-                    SizedBox(height: Get.height * 0.04),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        AppLocalizations.of(context)!.subtitle_company_members,
-                        style: Theme.of(context).textTheme.headline2,
+                      SizedBox(height: Get.height * 0.02),
+                      ReadMoreText(
+                        AppLocalizations.of(context)!.text_description_mandabai,
+                        trimLines: 8,
+                        colorClickableText: AppColors.greenColor,
+                        trimMode: TrimMode.Line,
+                        trimCollapsedText:
+                        AppLocalizations.of(context)!.readmoretext_see_more,
+                        trimExpandedText:
+                        AppLocalizations.of(context)!.readmoretext_close,
+                        style: Theme.of(context).textTheme.headline4,
+                        moreStyle: Theme.of(context).textTheme.headline6,
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    FutureBuilder(
-                      future: _carregar(context),
-                      builder: (BuildContext context, AsyncSnapshot snapshot) {
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.waiting:
-                            return Container(
-                              height: Get.height * 0.2,
-                              width: Get.width,
-                              child: Center(
-                                child: Image.network(
-                                  AppImages.loading,
-                                  width: Get.width * 0.2,
-                                  height: Get.height * 0.2,
-                                  alignment: Alignment.center,
-                                ),
-                              ),
-                            );
-                          default:
-                            if (snapshot.data == null) {
-                              return Container();
-                            } else {
+                      SizedBox(height: Get.height * 0.04),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          AppLocalizations.of(context)!.subtitle_company_members,
+                          style: Theme.of(context).textTheme.headline2,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      FutureBuilder(
+                        future: _carregar(context),
+                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
                               return Container(
-                                height: Get.height * 0.35,
-                                child: ListView.builder(
-                                  padding: EdgeInsets.all(0.0),
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: list_employee.length,
-                                  itemBuilder: (BuildContext context, index) {
-                                    var list = list_employee[index];
-                                    return Item_Bio(employee: list);
-                                  },
+                                height: Get.height * 0.2,
+                                width: Get.width,
+                                child: Center(
+                                  child: Image.network(
+                                    AppImages.loading,
+                                    width: Get.width * 0.2,
+                                    height: Get.height * 0.2,
+                                    alignment: Alignment.center,
+                                  ),
                                 ),
                               );
-                            }
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        AppLocalizations.of(context)!
-                            .subtitle_representative_members,
-                        style: Theme.of(context).textTheme.headline2,
+                            default:
+                              if (snapshot.data == null) {
+                                return Container();
+                              } else {
+                                return Container(
+                                  height: Get.height * 0.35,
+                                  child: ListView.builder(
+                                    padding: EdgeInsets.all(0.0),
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: list_employee.length,
+                                    itemBuilder: (BuildContext context, index) {
+                                      var list = list_employee[index];
+                                      return Item_Bio(employee: list);
+                                    },
+                                  ),
+                                );
+                              }
+                          }
+                        },
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    FutureBuilder(
-                      future: _carregarMandatarios(context),
-                      builder: (BuildContext context, AsyncSnapshot snapshot) {
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.waiting:
-                            return Container(
-                              height: Get.height * 0.2,
-                              width: Get.width,
-                              child: Center(
-                                child: Image.network(
-                                  AppImages.loading,
-                                  width: Get.width * 0.2,
-                                  height: Get.height * 0.2,
-                                  alignment: Alignment.center,
-                                ),
-                              ),
-                            );
-                          default:
-                            if (snapshot.data == null) {
-                              return Container();
-                            } else {
+                      const SizedBox(height: 20),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          AppLocalizations.of(context)!
+                              .subtitle_representative_members,
+                          style: Theme.of(context).textTheme.headline2,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      FutureBuilder(
+                        future: _carregarMandatarios(context),
+                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
                               return Container(
-                                height: Get.height * 0.35,
-                                child: ListView.builder(
-                                  padding: EdgeInsets.all(0.0),
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: list_employee_Mandatarios.length,
-                                  itemBuilder: (BuildContext context, index) {
-                                    var list = list_employee_Mandatarios[index];
-                                    return ItemMandatario(employee: list);
-                                  },
+                                height: Get.height * 0.2,
+                                width: Get.width,
+                                child: Center(
+                                  child: Image.network(
+                                    AppImages.loading,
+                                    width: Get.width * 0.2,
+                                    height: Get.height * 0.2,
+                                    alignment: Alignment.center,
+                                  ),
                                 ),
                               );
-                            }
-                        }
-                      },
-                    ),
-                    SizedBox(height: Get.height * 0.04),
-                    Container(
-                      margin: EdgeInsets.only(
-                        left: Get.width * 0.01,
-                        right: Get.width * 0.01,
-                        top: Get.height * 0.02,
+                            default:
+                              if (snapshot.data == null) {
+                                return Container();
+                              } else {
+                                return Container(
+                                  height: Get.height * 0.35,
+                                  child: ListView.builder(
+                                    padding: EdgeInsets.all(0.0),
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: list_employee_Mandatarios.length,
+                                    itemBuilder: (BuildContext context, index) {
+                                      var list = list_employee_Mandatarios[index];
+                                      return ItemMandatario(employee: list);
+                                    },
+                                  ),
+                                );
+                              }
+                          }
+                        },
                       ),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(15),
+                      SizedBox(height: Get.height * 0.04),
+                      Container(
+                        margin: EdgeInsets.only(
+                          left: Get.width * 0.01,
+                          right: Get.width * 0.01,
+                          top: Get.height * 0.02,
                         ),
-                        border: Border.all(
-                            color: Colors.black12, width: Get.width * 0.001),
-                      ),
-                      child: ExpansionTile(
-                        backgroundColor: Theme.of(context).cardColor,
-                        iconColor: AppColors.greenColor,
-                        title: Text(
-                          AppLocalizations.of(context)!.subtitle_mission,
-                          style: Theme.of(context).textTheme.headline5,
-                        ),
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.all(15.0),
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .text_description_mission,
-                              textAlign: TextAlign.start,
-                              style: Theme.of(context).textTheme.headline4,
-                            ),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(15),
                           ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(
-                        left: Get.width * 0.01,
-                        right: Get.width * 0.01,
-                        top: Get.height * 0.02,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(15),
+                          border: Border.all(
+                              color: Colors.black12, width: Get.width * 0.001),
                         ),
-                        border: Border.all(
-                            color: Colors.black12, width: Get.width * 0.001),
-                      ),
-                      child: ExpansionTile(
-                        backgroundColor: Theme.of(context).cardColor,
-                        iconColor: AppColors.greenColor,
-                        title: Text(
-                          AppLocalizations.of(context)!.subtitle_vision,
-                          style: Theme.of(context).textTheme.headline5,
-                        ),
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.all(15.0),
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .text_description_vision,
-                              textAlign: TextAlign.start,
-                              style: Theme.of(context).textTheme.headline4,
-                            ),
+                        child: ExpansionTile(
+                          backgroundColor: Theme.of(context).cardColor,
+                          iconColor: AppColors.greenColor,
+                          title: Text(
+                            AppLocalizations.of(context)!.subtitle_mission,
+                            style: Theme.of(context).textTheme.headline5,
                           ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(
-                        left: Get.width * 0.01,
-                        right: Get.width * 0.01,
-                        top: Get.height * 0.02,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(15),
-                        ),
-                        border: Border.all(
-                            color: Colors.black12, width: Get.width * 0.001),
-                      ),
-                      child: ExpansionTile(
-                        backgroundColor: Theme.of(context).cardColor,
-                        iconColor: AppColors.greenColor,
-                        title: Text(
-                          AppLocalizations.of(context)!.subtitle_values,
-                          style: Theme.of(context).textTheme.headline5,
-                        ),
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.all(15.0),
-                            child: Text(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.all(15.0),
+                              child: Text(
                                 AppLocalizations.of(context)!
-                                    .text_description_values,
+                                    .text_description_mission,
                                 textAlign: TextAlign.start,
-                                style: Theme.of(context).textTheme.headline4),
-                          ),
-                        ],
+                                style: Theme.of(context).textTheme.headline4,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: Get.height * 0.03),
+                      Container(
+                        margin: EdgeInsets.only(
+                          left: Get.width * 0.01,
+                          right: Get.width * 0.01,
+                          top: Get.height * 0.02,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                          border: Border.all(
+                              color: Colors.black12, width: Get.width * 0.001),
+                        ),
+                        child: ExpansionTile(
+                          backgroundColor: Theme.of(context).cardColor,
+                          iconColor: AppColors.greenColor,
+                          title: Text(
+                            AppLocalizations.of(context)!.subtitle_vision,
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.all(15.0),
+                              child: Text(
+                                AppLocalizations.of(context)!
+                                    .text_description_vision,
+                                textAlign: TextAlign.start,
+                                style: Theme.of(context).textTheme.headline4,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                          left: Get.width * 0.01,
+                          right: Get.width * 0.01,
+                          top: Get.height * 0.02,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                          border: Border.all(
+                              color: Colors.black12, width: Get.width * 0.001),
+                        ),
+                        child: ExpansionTile(
+                          backgroundColor: Theme.of(context).cardColor,
+                          iconColor: AppColors.greenColor,
+                          title: Text(
+                            AppLocalizations.of(context)!.subtitle_values,
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.all(15.0),
+                              child: Text(
+                                  AppLocalizations.of(context)!
+                                      .text_description_values,
+                                  textAlign: TextAlign.start,
+                                  style: Theme.of(context).textTheme.headline4),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: Get.height * 0.03),
 
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
 
-        ],
+          ],
+        ),
       ),
     );
   }
