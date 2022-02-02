@@ -25,7 +25,6 @@ class FullController extends GetxController {
 
   Future carregarFilter() async {
     if (_listFilter.isEmpty) {
-
       _listFilter.add(Filter(image:"https://www.mandabai.com/wp-content/uploads/2022/02/filterHomeApp.png",name: "Todos"));
       _listFilter.add(Filter(image:"https://www.mandabai.com/wp-content/uploads/2022/02/filterAlimentoApp-1.png",name:"Alimentos"));
       _listFilter.add(Filter(image:"https://www.mandabai.com/wp-content/uploads/2022/02/filterBebidaApp.png" ,name: "Bebidas"));
