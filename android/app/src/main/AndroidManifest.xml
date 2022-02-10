@@ -1,7 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.manda_bai">
-    <uses-permission  android:name="android.permission.CAMERA"/>
-    <uses-permission  android:name="android.permission.FLASHLIGHT"/>
+    package="com.manda_bai">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="MandaBai"
         android:icon="@mipmap/icon">

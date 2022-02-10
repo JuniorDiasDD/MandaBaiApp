@@ -214,6 +214,7 @@ const String getOrderIdSantiago =linkSantiago+"orders/";
 const String getOrderIdFogo =linkFogo+"orders/";
 const String getOrderIdBrava =linkBrava+"orders/";
 
+<<<<<<< HEAD
 //reset password
 const String resetPasswordSantiado=urlSantiago+"bdpwr/v1/reset-password";
 //validate code
@@ -221,6 +222,8 @@ const String validateCodeSantiado=urlSantiago+"bdpwr/v1/validate-code";
 //set Password
 const String setPasswordSantiado=urlSantiago+"bdpwr/v1/set-password";
 
+=======
+>>>>>>> d5704d22297730ed15dad9e87296aa31a01db1e7
 
 int loadProdutoPage=1;
 int loadProdutoTotal=0;

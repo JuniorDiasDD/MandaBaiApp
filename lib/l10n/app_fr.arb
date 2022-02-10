@@ -199,6 +199,7 @@
     "load_more": "chargement d'autres produits...",
     "loading_time": "Tenir...\nCela peut prendre quelques instants",
     "message_update_island": "Vous devez d'abord changer l'îlot dans les paramètres pour effectuer cette opération",
+<<<<<<< HEAD
     "message_erro_internet": "Vous êtes absent en ce moment",
     "message_erro_email_set_password": "Cet e-mail n'est pas associé à ce compte.\n Veuillez saisir le même e-mail que celui utilisé pour enregistrer ce compte.",
     "title_validate_code": "Valider le code",
@@ -210,4 +211,7 @@
     "reenviar_code": "Renvoyer le nouveau code",
     "title_new_password": "Nouveau mot de passe",
     "description_new_password": "Il est maintenant possible d'attribuer un nouveau mot de passe.\n Choisissez un mot de passe que vous n'oublierez pas!"
+=======
+    "message_erro_internet": "Vous êtes absent en ce moment"
+>>>>>>> d5704d22297730ed15dad9e87296aa31a01db1e7
 }
