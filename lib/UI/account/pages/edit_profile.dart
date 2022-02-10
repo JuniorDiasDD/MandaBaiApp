@@ -651,7 +651,6 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                       color: Colors.black54,
                       height: Get.height,
                       child: Center(
-<<<<<<< HEAD
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -674,13 +673,6 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                                   .copyWith(color: Colors.white),
                             ),
                           ],
-=======
-                        child: Image.network(
-                          AppImages.loading,
-                          width: Get.width * 0.2,
-                          height: Get.height * 0.2,
-                          alignment: Alignment.center,
->>>>>>> d5704d22297730ed15dad9e87296aa31a01db1e7
                         ),
                       ),
                     )

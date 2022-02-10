@@ -7,12 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
-<<<<<<< HEAD
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/authention/pages/validate_code_page.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
-=======
->>>>>>> d5704d22297730ed15dad9e87296aa31a01db1e7
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -87,7 +84,6 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
-<<<<<<< HEAD
       setState(() {
         loading = true;
       });
@@ -118,8 +114,6 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                   caminho: "erro");
             });
       }
-=======
->>>>>>> d5704d22297730ed15dad9e87296aa31a01db1e7
     }
   }
 

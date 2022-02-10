@@ -199,7 +199,6 @@
     "load_more": "loading more product...",
     "loading_time": "Hold...\nIt may take a few moments",
     "message_update_island": "You must first change the island in the settings to carry out this operation",
-<<<<<<< HEAD
     "message_erro_internet": "You are off right now",
     "message_erro_email_set_password": "This email is not associated with this account.\n Please enter the same email used to register that account.",
     "title_validate_code": "Validate Code",
@@ -211,7 +210,4 @@
     "reenviar_code": "Resend new code",
     "title_new_password": "New Password",
     "description_new_password": "It is now possible to assign a new password.\n Choose a password you won't forget!"
-=======
-    "message_erro_internet": "You are off right now"
->>>>>>> d5704d22297730ed15dad9e87296aa31a01db1e7
 }

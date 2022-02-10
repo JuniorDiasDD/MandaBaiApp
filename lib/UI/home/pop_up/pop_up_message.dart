@@ -109,11 +109,7 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
                           } else if (widget.caminho == "encomenda") {
                             Navigator.of(context).pushNamedAndRemoveUntil(
                                 '/home', (Route<dynamic> route) => false);
-<<<<<<< HEAD
                           } else if (widget.caminho == "registo" || widget.caminho == "reset") {
-=======
-                          } else if (widget.caminho == "registo") {
->>>>>>> d5704d22297730ed15dad9e87296aa31a01db1e7
                             Navigator.pushReplacementNamed(context, '/login');
                           } else if (widget.caminho == "erro_encomenda") {
 
