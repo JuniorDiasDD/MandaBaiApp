@@ -27,9 +27,9 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
       body: Center(
         child: Container(
           width: Get.width,
-          height: Get.height * 0.3,
+          height: Get.height * 0.25,
           margin:
-              EdgeInsets.only(left: Get.width * 0.12, right: Get.width * 0.12),
+              EdgeInsets.only(left: Get.width * 0.15, right: Get.width * 0.15),
           decoration: BoxDecoration(
             color: Theme.of(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(12),
@@ -55,7 +55,7 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
                           size: Get.height * 0.09,
                         ),
                 ),
-                SizedBox(height: Get.height * 0.01),
+
                 Padding(
                   padding: const EdgeInsets.only(
                     left: 10.0,
@@ -64,56 +64,58 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
                   child: Text(
                     widget.mensagem,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline4,
+                    style: widget.mensagem.length>50?Theme.of(context).textTheme.headline4!.copyWith(fontSize: Get.width * 0.025):Theme.of(context).textTheme.headline4,
                   ),
                 ),
-                SizedBox(height: Get.height * 0.02),
-                Container(
-                  height: Get.height * 0.06,
-                  width: Get.width * 0.3,
-                  decoration: BoxDecoration(
-                    color: AppColors.greenColor,
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(15),
+                Padding(
+                  padding: const EdgeInsets.only(left:15.0,right: 15.0,top:10.0),
+                  child: Container(
+                    height: Get.height * 0.05,
+                    width: Get.width,
+                    decoration: BoxDecoration(
+                      color: AppColors.greenColor,
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Theme.of(context).cardColor,
+                          blurRadius: 2.0,
+                          spreadRadius: 0.0,
+                          offset: Offset(2.0, 2.0),
+                        ),
+                      ],
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).cardColor,
-                        blurRadius: 2.0,
-                        spreadRadius: 0.0,
-                        offset: Offset(2.0, 2.0),
-                      ),
-                    ],
+                    child: TextButton(
+                        child: Text(
+                          'OK',
+                          style: TextStyle(
+                              fontFamily: AppFonts.poppinsBoldFont,
+                              fontSize: Get.width * 0.035,
+                              color: Colors.white),
+                        ),
+                        onPressed: () {
+                          if (widget.caminho == "home") {
+                            Navigator.pushReplacementNamed(context, '/home');
+                          } else if (widget.caminho == "erro" ||
+                              widget.caminho == "description" ||
+                              widget.caminho == "addCarrinho"||widget.caminho == "pedido") {
+                            Navigator.pop(context);
+                          } else if (widget.caminho == "atualizar") {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomePage(index: 3)));
+                          } else if (widget.caminho == "encomenda") {
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                '/home', (Route<dynamic> route) => false);
+                          } else if (widget.caminho == "registo" || widget.caminho == "reset") {
+                            Navigator.pushReplacementNamed(context, '/login');
+                          } else if (widget.caminho == "erro_encomenda") {
+
+                          }
+                        }),
                   ),
-                  child: TextButton(
-                      child: Text(
-                        'OK',
-                        style: TextStyle(
-                            fontFamily: AppFonts.poppinsBoldFont,
-                            fontSize: Get.width * 0.035,
-                            color: Colors.white),
-                      ),
-                      onPressed: () {
-                        if (widget.caminho == "home") {
-                          Navigator.pushReplacementNamed(context, '/home');
-                        } else if (widget.caminho == "erro" ||
-                            widget.caminho == "description" ||
-                            widget.caminho == "addCarrinho") {
-                          Navigator.pop(context);
-                        } else if (widget.caminho == "atualizar") {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomePage(index: 3)));
-                        } else if (widget.caminho == "encomenda") {
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/home', (Route<dynamic> route) => false);
-                        } else if (widget.caminho == "registo") {
-                          Navigator.pushReplacementNamed(context, '/login');
-                        } else if (widget.caminho == "erro_encomenda") {
-                          
-                        }
-                      }),
                 ),
               ],
             ),

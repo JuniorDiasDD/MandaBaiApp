@@ -17,16 +17,16 @@ class _Pop_LoginState extends State<Pop_Login> {
       body: Center(
         child: Container(
           width: Get.width,
-          height: Get.height * 0.272,
+          height: Get.height * 0.23,
           margin:
-              EdgeInsets.only(left: Get.width * 0.12, right: Get.width * 0.12),
+              EdgeInsets.only(left: Get.width * 0.15, right: Get.width * 0.15),
           decoration: BoxDecoration(
                  color:Theme.of(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(12),
           ),
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -39,12 +39,12 @@ class _Pop_LoginState extends State<Pop_Login> {
                         width: Get.width * 0.05,
                         height: Get.height * 0.04,
                         child: Icon(Icons.person,
-                             size: Get.width * 0.06),
+                             size: Get.width * 0.06,color: Colors.black54,),
                       ),
                     ),
                     Text(
                       AppLocalizations.of(context)!.button_login,
-                       style: Theme.of(context).textTheme.headline1,
+                       style: Theme.of(context).textTheme.headline3,
                     ),
                     IconButton(
                       icon: const Icon(Icons.close),
@@ -54,57 +54,61 @@ class _Pop_LoginState extends State<Pop_Login> {
                     ),
                   ],
                 ),
-                SizedBox(height: Get.height * 0.03),
-                Padding(
-                    padding: EdgeInsets.only(
-                      left: Get.width * 0.05,
-                      right: Get.width * 0.05,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.message_login,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline4,
+                SizedBox(
+                  height: Get.height*0.2,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: Get.width * 0.05,
+                          right: Get.width * 0.05,
                         ),
-                      ],
-                    ),
-                ),
-                SizedBox(height: Get.height * 0.03),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    height: Get.height * 0.06,
-                    width: Get.width *0.4,
-                    decoration:  BoxDecoration(
-                      color: AppColors.greenColor,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Theme.of(context).cardColor,
-                          blurRadius: 2.0,
-                          spreadRadius: 0.0,
-                          offset: Offset(
-                              2.0, 2.0), // changes position of shadow
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.message_login,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.headline4,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    child: TextButton(
-                      child: Text(
-                        AppLocalizations.of(context)!.button_login,
-                        style: TextStyle(
-                            fontFamily: AppFonts.poppinsBoldFont,
-                            fontSize: Get.width * 0.04,
-                            color: Colors.white),
                       ),
-                      onPressed: () => Navigator.pushNamed(context, '/login'),
-                    ),
+                      SizedBox(height: Get.height * 0.01),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          height: Get.height * 0.05,
+                          width: Get.width,
+                          decoration:  BoxDecoration(
+                            color: AppColors.greenColor,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(15),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Theme.of(context).cardColor,
+                                blurRadius: 2.0,
+                                spreadRadius: 0.0,
+                                offset: Offset(
+                                    2.0, 2.0), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          child: TextButton(
+                            child: Text(
+                              AppLocalizations.of(context)!.button_login,
+                              style: Theme.of(context).textTheme.headline4!.copyWith(color:Colors.white,),
+                            ),
+                            onPressed: () => Navigator.pushNamed(context, '/login'),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: Get.height * 0.01),
+
               ],
             ),
           ),

@@ -11,13 +11,7 @@ User user = new User(
     city: "",
     country: "");
 
-String ver_dados_pessoais = "Dados Pessoais \n Nome: " +
-    user.name +
-    "\n Email: " +
-    user.email +
-    "\n Telefone: " +
-    user.telefone +
-    "\n Morada: \n"+user.city;
+
 
 //! Configuração de serviços
 //?links- urls
@@ -100,7 +94,15 @@ const String productCategoriasFogo = linkFogo + "products?" + key + "&category="
 const String productCategoriasBrava = linkBrava + "products?" + key + "&category=";
 
 const String get_Produto = link + "products/";
-
+const String get_ProdutoSantiago = linkSantiago + "products/";
+const String get_ProdutoSaoAntao = linkSantoAntao + "products/";
+const String get_ProdutoSaoVicente = linkSaoVicente + "products/";
+const String get_ProdutoSaoNicolau = linkSaoNicolau + "products/";
+const String get_ProdutoBoaVista = linkBoaVista+ "products/";
+const String get_ProdutoSal = linkSal + "products/";
+const String get_ProdutoMaio = linkMaio + "products/";
+const String get_ProdutoFogo = linkFogo + "products/";
+const String get_ProdutoBrava = linkBrava + "products/";
 
 //! Cart
 const String getCart = link_2 + "cart";
@@ -211,3 +213,15 @@ const String getOrderIdMaio =linkMaio+"orders/";
 const String getOrderIdSantiago =linkSantiago+"orders/";
 const String getOrderIdFogo =linkFogo+"orders/";
 const String getOrderIdBrava =linkBrava+"orders/";
+
+//reset password
+const String resetPasswordSantiado=urlSantiago+"bdpwr/v1/reset-password";
+//validate code
+const String validateCodeSantiado=urlSantiago+"bdpwr/v1/validate-code";
+//set Password
+const String setPasswordSantiado=urlSantiago+"bdpwr/v1/set-password";
+
+
+int loadProdutoPage=1;
+int loadProdutoTotal=0;
+String statusLoadProdutoPage="init";

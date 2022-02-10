@@ -6,6 +6,7 @@ import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class Carrega_Saldo extends StatefulWidget {
   const Carrega_Saldo({Key? key}) : super(key: key);
 
@@ -30,9 +31,6 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                 icon: Icons.device_unknown_sharp,
                 caminho: "erro");
           });
-      print('Form is valid');
-    } else {
-      print('Form is invalid');
     }
   }
 
@@ -89,7 +87,7 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                       children: [
                         SizedBox(height: Get.height * 0.01),
                         Text(
-                           AppLocalizations.of(context)!.textfield_phone_number,
+                          AppLocalizations.of(context)!.textfield_phone_number,
                           style: Theme.of(context).textTheme.headline2,
                         ),
                         SizedBox(height: Get.height * 0.02),
@@ -101,20 +99,26 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                             obscureText: false,
                             style: Theme.of(context).textTheme.headline4,
                             decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Theme.of(context).backgroundColor,
-                              border: OutlineInputBorder(
-                                borderRadius:  BorderRadius.circular(15.0),
-                                borderSide:  const BorderSide(),
-                              ),
-                              prefixIcon: Padding(
-                                padding: const EdgeInsets.all(13.0),
-                                child:   Text("+238",style:Theme.of(context).textTheme.headline4,),// icon is 48px widget.
-                              ),
-                              labelText: AppLocalizations.of(context)!.label_number
-                            ),
-                            validator: (value) =>
-                                value!.length == 7 ? null : AppLocalizations.of(context)!.validator_number,
+                                filled: true,
+                                fillColor: Theme.of(context).backgroundColor,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  borderSide: const BorderSide(),
+                                ),
+                                prefixIcon: Padding(
+                                  padding: const EdgeInsets.all(13.0),
+                                  child: Text(
+                                    "+238",
+                                    style:
+                                        Theme.of(context).textTheme.headline4,
+                                  ), // icon is 48px widget.
+                                ),
+                                labelText:
+                                    AppLocalizations.of(context)!.label_number),
+                            validator: (value) => value!.length == 7
+                                ? null
+                                : AppLocalizations.of(context)!
+                                    .validator_number,
                           ),
                         ),
                         SizedBox(height: Get.height * 0.01),
@@ -134,8 +138,8 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                               filled: true,
                               fillColor: Theme.of(context).backgroundColor,
                               border: OutlineInputBorder(
-                                borderRadius:  BorderRadius.circular(15.0),
-                                borderSide:  const BorderSide(),
+                                borderRadius: BorderRadius.circular(15.0),
+                                borderSide: const BorderSide(),
                               ),
                               prefixIcon: const Padding(
                                 padding: EdgeInsets.all(0.0),
@@ -143,10 +147,12 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                                   Icons.attach_money,
                                 ), // icon is 48px widget.
                               ),
-                              labelText: AppLocalizations.of(context)!.textfield_amount,
+                              labelText: AppLocalizations.of(context)!
+                                  .textfield_amount,
                             ),
-                            validator: (value) =>
-                                value!.isEmpty ? AppLocalizations.of(context)!.validator_amount : null,
+                            validator: (value) => value!.isEmpty
+                                ? AppLocalizations.of(context)!.validator_amount
+                                : null,
                           ),
                         ),
                         SizedBox(height: Get.height * 0.03),
@@ -163,8 +169,7 @@ class _Carrega_SaldoState extends State<Carrega_Saldo> {
                                 color: Theme.of(context).cardColor,
                                 blurRadius: 2.0,
                                 spreadRadius: 0.0,
-                                offset: const Offset(
-                                    2.0, 2.0), 
+                                offset: const Offset(2.0, 2.0),
                               ),
                             ],
                           ),

@@ -136,19 +136,6 @@ class _WebViewPageState extends State<WebViewPage> {
               },
               javascriptMode: JavascriptMode.unrestricted,
               gestureNavigationEnabled: false,
-
-              /* navigationDelegate: (NavigationRequest request) {
-                  print(request.url);
-                  if (request.url == 'http://destination.com/') {
-                    setState(() {
-                      print("entrour");
-                    });
-                    // do not navigate
-                    return NavigationDecision.prevent;
-                  }
-
-                  return NavigationDecision.navigate;
-                }*/
             ),
             Obx(
               () => SizedBox(
@@ -183,9 +170,9 @@ class _WebViewPageState extends State<WebViewPage> {
             body: Center(
               child: Container(
                 width: Get.width,
-                height: Get.height * 0.3,
+                height: Get.height * 0.25,
                 margin: EdgeInsets.only(
-                    left: Get.width * 0.12, right: Get.width * 0.12),
+                    left: Get.width * 0.15, right: Get.width * 0.15),
                 decoration: BoxDecoration(
                   color: Theme.of(context).scaffoldBackgroundColor,
                   borderRadius: BorderRadius.circular(12),
@@ -216,39 +203,42 @@ class _WebViewPageState extends State<WebViewPage> {
                         ),
                       ),
                       SizedBox(height: Get.height * 0.02),
-                      Container(
-                        height: Get.height * 0.06,
-                        width: Get.width * 0.3,
-                        decoration: BoxDecoration(
-                          color: AppColors.greenColor,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(15),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          height: Get.height * 0.05,
+                          width: Get.width ,
+                          decoration: BoxDecoration(
+                            color: AppColors.greenColor,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(15),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Theme.of(context).cardColor,
+                                blurRadius: 2.0,
+                                spreadRadius: 0.0,
+                                offset: Offset(2.0, 2.0),
+                              ),
+                            ],
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Theme.of(context).cardColor,
-                              blurRadius: 2.0,
-                              spreadRadius: 0.0,
-                              offset: Offset(2.0, 2.0),
-                            ),
-                          ],
+                          child: TextButton(
+                              child: Text(
+                                'OK',
+                                style: TextStyle(
+                                    fontFamily: AppFonts.poppinsBoldFont,
+                                    fontSize: Get.width * 0.035,
+                                    color: Colors.white),
+                              ),
+                              onPressed: () {
+                                if (caminho == "encomenda") {
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                      '/home', (Route<dynamic> route) => false);
+                                } else if (caminho == "erro") {
+                                  Navigator.pop(context);
+                                }
+                              }),
                         ),
-                        child: TextButton(
-                            child: Text(
-                              'OK',
-                              style: TextStyle(
-                                  fontFamily: AppFonts.poppinsBoldFont,
-                                  fontSize: Get.width * 0.035,
-                                  color: Colors.white),
-                            ),
-                            onPressed: () {
-                              if (caminho == "encomenda") {
-                                Navigator.of(context).pushNamedAndRemoveUntil(
-                                    '/home', (Route<dynamic> route) => false);
-                              } else if (caminho == "erro") {
-                                Navigator.pop(context);
-                              }
-                            }),
                       ),
                     ],
                   ),

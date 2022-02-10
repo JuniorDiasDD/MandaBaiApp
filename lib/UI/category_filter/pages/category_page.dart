@@ -1,7 +1,12 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
+import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
@@ -10,6 +15,7 @@ import 'package:manda_bai/Model/favorite.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/category_filter/controller/categoryController.dart';
 import 'package:manda_bai/UI/home/components/product_list_component.dart';
+import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -27,18 +33,114 @@ class CategoryPage extends StatefulWidget {
 
 class _CategoryPageState extends State<CategoryPage> {
   final CategoryController controller = Get.put(CategoryController());
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
+  int net = 0;
+
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      print('Couldn\'t check connectivity status' + e.toString());
+      return;
+    }
+
+    if (!mounted) {
+      return Future.value(null);
+    }
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+      print(_connectionStatus.toString());
+      if (_connectionStatus == ConnectivityResult.none) {
+        net = 1;
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return PopupMessageInternet(
+                  mensagem: AppLocalizations.of(context)!.message_erro_internet,
+                  icon: Icons.signal_wifi_off);
+            });
+      } else {
+        if (net != 0) {
+          Navigator.pop(context);
+        }
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initConnectivity();
+
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    statusLoadProdutoPage = "init";
+    loadProdutoPage = 1;
+    controller.loading = false;
+    controller.loadingMais = false;
+    _controller = ScrollController();
+    _controller.addListener(_scrollListener);
+    setState(() {
+      dropdownValue = widget.filter_less;
+      list_filter = [widget.filter_less, widget.filter_most];
+    });
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
+
   TextEditingController pesquisa = TextEditingController();
   List<Product> list_product = [];
+  List<Product> list_product_cont = [];
   List<Product> list_product_full = [];
+  List<Favorite> list_favorite = [];
   String dropdownValue = '';
   List<String> list_filter = [];
+  static const int crossAxisCount = 2;
+  int size_list = 0;
+  int size_load = 0;
+  double position = 0.0;
+  var money = "EUR";
+  bool focus = false;
+  late ScrollController _controller;
+  _scrollListener() async {
+    if (_controller.offset >= _controller.position.maxScrollExtent &&
+        !_controller.position.outOfRange) {
+      if (statusLoadProdutoPage != "close") {
+        controller.loadingMais = true;
+
+        statusLoadProdutoPage = "next";
+
+        position = _controller.position.maxScrollExtent;
+        await _carregarAtualizar();
+      }
+
+      print("reach the bottom");
+    }
+    if (_controller.offset <= _controller.position.minScrollExtent &&
+        !_controller.position.outOfRange) {
+      print("reach the top");
+    }
+  }
+
   _search() {
-    // print("click");
     list_product = [];
     setState(() {
       for (int i = 0; i < list_product_full.length; i++) {
-        if (list_product_full[i].name.contains(pesquisa.text)) {
+        if (list_product_full[i].name.toLowerCase().contains(pesquisa.text.toLowerCase())) {
           list_product.add(list_product_full[i]);
+          size_load = list_product.length;
         }
       }
     });
@@ -61,20 +163,81 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   Future _carregar() async {
-    if (list_product.isEmpty) {
-      list_product = await ServiceRequest.loadProduct(widget.category.id);
+    if (statusLoadProdutoPage == "init" && pesquisa.text.isEmpty) {
       if (list_product.isEmpty) {
+        list_product = await ServiceRequest.loadProduct(widget.category.id);
+        if (list_product.isEmpty) {
+          return null;
+        } else {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          var check = prefs.getString('id');
+          if (check != 'null' && check != null) {
+            final String? itemFavortiesString =
+            prefs.getString('itens_favorites');
+            final String? itemUsernameString =
+            prefs.getString('username');
+            if (itemFavortiesString != null) {
+              list_favorite = Favorite.decode(itemFavortiesString);
+              for (int i = 0; i < list_product.length; i++) {
+                for (int f = 0; f < list_favorite.length; f++) {
+                  if (list_product[i].id == list_favorite[f].id && list_favorite[f].username==itemUsernameString) {
+                    list_product[i].favorite = true;
+                  }
+                }
+              }
+            }
+          }
+          money = prefs.getString('money')!;
+          var value;
+          if (money == "USD") {
+            value = await ServiceRequest.loadDolar();
+          }
+          if (money != "EUR") {
+            for (int m = 0; m < list_product.length; m++) {
+              switch (money) {
+                case 'USD':
+                  {
+                    if (value != false) {
+                      double dolar = double.parse(value);
+                      list_product[m].price = list_product[m].price / dolar;
+                    }
+                    break;
+                  }
+                case 'ECV':
+                  {
+                    list_product[m].price = list_product[m].price * 110.87;
+                    break;
+                  }
+              }
+            }
+          }
+
+          if (list_product_full.isEmpty) {
+            list_product_full = list_product;
+          }
+        }
+      }
+      setState(() {
+        size_list = loadProdutoTotal;
+        size_load = list_product.length;
+      });
+    }
+
+    return list_product;
+  }
+
+  Future _carregarAtualizar() async {
+    if (statusLoadProdutoPage != "init" && statusLoadProdutoPage != "close") {
+      list_product_cont = await ServiceRequest.loadProduct(widget.category.id);
+      if (list_product_cont.isEmpty) {
+        statusLoadProdutoPage = "close";
         return null;
       } else {
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        final String? itemFavortiesString = prefs.getString('itens_favorites');
-        var money = prefs.getString('money');
-        if (itemFavortiesString != null) {
-          List<Favorite> list = Favorite.decode(itemFavortiesString);
-          for (int i = 0; i < list_product.length; i++) {
-            for (int f = 0; f < list.length; f++) {
-              if (list_product[i].id == list[f].id) {
-                list_product[i].favorite = true;
+        if (!list_favorite.isEmpty) {
+          for (int i = 0; i < list_product_cont.length; i++) {
+            for (int f = 0; f < list_favorite.length; f++) {
+              if (list_product_cont[i].id == list_favorite[f].id) {
+                list_product_cont[i].favorite = true;
               }
             }
           }
@@ -83,40 +246,45 @@ class _CategoryPageState extends State<CategoryPage> {
         if (money == "USD") {
           value = await ServiceRequest.loadDolar();
         }
-        for (int m = 0; m < list_product.length; m++) {
-          switch (money) {
-            case 'USD':
-              {
-                if (value != false) {
-                  double dolar = double.parse(value);
-                  list_product[m].price = list_product[m].price / dolar;
+        if (money != "EUR") {
+          for (int m = 0; m < list_product_cont.length; m++) {
+            switch (money) {
+              case 'USD':
+                {
+                  if (value != false) {
+                    double dolar = double.parse(value);
+                    list_product_cont[m].price =
+                        list_product_cont[m].price / dolar;
+                  }
+                  break;
                 }
-                break;
-              }
-            case 'ECV':
-              {
-                list_product[m].price = list_product[m].price * 110.87;
-                break;
-              }
+              case 'ECV':
+                {
+                  list_product_cont[m].price =
+                      list_product_cont[m].price * 110.87;
+                  break;
+                }
+            }
           }
         }
-        if (list_product_full.isEmpty) {
+        if (!list_product_cont.isEmpty) {
+          setState(() {
+            for (int m = 0; m < list_product_cont.length; m++) {
+              list_product.add(list_product_cont[m]);
+            }
+          });
+
           list_product_full = list_product;
         }
       }
     }
+    setState(() {
+      controller.loadingMais = false;
+      size_load = list_product.length;
+      focus = true;
+    });
 
     return list_product;
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    controller.loading = false;
-    setState(() {
-      dropdownValue = widget.filter_less;
-      list_filter = [widget.filter_less, widget.filter_most];
-    });
   }
 
   @override
@@ -126,29 +294,173 @@ class _CategoryPageState extends State<CategoryPage> {
     /*24 is for notification bar on Android*/
     final double itemHeight = (size.height) / 3;
     final double itemWidth = size.width / 2;
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: Get.height * 0.045,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButton: focus
+            ? FloatingActionButton.small(
+                backgroundColor: Theme.of(context).primaryColor,
+                onPressed: () {
+                  _controller.animateTo(
+                    position,
+                    duration: Duration(seconds: 1),
+                    curve: Curves.easeIn,
+                  );
+                  focus = false;
+                },
+                child: const Icon(
+                  Icons.arrow_downward,
+                  color: Colors.white,
+                ),
+              )
+            : null,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+
+              Stack(
+                children: [
+                  Column(
                     children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: IconButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          icon: const Icon(Icons.arrow_back),
+                      Container(
+                        color: Theme.of(context).primaryColor,
+                        child: Row(
+                          children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  //_controller.jumpTo(position);
+                                },
+                                icon: const Icon(Icons.arrow_back,
+                                    color: Colors.white),
+                              ),
+                            ),
+                            const Spacer(),
+                            Container(
+                              width: Get.width * 0.2,
+                              margin: EdgeInsets.only(
+                                right: Get.width * 0.04,
+                              ),
+                              child: DropdownButton(
+                                icon: const Icon(
+                                  Icons.filter_alt_sharp,
+                                  color: Colors.white,
+                                  size: 20.09,
+                                ),
+                                isExpanded: true,
+                                elevation: 16,
+                                underline: DropdownButtonHideUnderline(
+                                    child: Container()),
+                                items: list_filter.map((val) {
+                                  return DropdownMenuItem(
+                                    value: val,
+                                    child: Text(val,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4),
+                                  );
+                                }).toList(),
+                                //  value: dropdownValue,
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    dropdownValue = value!;
+                                    _ordenar();
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(
+                      Container(
+                        padding: EdgeInsets.only(
+                            top: Get.height * 0.01, left: Get.width * 0.04),
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            widget.category.name +
+                                " (" +
+                                size_load.toString() +
+                                "/" +
+                                size_list.toString() +
+                                ")",
+                            style: Theme.of(context).textTheme.headline1,
+                          ),
+                        ),
+                      ),
+                      FutureBuilder(
+                        future: _carregar(),
+                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
+                              return SizedBox(
+                                height: Get.height * 0.2,
+                                width: Get.width,
+                                child: Center(
+                                  child: Image.network(
+                                    AppImages.loading,
+                                    width: Get.width * 0.2,
+                                    height: Get.height * 0.2,
+                                    alignment: Alignment.center,
+                                  ),
+                                ),
+                              );
+                            default:
+                              if (snapshot.data == null) {
+                                return SizedBox(
+                                  height: Get.height * 0.4,
+                                  width: Get.width,
+                                  child: Center(
+                                    child: Text(
+                                      AppLocalizations.of(context)!
+                                          .text_no_product,
+                                      style: TextStyle(
+                                        fontFamily: AppFonts.poppinsBoldFont,
+                                        fontSize: Get.width * 0.035,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return Container(
+                                  height: Get.height * 0.85,
+                                  margin: EdgeInsets.only(
+                                    left: Get.width * 0.05,
+                                    right: Get.width * 0.05,
+                                  ),
+                                  child: GridView.builder(
+                                    padding: const EdgeInsets.only(
+                                      top: 0.0,
+                                    ),
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 20,
+                                      mainAxisSpacing: 5,
+                                      mainAxisExtent: 200,
+                                      childAspectRatio: 8.0 / 9.0,
+                                    ),
+                                    itemCount: list_product.length,
+                                    controller: _controller,
+                                    itemBuilder: (BuildContext ctx, index) {
+                                      var list = list_product[index];
+                                      return ProductListComponent(product: list);
+                                    },
+                                  ),
+                                );
+                              }
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5.0),
+                      child: SizedBox(
                         width: Get.width * 0.7,
                         height: 40,
                         child: TextField(
@@ -182,134 +494,50 @@ class _CategoryPageState extends State<CategoryPage> {
                           },
                         ),
                       ),
-                      Container(
-                        width: Get.width * 0.1,
-                        height: Get.height * 0.06,
-                        margin: EdgeInsets.only(
-                          right: Get.width * 0.04,
-                        ),
-                        child: DropdownButton(
-                          icon: Icon(
-                            Icons.filter_alt_sharp,
-                            color: AppColors.greenColor,
-                            size: 20.09,
-                          ),
-
-                          isExpanded: true,
-                          underline:
-                              DropdownButtonHideUnderline(child: Container()),
-                          items: list_filter.map((val) {
-                            return DropdownMenuItem(
-                              value: val,
-                              child: Text(val),
-                            );
-                          }).toList(),
-                          //  value: dropdownValue,
-                          onChanged: (String? value) {
-                            setState(() {
-                              dropdownValue = value!;
-                              _ordenar();
-                            });
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(
-                      top: Get.height * 0.01, left: Get.width * 0.04),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      widget.category.name,
-                      style: Theme.of(context).textTheme.headline1,
                     ),
                   ),
-                ),
-                FutureBuilder(
-                  future: _carregar(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                   switch (snapshot.connectionState) {
-                            case ConnectionState.waiting:
-                              return Container(
-                                height: Get.height * 0.2,
-                                width: Get.width,
-                                child: Center(
-                                  child: Image.network(
-                                    AppImages.loading,
-                                    width: Get.width * 0.2,
-                                    height: Get.height * 0.2,
-                                    alignment: Alignment.center,
-                                  ),
+                  Obx(
+                    () => SizedBox(
+                      child: controller.loadingMais
+                          ? Container(
+                              color: Colors.black54,
+                              height: Get.height,
+                              child: Center(
+                                child: Text(
+                                    AppLocalizations.of(context)!.load_more,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline4!
+                                        .copyWith(
+                                          color: Colors.white,
+                                        )),
+                              ),
+                            )
+                          : null,
+                    ),
+                  ),
+                  Obx(
+                    () => SizedBox(
+                      child: controller.loading
+                          ? Container(
+                              color: Colors.black54,
+                              height: Get.height,
+                              child: Center(
+                                child: Image.network(
+                                  AppImages.loading,
+                                  width: Get.width * 0.2,
+                                  height: Get.height * 0.2,
+                                  alignment: Alignment.center,
                                 ),
-                              );
-                            default:
-                      if (snapshot.data == null) {
-                        return Container(
-                          height: Get.height * 0.4,
-                          width: Get.width,
-                          child: Center(
-                            child: Text(
-                              AppLocalizations.of(context)!.text_no_product,
-                              style: TextStyle(
-                                fontFamily: AppFonts.poppinsBoldFont,
-                                fontSize: Get.width * 0.035,
-                                color: Colors.grey,
                               ),
-                            ),
-                          ),
-                        );
-                      } else {
-                        return Container(
-                          height: Get.height * 0.85,
-                          margin: EdgeInsets.only(
-                            left: Get.width * 0.05,
-                            right: Get.width * 0.05,
-                          ),
-                          child: GridView.builder(
-                              padding: EdgeInsets.only(
-                                top: 0.0,
-                              ),
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount:
-                                          (Get.width == Orientation.portrait)
-                                              ? 3
-                                              : 2,
-                                    childAspectRatio: (itemWidth / itemHeight),),
-                              itemCount: list_product.length,
-
-                              itemBuilder: (BuildContext ctx, index) {
-                                var list = list_product[index];
-                                return ProductListComponent(product: list);
-                              }),
-                        );
-                      }
-                    }
-                  },
-                ),
-              ],
-            ),
-            Obx(
-              () => SizedBox(
-                child: controller.loading
-                    ? Container(
-                        color: Colors.black54,
-                        height: Get.height,
-                        child: Center(
-                          child: Image.network(
-                            AppImages.loading,
-                            width: Get.width * 0.2,
-                            height: Get.height * 0.2,
-                            alignment: Alignment.center,
-                          ),
-                        ),
-                      )
-                    : null,
+                            )
+                          : null,
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

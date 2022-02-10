@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/UI/Favorite/page/favorite_page.dart';
+import 'package:manda_bai/UI/Pedido/pages/pedido_page.dart';
 import 'package:manda_bai/UI/account/pages/profile_page.dart';
 import 'package:manda_bai/UI/cart/pages/cart_page.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
@@ -23,11 +24,12 @@ class _HomePageState extends State<HomePage> {
     StartPage(),
     CartPage(),
     FavoritePage(),
+    PedidoPage(),
     ProfilePage()
   ];
 
   Future<void> _onItemTapped(int index) async {
-    if (index == 1) {
+    if (index == 1 || index == 2 || index==3) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       var check = prefs.getString('id');
       if (check == 'null' || check == null) {
@@ -66,19 +68,24 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items:  <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: const Icon(Icons.home_outlined),
+            icon: _selectedIndex==0 ? Icon(Icons.home) : Icon(Icons.home_outlined),
             label: 'Home',
+
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.shopping_cart_outlined),
+            icon: _selectedIndex==1 ? Icon(Icons.shopping_cart): Icon(Icons.shopping_cart_outlined),
             label: AppLocalizations.of(context)!.label_cart,
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.favorite_border),
+            icon: _selectedIndex==2 ? Icon(Icons.favorite) :  Icon(Icons.favorite_border),
             label: AppLocalizations.of(context)!.label_favorites,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.line_weight),
+            icon: _selectedIndex==3 ? Icon(Icons.shopping_bag): Icon(Icons.shopping_bag_outlined),
+            label: AppLocalizations.of(context)!.label_order,
+          ),
+          BottomNavigationBarItem(
+            icon: _selectedIndex==4 ? Icon(Icons.line_weight):Icon(Icons.line_weight),
             label: AppLocalizations.of(context)!.label_more,
           ),
         ],
