@@ -218,11 +218,7 @@ class _StartPageState extends State<StartPage> {
                             autoPlayAnimationDuration: const Duration(seconds: 1),
                             autoPlay: true,
                             enlargeCenterPage: true,
-                            onPageChanged: (index, reason) {
-                              setState(() {
-                                _current = index;
-                              });
-                            }),
+                            ),
                         items: imagesList
                             .map(
                               (item) => Center(
@@ -235,30 +231,6 @@ class _StartPageState extends State<StartPage> {
                               ),
                             )
                             .toList(),
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.25,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: imagesList.map(
-                            (image) {
-                              int index = imagesList.indexOf(image);
-                              return Container(
-                                width: 10.0,
-                                height: 10.0,
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 10.0, horizontal: 2.0),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: _current == index
-                                      ? Theme.of(context).primaryColor
-                                      : Colors.green[100],
-                                ),
-                              );
-                            },
-                          ).toList(), // this was the part the I had to add
-                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),

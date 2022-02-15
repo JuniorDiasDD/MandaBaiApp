@@ -435,11 +435,11 @@ class _CategoryPageState extends State<CategoryPage> {
                                       top: 0.0,
                                     ),
                                     gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                         SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
-                                      crossAxisSpacing: 20,
-                                      mainAxisSpacing: 5,
-                                      mainAxisExtent: 200,
+                                      crossAxisSpacing: Get.width * 0.05,
+                                      mainAxisSpacing: Get.width * 0.02,
+                                      mainAxisExtent: Get.width * 0.5,
                                       childAspectRatio: 8.0 / 9.0,
                                     ),
                                     itemCount: list_product.length,
