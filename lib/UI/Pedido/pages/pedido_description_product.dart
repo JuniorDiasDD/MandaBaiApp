@@ -133,18 +133,36 @@ class _PedidoDescriptionProductState extends State<PedidoDescriptionProduct> {
                                         fit: BoxFit.cover,
                                       ),
                                     ),
-                                    Align(
-                                      alignment: Alignment.topLeft,
-                                      child: IconButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        icon: Icon(
-                                          Icons.arrow_back,
-                                          color: Colors.black,
-                                        ),
+                                    Padding(
+                                padding: const EdgeInsets.only(left: 10.0, top: 10.0),
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Container(
+                                     width: Get.width * 0.1,
+                                height: Get.width * 0.1,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Theme.of(context).cardColor,
+                                      blurRadius: 1.0,
+                                      spreadRadius: 0.0,
+                                      offset: Offset(0.5, 0.5),
+                                    ),
+                                  ],
+                                  color: Theme.of(context).dialogBackgroundColor,
+                                ),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      icon: const Icon(
+                                        Icons.arrow_back,
                                       ),
                                     ),
+                                  ),
+                                ),
+                              ),
                                   ],
                                 ),
                                 SizedBox(height: Get.height * 0.01),

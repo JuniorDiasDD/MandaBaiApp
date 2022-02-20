@@ -52,6 +52,7 @@ class ServiceRequest {
         response = await http.get(Uri.parse(categoriasBrava));
         break;
     }
+    print("--"+response.body);
     if (response.statusCode == 200) {
       var page = response.headers['x-wp-totalpages'];
       int pages = int.parse(page);
