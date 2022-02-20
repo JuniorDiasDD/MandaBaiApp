@@ -334,15 +334,15 @@ class _StartPageState extends State<StartPage> {
                       ],
                     ),
                   ),*/
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   FutureBuilder(
                     future: controller.carregarFilter(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if (snapshot.data == null) {
                         return const SizedBox();
                       } else {
-                        return SizedBox(
-                          height: Get.height * 0.12,
+                        return Container(
+                          height: Get.width * 0.2,
                           child: ListView.builder(
                             padding: const EdgeInsets.only(
                               top: 0.0,
