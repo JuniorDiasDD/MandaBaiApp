@@ -47,7 +47,7 @@ class _ProductListComponentState extends State<ProductListComponent> {
               children: [
                 Container(
                   width: Get.width,
-                  height: Get.height * 0.145,
+                  height: Get.width * 0.3,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(10.0),

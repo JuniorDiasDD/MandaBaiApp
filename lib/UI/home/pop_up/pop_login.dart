@@ -39,7 +39,7 @@ class _Pop_LoginState extends State<Pop_Login> {
                         width: Get.width * 0.05,
                         height: Get.height * 0.04,
                         child: Icon(Icons.person,
-                             size: Get.width * 0.06,color: Colors.black54,),
+                             size: Get.width * 0.06,),
                       ),
                     ),
                     Text(

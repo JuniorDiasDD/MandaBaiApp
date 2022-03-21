@@ -57,7 +57,7 @@ class _CategoryPageState extends State<CategoryPage> {
   Future<void> _updateConnectionStatus(ConnectivityResult result) async {
     setState(() {
       _connectionStatus = result;
-      print(_connectionStatus.toString());
+      //  print(_connectionStatus.toString());
       if (_connectionStatus == ConnectivityResult.none) {
         net = 1;
         showDialog(
@@ -77,25 +77,29 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   void initState() {
-    super.initState();
     initConnectivity();
 
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
-    statusLoadProdutoPage = "init";
     loadProdutoPage = 1;
+    controller.statusLoadProdutoPage = "init";
     controller.loading = false;
     controller.loadingMais = false;
+    controller.focus=false;
+    controller.size_list =  0;
+    controller.size_load =  0;
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
     setState(() {
       dropdownValue = widget.filter_less;
       list_filter = [widget.filter_less, widget.filter_most];
     });
+    super.initState();
   }
 
   @override
   void dispose() {
+    controller.statusLoadProdutoPage = "init";
     _connectivitySubscription.cancel();
     super.dispose();
   }
@@ -107,26 +111,24 @@ class _CategoryPageState extends State<CategoryPage> {
   List<Favorite> list_favorite = [];
   String dropdownValue = '';
   List<String> list_filter = [];
-  static const int crossAxisCount = 2;
-  int size_list = 0;
-  int size_load = 0;
+
   double position = 0.0;
   var money = "EUR";
-  bool focus = false;
+
   late ScrollController _controller;
   _scrollListener() async {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
-      if (statusLoadProdutoPage != "close") {
+      if (controller.statusLoadProdutoPage != "close" && controller.statusLoadProdutoPage!="...") {
         controller.loadingMais = true;
 
-        statusLoadProdutoPage = "next";
+        controller.statusLoadProdutoPage = "next";
 
         position = _controller.position.maxScrollExtent;
         await _carregarAtualizar();
       }
 
-      print("reach the bottom");
+     // print(controller.statusLoadProdutoPage + " - reach the bottom");
     }
     if (_controller.offset <= _controller.position.minScrollExtent &&
         !_controller.position.outOfRange) {
@@ -135,12 +137,16 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   _search() {
+
     list_product = [];
     setState(() {
       for (int i = 0; i < list_product_full.length; i++) {
-        if (list_product_full[i].name.toLowerCase().contains(pesquisa.text.toLowerCase())) {
+        if (list_product_full[i]
+            .name
+            .toLowerCase()
+            .contains(pesquisa.text.toLowerCase())) {
           list_product.add(list_product_full[i]);
-          size_load = list_product.length;
+          controller.size_load = list_product.length;
         }
       }
     });
@@ -163,7 +169,9 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   Future _carregar() async {
-    if (statusLoadProdutoPage == "init" && pesquisa.text.isEmpty) {
+
+    //print("carregar status: " + controller.statusLoadProdutoPage);
+    if (controller.statusLoadProdutoPage == "init" && pesquisa.text.isEmpty) {
       if (list_product.isEmpty) {
         list_product = await ServiceRequest.loadProduct(widget.category.id);
         if (list_product.isEmpty) {
@@ -216,21 +224,19 @@ class _CategoryPageState extends State<CategoryPage> {
             list_product_full = list_product;
           }
         }
+         controller.size_list =  loadProdutoTotal;
+         controller.size_load =  list_product.length;
       }
-      setState(() {
-        size_list = loadProdutoTotal;
-        size_load = list_product.length;
-      });
     }
-
     return list_product;
   }
 
   Future _carregarAtualizar() async {
-    if (statusLoadProdutoPage != "init" && statusLoadProdutoPage != "close") {
+   // print(controller.statusLoadProdutoPage.toString());
+    if (controller.statusLoadProdutoPage != "init" && controller.statusLoadProdutoPage != "close") {
       list_product_cont = await ServiceRequest.loadProduct(widget.category.id);
       if (list_product_cont.isEmpty) {
-        statusLoadProdutoPage = "close";
+        controller.statusLoadProdutoPage = "close";
         return null;
       } else {
         if (!list_favorite.isEmpty) {
@@ -278,11 +284,10 @@ class _CategoryPageState extends State<CategoryPage> {
         }
       }
     }
-    setState(() {
-      controller.loadingMais = false;
-      size_load = list_product.length;
-      focus = true;
-    });
+
+    controller.loadingMais = false;
+    controller.size_load = list_product.length;
+    controller.focus = true;
 
     return list_product;
   }
@@ -296,7 +301,7 @@ class _CategoryPageState extends State<CategoryPage> {
     final double itemWidth = size.width / 2;
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: focus
+        floatingActionButton: controller.focus
             ? FloatingActionButton.small(
                 backgroundColor: Theme.of(context).primaryColor,
                 onPressed: () {
@@ -305,7 +310,7 @@ class _CategoryPageState extends State<CategoryPage> {
                     duration: Duration(seconds: 1),
                     curve: Curves.easeIn,
                   );
-                  focus = false;
+                  controller.focus = false;
                 },
                 child: const Icon(
                   Icons.arrow_downward,
@@ -316,7 +321,6 @@ class _CategoryPageState extends State<CategoryPage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-
               Stack(
                 children: [
                   Column(
@@ -378,20 +382,24 @@ class _CategoryPageState extends State<CategoryPage> {
                             top: Get.height * 0.01, left: Get.width * 0.04),
                         child: Align(
                           alignment: Alignment.topLeft,
-                          child: Text(
-                            widget.category.name +
-                                " (" +
-                                size_load.toString() +
-                                "/" +
-                                size_list.toString() +
-                                ")",
-                            style: Theme.of(context).textTheme.headline1,
+                          child: Obx(
+                            () => Text(
+                              widget.category.name +
+                                  " (" +
+                                  controller.size_load.toString() +
+                                  "/" +
+                                  controller.size_list.toString() +
+                                  ")",
+                              style: Theme.of(context).textTheme.headline1,
+                            ),
                           ),
                         ),
                       ),
                       FutureBuilder(
                         future: _carregar(),
-                        builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
                               return SizedBox(

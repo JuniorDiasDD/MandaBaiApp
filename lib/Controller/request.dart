@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:get/get.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Model/cart_model.dart';
 import 'package:manda_bai/Model/category.dart';
@@ -10,6 +11,8 @@ import 'package:manda_bai/Model/order.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/Model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../UI/category_filter/controller/categoryController.dart';
 
 class ServiceRequest {
   // ! Load Category
@@ -52,7 +55,7 @@ class ServiceRequest {
         response = await http.get(Uri.parse(categoriasBrava));
         break;
     }
-    print("--"+response.body);
+    //print("--"+response.body);
     if (response.statusCode == 200) {
       var page = response.headers['x-wp-totalpages'];
       int pages = int.parse(page);
@@ -112,15 +115,18 @@ class ServiceRequest {
 
   //! Load Products
   static Future<List<Product>> loadProduct(id) async {
-   // print(id);
+
+    final CategoryController controller = Get.find();
     List<Product> list = [];
-    // List<Product> list_page = [];
+
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var island = prefs.getString('island');
 
     var response;
-    if (statusLoadProdutoPage == "init") {
+    if (controller.statusLoadProdutoPage == "init") {
+
+      loadProdutoPage=1;
       switch (island) {
         case "Santo Antão":
           response = await http
@@ -149,7 +155,6 @@ class ServiceRequest {
         case "Santiago":
           response = await http
               .get(Uri.parse(productCategoriasSantiago + id.toString()));
-        //  print(productCategoriasSantiago + id.toString());
           break;
         case "Fogo":
           response =
@@ -160,8 +165,12 @@ class ServiceRequest {
               await http.get(Uri.parse(productCategoriasBrava + id.toString()));
           break;
       }
-    } else if (statusLoadProdutoPage == "next") {
-      print(statusLoadProdutoPage);
+    }
+    else if (controller.statusLoadProdutoPage == "next") {
+      if(loadProdutoPage==1){
+        loadProdutoPage=2;
+      }
+
       switch (island) {
         case "Santo Antão":
           response = await http.get(Uri.parse(productCategoriasSaoAntao +
@@ -204,7 +213,7 @@ class ServiceRequest {
               id.toString() +
               "&page=" +
               loadProdutoPage.toString()));
-          print(productCategoriasSantiago + id.toString());
+        //  print(productCategoriasSantiago + id.toString());
           break;
         case "Fogo":
           response = await http.get(Uri.parse(productCategoriasFogo +
@@ -223,6 +232,7 @@ class ServiceRequest {
 
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
+
       if (jsonResponse != "[]") {
         final _cats = jsonResponse.cast<Map<String, dynamic>>();
         list = _cats.map<Product>((cat) => Product.fromJson(cat)).toList();
@@ -230,11 +240,19 @@ class ServiceRequest {
          loadProdutoTotal=int.parse(quantidade);
         var page = response.headers['x-wp-totalpages'];
         int pages = int.parse(page);
+      //  print("TotalPage: "+pages.toString()+" - AtualPage:p "+loadProdutoPage.toString());
         if (pages == 1 || pages == loadProdutoPage) {
-          statusLoadProdutoPage = "close";
-
+          controller.statusLoadProdutoPage = "close";
+          return list;
         }else{
-          loadProdutoPage++;
+          if(controller.statusLoadProdutoPage=="init"){
+            loadProdutoPage=1;
+          }else{
+            controller.statusLoadProdutoPage = "next";
+            loadProdutoPage++;
+          }
+
+          return list;
         }
       }
     } else if (response.statusCode == 503) {
@@ -282,8 +300,11 @@ class ServiceRequest {
         "country": ""
       }
     });
-    var response = await http.post(Uri.parse(register_client),
+    var response =  await http.post(Uri.parse(register_client_Santiago),
         headers: headers, body: data);
+    /*await http.post(Uri.parse(register_client),
+        headers: headers, body: data);*/
+    print(response.body);
     if (response.statusCode == 201) {
       final jsonResponse = json.decode(response.body);
 
