@@ -301,6 +301,7 @@ class _CategoryPageState extends State<CategoryPage> {
     final double itemWidth = size.width / 2;
     return SafeArea(
       child: Scaffold(
+       // resizeToAvoidBottomInset: false,
         floatingActionButton: controller.focus
             ? FloatingActionButton.small(
                 backgroundColor: Theme.of(context).primaryColor,
@@ -445,7 +446,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                     gridDelegate:
                                          SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 2,
-                                      crossAxisSpacing: Get.width * 0.05,
+                                      crossAxisSpacing: Get.width * 0.01,
                                       mainAxisSpacing: Get.width * 0.02,
                                       mainAxisExtent: Get.width * 0.5,
                                       childAspectRatio: 8.0 / 9.0,
