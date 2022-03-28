@@ -1,4 +1,4 @@
-package com.manda_bai;
+package com.mandabai;
 
 import io.flutter.embedding.android.FlutterActivity;
 
