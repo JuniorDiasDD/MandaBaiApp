@@ -1,16 +1,16 @@
-import 'package:dropdown_search/dropdown_search.dart';
+
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Core/app_colors.dart';
-import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
+import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
-
-import 'package:websafe_svg/websafe_svg.dart';
-
-import 'language_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class ChooseIsland extends StatefulWidget {
   const ChooseIsland({Key? key}) : super(key: key);
@@ -20,13 +20,65 @@ class ChooseIsland extends StatefulWidget {
 }
 
 class _ChooseIslandState extends State<ChooseIsland> {
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  int net=0;
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      print('Couldn\'t check connectivity status' + e.toString());
+      return;
+    }
+
+    if (!mounted) {
+      return Future.value(null);
+    }
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+      print(_connectionStatus.toString());
+      if (_connectionStatus == ConnectivityResult.none) {
+        net=1;
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return PopupMessageInternet(
+                  mensagem: AppLocalizations.of(context)!.message_erro_internet,
+                  icon: Icons.signal_wifi_off);
+            });
+      } else {
+    if(net!=0){
+      Navigator.pop(context);
+    }
+      }
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    initConnectivity();
+
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+  }
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
   String dropdownValue = 'Santiago';
   List<String> list_island = [
     'Santo Antão',
     'São Vicente',
     'São Nicolau',
     'Sal',
-    'Boavista',
+    'Boa Vista',
     'Maio',
     'Santiago',
     'Fogo',
@@ -34,10 +86,9 @@ class _ChooseIslandState extends State<ChooseIsland> {
   ];
   @override
   Widget build(BuildContext context) {
-    var child;
     return Scaffold(
       body: Column(
-        //  mainAxisAlignment: MainAxisAlignment.center,
+       
         children: [
           Align(
             alignment: Alignment.bottomLeft,
@@ -49,28 +100,16 @@ class _ChooseIslandState extends State<ChooseIsland> {
               children: [
                 Align(
                   alignment: Alignment.topRight,
-                  child: Image.asset(
-                    AppImages.ilha_2,
-                    height: Get.height * 0.38,
+                  child:Image.asset(
+                    AppImages.ilhas,
+                    height: Get.height * 0.4,
                     width: Get.width * 0.99,
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(top: 5.0, right: 150.0, left: 1.0),
-                  child: Align(
-                    alignment: Alignment.bottomLeft,
-                    child: WebsafeSvg.asset(
-                      AppImages.homem,
-                      height: Get.height * 0.4,
-                      width: Get.width * 0.01,
-                    ),
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(height: Get.height * 0.05),
+          SizedBox(height: Get.height * 0.1),
           Container(
             width: Get.width,
             height: Get.height * 0.06,
@@ -85,7 +124,7 @@ class _ChooseIslandState extends State<ChooseIsland> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15.0),
               border: Border.all(
-                  color: Colors.black38, style: BorderStyle.solid, width: 0.80),
+                  color: Theme.of(context).indicatorColor, style: BorderStyle.solid, width: 0.80),
             ),
             child: DropdownButton<String>(
               value: dropdownValue,
@@ -94,10 +133,7 @@ class _ChooseIslandState extends State<ChooseIsland> {
               ),
               iconSize: Get.width * 0.05,
               elevation: 16,
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: Get.width * 0.04,
-              ),
+              style: Theme.of(context).textTheme.headline4,
               borderRadius: BorderRadius.circular(15.0),
               underline: Container(
                 height: 0,
@@ -113,11 +149,7 @@ class _ChooseIslandState extends State<ChooseIsland> {
                   value: value,
                   child: Text(
                     value,
-                    style: TextStyle(
-                      fontFamily: AppFonts.poppinsRegularFont,
-                      color: Colors.black,
-                      fontSize: Get.width * 0.04,
-                    ),
+                    style: Theme.of(context).textTheme.headline4,
                   ),
                 );
               }).toList(),
@@ -129,7 +161,7 @@ class _ChooseIslandState extends State<ChooseIsland> {
       bottomNavigationBar: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(" "),
+          const Spacer(),
           Padding(
             padding: EdgeInsets.only(
               right: 15,
@@ -140,10 +172,8 @@ class _ChooseIslandState extends State<ChooseIsland> {
                 _navigacao();
               },
               child: Text(
-                "seguinte >",
-                style: TextStyle(
-                    fontFamily: AppFonts.poppinsRegularFont,
-                    color: AppColors.greenColor),
+                AppLocalizations.of(context)!.textbutton_next+ ">",
+                style: Theme.of(context).textTheme.headline5,
               ),
             ),
           ),
@@ -153,10 +183,9 @@ class _ChooseIslandState extends State<ChooseIsland> {
   }
 
   _navigacao() async {
-   // print(dropdownValue);
-     var session = FlutterSession();
-    await session.set('onboarding', true);
-    await session.set('island', dropdownValue);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('onboarding', 'true');
+    await prefs.setString('island', dropdownValue);
     Navigator.pushReplacementNamed(context, '/home');
   }
 }

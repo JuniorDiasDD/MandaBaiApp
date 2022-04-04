@@ -1,13 +1,19 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/mandaBaiController.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/authention/pages/recovery_password_page.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
+import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -17,271 +23,385 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
 
+  int net = 0;
+
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      print('Couldn\'t check connectivity status' + e.toString());
+      return;
+    }
+
+    if (!mounted) {
+      return Future.value(null);
+    }
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+      print(_connectionStatus.toString());
+      if (_connectionStatus == ConnectivityResult.none) {
+        net = 1;
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return PopupMessageInternet(
+                  mensagem: AppLocalizations.of(context)!.message_erro_internet,
+                  icon: Icons.signal_wifi_off);
+            });
+      } else {
+        if (net != 0) {
+          Navigator.pop(context);
+        }
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initConnectivity();
+
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool statePassword = true;
   final input_username = TextEditingController();
   final input_senha = TextEditingController();
-  final MandaBaiController mandaBaiController = Get.find();
+  bool loading = false;
   Future<void> validateAndSave() async {
     final FormState? form = _formKey.currentState;
     if (form!.validate()) {
+      setState(() {
+        loading = true;
+      });
       var check =
           await mandaBaiController.login(input_username.text, input_senha.text);
       if (check == true) {
+        setState(() {
+          loading = false;
+        });
         Navigator.pushReplacementNamed(context, '/home');
-      } else {}
-    } else {
-      print('Form is invalid');
+      } else {
+        setState(() {
+          loading = false;
+        });
+        return showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Pop_up_Message(
+                  mensagem:
+                      AppLocalizations.of(context)!.message_error_cridencials,
+                  icon: Icons.error,
+                  caminho: "erro");
+            });
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Stack(
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: ColoredCircleComponent(),
+                  Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: ColoredCircleComponent(),
+                      ),
+                    ],
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: 33.0),
-                    width: Get.width,
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: Icon(Icons.arrow_back),
-                      alignment: Alignment.topLeft,
+                  SizedBox(
+                    height: Get.height * 0.02,
+                  ),
+                  Image.asset(
+                    AppImages.appLogoIcon,
+                    width: Get.width * 0.6,
+                    height: Get.height * 0.15,
+                  ),
+                  SizedBox(
+                    height: Get.height * 0.06,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: Get.width * 0.05,
+                      right: Get.width * 0.05,
+                    ),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            controller: input_username,
+                            obscureText: false,
+                            style: Theme.of(context).textTheme.headline4,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Theme.of(context).backgroundColor,
+                              border: OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(15.0),
+                                borderSide: new BorderSide(),
+                              ),
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.all(0.0),
+                                child: Icon(
+                                  Icons.person,
+                                  color: Colors.grey,
+                                ), // icon is 48px widget.
+                              ),
+                              labelText:
+                                  AppLocalizations.of(context)!.textfield_user,
+                              labelStyle: Theme.of(context).textTheme.headline4,
+                            ),
+                            validator: (value) => value!.isEmpty
+                                ? AppLocalizations.of(context)!.validator_user
+                                : null,
+                          ),
+                          SizedBox(height: Get.height * 0.01),
+                          TextFormField(
+                            controller: input_senha,
+                            obscureText: statePassword,
+                            style: Theme.of(context).textTheme.headline4,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Theme.of(context).backgroundColor,
+                              border: OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(15.0),
+                                borderSide: new BorderSide(),
+                              ),
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.all(0.0),
+                                child: Icon(
+                                  Icons.lock,
+                                  color: Colors.grey,
+                                ), // icon is 48px widget.
+                              ),
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    statePassword = !statePassword;
+                                  });
+                                },
+                                icon: Icon(
+                                  statePassword
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                ),
+                              ),
+                              labelText: AppLocalizations.of(context)!
+                                  .textfield_password,
+                              labelStyle: Theme.of(context).textTheme.headline4,
+                            ),
+                            validator: (value) => value!.isEmpty
+                                ? AppLocalizations.of(context)!
+                                    .validator_password
+                                : null,
+                          ),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                primary: Colors.black,
+                                textStyle:
+                                    TextStyle(fontSize: Get.width * 0.025),
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => RecoveryPassword()),
+                                );
+                              },
+                              child: Text(
+                                AppLocalizations.of(context)!
+                                    .text_forgot_password,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline4!
+                                    .copyWith(fontStyle: FontStyle.italic),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: Get.height * 0.02,
+                          ),
+                          Container(
+                            height: Get.height * 0.07,
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                              color: AppColors.greenColor,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Theme.of(context).cardColor,
+                                  blurRadius: 2.0,
+                                  spreadRadius: 0.0,
+                                  offset: Offset(
+                                      2.0, 2.0), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: TextButton(
+                              child: Text(
+                                AppLocalizations.of(context)!.button_login,
+                                style: TextStyle(
+                                    fontFamily: AppFonts.poppinsRegularFont,
+                                    fontSize: Get.width * 0.035,
+                                    color: Colors.white),
+                              ),
+                              onPressed: validateAndSave,
+                            ),
+                          ),
+                          SizedBox(
+                            height: Get.height * 0.01,
+                          ),
+
+                          /* SizedBox(
+                            height: Get.height * 0.01,
+                          ),
+                          Column(
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: new Container(
+                                      width: Get.width * 0.4,
+                                      child: Divider(
+                                        height: 36,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: Get.width * 0.05,
+                                      right: Get.width * 0.05,
+                                    ),
+                                    child: Text(
+                                      AppLocalizations.of(context)!.text_or,
+                                      style:
+                                          Theme.of(context).textTheme.headline2,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      width: Get.width * 0.4,
+                                      child: const Divider(
+                                        height: 36,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: Get.height * 0.02,
+                          ),*/
+                          /* Column(
+                            children: [
+                              Container(
+                                width: Get.width,
+                                child: SignInButton(
+                                  Buttons.Google,
+                                  text: "Login com Google",
+                                  onPressed: () {
+                                    _googleSignIn.signIn().then((userData) {
+                                      setState(() {
+                                        _isLoggedIn = true;
+                                        _userObj = userData!;
+
+                                      });
+                                    }).catchError((e) {
+                                      print(e);
+                                    });
+                                  },
+                                ),
+                              ),
+                              Container(
+                                width: Get.width,
+                                child: SignInButton(
+                                  Buttons.Facebook,
+                                  text: "Login com Facebook",
+                                  onPressed: () {},
+                                ),
+                              ),
+                            ],
+                          ),*/
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
-              SizedBox(
-                height: Get.height * 0.02,
-              ),
-              Image.asset(
-                AppImages.appLogo2,
-                width: Get.width * 0.6,
-                height: Get.height * 0.15,
-              ),
-              SizedBox(
-                height: Get.height * 0.05,
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: Get.width * 0.05,
-                  right: Get.width * 0.05,
-                ),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        controller: input_username,
-                        obscureText: false,
-                        style: Theme.of(context).textTheme.headline4,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Theme.of(context).backgroundColor,
-                          border: OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(15.0),
-                            borderSide: new BorderSide(),
-                          ),
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.all(0.0),
-                            child: Icon(
-                              Icons.person,
-                              color: Colors.grey,
-                            ), // icon is 48px widget.
-                          ),
-                          labelText: 'Utilizador',
-                          labelStyle: Theme.of(context).textTheme.headline4,
-                        ),
-                        validator: (value) =>
-                            value!.isEmpty ? 'Insira o Utilizador' : null,
-                      ),
-                      SizedBox(height: Get.height * 0.01),
-                      TextFormField(
-                        controller: input_senha,
-                        obscureText: true,
-                        style: Theme.of(context).textTheme.headline4,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Theme.of(context).backgroundColor,
-                          border: OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(15.0),
-                            borderSide: new BorderSide(),
-                          ),
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.all(0.0),
-                            child: Icon(
-                              Icons.lock,
-                              color: Colors.grey,
-                            ), // icon is 48px widget.
-                          ),
-                          labelText: 'Palavra-passe',
-                          labelStyle: Theme.of(context).textTheme.headline4,
-                        ),
-                        validator: (value) =>
-                            value!.isEmpty ? 'Insira a senha' : null,
-                      ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            primary: Colors.black,
-                            textStyle: TextStyle(fontSize: Get.width * 0.025),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RecoveryPassword()),
-                            );
-                          },
-                          child: Text(
-                            'Esqueceu sua senha?',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline4!
-                                .copyWith(fontStyle: FontStyle.italic),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.01,
-                      ),
-                      Container(
-                        height: Get.height * 0.07,
-                        width: Get.width,
-                        decoration: BoxDecoration(
-                          color: AppColors.greenColor,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Theme.of(context).cardColor,
-                              blurRadius: 2.0,
-                              spreadRadius: 0.0,
-                              offset: Offset(
-                                  2.0, 2.0), // changes position of shadow
-                            ),
-                          ],
-                        ),
-                        child: TextButton(
-                          child: Text(
-                            'Entrar',
-                            style: TextStyle(
-                                fontFamily: AppFonts.poppinsRegularFont,
-                                fontSize: Get.width * 0.035,
-                                color: Colors.white),
-                          ),
-                          onPressed: validateAndSave,
-                        ),
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.01,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Não possui uma conta?",
-                            style: Theme.of(context).textTheme.headline4,
-                          ),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              primary: AppColors.greenColor,
-                              textStyle: TextStyle(fontSize: Get.width * 0.03),
-                            ),
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/register');
-                            },
-                            child: Text(
-                              'Registar agora',
-                              style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                fontStyle: FontStyle.italic,
-                                fontFamily: AppFonts.poppinsItalicFont,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.01,
-                      ),
-                      Column(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: new Container(
-                                  width: Get.width * 0.4,
-                                  child: Divider(
-                                    height: 36,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: Get.width * 0.05,
-                                  right: Get.width * 0.05,
-                                ),
-                                child: Text(
-                                  "ou",
-                                  style: Theme.of(context).textTheme.headline2,
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  width: Get.width * 0.4,
-                                  child: const Divider(
-                                    height: 36,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.02,
-                      ),
-                      Column(
-                        children: [
-                          Container(
-                            width: Get.width,
-                            child: SignInButton(
-                              Buttons.Google,
-                              text: "Login com Google",
-                              onPressed: () {},
-                            ),
-                          ),
-                          Container(
-                            width: Get.width,
-                            child: SignInButton(
-                              Buttons.Facebook,
-                              text: "Login com Facebook",
-                              onPressed: () {},
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
+          SizedBox(
+            child: loading
+                ? Container(
+                    color: Colors.black54,
+                    height: Get.height,
+                    child: Center(
+                      child: Image.network(
+                        AppImages.loading,
+                        width: Get.width * 0.2,
+                        height: Get.height * 0.2,
+                        alignment: Alignment.center,
+                      ),
+                    ),
+                  )
+                : null,
+          ),
+        ],
+      ),
+      bottomNavigationBar: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            AppLocalizations.of(context)!.text_dont_have_an_account,
+            style: Theme.of(context).textTheme.headline4,
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              primary: AppColors.greenColor,
+              textStyle: TextStyle(fontSize: Get.width * 0.03),
+            ),
+            onPressed: () {
+              Navigator.pushNamed(context, '/register');
+            },
+            child: Text(
+              AppLocalizations.of(context)!.button_sign_up_now,
+              style: TextStyle(
+                decoration: TextDecoration.underline,
+                fontStyle: FontStyle.italic,
+                fontFamily: AppFonts.poppinsItalicFont,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_session/flutter_session.dart';
-import 'package:get/get.dart';
-import 'package:manda_bai/Controller/cart_controller.dart';
-import 'package:manda_bai/Controller/mandaBaiController.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/UI/Favorite/page/favorite_page.dart';
+import 'package:manda_bai/UI/Pedido/pages/pedido_page.dart';
 import 'package:manda_bai/UI/account/pages/profile_page.dart';
 import 'package:manda_bai/UI/cart/pages/cart_page.dart';
 import 'package:manda_bai/UI/category_filter/controller/mandaBaiProductController.dart';
 import 'package:manda_bai/UI/home/controller/mandaBaiCategoryController.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
 import 'package:manda_bai/UI/home/pages/start_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   int index;
@@ -28,34 +27,32 @@ class _HomePageState extends State<HomePage> {
     StartPage(),
     CartPage(),
     FavoritePage(),
+    PedidoPage(),
     ProfilePage()
   ];
 
   Future<void> _onItemTapped(int index) async {
-    /*if (index == 3){
-        var check = await FlutterSession().get('id');
-        if (check == 'null' || check == null) {
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return Pop_Login();
-              });
-        }else {
-          setState(()  { _selectedIndex = index;  });
-        }
-      }else{*/
-    setState(() {
-      _selectedIndex = index;
-    });
-    // }
+    if (index == 1 || index == 2 || index == 3) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      var check = prefs.getString('id');
+      if (check == 'null' || check == null) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Pop_Login();
+            });
+      } else {
+        setState(() {
+          _selectedIndex = index;
+        });
+      }
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
-  final MandaBaiCategoryController mandaBaiCategoryController =
-      Get.put(MandaBaiCategoryController());
-  final MandaBaiController mandaBaiController = Get.put(MandaBaiController());
-  final MandaBaiProductController mandaBaiProductController =
-      Get.put(MandaBaiProductController());
-  CartPageController cartPageController = Get.put(CartPageController());
   @override
   void initState() {
     // TODO: implement initState
@@ -72,22 +69,36 @@ class _HomePageState extends State<HomePage> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
+            icon: _selectedIndex == 0
+                ? Icon(Icons.home)
+                : Icon(Icons.home_outlined),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart_outlined),
-            label: 'Carrinho',
+            icon: _selectedIndex == 1
+                ? Icon(Icons.shopping_cart)
+                : Icon(Icons.shopping_cart_outlined),
+            label: AppLocalizations.of(context)!.label_cart,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_border),
-            label: 'Favoritos',
+            icon: _selectedIndex == 2
+                ? Icon(Icons.favorite)
+                : Icon(Icons.favorite_border),
+            label: AppLocalizations.of(context)!.label_favorites,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.line_weight),
-            label: 'Mais',
+            icon: _selectedIndex == 3
+                ? Icon(Icons.shopping_bag)
+                : Icon(Icons.shopping_bag_outlined),
+            label: AppLocalizations.of(context)!.label_order,
+          ),
+          BottomNavigationBarItem(
+            icon: _selectedIndex == 4
+                ? Icon(Icons.line_weight)
+                : Icon(Icons.line_weight),
+            label: AppLocalizations.of(context)!.label_more,
           ),
         ],
         currentIndex: _selectedIndex,

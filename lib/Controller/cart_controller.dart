@@ -10,7 +10,12 @@ class CartPageController extends GetxController {
   final _subTotal = 0.0.obs;
   final _total = 0.0.obs;
   final _taxa = 0.0.obs;
-
+  final _note = ''.obs;
+  final _route = ''.obs;
+  final _order = ''.obs;
+  final _loading = false.obs;
+  final _checkMessage = false.obs;
+  final _deleteFull = false.obs;
   final _list = <CartModel>[].obs;
 
   List<CartModel> get list {
@@ -19,6 +24,53 @@ class CartPageController extends GetxController {
 
   set list(List<CartModel> list) {
     this._list.value = list;
+  }
+
+  set deleteFull(bool deleteFull) {
+    this._deleteFull.value = deleteFull;
+  }
+
+  bool get deleteFull {
+    return _deleteFull.value;
+  }
+  set checkMessage(bool checkMessage) {
+    this._checkMessage.value = checkMessage;
+  }
+
+  bool get checkMessage {
+    return _checkMessage.value;
+  }
+
+  set loading(bool loading) {
+    this._loading.value = loading;
+  }
+
+  bool get loading {
+    return _loading.value;
+  }
+
+  String get order {
+    return _order.value;
+  }
+
+  set order(String order) {
+    this._order.value = order;
+  }
+
+  String get route {
+    return _route.value;
+  }
+
+  set route(String route) {
+    this._route.value = route;
+  }
+
+  String get note {
+    return _note.value;
+  }
+
+  set note(String note) {
+    this._note.value = note;
   }
 
   String get name {
@@ -114,7 +166,14 @@ class CartPageController extends GetxController {
           _list[i].checkout = value;
         }
       }
-      calcule();
+    }
+  }
+
+  checkBoxFull(value) {
+    if (!_list.isEmpty) {
+      for (int i = 0; i < _list.length; i++) {
+        _list[i].checkout = value;
+      }
     }
   }
 

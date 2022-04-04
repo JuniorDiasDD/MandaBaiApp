@@ -64,7 +64,7 @@ abstract class AppThemes {
   );
 
   static final ThemeData lightTheme = ThemeData(
-    brightness: Brightness.dark,
+    brightness: Brightness.light,
     scaffoldBackgroundColor: AppColors.white_50,
     primaryColor: AppColors.greenColor,
     cardColor: AppColors.Dimgrey,

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/UI/home/pop_up/carrega_saldo.dart';
-
+import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ItemNew extends StatefulWidget {
   String image, title;
-  ItemNew({Key? key, required this.image, required this.title}) : super(key: key);
+  ItemNew({Key? key, required this.image, required this.title})
+      : super(key: key);
   @override
   _ItemNewState createState() => _ItemNewState();
 }
@@ -20,7 +22,17 @@ class _ItemNewState extends State<ItemNew> {
               builder: (BuildContext context) {
                 return Carrega_Saldo();
               });
-        } else if (widget.title == "Serviços da Câmara") {}
+        } else {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Pop_up_Message(
+                    mensagem:
+                        AppLocalizations.of(context)!.text_unavailable_service,
+                    icon: Icons.device_unknown_sharp,
+                    caminho: "erro");
+              });
+        }
       },
       child: Padding(
         padding: EdgeInsets.only(
@@ -34,11 +46,11 @@ class _ItemNewState extends State<ItemNew> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
-               BoxShadow(
+              BoxShadow(
                 color: Theme.of(context).cardColor,
                 blurRadius: 1.0,
                 spreadRadius: 0.0,
-                offset: Offset(0.5, 0.5), 
+                offset: Offset(0.5, 0.5),
               ),
             ],
             color: Theme.of(context).dialogBackgroundColor,
@@ -47,7 +59,7 @@ class _ItemNewState extends State<ItemNew> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(
+              Image.network(
                 widget.image,
                 width: Get.width * 0.15,
                 height: Get.width * 0.15,

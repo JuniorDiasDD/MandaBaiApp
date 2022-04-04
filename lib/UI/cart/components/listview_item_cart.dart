@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/cart_controller.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 
 import 'package:manda_bai/Model/cart_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ItemCart extends StatefulWidget {
   final CartPageController cartPageController = Get.find();
   CartModel cartModel;
-  ItemCart({required this.cartModel});
+  int index;
+  ItemCart({required this.cartModel, required this.index});
 
   @override
   _ItemCartState createState() => _ItemCartState();
 }
 
 class _ItemCartState extends State<ItemCart> {
-  bool isChecked = false;
   int quant = 0;
   double price = 0.0;
   String money = "";
   Future _carregarMoney() async {
-    money = await FlutterSession().get('money');
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    money = prefs.getString('money')!;
     return money;
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setState(() {
       quant = widget.cartModel.amount!;
@@ -58,15 +58,22 @@ class _ItemCartState extends State<ItemCart> {
           children: [
             Flexible(
               flex: 1,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(10.0),
-                      bottomLeft: Radius.circular(10.0)),
-                  color: Colors.white,
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: NetworkImage(widget.cartModel.image!),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: Get.width * 0.2,
+                  width: Get.width * 0.2,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(10.0),
+                      ),
+                      color: Colors.white,
+                      image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: NetworkImage(widget.cartModel.image),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -78,62 +85,77 @@ class _ItemCartState extends State<ItemCart> {
                 child: Column(
                   children: [
                     Flexible(
-                      flex:2,
+                      flex: 2,
                       child: Row(
                         children: [
                           SizedBox(
-                            width:Get.width*0.4,
+                            width: Get.width * 0.4,
                             child: Text(
-                              widget.cartModel.name!,
+                              widget.cartModel.name,
+                              maxLines: 2,
                               textAlign: TextAlign.start,
                               style: Theme.of(context).textTheme.headline2,
                             ),
                           ),
                           const Spacer(),
-                          Checkbox(
-                            checkColor: Colors.white,
-                            activeColor: AppColors.greenColor,
-                            value: isChecked,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                isChecked = value!;
-                                widget.cartPageController
-                                    .checkBox(widget.cartModel.id!, isChecked);
-                              });
-                            },
+                          Obx(
+                            () => Checkbox(
+                              checkColor: Colors.white,
+                              activeColor: AppColors.greenColor,
+                              value: widget.cartPageController
+                                  .list[widget.index].checkout,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  // isChecked = value!;
+                                  widget.cartPageController
+                                      .checkBox(widget.cartModel.id, value);
+
+                                  if (widget.cartPageController.deleteFull ==
+                                      true) {
+                                    if (value == false) {
+                                      print(value.toString());
+                                      widget.cartPageController.deleteFull =
+                                          false;
+                                    }
+                                  }
+                                });
+                              },
+                            ),
                           ),
                         ],
                       ),
                     ),
-        
                     Flexible(
-                      flex:1,
-                      child: Row(
-                        children: [
-                          Text(
-                            price.toStringAsFixed(0),
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.headline5,
-                          ),
-                          FutureBuilder(
-                              future: _carregarMoney(),
-                              builder:
-                                  (BuildContext context, AsyncSnapshot snapshot) {
-                                if (snapshot.data == null) {
-                                  return const Text(" ");
-                                } else {
-                                  return Text(
+                      flex: 1,
+                      child: FutureBuilder(
+                          future: _carregarMoney(),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.data == null) {
+                              return const Text(" ");
+                            } else {
+                              return Row(
+                                children: [
+                                  Text(
+                                    money == "ECV"
+                                        ? price.toStringAsFixed(0)
+                                        : price.toStringAsFixed(2),
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        Theme.of(context).textTheme.headline5,
+                                  ),
+                                  Text(
                                     " " + money,
-                                    style: Theme.of(context).textTheme.headline5,
-                                  );
-                                }
-                              }),
-                        ],
-                      ),
+                                    style:
+                                        Theme.of(context).textTheme.headline5,
+                                  ),
+                                ],
+                              );
+                            }
+                          }),
                     ),
-                    
                     Flexible(
-                      flex:2,
+                      flex: 2,
                       child: Row(
                         children: <Widget>[
                           Container(
@@ -155,18 +177,20 @@ class _ItemCartState extends State<ItemCart> {
                                   },
                                 );
                               },
-                              child: Icon(
+                              child: const Icon(
                                 Icons.remove,
                                 color: Colors.white,
                               ),
-                              backgroundColor: AppColors.greenColor,
+                              backgroundColor: quant > 1
+                                  ? AppColors.greenColor
+                                  : Colors.grey,
                               elevation: 0,
                             ),
                           ),
                           Padding(
-                            padding:  EdgeInsets.only(
-                              left: Get.width*0.05,
-                              right: Get.width*0.05,
+                            padding: EdgeInsets.only(
+                              left: Get.width * 0.05,
+                              right: Get.width * 0.05,
                             ),
                             child: Text(
                               quant.toString(),
