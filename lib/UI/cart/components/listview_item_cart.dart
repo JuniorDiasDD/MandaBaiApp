@@ -31,8 +31,8 @@ class _ItemCartState extends State<ItemCart> {
   void initState() {
     super.initState();
     setState(() {
-      quant = widget.cartModel.amount!;
-      price = widget.cartModel.price!;
+      quant = widget.cartModel.amount;
+      price = widget.cartModel.price;
     });
   }
 
@@ -167,11 +167,11 @@ class _ItemCartState extends State<ItemCart> {
                                     if (quant != 1) {
                                       quant = quant - 1;
                                       setState(() {
-                                        price = widget.cartModel.price! * quant;
+                                        price = widget.cartModel.price * quant;
                                       });
 
                                       widget.cartPageController
-                                          .decrementar(widget.cartModel.id!);
+                                          .decrementar(widget.cartModel.id);
                                       widget.cartPageController.calcule();
                                     }
                                   },
@@ -206,9 +206,9 @@ class _ItemCartState extends State<ItemCart> {
                               onPressed: () {
                                 setState(() {
                                   quant += 1;
-                                  price = widget.cartModel.price! * quant;
+                                  price = widget.cartModel.price * quant;
                                   widget.cartPageController
-                                      .incrementar(widget.cartModel.id!);
+                                      .incrementar(widget.cartModel.id);
                                   widget.cartPageController.calcule();
                                 });
                               },

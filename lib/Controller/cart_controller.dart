@@ -142,7 +142,7 @@ class CartPageController extends GetxController {
       for (int i = 0; i < _list.length; i++) {
         if (_list[i].id == id) {
           if (_list[i].amount != 1) {
-            _list[i].amount = _list[i].amount! - 1;
+            _list[i].amount = _list[i].amount - 1;
           }
         }
       }
@@ -153,7 +153,7 @@ class CartPageController extends GetxController {
     if (!_list.isEmpty) {
       for (int i = 0; i < _list.length; i++) {
         if (_list[i].id == id) {
-          _list[i].amount = _list[i].amount! + 1;
+          _list[i].amount = _list[i].amount + 1;
         }
       }
     }
@@ -183,7 +183,7 @@ class CartPageController extends GetxController {
     // ignore: unused_local_variable
     if (!_list.isEmpty) {
       for (int i = 0; i < _list.length; i++) {
-        subTotal += _list[i].price! * _list[i].amount!;
+        subTotal += _list[i].price * _list[i].amount;
       }
 
       total = subTotal + taxa;

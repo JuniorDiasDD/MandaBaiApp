@@ -6,7 +6,7 @@ class Favorite {
   String username;
   Favorite({required this.id, required this.island, required this.username});
 
-  factory Favorite.fromJson(Map<String, dynamic> json) {
+  factory Favorite.fromJson(Map<String, dynamic> jsonData) {
     return Favorite(
         id: jsonData['id'],
         island: jsonData['island'],

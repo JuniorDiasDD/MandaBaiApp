@@ -14,6 +14,7 @@ import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:manda_bai/constants/controllers.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -91,8 +92,7 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         loading = true;
       });
-      var check =
-          await mandaBaiController.login(input_username.text, input_senha.text);
+      var check =await mandaBaiController.login(input_username.text, input_senha.text);
       if (check == true) {
         setState(() {
           loading = false;

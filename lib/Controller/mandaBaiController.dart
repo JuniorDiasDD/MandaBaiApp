@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter_session/flutter_session.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:http/http.dart' as http;
@@ -8,6 +7,7 @@ import 'package:manda_bai/Model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MandaBaiController extends GetxController {
+  static MandaBaiController instance = Get.find();
   var island = "".obs;
   var money = "".obs;
   var language = "".obs;
@@ -17,15 +17,17 @@ class MandaBaiController extends GetxController {
   //!Carregar sessão
 
   Future loadSessao() async {
-    island.value = await FlutterSession().get('island');
-    money.value = await FlutterSession().get('money');
-    language.value = await FlutterSession().get('language');
-    var session = FlutterSession();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    island.value = prefs.getString('island')!;
+    money.value = prefs.getString('money')!;
+    language.value =  prefs.getString('language')!;
+
     if (language.value == "null" || language.value == null) {
-      await session.set('language', "pt");
+      await prefs.setString('language', "pt");
     }
     if (money.value == "null" || money.value == null) {
-      await session.set('money', "EUR");
+      await prefs.setString('money', "EUR");
     }
   }
 
@@ -72,8 +74,8 @@ class MandaBaiController extends GetxController {
     //  print(response.body);
     if (response.statusCode == 201) {
       final jsonResponse = json.decode(response.body);
-      var session = FlutterSession();
-      await session.set('id', jsonResponse["id"]);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('id', jsonResponse["id"]);
       return true;
     } else if (response.statusCode == 503) {
       print("Erro de serviço");
@@ -91,10 +93,10 @@ class MandaBaiController extends GetxController {
 
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
-      var session = FlutterSession();
-      await session.set('id', jsonResponse["ID"]);
-      await session.set('username', username);
-      await session.set('password', password);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('id', jsonResponse["ID"]);
+      await prefs.setString('username', username);
+      await prefs.setString('password', password);
 
       //  print(jsonResponse["ID"]);
       GetUser();
@@ -109,8 +111,9 @@ class MandaBaiController extends GetxController {
   }
 
   validateDadosUser() async {
-    var username = await FlutterSession().get('username');
-    var password = await FlutterSession().get('password');
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var username = prefs.get('username');
+    var password = prefs.get('password');
 
     if (password != null && username != null) {
       user.username = username.toString();
@@ -121,7 +124,8 @@ class MandaBaiController extends GetxController {
   //! Get User
 
   Future GetUser() async {
-    var id = await FlutterSession().get('id');
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var id = prefs.get('id');
     var response = await http.post(Uri.parse(
       getUser + id.toString() + "?" + key,
     ));
@@ -150,7 +154,7 @@ class MandaBaiController extends GetxController {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     // await prefs.remove('itens_location');
-    final String itemLocationString = prefs.getString('itens_location');
+    final String? itemLocationString = prefs.getString('itens_location');
     if (itemLocationString != null) {
       //  print("nao vazio");
       // decode and store data in SharedPreferencesSS
@@ -166,12 +170,12 @@ class MandaBaiController extends GetxController {
   Future addLocation(Location location) async {
     Location new_location = location;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String itemLocationString = prefs.getString('itens_location');
+    String? itemLocationString = prefs.getString('itens_location');
 
     if (itemLocationString != null) {
       // decode and store data in SharedPreferences
       list_location = Location.decode(itemLocationString);
-      new_location.id = list_location[list_location.length - 1].id! + 1;
+      new_location.id = list_location[list_location.length - 1].id + 1;
 
       list_location.add(new_location);
       // Encode and store data in SharedPreferences
@@ -190,7 +194,6 @@ class MandaBaiController extends GetxController {
     if (itemLocationString != null) {
       list_location = Location.decode(itemLocationString);
       for (int i = 0; i < list_location.length; i++) {
-        print("-" + list_location[i].name!);
         if (list_location[i].id == new_location.id) {
           return true;
         }
@@ -204,7 +207,7 @@ class MandaBaiController extends GetxController {
   //?remove location
   Future removeLocation(int id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String itemLocationString = prefs.getString('itens_location');
+    final String? itemLocationString = prefs.getString('itens_location');
 
     List<Location> list_new = [];
     if (list_location.length < 2) {

@@ -1,9 +1,10 @@
 import 'dart:convert';
-import 'package:flutter_session/flutter_session.dart';
+
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Model/category.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MandaBaiCategoryController extends GetxController {
   late List<Category> ListCategoria;
@@ -34,10 +35,11 @@ class MandaBaiCategoryController extends GetxController {
         for (int i = 0; i < list.length; i++) {
           print(list[i].name);
         }
-        var island = await FlutterSession().get('island');
+         final SharedPreferences prefs = await SharedPreferences.getInstance();
+        String? island = prefs.getString('island');
         print(island);
         for (var i = 0; i < list.length; i++) {
-          if (list[i].name.contains(island) == true) {
+          if (list[i].name.contains(island!) == true) {
             var name = list[i].name.split(" / ");
             list[i].name = name[0];
             ListCategoria.add(list[i]);

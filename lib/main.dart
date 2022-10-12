@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:manda_bai/Controller/mandaBaiController.dart';
+import 'package:manda_bai/UI/category_filter/controller/mandaBaiProductController.dart';
 import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 import 'Core/app_themes.dart';
 import 'UI/about/pages/info_app.dart';
@@ -23,6 +26,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   HttpOverrides.global = new MyHttpOverrides();
+  Get.put(MandaBaiProductController());
+  Get.put(MandaBaiController());
   runApp(const App());
 }
 

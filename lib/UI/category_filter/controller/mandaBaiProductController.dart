@@ -6,17 +6,20 @@ import 'package:manda_bai/Controller/cart_controller.dart';
 import 'package:manda_bai/Controller/mandaBaiController.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Model/cart_model.dart';
-import 'package:manda_bai/Model/category.dart';
 import 'package:manda_bai/Model/favorite.dart';
 import 'package:manda_bai/Model/product.dart';
+import 'package:manda_bai/constants/controllers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MandaBaiProductController extends GetxController {
+
+  static MandaBaiProductController instance = Get.find();
+
   late List<Product> list_product;
   late List<Product> list_product_full;
   late List<CartModel> list_cart;
   late List<Favorite> list_favorite;
-  final MandaBaiController mandaBaiController = Get.find();
+
   final CartPageController cartPageController = Get.put(CartPageController());
  // var category = Category().obs;
   var filter = ''.obs;
@@ -72,7 +75,7 @@ class MandaBaiProductController extends GetxController {
 
   getFavorite() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String itemFavortiesString = prefs.getString('itens_favorites');
+    final String? itemFavortiesString = prefs.getString('itens_favorites');
     if (itemFavortiesString != null) {
       List<Favorite> list = Favorite.decode(itemFavortiesString);
       for (int i = 0; i < list_product.length; i++) {
@@ -93,7 +96,7 @@ class MandaBaiProductController extends GetxController {
     list_product = [];
 
     for (int i = 0; i < list_product_full.length; i++) {
-      if (list_product_full[i].name!.contains(text_pesquisa.value)) {
+      if (list_product_full[i].name.contains(text_pesquisa.value)) {
         list_product.add(list_product_full[i]);
       }
     }
@@ -105,11 +108,11 @@ class MandaBaiProductController extends GetxController {
     list_product = list_product_full;
     if (filter.value == "Menos Preço") {
       Comparator<Product> pesagemComparator =
-          (a, b) => a.price!.compareTo(b.price!);
+          (a, b) => a.price.compareTo(b.price);
       list_product.sort(pesagemComparator);
     } else if (filter.value == "Mais Preço") {
       Comparator<Product> pesagemComparator =
-          (a, b) => b.price!.compareTo(a.price!);
+          (a, b) => b.price.compareTo(a.price);
       list_product.sort(pesagemComparator);
     }
   }
@@ -153,7 +156,7 @@ class MandaBaiProductController extends GetxController {
     if (ischeck == true) {
       for (int i = 0; i < cartPageController.list.length; i++) {
         var response = await http.delete(
-            Uri.parse(removeItemCart + cartPageController.list[i].item_key!),
+            Uri.parse(removeItemCart + cartPageController.list[i].item_key),
             headers: <String, String>{'authorization': basicAuth});
         print(response.body);
 
@@ -168,14 +171,14 @@ class MandaBaiProductController extends GetxController {
           print("Erro de serviço");
         } else {
           print(
-              "Erro em eliminar item " + cartPageController.list[i].item_key!);
+              "Erro em eliminar item " + cartPageController.list[i].item_key);
         }
       }
     } else {
       for (int i = 0; i < cartPageController.list.length; i++) {
         if (cartPageController.list[i].checkout == true) {
           var response = await http.delete(
-              Uri.parse(removeItemCart + cartPageController.list[i].item_key!),
+              Uri.parse(removeItemCart + cartPageController.list[i].item_key),
               headers: <String, String>{'authorization': basicAuth});
           print(response.body);
 
@@ -190,7 +193,7 @@ class MandaBaiProductController extends GetxController {
             print("Erro de serviço");
           } else {
             print("Erro em eliminar item " +
-                cartPageController.list[i].item_key!);
+                cartPageController.list[i].item_key);
           }
         }
       }
@@ -223,13 +226,13 @@ class MandaBaiProductController extends GetxController {
   //?add favorite
   Future addFavrite(int id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String itemFavortiesString = prefs.getString('itens_favorites');
+    final String? itemFavortiesString = prefs.getString('itens_favorites');
 
     if (itemFavortiesString != null) {
       // decode and store data in SharedPreferences
       list_favorite = Favorite.decode(itemFavortiesString);
       list_favorite
-          .add(new Favorite(id: id, island: mandaBaiController.island.value));
+          .add(Favorite(id: id, island: mandaBaiController.island.value, username: ''));
 
       // Encode and store data in SharedPreferences
       final String encodedData = Favorite.encode(list_favorite);
@@ -237,7 +240,7 @@ class MandaBaiProductController extends GetxController {
       await prefs.setString('itens_favorites', encodedData);
     } else {
       list_favorite
-          .add(new Favorite(id: id, island: mandaBaiController.island.value));
+          .add(Favorite(id: id, island: mandaBaiController.island.value, username: ''));
       // Encode and store data in SharedPreferences
       final String encodedData = Favorite.encode(list_favorite);
 
@@ -248,7 +251,7 @@ class MandaBaiProductController extends GetxController {
   //?remove favorite
   Future removeFavrite(int id) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String itemFavortiesString = prefs.getString('itens_favorites');
+    final String? itemFavortiesString = prefs.getString('itens_favorites');
 
     if (itemFavortiesString != null) {
       // decode and store data in SharedPreferences
@@ -274,7 +277,7 @@ class MandaBaiProductController extends GetxController {
   Future<List<Product>> loadFavorite() async {
     list_product = [];
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String itemFavortiesString = prefs.getString('itens_favorites');
+    final String? itemFavortiesString = prefs.getString('itens_favorites');
 
     if (itemFavortiesString != null) {
       // decode and store data in SharedPreferences
@@ -292,7 +295,7 @@ class MandaBaiProductController extends GetxController {
                   name: jsonResponse['name'].toString(),
                   description: jsonResponse['description'].toString(),
                   price: double.parse(jsonResponse['price']),
-                  rating_count: jsonResponse['rating_count'] ?? 0,
+                  //rating_count: jsonResponse['rating_count'] ?? 0,
                   sale_price: jsonResponse['sale_price'].toString(),
                   in_stock: jsonResponse['manage_stock'].toString(),
                   on_sale: jsonResponse['on_sale'].toString(),

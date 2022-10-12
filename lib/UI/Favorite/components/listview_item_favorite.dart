@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/mandaBaiController.dart';
+import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/Favorite/controller/favorite_controller.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
@@ -58,7 +58,7 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.network(
-              widget.product.image!,
+              widget.product.image,
               width: Get.width * 0.2,
               height: Get.height * 0.2,
               alignment: Alignment.center,
