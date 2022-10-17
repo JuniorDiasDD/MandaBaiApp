@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "947585824998",
+    "project_id": "mandabai-8d879",
+    "storage_bucket": "mandabai-8d879.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947585824998:android:7c744b4013b1f928db6327",
+        "android_client_info": {
+          "package_name": "com.mandabai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "947585824998-b4307j3lok6qu8metqedlqgidd6m0kpj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyxJDbmKcoIS6FdPCTbn-5OG6Cdlj1LPk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "947585824998-b4307j3lok6qu8metqedlqgidd6m0kpj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

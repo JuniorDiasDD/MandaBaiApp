@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:http/http.dart' as http;
 import 'package:manda_bai/Model/location.dart';
@@ -88,18 +89,62 @@ class MandaBaiController extends GetxController {
 
   //! Login
   Future login(username, password) async {
-    var response = await http.post(Uri.parse(request_login),
-        body: {'username': username, 'password': password});
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var island = prefs.getString('island');
 
+    var response;
+
+    switch (island) {
+      case "Santo Antão":
+        response = await http.post(Uri.parse(request_login_SantoAntao),
+            body: {'username': username, 'password': password});
+        break;
+      case "São  Vicente":
+        response = await http.post(Uri.parse(request_login_SaoVicente),
+            body: {'username': username, 'password': password});
+        break;
+      case "São Nicolau":
+        response = await http.post(Uri.parse(request_login_SaoNicolau),
+            body: {'username': username, 'password': password});
+        break;
+      case "Boa Vista":
+        response = await http.post(Uri.parse(request_login_BoaVista),
+            body: {'username': username, 'password': password});
+        break;
+      case "Sal":
+        response = await http.post(Uri.parse(request_login_Sal),
+            body: {'username': username, 'password': password});
+        break;
+      case "Maio":
+        response = await http.post(Uri.parse(request_login_Maio),
+            body: {'username': username, 'password': password});
+        break;
+      case "Santiago":
+        response = await http.post(Uri.parse(request_login_Santiago),
+            body: {'username': username, 'password': password});
+        break;
+      case "Fogo":
+        response = await http.post(Uri.parse(request_login_Fogo),
+            body: {'username': username, 'password': password});
+        break;
+      case "Brava":
+        response = await http.post(Uri.parse(request_login_Brava),
+            body: {'username': username, 'password': password});
+        break;
+    }
+
+    print(response.statusCode.toString()+"\n"+response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('id', jsonResponse["ID"]);
+
+      await prefs.setString('id', jsonResponse["data"]["ID"].toString());
       await prefs.setString('username', username);
       await prefs.setString('password', password);
-
-      //  print(jsonResponse["ID"]);
-      GetUser();
+      user.senha = password;
+      user.username = username;
+      //  loginCoCart();
+      ServiceRequest.GetUser();
       return true;
     } else if (response.statusCode == 503) {
       print("Erro de serviço");

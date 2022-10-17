@@ -4,8 +4,6 @@ import 'package:manda_bai/UI/Favorite/page/favorite_page.dart';
 import 'package:manda_bai/UI/Pedido/pages/pedido_page.dart';
 import 'package:manda_bai/UI/account/pages/profile_page.dart';
 import 'package:manda_bai/UI/cart/pages/cart_page.dart';
-import 'package:manda_bai/UI/category_filter/controller/mandaBaiProductController.dart';
-import 'package:manda_bai/UI/home/controller/mandaBaiCategoryController.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
 import 'package:manda_bai/UI/home/pages/start_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -60,7 +58,9 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _selectedIndex = widget.index;
     });
+
   }
+
 
   @override
   Widget build(BuildContext context) {

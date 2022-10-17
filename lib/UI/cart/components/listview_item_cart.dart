@@ -32,7 +32,7 @@ class _ItemCartState extends State<ItemCart> {
     super.initState();
     setState(() {
       quant = widget.cartModel.amount;
-      price = widget.cartModel.price;
+      price = widget.cartModel.price/100;
     });
   }
 

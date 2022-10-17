@@ -8,11 +8,13 @@ import 'package:manda_bai/Controller/full_controller.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
-import 'package:flutter/services.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:manda_bai/UI/intro/pages/onboarding_page.dart';
+import 'package:manda_bai/constants/controllers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../data/config.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -22,8 +24,6 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  final FullController controller = Get.put(FullController());
-
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
@@ -79,14 +79,27 @@ class _SplashPageState extends State<SplashPage> {
         if (net == 1) {
           Navigator.pop(context);
         }
+      /*  String versionStore = "";
+        setState(() async {
+          versionStore = await fullControllerController.getVersion();
+          print("---" + versionStore);
+        });*/
+        //check version
         Future.delayed(Duration(seconds: 2)).then((_) async {
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
-          var check = prefs.getString('onboarding');
-          if (check.toString() == 'true' && check != null) {
-            Navigator.pushReplacementNamed(context, '/home');
+         String versionStore = await fullControllerController.getVersion();
+          if (versionApp == versionStore) {
+            final SharedPreferences prefs =
+                await SharedPreferences.getInstance();
+            var check = prefs.getString('onboarding');
+            if (check.toString() == 'true' && check != null) {
+              Navigator.pushReplacementNamed(context, '/home');
+            } else {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => OnboardingPage()));
+            }
           } else {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => OnboardingPage()));
+            print("entrou");
+            Navigator.pushReplacementNamed(context, '/updateApp');
           }
         });
       }

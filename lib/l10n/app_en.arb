@@ -209,5 +209,7 @@
     "message_erro_validate_code": "Invalid code",
     "reenviar_code": "Resend new code",
     "title_new_password": "New Password",
-    "description_new_password": "It is now possible to assign a new password.\n Choose a password you won't forget!"
+    "description_new_password": "It is now possible to assign a new password.\n Choose a password you won't forget!",
+    "title_update_app":"New Update available",
+    "description_update_app":"You must update the app to be able to use all the benefits of MandaBai"
 }

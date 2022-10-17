@@ -183,7 +183,7 @@ class CartPageController extends GetxController {
     // ignore: unused_local_variable
     if (!_list.isEmpty) {
       for (int i = 0; i < _list.length; i++) {
-        subTotal += _list[i].price * _list[i].amount;
+        subTotal += _list[i].price * _list[i].amount/100;
       }
 
       total = subTotal + taxa;

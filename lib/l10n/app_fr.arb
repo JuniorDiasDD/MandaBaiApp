@@ -209,5 +209,7 @@
     "message_erro_validate_code": "Code invalide",
     "reenviar_code": "Renvoyer le nouveau code",
     "title_new_password": "Nouveau mot de passe",
-    "description_new_password": "Il est maintenant possible d'attribuer un nouveau mot de passe.\n Choisissez un mot de passe que vous n'oublierez pas!"
+    "description_new_password": "Il est maintenant possible d'attribuer un nouveau mot de passe.\n Choisissez un mot de passe que vous n'oublierez pas!",
+    "title_update_app":"Nouvelle mise à jour disponible",
+    "description_update_app":"Vous devez mettre à jour l'application pour pouvoir utiliser tous les avantages de MandaBai"
 }
