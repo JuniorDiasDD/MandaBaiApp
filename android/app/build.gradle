@@ -38,8 +38,8 @@ android {
         applicationId "com.mandabai"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 4
-        versionName "1.0.2"
+        versionCode 5
+        versionName "1.0.3"
         multiDexEnabled true
     }
 
