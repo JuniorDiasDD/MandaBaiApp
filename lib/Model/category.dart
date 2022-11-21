@@ -27,11 +27,14 @@ class CategoryRequestResponse {
 }
 
 class Category {
-  int id, count;
-  String name, image;
+  int? id, count;
+  String? name, image;
 
-  Category({required this.id, required this.count, required this.name, required this.image});
-/* int? get id => _id;
+  Category({ this.id,  this.count,  this.name,  this.image});
+
+
+
+  /* int? get id => _id;
   int? get count => _count;
   String? get name => _name;
   String? get image => _image;

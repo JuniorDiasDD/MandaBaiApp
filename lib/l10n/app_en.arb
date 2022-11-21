@@ -30,8 +30,8 @@
     "text_unavailable_service": "Unavailable service.\n Try later...",
     "filter_less_price": "Lowest Price",
     "filter_more_price": "Biggest Price",
-    "search": "Search product",
-    "label_cart": "Cart",
+    "search": "Can we go get you something?",
+    "label_category": "Categories",
     "label_favorites": "Favorites",
     "label_order": "Order",
     "label_more": "More",
@@ -211,5 +211,9 @@
     "title_new_password": "New Password",
     "description_new_password": "It is now possible to assign a new password.\n Choose a password you won't forget!",
     "title_update_app":"New Update available",
-    "description_update_app":"You must update the app to be able to use all the benefits of MandaBai"
+    "description_update_app":"You must update the app to be able to use all the benefits of MandaBai",
+    "look_full": "see it all",
+    "gifts": "Gifts",
+    "all_categories": "All Categories",
+    "best_product": "The Best Products"
 }

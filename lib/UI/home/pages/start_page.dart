@@ -1,27 +1,26 @@
 import 'dart:async';
-import 'dart:convert';
-import 'package:animations/animations.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/full_controller.dart';
-import 'package:manda_bai/Controller/request.dart';
-import 'package:manda_bai/Controller/static_config.dart';
-import 'package:manda_bai/Core/app_fonts.dart';
+import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_images.dart';
-import 'package:manda_bai/Model/category.dart';
 import 'package:manda_bai/UI/about/pages/info_page.dart';
-import 'package:manda_bai/UI/home/components/item_category.dart';
+import 'package:manda_bai/UI/category_filter/components/product_list_component.dart';
+import 'package:manda_bai/UI/category_filter/pages/category_page.dart';
 import 'package:manda_bai/UI/home/components/item_filter.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
-import 'package:manda_bai/data/madaBaiData.dart';
+import 'package:manda_bai/UI/widget/Empty.dart';
+import 'package:manda_bai/constants/controllers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import 'home_page.dart';
+import 'package:websafe_svg/websafe_svg.dart';
+import '../../widget/ErrorPage.dart';
+import '../../widget/HeaderTitle.dart';
+import '../../widget/PromotionText.dart';
+import '../../widget/Search.dart';
 
 class StartPage extends StatefulWidget {
   @override
@@ -29,12 +28,11 @@ class StartPage extends StatefulWidget {
 }
 
 class _StartPageState extends State<StartPage> {
-  final FullController controller = Get.find();
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   int net = 0;
-  bool _onFirstPage = true;
+
   Future<void> initConnectivity() async {
     late ConnectivityResult result;
     try {
@@ -78,114 +76,12 @@ class _StartPageState extends State<StartPage> {
     "https://www.mandabai.com/wp-content/uploads/2022/02/banner1.jpg"
   ];
 
-  List<Category> list_full_category = [];
-  Future _carregarCategory() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    controller.ilha = prefs.getString('island')!;
-    var island_atualizar = prefs.getString('island_atualizar');
-    if (island_atualizar != null && island_atualizar == "true") {
-      list_category = await ServiceRequest.loadCategory(true);
-      await prefs.setString('island_atualizar', "false");
-      if (list_category.isEmpty) {
-        return null;
-      } else {
-        setState(() {
-          list_full_category = list_category;
-        });
-      }
-    } else {
-      if (list_full_category.isEmpty) {
-        //  print("entrou");
-        if (list_category.isEmpty) {
-          list_category = await ServiceRequest.loadCategory(false);
-
-          if (list_category.isEmpty) {
-            return null;
-          } else {
-            setState(() {
-              list_full_category = list_category;
-            });
-          }
-        }
-      }
-    }
-
-    return list_category;
-  }
-
-  validateMoney() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var money = prefs.getString('money');
-    if (money == "null" || money == null) {
-      await prefs.setString('money', "EUR");
-    }
-  }
-
-  validateLanguage() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var language = prefs.getString('language');
-
-    if (language == "null" || language == null) {
-      await prefs.setString('language', "pt");
-    }
-  }
-
-  validateDados() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    var username = prefs.getString('username');
-    var password = prefs.getString('password');
-
-    if (password != null && username != null) {
-      final String? userString = prefs.getString('user');
-      var userCache = json.decode(userString!);
-
-      user.username = username.toString();
-      user.senha = password.toString();
-
-      user.name = userCache["name"];
-      user.email = userCache["email"];
-      user.nickname = userCache["nickname"];
-      user.avatar = userCache["avatar"];
-      user.telefone = userCache["telefone"];
-      user.city = userCache["city"];
-      user.country = userCache["country"];
-    }
-  }
-
-  removerId() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('onboarding');
-  }
-
-  Future getFilter(value) async {
-    setState(() {
-      list_category = [];
-      if (!list_full_category.isEmpty) {
-        if (value == "Todos") {
-          list_category = list_full_category;
-        } else {
-          for (var i = 0; i < list_full_category.length; i++) {
-            if (list_full_category[i].name == value) {
-              list_category.add(list_full_category[i]);
-            }
-          }
-        }
-      }
-    });
-  }
-
   @override
   void initState() {
     super.initState();
     initConnectivity();
-
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
-    validateMoney();
-    validateLanguage();
-    validateDados();
-    //removerId();
   }
 
   @override
@@ -194,7 +90,6 @@ class _StartPageState extends State<StartPage> {
     super.dispose();
   }
 
-  int _current = 0;
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
@@ -210,105 +105,105 @@ class _StartPageState extends State<StartPage> {
                 children: [
                   Stack(
                     children: [
-                      CarouselSlider(
-                        options: CarouselOptions(
-                          viewportFraction: 1,
-                          autoPlayInterval: const Duration(seconds: 10),
-                          autoPlayAnimationDuration: const Duration(seconds: 1),
-                          autoPlay: true,
-                          enlargeCenterPage: true,
+                      SizedBox(
+                        width: Get.width,
+                        height: Get.height * 0.22,
+                        child: Image.network(
+                          "https://santiago.mandabai.com/wp-content/uploads/2022/11/santiagoBackground.jpeg",
+                          fit: BoxFit.cover,
+                          width: Get.width,
+                          height: Get.height * 0.2,
                         ),
-                        items: imagesList
-                            .map(
-                              (item) => Center(
-                                child: Image.network(
-                                  item,
-                                  fit: BoxFit.cover,
-                                  width: Get.width,
-                                  height: Get.height * 0.27,
-                                ),
-                              ),
-                            )
-                            .toList(),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const InfoPage(),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                width: Get.width * 0.1,
-                                height: Get.width * 0.1,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Theme.of(context).cardColor,
-                                      blurRadius: 1.0,
-                                      spreadRadius: 0.0,
-                                      offset: Offset(0.5, 0.5),
-                                    ),
-                                  ],
-                                  color:
-                                      Theme.of(context).dialogBackgroundColor,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Image.asset(
-                                    AppImages.appLogoIcon,
-                                    width: Get.width * 0.3,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const Spacer(),
-                            GestureDetector(
-                              onTap: () async {
-                                final SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                                var check = prefs.getString('id');
-                                if (check != 'null' && check != null) {
-                                  Navigator.pushReplacement(
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              HomePage(index: 4)));
-                                } else {
-                                  Navigator.pushNamed(context, '/login');
-                                }
-                              },
-                              child: Container(
-                                width: Get.width * 0.1,
-                                height: Get.width * 0.1,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Theme.of(context).cardColor,
-                                      blurRadius: 1.0,
-                                      spreadRadius: 0.0,
-                                      offset: Offset(0.5, 0.5),
+                                        builder: (context) => const InfoPage(),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    width: Get.width * 0.1,
+                                    height: Get.width * 0.1,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: AppColors.grey50.withOpacity(0.8),
                                     ),
-                                  ],
-                                  color:
-                                      Theme.of(context).dialogBackgroundColor,
+                                    child: const Padding(
+                                      padding: EdgeInsets.all(4.0),
+                                      child: Icon(Icons.close),
+                                    ),
+                                  ),
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Icon(Icons.person),
+                                const Spacer(),
+                                GestureDetector(
+                                  onTap: () async {
+                                    final SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    var check = prefs.getString('id');
+                                    if (check == 'null' || check == null) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return const Pop_Login();
+                                          });
+                                    } else {
+                                      Navigator.pushNamed(context, '/cart');
+                                    }
+                                  },
+                                  child: Container(
+                                    width: Get.width * 0.1,
+                                    height: Get.width * 0.1,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      color: AppColors.grey50.withOpacity(0.8),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(6.0),
+                                      child: WebsafeSvg.asset(
+                                          AppImages.iconMenuCartOutline),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: Get.width * 0.05,
+                                right: Get.width * 0.05),
+                            child: CarouselSlider(
+                              options: CarouselOptions(
+                                viewportFraction: 1,
+                                autoPlayInterval: const Duration(seconds: 10),
+                                autoPlayAnimationDuration:
+                                    const Duration(seconds: 1),
+                                autoPlay: true,
+                                enlargeCenterPage: true,
+                              ),
+                              items: imagesList
+                                  .map(
+                                    (item) => Center(
+                                      child: Image.network(
+                                        item,
+                                        fit: BoxFit.cover,
+                                        width: Get.width,
+                                        height: Get.height * 0.2,
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -335,48 +230,124 @@ class _StartPageState extends State<StartPage> {
                       ],
                     ),
                   ),*/
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  FutureBuilder(
-                    future: controller.carregarFilter(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.data == null) {
-                        return const SizedBox();
-                      } else {
-                        return Container(
-                          height: Get.width * 0.2,
-                          child: ListView.builder(
-                            padding: const EdgeInsets.only(
-                              top: 0.0,
-                            ),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (BuildContext context, index) {
-                              var list = controller.listFilter[index];
-                              return GestureDetector(
-                                  onTap: () {
-                                    getFilter(list.name);
-                                  },
-                                  child: ItemFilter(filter: list));
-                            },
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: Get.width * 0.05),
-                      child: Text(
-                        AppLocalizations.of(context)!.title_categories,
-                        style: Theme.of(context).textTheme.headline1,
-                      ),
+
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: Get.width * 0.05, right: Get.width * 0.05),
+                    child: Search(
+                      textHint: AppLocalizations.of(context)!.search,
+                      function: () {},
                     ),
                   ),
+
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      PromotionText(
+                        title: '-10%',
+                        description:
+                            AppLocalizations.of(context)!.label_order + ' +100',
+                      ),
+                      PromotionText(
+                        title: '-20%',
+                        description:
+                            AppLocalizations.of(context)!.label_order + ' +250',
+                      ),
+                      PromotionText(
+                        title: '-25%',
+                        description:
+                            AppLocalizations.of(context)!.label_order + ' +500',
+                      ),
+                    ],
+                  ),
+
                   FutureBuilder(
-                    future: _carregarCategory(),
+                    future: categoryController.carregarFilter(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasError) {
+                        return const ErrorPage(text: 'Erro the system');
+                      }
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return Column(
+                          children: [
+                            HeaderTitle(
+                              title: AppLocalizations.of(context)!
+                                  .title_categories,
+                              buttonText:
+                                  AppLocalizations.of(context)!.look_full,
+                              action: () {
+                                Navigator.pushNamed(context, '/categories');
+                              },
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                ItemFilter(
+                                    filter: categoryController.listFilter[0]),
+                                ItemFilter(
+                                    filter: categoryController.listFilter[1]),
+                                ItemFilter(
+                                    filter: categoryController.listFilter[2]),
+                                ItemFilter(
+                                    filter: categoryController.listFilter[3]),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                ItemFilter(
+                                    filter: categoryController.listFilter[4]),
+                                ItemFilter(
+                                    filter: categoryController.listFilter[5]),
+                                ItemFilter(
+                                    filter: categoryController.listFilter[6]),
+                                ItemFilter(
+                                    filter: categoryController.listFilter[7]),
+                              ],
+                            ),
+                          ],
+                        );
+                      }
+                      return Center(
+                        child: SizedBox(
+                            width: 32,
+                            height: 32,
+                            child: CircularProgressIndicator(
+                              color: Theme.of(context).primaryColor,
+                              strokeWidth: 2,
+                            )),
+                      );
+                    },
+                  ),
+                  Obx(
+                    () => productController.listProduct.isEmpty
+                        ? Container()
+                        : HeaderTitle(
+                            title: AppLocalizations.of(context)!.gifts,
+                            buttonText: AppLocalizations.of(context)!.look_full,
+                            action: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CategoryPage(
+                                        category:
+                                            categoryController.categorySelect,
+                                        filter_most:
+                                            AppLocalizations.of(context)!
+                                                .filter_more_price,
+                                        filter_less:
+                                            AppLocalizations.of(context)!
+                                                .filter_less_price)),
+                              );
+                            },
+                          ),
+                  ),
+
+                  FutureBuilder(
+                    future: categoryController.carregarProductByPresents(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
@@ -384,55 +355,35 @@ class _StartPageState extends State<StartPage> {
                             height: Get.height * 0.2,
                             width: Get.width,
                             child: Center(
-                              child: Image.network(
-                                AppImages.loading,
-                                width: Get.width * 0.15,
-                                height: Get.height * 0.2,
-                                alignment: Alignment.center,
-                              ),
+                              child: SizedBox(
+                                  width: 32,
+                                  height: 32,
+                                  child: CircularProgressIndicator(
+                                    color: Theme.of(context).primaryColor,
+                                    strokeWidth: 2,
+                                  )),
                             ),
                           );
                         default:
                           if (snapshot.data == null) {
-                            print("vazio");
-                            return SizedBox(
-                              height: Get.height * 0.2,
-                              width: Get.width,
-                              child: Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.public_off_outlined,
-                                      color: Colors.grey,
-                                      size: Get.height * 0.06,
-                                    ),
-                                    Text(
-                                      AppLocalizations.of(context)!
-                                          .text_unavailable_service,
-                                      style: TextStyle(
-                                        fontFamily: AppFonts.poppinsBoldFont,
-                                        fontSize: Get.width * 0.035,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
+                            return const Empty();
                           } else {
-                            return Container(
-                              height: Get.height * 0.485,
+                            return SizedBox(
+                              height: Get.height * 0.25,
+                              width: Get.width,
                               child: ListView.builder(
-                                padding: EdgeInsets.only(
+                                padding: const EdgeInsets.only(
                                   top: 0.0,
-                                  bottom: Get.height * 0.03,
                                 ),
-                                scrollDirection: Axis.vertical,
+                                scrollDirection: Axis.horizontal,
                                 itemCount: snapshot.data.length,
                                 itemBuilder: (BuildContext context, index) {
-                                  var list = list_category[index];
-                                  return ListViewItemComponent(category: list);
+                                  var list =
+                                      productController.listProduct[index];
+                                  return ProductListComponent(
+                                    product: list,
+                                    checkOption: false,
+                                  );
                                 },
                               ),
                             );

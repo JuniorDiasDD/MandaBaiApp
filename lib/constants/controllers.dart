@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:manda_bai/Controller/category_controller.dart';
 import 'package:manda_bai/Controller/full_controller.dart';
 import 'package:manda_bai/Controller/mandaBaiController.dart';
+import 'package:manda_bai/Controller/product_controller.dart';
 import 'package:manda_bai/UI/category_filter/controller/mandaBaiProductController.dart';
 import 'package:manda_bai/firebase_options.dart';
 
@@ -15,3 +17,5 @@ MandaBaiController mandaBaiController = MandaBaiController.instance;
 MandaBaiProductController mandaBaiProductController =
     MandaBaiProductController.instance;
 FullController fullControllerController = FullController.instance;
+CategoryController categoryController = CategoryController.instance;
+ProductController productController = ProductController.instance;

@@ -4,7 +4,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/full_controller.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
@@ -92,13 +91,13 @@ class _SplashPageState extends State<SplashPage> {
                 await SharedPreferences.getInstance();
             var check = prefs.getString('onboarding');
             if (check.toString() == 'true' && check != null) {
+              await fullControllerController.getInit();
               Navigator.pushReplacementNamed(context, '/home');
             } else {
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => OnboardingPage()));
             }
           } else {
-            print("entrou");
             Navigator.pushReplacementNamed(context, '/updateApp');
           }
         });

@@ -39,8 +39,8 @@ class MandaBaiCategoryController extends GetxController {
         String? island = prefs.getString('island');
         print(island);
         for (var i = 0; i < list.length; i++) {
-          if (list[i].name.contains(island!) == true) {
-            var name = list[i].name.split(" / ");
+          if (list[i].name!.contains(island!) == true) {
+            var name = list[i].name!.split(" / ");
             list[i].name = name[0];
             ListCategoria.add(list[i]);
           }

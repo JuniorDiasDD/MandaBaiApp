@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Controller/full_controller.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Model/category.dart';
-import 'package:manda_bai/UI/category_filter/controller/mandaBaiProductController.dart';
 import 'package:manda_bai/UI/category_filter/pages/category_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -21,7 +20,7 @@ class _ListViewItemComponentState extends State<ListViewItemComponent> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 15.0, right: 15.0),
+      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
       child: OpenContainer(
           closedBuilder: (context, action) {
             return Container(
@@ -41,7 +40,7 @@ class _ListViewItemComponentState extends State<ListViewItemComponent> {
                   fit: BoxFit.fill,
                   image: widget.category.image != 'null'
                       ? NetworkImage(widget.category.image.toString())
-                      : NetworkImage(
+                      : const NetworkImage(
                           'https://static.expressodasilhas.cv/media/2020/10/09324151.normal.jpg'),
                 ),
               ),
@@ -53,7 +52,7 @@ class _ListViewItemComponentState extends State<ListViewItemComponent> {
                 decoration: BoxDecoration(
                   color: Colors.black26,
                   borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Colors.black12,
                       blurRadius: 1.0,
@@ -66,7 +65,7 @@ class _ListViewItemComponentState extends State<ListViewItemComponent> {
                     child: AnimatedTextKit(
                   animatedTexts: [
                     RotateAnimatedText(
-                      widget.category.name,
+                      widget.category.name!,
                       textStyle: TextStyle(
                         fontFamily: AppFonts.poppinsBoldFont,
                         fontSize: Get.height * 0.026,

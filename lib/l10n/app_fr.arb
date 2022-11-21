@@ -30,8 +30,8 @@
     "text_unavailable_service": "Service indisponible.\n  Essayer plus tard...",
     "filter_less_price": "Moins de prix",
     "filter_more_price": "Plus de prix",
-    "search": "Rechercher un produit",
-    "label_cart": "Chariot",
+    "search": "Pouvons-nous aller te chercher quelque chose?",
+    "label_category": "Catégories",
     "label_favorites":"Favoris",
     "label_order": "Demandes",
     "label_more": "Plus",
@@ -211,5 +211,9 @@
     "title_new_password": "Nouveau mot de passe",
     "description_new_password": "Il est maintenant possible d'attribuer un nouveau mot de passe.\n Choisissez un mot de passe que vous n'oublierez pas!",
     "title_update_app":"Nouvelle mise à jour disponible",
-    "description_update_app":"Vous devez mettre à jour l'application pour pouvoir utiliser tous les avantages de MandaBai"
+    "description_update_app":"Vous devez mettre à jour l'application pour pouvoir utiliser tous les avantages de MandaBai",
+    "look_full": "tout voir",
+    "gifts": "Cadeaux",
+    "all_categories": "Toutes catégories",
+    "best_product": "Les Meilleurs Produits"
 }

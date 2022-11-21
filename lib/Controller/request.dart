@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:get/get.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Model/cart_model.dart';
 import 'package:manda_bai/Model/category.dart';
@@ -10,13 +9,13 @@ import 'package:manda_bai/Model/location.dart';
 import 'package:manda_bai/Model/order.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/Model/user.dart';
+import 'package:manda_bai/constants/controllers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../UI/category_filter/controller/categoryController.dart';
 
 class ServiceRequest {
   // ! Load Category
-  static Future<List<Category>> loadCategory(bool fresh) async {
+  static Future<List<Category>> loadCategory() async {
     List<Category> list = [];
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -115,16 +114,14 @@ class ServiceRequest {
 
   //! Load Products
   static Future<List<Product>> loadProduct(id) async {
+    print('entro product');
 
-    final CategoryController controller = Get.find();
     List<Product> list = [];
-
-
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var island = prefs.getString('island');
 
     var response;
-    if (controller.statusLoadProdutoPage == "init") {
+    if (productController.statusLoadProdutoPage == "init") {
 
       loadProdutoPage=1;
       switch (island) {
@@ -166,7 +163,7 @@ class ServiceRequest {
           break;
       }
     }
-    else if (controller.statusLoadProdutoPage == "next") {
+    else if (productController.statusLoadProdutoPage == "next") {
       if(loadProdutoPage==1){
         loadProdutoPage=2;
       }
@@ -242,13 +239,13 @@ class ServiceRequest {
         int pages = int.parse(page);
       //  print("TotalPage: "+pages.toString()+" - AtualPage:p "+loadProdutoPage.toString());
         if (pages == 1 || pages == loadProdutoPage) {
-          controller.statusLoadProdutoPage = "close";
+          productController.statusLoadProdutoPage = "close";
           return list;
         }else{
-          if(controller.statusLoadProdutoPage=="init"){
+          if(productController.statusLoadProdutoPage=="init"){
             loadProdutoPage=1;
           }else{
-            controller.statusLoadProdutoPage = "next";
+            productController.statusLoadProdutoPage = "next";
             loadProdutoPage++;
           }
 

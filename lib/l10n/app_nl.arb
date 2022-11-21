@@ -30,8 +30,8 @@
     "text_unavailable_service": " Service niet beschikbare,\n  Probeer later...",
     "filter_less_price": "Laagste prijs",
     "filter_more_price": "Grootste prijs",
-    "search": "zoek product",
-    "label_cart": "Winkelwagen",
+    "search": "Kunnen we iets voor je gaan halen?",
+    "label_category": "Categorieën",
     "label_favorites": "Favorieten",
     "label_order": "Aanvragen",
     "label_more": "Meest",
@@ -211,5 +211,9 @@
     "title_new_password": "Nieuw paswoord",
     "description_new_password": "Het is nu mogelijk om een nieuw wachtwoord toe te kennen.\n Kies een wachtwoord dat u niet zult vergeten!",
     "title_update_app":"Nieuwe update beschikbaar",
-    "description_update_app":"Je moet de app updaten om alle voordelen van MandaBai te kunnen gebruiken"
+    "description_update_app":"Je moet de app updaten om alle voordelen van MandaBai te kunnen gebruiken",
+    "look_full": "zie het allemaal",
+    "gifts": "Geschenken",
+    "all_categories": "Alle categorieën",
+    "best_product": "De Beste Producten"
 }

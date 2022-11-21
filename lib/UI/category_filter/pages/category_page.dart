@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -14,25 +13,28 @@ import 'package:manda_bai/Model/category.dart';
 import 'package:manda_bai/Model/favorite.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/category_filter/components/product_list_component.dart';
-import 'package:manda_bai/UI/category_filter/controller/categoryController.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
+import 'package:manda_bai/constants/controllers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:websafe_svg/websafe_svg.dart';
 
 class CategoryPage extends StatefulWidget {
   Category category;
   String filter_most, filter_less;
   CategoryPage(
-      {required this.category,
+      {Key? key,
+      required this.category,
       required this.filter_most,
-      required this.filter_less});
+      required this.filter_less})
+      : super(key: key);
 
   @override
   State<CategoryPage> createState() => _CategoryPageState();
 }
 
 class _CategoryPageState extends State<CategoryPage> {
-  final CategoryController controller = Get.put(CategoryController());
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
@@ -82,12 +84,12 @@ class _CategoryPageState extends State<CategoryPage> {
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
     loadProdutoPage = 1;
-    controller.statusLoadProdutoPage = "init";
-    controller.loading = false;
-    controller.loadingMais = false;
-    controller.focus = false;
-    controller.size_list = 0;
-    controller.size_load = 0;
+    productController.statusLoadProdutoPage = "init";
+    productController.loading = false;
+    productController.loadingMais = false;
+    productController.focus = false;
+    productController.size_list = 0;
+    productController.size_load = 0;
     _controller = ScrollController();
     _controller.addListener(_scrollListener);
     setState(() {
@@ -99,7 +101,7 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   void dispose() {
-    controller.statusLoadProdutoPage = "init";
+    productController.statusLoadProdutoPage = "init";
     _connectivitySubscription.cancel();
     super.dispose();
   }
@@ -119,11 +121,11 @@ class _CategoryPageState extends State<CategoryPage> {
   _scrollListener() async {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_controller.position.outOfRange) {
-      if (controller.statusLoadProdutoPage != "close" &&
-          controller.statusLoadProdutoPage != "...") {
-        controller.loadingMais = true;
+      if (productController.statusLoadProdutoPage != "close" &&
+          productController.statusLoadProdutoPage != "...") {
+        productController.loadingMais = true;
 
-        controller.statusLoadProdutoPage = "next";
+        productController.statusLoadProdutoPage = "next";
 
         position = _controller.position.maxScrollExtent;
         await _carregarAtualizar();
@@ -146,7 +148,7 @@ class _CategoryPageState extends State<CategoryPage> {
             .toLowerCase()
             .contains(pesquisa.text.toLowerCase())) {
           list_product.add(list_product_full[i]);
-          controller.size_load = list_product.length;
+          productController.size_load = list_product.length;
         }
       }
     });
@@ -170,7 +172,8 @@ class _CategoryPageState extends State<CategoryPage> {
 
   Future _carregar() async {
     //print("carregar status: " + controller.statusLoadProdutoPage);
-    if (controller.statusLoadProdutoPage == "init" && pesquisa.text.isEmpty) {
+    if (productController.statusLoadProdutoPage == "init" &&
+        pesquisa.text.isEmpty) {
       if (list_product.isEmpty) {
         list_product = await ServiceRequest.loadProduct(widget.category.id);
         if (list_product.isEmpty) {
@@ -223,20 +226,20 @@ class _CategoryPageState extends State<CategoryPage> {
             list_product_full = list_product;
           }
         }
-        controller.size_list = loadProdutoTotal;
-        controller.size_load = list_product.length;
+        productController.size_list = loadProdutoTotal;
+        productController.size_load = list_product.length;
       }
     }
     return list_product;
   }
 
   Future _carregarAtualizar() async {
-    // print(controller.statusLoadProdutoPage.toString());
-    if (controller.statusLoadProdutoPage != "init" &&
-        controller.statusLoadProdutoPage != "close") {
+    // print(productController.statusLoadProdutoPage.toString());
+    if (productController.statusLoadProdutoPage != "init" &&
+        productController.statusLoadProdutoPage != "close") {
       list_product_cont = await ServiceRequest.loadProduct(widget.category.id);
       if (list_product_cont.isEmpty) {
-        controller.statusLoadProdutoPage = "close";
+        productController.statusLoadProdutoPage = "close";
         return null;
       } else {
         if (!list_favorite.isEmpty) {
@@ -285,9 +288,9 @@ class _CategoryPageState extends State<CategoryPage> {
       }
     }
 
-    controller.loadingMais = false;
-    controller.size_load = list_product.length;
-    controller.focus = true;
+    productController.loadingMais = false;
+    productController.size_load = list_product.length;
+    productController.focus = true;
 
     return list_product;
   }
@@ -302,7 +305,7 @@ class _CategoryPageState extends State<CategoryPage> {
     return SafeArea(
       child: Scaffold(
         // resizeToAvoidBottomInset: false,
-        floatingActionButton: controller.focus
+        floatingActionButton: productController.focus
             ? FloatingActionButton.small(
                 backgroundColor: Theme.of(context).primaryColor,
                 onPressed: () {
@@ -311,7 +314,7 @@ class _CategoryPageState extends State<CategoryPage> {
                     duration: Duration(seconds: 1),
                     curve: Curves.easeIn,
                   );
-                  controller.focus = false;
+                  productController.focus = false;
                 },
                 child: const Icon(
                   Icons.arrow_downward,
@@ -326,72 +329,160 @@ class _CategoryPageState extends State<CategoryPage> {
                 children: [
                   Column(
                     children: [
-                      Container(
-                        color: Theme.of(context).primaryColor,
-                        child: Row(
-                          children: [
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: IconButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  //_controller.jumpTo(position);
-                                },
-                                icon: const Icon(Icons.arrow_back,
-                                    color: Colors.white),
-                              ),
-                            ),
-                            const Spacer(),
-                            Container(
-                              width: Get.width * 0.2,
-                              margin: EdgeInsets.only(
-                                right: Get.width * 0.04,
-                              ),
-                              child: DropdownButton(
-                                icon: const Icon(
-                                  Icons.filter_alt_sharp,
-                                  color: Colors.white,
-                                  size: 20.09,
+                      Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 8.0, right: 16.0, top: 8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextButton(
+                                  child: Obx(
+                                    () => Text(
+                                      '< ' +
+                                          widget.category.name! +
+                                          " (" +
+                                          productController.size_load
+                                              .toString() +
+                                          "/" +
+                                          productController.size_list
+                                              .toString() +
+                                          ")",
+                                      style:
+                                          Theme.of(context).textTheme.headline3,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
                                 ),
-                                isExpanded: true,
-                                elevation: 16,
-                                underline: DropdownButtonHideUnderline(
-                                    child: Container()),
-                                items: list_filter.map((val) {
-                                  return DropdownMenuItem(
-                                    value: val,
-                                    child: Text(val,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline4),
-                                  );
-                                }).toList(),
-                                //  value: dropdownValue,
-                                onChanged: (String? value) {
-                                  setState(() {
-                                    dropdownValue = value!;
-                                    _ordenar();
-                                  });
-                                },
-                              ),
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: Get.width * 0.2,
+                                      height: Get.width * 0.1,
+                                      child: DropdownButton(
+                                        icon: Container(
+                                          width: Get.width * 0.1,
+                                          height: Get.width * 0.1,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(50),
+                                            color: AppColors.grey50
+                                                .withOpacity(0.8),
+                                          ),
+                                          child: const Icon(
+                                            Icons.filter_alt_sharp,
+                                            color: AppColors.black_claro,
+                                            size: 20.09,
+                                          ),
+                                        ),
+                                        isExpanded: true,
+                                        elevation: 16,
+                                        underline: DropdownButtonHideUnderline(
+                                            child: Container()),
+                                        items: list_filter.map((val) {
+                                          return DropdownMenuItem(
+                                            value: val,
+                                            child: Text(val,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline4),
+                                          );
+                                        }).toList(),
+                                        //  value: dropdownValue,
+                                        onChanged: (String? value) {
+                                          setState(() {
+                                            dropdownValue = value!;
+                                            _ordenar();
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        final SharedPreferences prefs =
+                                            await SharedPreferences
+                                                .getInstance();
+                                        var check = prefs.getString('id');
+                                        if (check == 'null' || check == null) {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return const Pop_Login();
+                                              });
+                                        } else {
+                                          Navigator.pushNamed(context, '/cart');
+                                        }
+                                      },
+                                      child: Container(
+                                        width: Get.width * 0.1,
+                                        height: Get.width * 0.1,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          color:
+                                              AppColors.grey50.withOpacity(0.8),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(6.0),
+                                          child: WebsafeSvg.asset(
+                                              AppImages.iconMenuCartOutline),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      Container(
-                        padding: EdgeInsets.only(
-                            top: Get.height * 0.01, left: Get.width * 0.04),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Obx(
-                            () => Text(
-                              widget.category.name +
-                                  " (" +
-                                  controller.size_load.toString() +
-                                  "/" +
-                                  controller.size_list.toString() +
-                                  ")",
-                              style: Theme.of(context).textTheme.headline1,
+                      Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 16.0, right: 16.0, bottom: 16.0, top: 8),
+                          child: SizedBox(
+                            width: Get.width,
+                            height: 40,
+                            child: TextField(
+                              cursorColor: AppColors.greenColor,
+                              controller: pesquisa,
+                              style: Theme.of(context).textTheme.headline4,
+                              decoration: InputDecoration(
+                                hintText: AppLocalizations.of(context)!.search,
+                                hintStyle:
+                                    Theme.of(context).textTheme.headline4,
+                                contentPadding: const EdgeInsets.only(top: 8),
+                                focusedBorder: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20.0)),
+                                    borderSide: BorderSide(
+                                        color: AppColors.greenColor)),
+                                prefixIcon: Icon(
+                                  Icons.search,
+                                  color: AppColors.black_claro.withOpacity(0.4),
+                                ),
+                                filled: true,
+                                fillColor: AppColors.grey50.withOpacity(0.5),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(20.0),
+                                  ),
+                                  borderSide: BorderSide(
+                                      color: AppColors.black_claro
+                                          .withOpacity(0.4),
+                                      width: 0.0),
+                                ),
+                              ),
+                              onChanged: (text) {
+                                _search();
+                              },
                             ),
                           ),
                         ),
@@ -455,7 +546,9 @@ class _CategoryPageState extends State<CategoryPage> {
                                     itemBuilder: (BuildContext ctx, index) {
                                       var list = list_product[index];
                                       return ProductListComponent(
-                                          product: list);
+                                        product: list,
+                                        checkOption: true,
+                                      );
                                     },
                                   ),
                                 );
@@ -465,49 +558,9 @@ class _CategoryPageState extends State<CategoryPage> {
                       ),
                     ],
                   ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: SizedBox(
-                        width: Get.width * 0.7,
-                        height: 40,
-                        child: TextField(
-                          cursorColor: AppColors.greenColor,
-                          controller: pesquisa,
-                          style: Theme.of(context).textTheme.headline4,
-                          decoration: InputDecoration(
-                            focusedBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30.0)),
-                                borderSide:
-                                    BorderSide(color: AppColors.greenColor)),
-                            hintText: AppLocalizations.of(context)!.search,
-                            hintStyle: Theme.of(context).textTheme.headline4,
-                            contentPadding:
-                                const EdgeInsets.only(top: 10, left: 15),
-                            suffixIcon: const Icon(
-                              Icons.search,
-                              color: AppColors.greenColor,
-                            ),
-                            filled: true,
-                            fillColor: Theme.of(context).backgroundColor,
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(30.0),
-                              ),
-                            ),
-                          ),
-                          onChanged: (text) {
-                            _search();
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
                   Obx(
                     () => SizedBox(
-                      child: controller.loadingMais
+                      child: productController.loadingMais
                           ? Container(
                               color: Colors.black54,
                               height: Get.height,
@@ -527,7 +580,7 @@ class _CategoryPageState extends State<CategoryPage> {
                   ),
                   Obx(
                     () => SizedBox(
-                      child: controller.loading
+                      child: productController.loading
                           ? Container(
                               color: Colors.black54,
                               height: Get.height,

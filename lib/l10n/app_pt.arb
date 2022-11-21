@@ -30,8 +30,8 @@
     "text_unavailable_service": "Serviço Indispónivel.\n Tente mais tarde...",
     "filter_less_price": "Menor Preço",
     "filter_more_price": "Maior Preço",
-    "search": "Pesquisar produto",
-    "label_cart": "Carrinho",
+    "search": "Podemos ir buscar-te alguma coisa?",
+    "label_category": "Categorias",
     "label_favorites": "Favoritos",
     "label_order": "Encomendas",
     "label_more": "Mais",
@@ -211,5 +211,9 @@
     "title_new_password": "Nova Senha",
     "description_new_password": "Agora já é possivel atribuir uma nova senha.\n Escolha uma senha que não irás esquecer!",
     "title_update_app":"Nova Atualização disponivel",
-    "description_update_app":"Deverá atualizar a app para poder utilizar todos os benificios da MandaBai"
+    "description_update_app":"Deverá atualizar a app para poder utilizar todos os benificios da MandaBai",
+    "look_full": "ver tudo",
+    "gifts": "Presentes",
+    "all_categories": "Todas Categorias",
+    "best_product": "Os Melhores Produtos"
 }

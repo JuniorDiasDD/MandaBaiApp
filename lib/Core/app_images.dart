@@ -1,5 +1,17 @@
 class AppImages {
-  
+
+  static const iconMenuHome='assets/images/icons/Home.svg';
+  static const iconMenuHomeOutline='assets/images/icons/HomeOutline.svg';
+  static const iconMenuCategory='assets/images/icons/Category.svg';
+  static const iconMenuCategoryOutline='assets/images/icons/CategoryOutline.svg';
+  static const iconMenuFavorite='assets/images/icons/Favorite.svg';
+  static const iconMenuFavoriteOutline='assets/images/icons/FavoriteOutline.svg';
+  static const iconMenuSetting='assets/images/icons/Setting.svg';
+  static const iconMenuSettingOutline='assets/images/icons/SettingOutline.svg';
+  static const iconMenuShopping='assets/images/icons/Shopping.svg';
+  static const iconMenuShoppingOutline='assets/images/icons/ShoppingOutline.svg';
+  static const iconMenuCartOutline='assets/images/icons/cartOutline.svg';
+
   static const firstOnboardingImage = 'assets/images/onboarding.svg';
   static const secondOnboardingImage = 'assets/images/onboarding_2.svg';
   static const thirdOnboardingImage = 'assets/images/onboarding_3.svg';

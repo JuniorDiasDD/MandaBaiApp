@@ -1,16 +1,20 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
+import 'dart:convert';
 
+import 'package:get/get.dart';
+import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Model/filter.dart';
 import 'package:manda_bai/service/app_data_services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:store_redirect/store_redirect.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 
 class FullController extends GetxController {
   static FullController instance = Get.find();
   final _ilha = ''.obs;
   final _listFilter = <Filter>[].obs;
   final String _versionCollection = "version";
+  final symbolMoney=''.obs;
+  final initialMoney=''.obs;
 
   List<Filter> get listFilter {
     return _listFilter.value;
@@ -28,60 +32,73 @@ class FullController extends GetxController {
     this._ilha.value = ilha;
   }
 
-  Future carregarFilter() async {
-    if (_listFilter.isEmpty) {
-      _listFilter.add(Filter(
-          image:
-              "https://www.mandabai.com/wp-content/uploads/2022/02/filterHomeApp.png",
-          name: "Todos"));
-      _listFilter.add(Filter(
-          image:
-              "https://www.mandabai.com/wp-content/uploads/2022/02/filterAlimentoApp-1.png",
-          name: "Alimentos"));
-      _listFilter.add(Filter(
-          image:
-              "https://www.mandabai.com/wp-content/uploads/2022/02/filterBebidaApp.png",
-          name: "Bebidas"));
-      _listFilter.add(Filter(
-          image:
-              "https://www.mandabai.com/wp-content/uploads/2022/02/filterAlimentosApp.png",
-          name: "Legumes e Verduras"));
-      _listFilter.add(Filter(
-          image:
-              "https://www.mandabai.com/wp-content/uploads/2022/02/filterFrutasApp-1.png",
-          name: "Frutas"));
-      _listFilter.add(Filter(
-          image:
-              "https://www.mandabai.com/wp-content/uploads/2022/02/filterPeixesApp.png",
-          name: "Carnes e Peixes"));
-      _listFilter.add(Filter(
-          image:
-              "https://www.mandabai.com/wp-content/uploads/2022/02/filtroHigieneApp.png",
-          name: "Higiene"));
-      _listFilter.add(Filter(
-          image:
-              "https://www.mandabai.com/wp-content/uploads/2022/02/filterBolos_App-1.png",
-          name: "Bolos"));
-      _listFilter.add(Filter(
-          image:
-              "https://www.mandabai.com/wp-content/uploads/2022/02/filterCasa_App.png",
-          name: "Casa"));
-      _listFilter.add(Filter(
-          image:
-              "https://www.mandabai.com/wp-content/uploads/2022/02/filterEletronicosApp.png",
-          name: "Eletrônicos"));
-      if (_listFilter.isEmpty) {
-        return null;
-      }
-    }
-    return _listFilter;
-  }
 
   getVersion() async {
     return AppDataServices().getGeoDataVersion();
   }
 
+  getSymbolMoney() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    initialMoney.value = prefs.getString('money')!;
+    if (initialMoney.isEmpty || symbolMoney.value== "null") {
+      await prefs.setString('money', "EUR");
+      initialMoney.value='EUR';
+    }
 
+    switch(initialMoney.value){
+      case 'EUR':{
+        symbolMoney.value='€';
+        break;
+      }
+      case 'ESC':{
+        symbolMoney.value='\$';
+        break;
+      }
+      case 'USD':{
+        symbolMoney.value='\$';
+        break;
+      }
+    }
+
+  }
+
+
+  validateLanguage() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var language = prefs.getString('language');
+
+    if (language == "null" || language == null) {
+      await prefs.setString('language', "pt");
+    }
+  }
+
+  getUser() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var username = prefs.getString('username');
+    var password = prefs.getString('password');
+
+    if (password != null && username != null) {
+      final String? userString = prefs.getString('user');
+      var userCache = json.decode(userString!);
+
+      user.username = username.toString();
+      user.senha = password.toString();
+      user.name = userCache["name"];
+      user.email = userCache["email"];
+      user.nickname = userCache["nickname"];
+      user.avatar = userCache["avatar"];
+      user.telefone = userCache["telefone"];
+      user.city = userCache["city"];
+      user.country = userCache["country"];
+    }
+  }
+
+  getInit()async{
+    await getSymbolMoney();
+    await validateLanguage();
+    await getUser();
+  }
   sendStore() async {
     print("object");
     StoreRedirect.redirect(
