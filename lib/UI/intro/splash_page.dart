@@ -90,8 +90,8 @@ class _SplashPageState extends State<SplashPage> {
             final SharedPreferences prefs =
                 await SharedPreferences.getInstance();
             var check = prefs.getString('onboarding');
+            await fullControllerController.getInit();
             if (check.toString() == 'true' && check != null) {
-              await fullControllerController.getInit();
               Navigator.pushReplacementNamed(context, '/home');
             } else {
               Navigator.pushReplacement(context,

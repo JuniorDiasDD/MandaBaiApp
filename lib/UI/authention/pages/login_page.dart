@@ -5,15 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/mandaBaiController.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/authention/pages/recovery_password_page.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
-import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:manda_bai/UI/widget/TextFormField.dart';
+import 'package:manda_bai/UI/widget/button_ui.dart';
 import 'package:manda_bai/constants/controllers.dart';
 
 class LoginPage extends StatefulWidget {
@@ -81,40 +81,6 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool statePassword = true;
-  final input_username = TextEditingController();
-  final input_senha = TextEditingController();
-  bool loading = false;
-  Future<void> validateAndSave() async {
-    final FormState? form = _formKey.currentState;
-    if (form!.validate()) {
-      setState(() {
-        loading = true;
-      });
-      var check =await mandaBaiController.login(input_username.text, input_senha.text);
-      if (check == true) {
-        setState(() {
-          loading = false;
-        });
-        Navigator.pushReplacementNamed(context, '/home');
-      } else {
-        setState(() {
-          loading = false;
-        });
-        return showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Pop_up_Message(
-                  mensagem:
-                      AppLocalizations.of(context)!.message_error_cridencials,
-                  icon: Icons.error,
-                  caminho: "erro");
-            });
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,253 +93,287 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   Stack(
                     children: [
-                      Align(
-                        alignment: Alignment.bottomLeft,
-                        child: ColoredCircleComponent(),
+                      Image.network(
+                        "https://santiago.mandabai.com/wp-content/uploads/2022/11/santiagoBackground.jpeg",
+                        fit: BoxFit.cover,
+                        width: Get.width,
+                        height: Get.height,
+                        color: Colors.grey.withOpacity(1),
+                        colorBlendMode: BlendMode.modulate,
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: Get.height * 0.02,
-                  ),
-                  Image.asset(
-                    AppImages.appLogoIcon,
-                    width: Get.width * 0.6,
-                    height: Get.height * 0.15,
-                  ),
-                  SizedBox(
-                    height: Get.height * 0.06,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: Get.width * 0.05,
-                      right: Get.width * 0.05,
-                    ),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          TextFormField(
-                            controller: input_username,
-                            obscureText: false,
-                            style: Theme.of(context).textTheme.headline4,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Theme.of(context).backgroundColor,
-                              border: OutlineInputBorder(
-                                borderRadius: new BorderRadius.circular(15.0),
-                                borderSide: new BorderSide(),
-                              ),
-                              prefixIcon: Padding(
-                                padding: EdgeInsets.all(0.0),
-                                child: Icon(
-                                  Icons.person,
-                                  color: Colors.grey,
-                                ), // icon is 48px widget.
-                              ),
-                              labelText:
-                                  AppLocalizations.of(context)!.textfield_user,
-                              labelStyle: Theme.of(context).textTheme.headline4,
+                      SizedBox(
+                        height: Get.height * 0.9,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: Get.height * 0.02,
                             ),
-                            validator: (value) => value!.isEmpty
-                                ? AppLocalizations.of(context)!.validator_user
-                                : null,
-                          ),
-                          SizedBox(height: Get.height * 0.01),
-                          TextFormField(
-                            controller: input_senha,
-                            obscureText: statePassword,
-                            style: Theme.of(context).textTheme.headline4,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Theme.of(context).backgroundColor,
-                              border: OutlineInputBorder(
-                                borderRadius: new BorderRadius.circular(15.0),
-                                borderSide: new BorderSide(),
-                              ),
-                              prefixIcon: Padding(
-                                padding: EdgeInsets.all(0.0),
-                                child: Icon(
-                                  Icons.lock,
-                                  color: Colors.grey,
-                                ), // icon is 48px widget.
-                              ),
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    statePassword = !statePassword;
-                                  });
-                                },
-                                icon: Icon(
-                                  statePassword
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                ),
-                              ),
-                              labelText: AppLocalizations.of(context)!
-                                  .textfield_password,
-                              labelStyle: Theme.of(context).textTheme.headline4,
+                            Image.asset(
+                              AppImages.appLogoIcon,
+                              width: Get.width * 0.6,
+                              height: Get.height * 0.15,
                             ),
-                            validator: (value) => value!.isEmpty
-                                ? AppLocalizations.of(context)!
-                                    .validator_password
-                                : null,
-                          ),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: TextButton(
-                              style: TextButton.styleFrom(
-                                primary: Colors.black,
-                                textStyle:
-                                    TextStyle(fontSize: Get.width * 0.025),
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => RecoveryPassword()),
-                                );
-                              },
-                              child: Text(
-                                AppLocalizations.of(context)!
-                                    .text_forgot_password,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline4!
-                                    .copyWith(fontStyle: FontStyle.italic),
-                              ),
+                            SizedBox(
+                              height: Get.height * 0.06,
                             ),
-                          ),
-                          SizedBox(
-                            height: Get.height * 0.02,
-                          ),
-                          Container(
-                            height: Get.height * 0.07,
-                            width: Get.width,
-                            decoration: BoxDecoration(
-                              color: AppColors.greenColor,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(15),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: Get.width * 0.05,
+                                right: Get.width * 0.05,
                               ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Theme.of(context).cardColor,
-                                  blurRadius: 2.0,
-                                  spreadRadius: 0.0,
-                                  offset: Offset(
-                                      2.0, 2.0), // changes position of shadow
+                              child: Form(
+                                key: authenticationController.formKeyLogin,
+                                child: Column(
+                                  children: [
+                                    TextFormFieldCustom(
+                                      textController: authenticationController
+                                          .input_usernameLogin,
+                                      hintText: AppLocalizations.of(context)!
+                                          .textfield_user,
+                                      requiredLabel:
+                                          AppLocalizations.of(context)!
+                                              .validator_user,
+                                      keyboardType: TextInputType.name,
+                                      icon: Icons.person,
+                                      login: true,
+                                    ),
+                                    SizedBox(height: Get.height * 0.01),
+                                    Obx(
+                                      () => TextFormField(
+                                        controller: authenticationController
+                                            .input_senhaLogin,
+                                        obscureText: authenticationController
+                                            .statePasswordLogin.value,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline4,
+                                        decoration: InputDecoration(
+                                          filled: true,
+                                          fillColor:
+                                              AppColors.grey50.withOpacity(0.8),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                              Radius.circular(20.0),
+                                            ),
+                                            borderSide: BorderSide(
+                                                color: AppColors.black_claro
+                                                    .withOpacity(0.4),
+                                                width: 0.0),
+                                          ),
+                                          focusedBorder:
+                                              const OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              20.0)),
+                                                  borderSide: BorderSide(
+                                                      color: AppColors
+                                                          .greenColor)),
+                                          prefixIcon: const Padding(
+                                            padding: EdgeInsets.all(0.0),
+                                            child: Icon(
+                                              Icons.lock,
+                                              color: Colors.black54,
+                                            ), // icon is 48px widget.
+                                          ),
+                                          suffixIcon: IconButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                authenticationController
+                                                        .statePasswordLogin
+                                                        .value =
+                                                    !authenticationController
+                                                        .statePasswordLogin
+                                                        .value;
+                                              });
+                                            },
+                                            icon: Icon(
+
+                                              authenticationController
+                                                      .statePasswordLogin.value
+                                                  ? Icons.visibility_off
+                                                  : Icons.visibility,
+                                              color: Theme.of(context).primaryColor,
+                                            ),
+                                          ),
+                                          labelText:
+                                              AppLocalizations.of(context)!
+                                                  .textfield_password,
+                                          labelStyle: Theme.of(context)
+                                              .textTheme
+                                              .headline4,
+                                        ),
+                                        validator: (value) => value!.isEmpty
+                                            ? AppLocalizations.of(context)!
+                                                .validator_password
+                                            : null,
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.topLeft,
+                                      child: TextButton(
+                                        style: TextButton.styleFrom(
+                                          primary: Colors.white,
+                                          textStyle: TextStyle(
+                                              fontSize: Get.width * 0.025),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                   const RecoveryPassword()),
+                                          );
+                                        },
+                                        child: Text(
+                                          AppLocalizations.of(context)!
+                                              .text_forgot_password,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline4!
+                                              .copyWith(
+                                                  fontStyle: FontStyle.italic,color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.02,
+                                    ),
+                                    ButtonUI(
+                                      label: AppLocalizations.of(context)!
+                                          .button_login,
+                                      action: () async {
+                                        bool check =
+                                            await authenticationController
+                                                .validateAndSaveLogin();
+                                        if (check == true) {
+                                          authenticationController
+                                              .loading.value = false;
+                                          Navigator.pushReplacementNamed(
+                                              context, '/home');
+                                        } else {
+                                          authenticationController
+                                              .loading.value = false;
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return Pop_up_Message(
+                                                    mensagem: AppLocalizations
+                                                            .of(context)!
+                                                        .message_error_cridencials,
+                                                    icon: Icons.error,
+                                                    caminho: "erro");
+                                              });
+                                        }
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.01,
+                                    ),
+
+                                    /* SizedBox(
+                              height: Get.height * 0.01,
+                            ),
+                            Column(
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: new Container(
+                                        width: Get.width * 0.4,
+                                        child: Divider(
+                                          height: 36,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        left: Get.width * 0.05,
+                                        right: Get.width * 0.05,
+                                      ),
+                                      child: Text(
+                                        AppLocalizations.of(context)!.text_or,
+                                        style:
+                                            Theme.of(context).textTheme.headline2,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        width: Get.width * 0.4,
+                                        child: const Divider(
+                                          height: 36,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                            child: TextButton(
-                              child: Text(
-                                AppLocalizations.of(context)!.button_login,
-                                style: TextStyle(
-                                    fontFamily: AppFonts.poppinsRegularFont,
-                                    fontSize: Get.width * 0.035,
-                                    color: Colors.white),
-                              ),
-                              onPressed: validateAndSave,
-                            ),
-                          ),
-                          SizedBox(
-                            height: Get.height * 0.01,
-                          ),
+                            SizedBox(
+                              height: Get.height * 0.02,
+                            ),*/
+                                    /* Column(
+                              children: [
+                                Container(
+                                  width: Get.width,
+                                  child: SignInButton(
+                                    Buttons.Google,
+                                    text: "Login com Google",
+                                    onPressed: () {
+                                      _googleSignIn.signIn().then((userData) {
+                                        setState(() {
+                                          _isLoggedIn = true;
+                                          _userObj = userData!;
 
-                          /* SizedBox(
-                            height: Get.height * 0.01,
-                          ),
-                          Column(
-                            children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: new Container(
-                                      width: Get.width * 0.4,
-                                      child: Divider(
-                                        height: 36,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      left: Get.width * 0.05,
-                                      right: Get.width * 0.05,
-                                    ),
-                                    child: Text(
-                                      AppLocalizations.of(context)!.text_or,
-                                      style:
-                                          Theme.of(context).textTheme.headline2,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      width: Get.width * 0.4,
-                                      child: const Divider(
-                                        height: 36,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: Get.height * 0.02,
-                          ),*/
-                          /* Column(
-                            children: [
-                              Container(
-                                width: Get.width,
-                                child: SignInButton(
-                                  Buttons.Google,
-                                  text: "Login com Google",
-                                  onPressed: () {
-                                    _googleSignIn.signIn().then((userData) {
-                                      setState(() {
-                                        _isLoggedIn = true;
-                                        _userObj = userData!;
-
+                                        });
+                                      }).catchError((e) {
+                                        print(e);
                                       });
-                                    }).catchError((e) {
-                                      print(e);
-                                    });
-                                  },
+                                    },
+                                  ),
+                                ),
+                                Container(
+                                  width: Get.width,
+                                  child: SignInButton(
+                                    Buttons.Facebook,
+                                    text: "Login com Facebook",
+                                    onPressed: () {},
+                                  ),
+                                ),
+                              ],
+                            ),*/
+                                  ],
                                 ),
                               ),
-                              Container(
-                                width: Get.width,
-                                child: SignInButton(
-                                  Buttons.Facebook,
-                                  text: "Login com Facebook",
-                                  onPressed: () {},
-                                ),
-                              ),
-                            ],
-                          ),*/
-                        ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ],
               ),
             ),
           ),
-          SizedBox(
-            child: loading
-                ? Container(
-                    color: Colors.black54,
-                    height: Get.height,
-                    child: Center(
-                      child: Image.network(
-                        AppImages.loading,
-                        width: Get.width * 0.2,
-                        height: Get.height * 0.2,
-                        alignment: Alignment.center,
+          Obx(
+            () => SizedBox(
+              child: authenticationController.loading.value
+                  ? Container(
+                      color: Colors.black54,
+                      height: Get.height,
+                      child: Center(
+                        child: Image.network(
+                          AppImages.loading,
+                          width: Get.width * 0.2,
+                          height: Get.height * 0.2,
+                          alignment: Alignment.center,
+                        ),
                       ),
-                    ),
-                  )
-                : null,
+                    )
+                  : null,
+            ),
           ),
         ],
       ),
@@ -390,11 +390,13 @@ class _LoginPageState extends State<LoginPage> {
               textStyle: TextStyle(fontSize: Get.width * 0.03),
             ),
             onPressed: () {
+              authenticationController.loading.value = false;
+              authenticationController.statePassword.value = false;
               Navigator.pushNamed(context, '/register');
             },
             child: Text(
               AppLocalizations.of(context)!.button_sign_up_now,
-              style: TextStyle(
+              style: const TextStyle(
                 decoration: TextDecoration.underline,
                 fontStyle: FontStyle.italic,
                 fontFamily: AppFonts.poppinsItalicFont,

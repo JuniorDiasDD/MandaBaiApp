@@ -1,7 +1,15 @@
+
+
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Model/cart_model.dart';
+import 'package:manda_bai/helpers/result.dart';
+
+import '../constants/controllers.dart';
 
 class CartPageController extends GetxController {
+  static CartPageController instance = Get.find();
   final _name = ''.obs;
   final _image = ''.obs;
   final _price = 0.0.obs;
@@ -23,11 +31,11 @@ class CartPageController extends GetxController {
   }
 
   set list(List<CartModel> list) {
-    this._list.value = list;
+    _list.value = list;
   }
 
   set deleteFull(bool deleteFull) {
-    this._deleteFull.value = deleteFull;
+    _deleteFull.value = deleteFull;
   }
 
   bool get deleteFull {
@@ -196,5 +204,58 @@ class CartPageController extends GetxController {
 
     calcule();
     super.onInit();
+  }
+
+
+//checkout 2
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  final input_info = TextEditingController();
+  bool isCheckedPromocao = false;
+  final input_codigo = TextEditingController();
+
+  Future<SetResult> validateAndSave() async {
+    final FormState? form = formKey.currentState;
+
+      if (locationController.location.value.id!=null) {
+        cartPageController.note = input_info.text;
+        cartPageController.loading = true;
+
+        var check = await ServiceRequest.createOrder(
+            "",
+            locationController.location.value,
+            cartPageController.list,
+            cartPageController.total,
+            cartPageController.note,
+            isCheckedPromocao,
+            input_codigo.text);
+
+        if (check == "Erro de serviço") {
+          return SetResult(false,errorMessage:"Erro no servico");
+        } else if (check == "Erro de cupom") {
+          return SetResult(false,errorMessage:"Erro no cupon");
+        } else if (check == "false") {
+          return SetResult(false,errorMessage:"Erro");
+        } else {
+          return SetResult(true);
+        }
+      } else {
+       return SetResult(false,errorMessage:"Not Location, Select one");
+      }
+  }
+
+
+  Future<void> canceledOrder() async {
+
+    var check = await ServiceRequest.createOrder(
+        "cancelled",
+        locationController.location.value,
+        cartPageController.list,
+        cartPageController.total,
+        cartPageController.note,
+        false,
+        "");
+
+    print(check);
   }
 }

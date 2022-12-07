@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:http/http.dart' as http;
 import 'package:manda_bai/Model/location.dart';
-import 'package:manda_bai/Model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MandaBaiController extends GetxController {
@@ -32,128 +30,7 @@ class MandaBaiController extends GetxController {
     }
   }
 
-  //! registar
-  Future createAccount(User user) async {
-    var headers = {
-      'Content-Type': 'application/json',
-    };
 
-    var data = json.encode({
-      "email": user.email,
-      "first_name": user.name,
-      "last_name": user.nickname,
-      "username": user.username,
-      "password": user.senha,
-      "billing": {
-        "first_name": user.name,
-        "last_name": user.nickname,
-        "company": "",
-        "address_1": "",
-        "address_2": "",
-        "city": "",
-        "state": "",
-        "postcode": "",
-        "country": "",
-        "email": user.email,
-        "phone": ""
-      },
-      "shipping": {
-        "first_name": "",
-        "last_name": "",
-        "company": "",
-        "address_1": "",
-        "address_2": "",
-        "city": "",
-        "state": "",
-        "postcode": "",
-        "country": ""
-      }
-    });
-    var response = await http.post(Uri.parse(register_client),
-        headers: headers, body: data);
-
-    //  print(response.body);
-    if (response.statusCode == 201) {
-      final jsonResponse = json.decode(response.body);
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('id', jsonResponse["id"]);
-      return true;
-    } else if (response.statusCode == 503) {
-      print("Erro de serviço");
-      return false;
-    } else {
-      print("Erro de authentiction");
-      return false;
-    }
-  }
-
-  //! Login
-  Future login(username, password) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var island = prefs.getString('island');
-
-    var response;
-
-    switch (island) {
-      case "Santo Antão":
-        response = await http.post(Uri.parse(request_login_SantoAntao),
-            body: {'username': username, 'password': password});
-        break;
-      case "São  Vicente":
-        response = await http.post(Uri.parse(request_login_SaoVicente),
-            body: {'username': username, 'password': password});
-        break;
-      case "São Nicolau":
-        response = await http.post(Uri.parse(request_login_SaoNicolau),
-            body: {'username': username, 'password': password});
-        break;
-      case "Boa Vista":
-        response = await http.post(Uri.parse(request_login_BoaVista),
-            body: {'username': username, 'password': password});
-        break;
-      case "Sal":
-        response = await http.post(Uri.parse(request_login_Sal),
-            body: {'username': username, 'password': password});
-        break;
-      case "Maio":
-        response = await http.post(Uri.parse(request_login_Maio),
-            body: {'username': username, 'password': password});
-        break;
-      case "Santiago":
-        response = await http.post(Uri.parse(request_login_Santiago),
-            body: {'username': username, 'password': password});
-        break;
-      case "Fogo":
-        response = await http.post(Uri.parse(request_login_Fogo),
-            body: {'username': username, 'password': password});
-        break;
-      case "Brava":
-        response = await http.post(Uri.parse(request_login_Brava),
-            body: {'username': username, 'password': password});
-        break;
-    }
-
-    print(response.statusCode.toString()+"\n"+response.body);
-    if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-      await prefs.setString('id', jsonResponse["data"]["ID"].toString());
-      await prefs.setString('username', username);
-      await prefs.setString('password', password);
-      user.senha = password;
-      user.username = username;
-      //  loginCoCart();
-      ServiceRequest.GetUser();
-      return true;
-    } else if (response.statusCode == 503) {
-      print("Erro de serviço");
-      return false;
-    } else {
-      print("Erro de authentiction");
-      return false;
-    }
-  }
 
   validateDadosUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -220,7 +97,7 @@ class MandaBaiController extends GetxController {
     if (itemLocationString != null) {
       // decode and store data in SharedPreferences
       list_location = Location.decode(itemLocationString);
-      new_location.id = list_location[list_location.length - 1].id + 1;
+      new_location.idUpdate = list_location[list_location.length - 1].id !+ 1;
 
       list_location.add(new_location);
       // Encode and store data in SharedPreferences

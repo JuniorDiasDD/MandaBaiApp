@@ -1281,7 +1281,7 @@ class ServiceRequest {
     if (itemLocationString != null) {
       // decode and store data in SharedPreferences
       List<Location> list = Location.decode(itemLocationString);
-      new_location.id = list[list.length - 1].id + 1;
+      new_location.idUpdate = list[list.length - 1].id! + 1;
 
       list.add(new_location);
       // Encode and store data in SharedPreferences

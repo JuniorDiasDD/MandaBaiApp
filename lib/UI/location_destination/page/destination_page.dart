@@ -104,19 +104,7 @@ class _Destination_PageState extends State<Destination_Page> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
-                        onPressed: () {
-                          if (widget.route == "checkout") {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    CheckoutPageStep2(location: null),
-                              ),
-                            );
-                          } else {
-                            Navigator.pop(context);
-                          }
-                        },
+                        onPressed:()=>Navigator.pop(context),
                         icon: const Icon(
                           Icons.arrow_back,
                           color: Colors.white,
@@ -135,7 +123,7 @@ class _Destination_PageState extends State<Destination_Page> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => NewDestination(
-                                      route: widget.route, location: null)));
+                                     location: null)));
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(right: 8.0),
@@ -218,7 +206,7 @@ class _Destination_PageState extends State<Destination_Page> {
                                 itemBuilder: (BuildContext context, index) {
                                   var list = list_location[index];
                                   return ItemLocation(
-                                      location: list, route: widget.route);
+                                      location: list);
                                 },
                               ),
                             );

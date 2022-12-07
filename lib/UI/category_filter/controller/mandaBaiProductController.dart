@@ -232,7 +232,7 @@ class MandaBaiProductController extends GetxController {
       // decode and store data in SharedPreferences
       list_favorite = Favorite.decode(itemFavortiesString);
       list_favorite
-          .add(Favorite(id: id, island: mandaBaiController.island.value, username: ''));
+          .add(Favorite(id: id, island: fullControllerController.island.value, username: ''));
 
       // Encode and store data in SharedPreferences
       final String encodedData = Favorite.encode(list_favorite);
@@ -240,7 +240,7 @@ class MandaBaiProductController extends GetxController {
       await prefs.setString('itens_favorites', encodedData);
     } else {
       list_favorite
-          .add(Favorite(id: id, island: mandaBaiController.island.value, username: ''));
+          .add(Favorite(id: id, island: fullControllerController.island.value, username: ''));
       // Encode and store data in SharedPreferences
       final String encodedData = Favorite.encode(list_favorite);
 
@@ -284,7 +284,7 @@ class MandaBaiProductController extends GetxController {
       list_favorite = Favorite.decode(itemFavortiesString);
       if (text_pesquisa.value == "") {
         for (int i = 0; i < list_favorite.length; i++) {
-          if (list_favorite[i].island == mandaBaiController.island.value) {
+          if (list_favorite[i].island == fullControllerController.island.value) {
             var response = await http.get(Uri.parse(
                 get_Produto + list_favorite[i].id.toString() + "?" + key));
             final jsonResponse = json.decode(response.body);

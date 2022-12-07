@@ -63,6 +63,7 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
       }
     });
   }
+
   @override
   void initState() {
     super.initState();
@@ -70,7 +71,6 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
 
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
-
   }
 
   @override
@@ -78,6 +78,7 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
     _connectivitySubscription.cancel();
     super.dispose();
   }
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final input_email = TextEditingController();
   bool loading = false;
@@ -88,19 +89,17 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
         loading = true;
       });
       var check = await ServiceRequest.resetPassword(input_email.text);
-      if(check){
+      if (check) {
         setState(() {
           loading = false;
         });
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>
-                ValidateCode(
-                    email: input_email.text),
+            builder: (context) => ValidateCode(email: input_email.text),
           ),
         );
-      }else{
+      } else {
         setState(() {
           loading = false;
         });
@@ -108,8 +107,8 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
             context: context,
             builder: (BuildContext context) {
               return Pop_up_Message(
-                  mensagem:
-                  AppLocalizations.of(context)!.message_erro_email_set_password,
+                  mensagem: AppLocalizations.of(context)!
+                      .message_erro_email_set_password,
                   icon: Icons.error,
                   caminho: "erro");
             });
@@ -141,7 +140,10 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: const Icon(Icons.arrow_back,color: Colors.black,),
+                            icon: const Icon(
+                              Icons.arrow_back,
+                              color: Colors.black,
+                            ),
                             alignment: Alignment.topLeft,
                           ),
                         ),
@@ -154,7 +156,6 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                   padding: EdgeInsets.only(
                     left: Get.width * 0.05,
                     right: Get.height * 0.05,
-
                   ),
                   child: Form(
                     key: _formKey,
@@ -173,7 +174,6 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                           style: Theme.of(context).textTheme.headline2,
                         ),
                         SizedBox(height: Get.height * 0.02),
-
                         SizedBox(height: Get.height * 0.01),
                         TextFormField(
                           obscureText: false,
@@ -189,7 +189,9 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                               borderRadius: BorderRadius.circular(15.0),
                             ),
                             labelText: "Email",
-                            labelStyle: Theme.of(context).textTheme.headline4!
+                            labelStyle: Theme.of(context)
+                                .textTheme
+                                .headline4!
                                 .copyWith(fontSize: Get.width * 0.03),
                           ),
                           validator: (value) => EmailValidator.validate(value!)
@@ -199,21 +201,24 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
                         SizedBox(
                           height: Get.height * 0.05,
                         ),
-                        Container(
-                          height: Get.height * 0.07,
-                          width: Get.width,
-                          child: FlatButton(
+                        TextButton(
+                          onPressed: () => validateAndSave(),
+                          child: Container(
+                            height: Get.height * 0.07,
+                            width: Get.width,
                             padding: EdgeInsets.only(
                               left: Get.width * 0.05,
                               right: Get.height * 0.05,
                             ),
                             color: AppColors.greenColor,
-                            textColor: Colors.white,
-                            child:  Text(AppLocalizations.of(context)!.button_send),
-                            onPressed: () =>validateAndSave(),
-                            shape: RoundedRectangleBorder(
+                            decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
+                            child:
+                                Text(AppLocalizations.of(context)!.button_send,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    )),
                           ),
                         ),
                       ],
@@ -226,21 +231,20 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
           SizedBox(
             child: loading
                 ? Container(
-              color: Colors.black54,
-              height: Get.height,
-              child: Center(
-                child: Image.network(
-                  AppImages.loading,
-                  width: Get.width * 0.2,
-                  height: Get.height * 0.2,
-                  alignment: Alignment.center,
-                ),
-              ),
-            )
+                    color: Colors.black54,
+                    height: Get.height,
+                    child: Center(
+                      child: Image.network(
+                        AppImages.loading,
+                        width: Get.width * 0.2,
+                        height: Get.height * 0.2,
+                        alignment: Alignment.center,
+                      ),
+                    ),
+                  )
                 : null,
           ),
         ],
-
       ),
     );
   }

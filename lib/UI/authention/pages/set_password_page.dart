@@ -282,23 +282,27 @@ class _SetPasswordPageState extends State<SetPasswordPage> {
                         SizedBox(
                           height: Get.height * 0.05,
                         ),
-                        Container(
-                          height: Get.height * 0.07,
-                          width: Get.width,
-                          child: FlatButton(
+                        TextButton(
+                          onPressed: () =>validateAndSave(),
+                          child: Container(
+                            height: Get.height * 0.07,
+                            width: Get.width,
                             padding: EdgeInsets.only(
                               left: Get.width * 0.05,
                               right: Get.height * 0.05,
                             ),
                             color: AppColors.greenColor,
-                            textColor: Colors.white,
-                            child:  Text(AppLocalizations.of(context)!.button_update),
-                            onPressed: () =>validateAndSave(),
-                            shape: RoundedRectangleBorder(
+                            decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
+                            child:
+                            Text(AppLocalizations.of(context)!.button_update,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                )),
                           ),
                         ),
+
                       ],
                     ),
                   ),

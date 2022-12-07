@@ -5,13 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/cart_controller.dart';
-import 'package:manda_bai/Controller/mandaBaiController.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/cart_model.dart';
 import 'package:manda_bai/UI/cart/components/listview_item_cart.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
+import 'package:manda_bai/UI/widget/button_ui.dart';
+import 'package:manda_bai/constants/controllers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 import 'checkout_page_step_2.dart';
@@ -77,6 +78,7 @@ class _StartPageState extends State<CartPage> {
     cartPageController.subTotal = 0;
     cartPageController.loading = false;
     cartPageController.deleteFull = false;
+
     super.initState();
   }
 
@@ -121,7 +123,7 @@ class _StartPageState extends State<CartPage> {
               }
           }
         }
-
+        await locationController.carregarLocation();
         setState(() {
           cartPageController.list = list_cart;
           cartPageController.calcule();
@@ -181,7 +183,7 @@ class _StartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        return new Future(() => false);
+        return Future(() => false);
       },
       child: SafeArea(
         child: Scaffold(
@@ -192,50 +194,53 @@ class _StartPageState extends State<CartPage> {
                   child: Column(
                     children: [
                       Container(
-                        color: Theme.of(context).primaryColor,
                         width: double.infinity,
+                        padding:
+                            const EdgeInsets.only(left: 16, right: 16, top: 16),
                         child: Row(
                           children: [
-                            const Spacer(),
-                            Text(
-                              AppLocalizations.of(context)!.title_my_cart,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline3!
-                                  .copyWith(
-                                    color: Colors.white,
-                                  ),
+                            TextButton(
+                              child: Text(
+                                  "< " +
+                                      AppLocalizations.of(context)!
+                                          .title_my_cart,
+                                  style:
+                                      Theme.of(context).textTheme.headline3!),
+                              onPressed: () => Navigator.pop(context),
                             ),
                             const Spacer(),
-                            Container(
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: IconButton(
-                                  onPressed: () {
-                                    if (isChecked == false) {
-                                      bool check = false;
-                                      for (int i = 0;
-                                          i < cartPageController.list.length;
-                                          i++) {
-                                        if (cartPageController
-                                                .list[i].checkout ==
-                                            true) {
-                                          check = true;
-                                          break;
-                                        }
-                                      }
-                                      if (check) {
-                                        _remover();
-                                      }
-                                    } else {
-                                      _remover();
+                            GestureDetector(
+                              onTap: () {
+                                if (isChecked == false) {
+                                  bool check = false;
+                                  for (int i = 0;
+                                      i < cartPageController.list.length;
+                                      i++) {
+                                    if (cartPageController.list[i].checkout ==
+                                        true) {
+                                      check = true;
+                                      break;
                                     }
-                                  },
-                                  icon: const Icon(
-                                    Icons.delete,
-                                    color: Colors.white,
+                                  }
+                                  if (check) {
+                                    _remover();
+                                  }
+                                } else {
+                                  _remover();
+                                }
+                              },
+                              child: Container(
+                                width: Get.width * 0.1,
+                                height: Get.width * 0.1,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: AppColors.grey50.withOpacity(0.8),
+                                ),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(6.0),
+                                  child: Icon(
+                                    Icons.delete_outline,
                                   ),
-                                  alignment: Alignment.centerRight,
                                 ),
                               ),
                             ),
@@ -279,21 +284,18 @@ class _StartPageState extends State<CartPage> {
                             (BuildContext context, AsyncSnapshot snapshot) {
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
-                              return Container(
-                                height: Get.height * 0.2,
-                                width: Get.width,
-                                child: Center(
-                                  child: Image.network(
-                                    AppImages.loading,
-                                    width: Get.width * 0.2,
-                                    height: Get.height * 0.2,
-                                    alignment: Alignment.center,
-                                  ),
-                                ),
+                              return Center(
+                                child: SizedBox(
+                                    width: 32,
+                                    height: 32,
+                                    child: CircularProgressIndicator(
+                                      color: Theme.of(context).primaryColor,
+                                      strokeWidth: 2,
+                                    )),
                               );
                             default:
                               if (snapshot.data == null) {
-                                return Container(
+                                return SizedBox(
                                   width: Get.width,
                                   height: Get.height * 0.7,
                                   child: Column(
@@ -312,10 +314,10 @@ class _StartPageState extends State<CartPage> {
                                   ),
                                 );
                               } else {
-                                return Container(
+                                return SizedBox(
                                   height: Get.height * 0.45,
                                   child: ListView.builder(
-                                    padding: EdgeInsets.all(0.0),
+                                    padding: const EdgeInsets.all(0.0),
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
                                     itemCount: snapshot.data.length,
@@ -474,77 +476,54 @@ class _StartPageState extends State<CartPage> {
                                               .textTheme
                                               .headline1,
                                         ),
-                                        Container(
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Obx(
-                                                () => Text(
-                                                  money == "ECV"
-                                                      ? cartPageController.total
-                                                          .toStringAsFixed(0)
-                                                      : cartPageController.total
-                                                          .toStringAsFixed(2),
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline5!
-                                                      .copyWith(fontSize: 20),
-                                                ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Obx(
+                                              () => Text(
+                                                money == "ECV"
+                                                    ? cartPageController.total
+                                                        .toStringAsFixed(0)
+                                                    : cartPageController.total
+                                                        .toStringAsFixed(2),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline5!
+                                                    .copyWith(fontSize: 20),
                                               ),
-                                              FutureBuilder(
-                                                  future: _carregarMoney(),
-                                                  builder: (BuildContext
-                                                          context,
-                                                      AsyncSnapshot snapshot) {
-                                                    if (snapshot.data == null) {
-                                                      return const Text(" ");
-                                                    } else {
-                                                      return Text(
-                                                        " " + money,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .headline5!
-                                                            .copyWith(
-                                                                fontSize: 20),
-                                                      );
-                                                    }
-                                                  }),
-                                            ],
-                                          ),
+                                            ),
+                                            FutureBuilder(
+                                                future: _carregarMoney(),
+                                                builder: (BuildContext context,
+                                                    AsyncSnapshot snapshot) {
+                                                  if (snapshot.data == null) {
+                                                    return const Text(" ");
+                                                  } else {
+                                                    return Text(
+                                                      " " + money,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headline5!
+                                                          .copyWith(
+                                                              fontSize: 20),
+                                                    );
+                                                  }
+                                                }),
+                                          ],
                                         ),
                                       ],
                                     ),
                                     SizedBox(height: Get.height * 0.02),
-                                    Container(
-                                      height: Get.height * 0.05,
-                                      width: Get.width,
-                                      child: FlatButton(
-                                        padding: EdgeInsets.only(
-                                          left: Get.width * 0.05,
-                                          right: Get.height * 0.05,
-                                        ),
-                                        color: AppColors.greenColor,
-                                        textColor: Colors.white,
-                                        child: Text(
-                                            AppLocalizations.of(context)!
-                                                .text_checkout),
-                                        onPressed: () {
-                                          Navigator.push(
+                                    ButtonUI(
+                                        action: () async {
+                                          Navigator.pushNamed(
                                             context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  CheckoutPageStep2(
-                                                      location: null),
-                                            ),
+                                            "/checkoutFinal"
                                           );
                                         },
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              new BorderRadius.circular(30.0),
-                                        ),
-                                      ),
-                                    ),
+                                        label: AppLocalizations.of(context)!
+                                            .text_checkout),
                                     SizedBox(height: Get.height * 0.02),
                                   ],
                                 ),
@@ -561,14 +540,14 @@ class _StartPageState extends State<CartPage> {
                           color: Colors.black54,
                           height: Get.height,
                           child: Center(
-                            child: Image.network(
-                              AppImages.loading,
-                              width: Get.width * 0.2,
-                              height: Get.height * 0.2,
-                              alignment: Alignment.center,
-                            ),
-                          ),
-                        )
+                            child: SizedBox(
+                                width: 32,
+                                height: 32,
+                                child: CircularProgressIndicator(
+                                  color: Theme.of(context).primaryColor,
+                                  strokeWidth: 2,
+                                )),
+                          ))
                       : null,
                 ),
               ),

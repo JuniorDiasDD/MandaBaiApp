@@ -1,17 +1,38 @@
 import 'dart:convert';
 
 class Location {
-  String name, island, city, endereco, phone, email, username;
-  int id;
-  Location(
-      {required this.username,
-      required this.email,
-      required this.id,
-      required this.name,
-      required this.island,
-      required this.city,
-      required this.endereco,
-      required this.phone});
+  String? _name;
+  String? _island, _city, _endereco, _phone, _email, _username;
+  int? _id;
+
+
+  Location({String? name,String? island, String? city, String? endereco,String? phone, String? email,String? username,
+  int? id}){
+    _id=id;
+    _name=name;
+    _island=island;
+    _city=city;
+    _endereco=endereco;
+    _phone=phone;
+    _email=email;
+    _username=username;
+  }
+
+
+  String? get name => _name;
+  String? get island => _island;
+  String? get city => _city;
+  String? get endereco => _endereco;
+  String? get phone => _phone;
+  String? get email => _email;
+  String? get username => _username;
+  int? get id => _id;
+
+
+  set idUpdate(int value) {
+    _id = value;
+  }
+
   factory Location.fromJson(Map<String, dynamic> jsonData) {
     return Location(
       id: jsonData['id'],
@@ -45,4 +66,6 @@ class Location {
       (json.decode(location) as List<dynamic>)
           .map<Location>((item) => Location.fromJson(item))
           .toList();
+
+
 }

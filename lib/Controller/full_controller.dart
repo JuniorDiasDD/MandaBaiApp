@@ -16,6 +16,9 @@ class FullController extends GetxController {
   final symbolMoney=''.obs;
   final initialMoney=''.obs;
 
+  var island = "".obs;
+  var language = "".obs;
+
   List<Filter> get listFilter {
     return _listFilter.value;
   }
@@ -39,11 +42,14 @@ class FullController extends GetxController {
 
   getSymbolMoney() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    initialMoney.value = prefs.getString('money')!;
-    if (initialMoney.isEmpty || symbolMoney.value== "null") {
+    if(prefs.getString('money')==null){
       await prefs.setString('money', "EUR");
       initialMoney.value='EUR';
+    }else{
+      initialMoney.value = prefs.getString('money')!;
     }
+
+
 
     switch(initialMoney.value){
       case 'EUR':{
@@ -65,11 +71,30 @@ class FullController extends GetxController {
 
   validateLanguage() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var language = prefs.getString('language');
+    var languag = prefs.getString('language');
 
-    if (language == "null" || language == null) {
+    if (languag == "null" || languag == null) {
       await prefs.setString('language', "pt");
+      language.value='pt';
+    }else{
+      language.value=languag;
     }
+
+
+  }
+  validateIsland() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    if(prefs.getString('island')==null){
+      await prefs.setString('island', "pt");
+      island.value='pt';
+    }else{
+      island.value = prefs.getString('island')!;
+    }
+
+
+
+
   }
 
   getUser() async {
@@ -87,7 +112,7 @@ class FullController extends GetxController {
       user.name = userCache["name"];
       user.email = userCache["email"];
       user.nickname = userCache["nickname"];
-      user.avatar = userCache["avatar"];
+    //  user.avatar = userCache["avatar"];
       user.telefone = userCache["telefone"];
       user.city = userCache["city"];
       user.country = userCache["country"];
@@ -97,6 +122,7 @@ class FullController extends GetxController {
   getInit()async{
     await getSymbolMoney();
     await validateLanguage();
+    await validateIsland();
     await getUser();
   }
   sendStore() async {

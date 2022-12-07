@@ -12,10 +12,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProductListComponent extends StatefulWidget {
-  Product product;
-  bool checkOption;
+ final Product product;
+ final bool checkOption;
 
-  ProductListComponent({Key? key, required this.product,required this.checkOption}) : super(key: key);
+ const ProductListComponent({Key? key, required this.product,required this.checkOption}) : super(key: key);
 
   @override
   State<ProductListComponent> createState() => _ProductListComponentState();
@@ -23,18 +23,13 @@ class ProductListComponent extends StatefulWidget {
 
 class _ProductListComponentState extends State<ProductListComponent> {
   bool checkFavorite = false;
+
   Future _addCart(id) async {
     bool check = await ServiceRequest.addCart(id, 1);
     return check;
   }
 
-  var money_txt;
-  Future _carregarMoney() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    money_txt = prefs.getString('money');
 
-    return money_txt;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -186,7 +181,7 @@ class _ProductListComponentState extends State<ProductListComponent> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
-                        height: Get.height * 0.05,
+                        height: Get.height * 0.07,
                         width: Get.width,
                        padding: const EdgeInsets.only(left: 4,right: 4),
                        color: AppColors.grey50.withOpacity(0.8),

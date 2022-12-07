@@ -111,8 +111,8 @@ class _Pop_up_MessageState extends State<Pop_up_Message> {
                                 '/home', (Route<dynamic> route) => false);
                           } else if (widget.caminho == "registo" || widget.caminho == "reset") {
                             Navigator.pushReplacementNamed(context, '/login');
-                          } else if (widget.caminho == "erro_encomenda") {
-
+                          } else if (widget.caminho == "normal") {
+                            Navigator.pop(context);
                           }
                         }),
                   ),

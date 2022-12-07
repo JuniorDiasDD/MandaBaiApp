@@ -4,22 +4,20 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/mandaBaiController.dart';
-import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
-import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Model/location.dart';
+import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:manda_bai/UI/location_destination/components/popup_info.dart';
-import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:manda_bai/UI/widget/TextFormField.dart';
+import 'package:manda_bai/UI/widget/button_ui.dart';
+import 'package:manda_bai/UI/widget/dialogs.dart';
+import 'package:manda_bai/constants/controllers.dart';
 
 class NewDestination extends StatefulWidget {
-  String route;
   Location? location;
-  NewDestination({Key? key, required this.route, required this.location})
-      : super(key: key);
+  NewDestination({Key? key, required this.location}) : super(key: key);
 
   @override
   State<NewDestination> createState() => _NewDestinationState();
@@ -75,10 +73,10 @@ class _NewDestinationState extends State<NewDestination> {
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
     if (widget.location != null) {
-      input_nome.text = widget.location!.name;
-      input_cidade.text = widget.location!.city;
-      input_endereco.text = widget.location!.endereco;
-      input_tel.text = widget.location!.phone;
+      locationController.inputNome.text = widget.location!.name!;
+      locationController.inputCidade.text = widget.location!.city!;
+      locationController.inputEndereco.text = widget.location!.endereco!;
+      locationController.inputTel.text = widget.location!.phone!;
     }
   }
 
@@ -88,90 +86,34 @@ class _NewDestinationState extends State<NewDestination> {
     super.dispose();
   }
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final input_nome = TextEditingController();
-  final input_cidade = TextEditingController();
-  final input_endereco = TextEditingController();
-  final input_tel = TextEditingController();
-  final MandaBaiController mandaBaiController = Get.find();
-  String dropdownValue = 'Santiago';
-  List<String> list_island = [
-    'Santo Antão',
-    'São Vicente',
-    'São Nicolau',
-    'Sal',
-    'Boa Vista',
-    'Maio',
-    'Santiago',
-    'Fogo',
-    'Brava',
-  ];
-  Future<void> validateAndSave() async {
-    final FormState? form = _formKey.currentState;
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? itemusernameString = prefs.getString('username');
-    if (form!.validate()) {
-      Location novo = Location(
-          id: 1,
-          name: input_nome.text,
-          city: input_cidade.text,
-          endereco: input_endereco.text,
-          island: dropdownValue,
-          phone: input_tel.text,
-          email: "",
-          username: itemusernameString!);
-      if (widget.location != null) {
-        await ServiceRequest.removeLocation(widget.location!.id);
-      }
-      bool check = await ServiceRequest.addLocation(novo);
-      if (check == true) {
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Destination_Page(route: widget.route)));
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                color: Theme.of(context).primaryColor,
-                width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
+          child: SizedBox(
+            height: Get.height * 0.95,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 16.0, left: 8, right: 16),
                   child: Row(
                     children: [
-                      IconButton(
+                      TextButton(
                         onPressed: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      Destination_Page(route: widget.route)));
+                          Navigator.pop(context);
                         },
-                        icon: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
+                        child: Text(
+                          '< ' +
+                              AppLocalizations.of(context)!.title_new_destiny,
+                          style: Theme.of(context).textTheme.headline3,
                         ),
                       ),
                       const Spacer(),
-                      Text(
-                        AppLocalizations.of(context)!.title_new_destiny,
-                        style: Theme.of(context).textTheme.headline3!.copyWith(
-                              color: Colors.white,
-                            ),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        onPressed: () {
+                      GestureDetector(
+                        onTap: () {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -179,229 +121,145 @@ class _NewDestinationState extends State<NewDestination> {
                             },
                           );
                         },
-                        icon: const Icon(
-                          Icons.info_outline,
-                          color: Colors.white,
+                        child: Container(
+                          width: Get.width * 0.1,
+                          height: Get.width * 0.1,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: AppColors.grey50.withOpacity(0.8),
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(6.0),
+                            child: Icon(
+                              Icons.info_outline,
+                            ),
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: Get.width * 0.05,
-                  right: Get.width * 0.05,
-                ),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      SizedBox(height: Get.height * 0.05),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            left: Get.width * 0.02,
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: Get.width * 0.05,
+                    right: Get.width * 0.05,
+                  ),
+                  child: Form(
+                    key: locationController.formKey,
+                    child: Column(
+                      children: [
+                        SizedBox(height: Get.height * 0.05),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: Get.width * 0.02,
+                            ),
+                            child: Text(
+                              AppLocalizations.of(context)!.text_fill_the_field,
+                              style: Theme.of(context).textTheme.headline4,
+                            ),
                           ),
-                          child: Text(
-                            AppLocalizations.of(context)!.text_fill_the_field,
+                        ),
+                        SizedBox(height: Get.height * 0.01),
+                        TextFormFieldCustom(
+                          textController: locationController.inputNome,
+                          hintText:
+                              AppLocalizations.of(context)!.text_recipient_name,
+                          requiredLabel:
+                              AppLocalizations.of(context)!.validator_name,
+                          keyboardType: TextInputType.name,
+                        ),
+                        SizedBox(height: Get.height * 0.01),
+                        TextFormFieldCustom(
+                          textController: locationController.inputCidade,
+                          hintText:
+                              AppLocalizations.of(context)!.textfield_city,
+                          requiredLabel:
+                              AppLocalizations.of(context)!.validator_city,
+                          keyboardType: TextInputType.name,
+                        ),
+                        SizedBox(height: Get.height * 0.01),
+                        TextFormFieldCustom(
+                          textController: locationController.inputEndereco,
+                          hintText: AppLocalizations.of(context)!.text_address,
+                          requiredLabel: AppLocalizations.of(context)!
+                              .validator_enter_address,
+                          keyboardType: TextInputType.name,
+                        ),
+                        SizedBox(height: Get.height * 0.01),
+                        SizedBox(
+                          width: Get.width,
+                          child: TextFormField(
+                            controller: locationController.inputTel,
+                            keyboardType: TextInputType.number,
                             style: Theme.of(context).textTheme.headline4,
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: Get.height * 0.01),
-                      SizedBox(
-                        width: Get.width,
-                        child: TextFormField(
-                          controller: input_nome,
-                          style: Theme.of(context).textTheme.headline4,
-                          decoration: InputDecoration(
-                            labelText: AppLocalizations.of(context)!
-                                .text_recipient_name,
-                            labelStyle: Theme.of(context).textTheme.headline4,
-                            filled: true,
-                            fillColor: Theme.of(context).backgroundColor,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                              borderSide: const BorderSide(
-                                  color: Colors.red, width: 2.0),
-                            ),
-                          ),
-                          validator: (value) => value!.isEmpty
-                              ? AppLocalizations.of(context)!.validator_name
-                              : null,
-                        ),
-                      ),
-                      SizedBox(height: Get.height * 0.01),
-                      Container(
-                        width: Get.width,
-                        height: Get.height * 0.06,
-                        padding: EdgeInsets.only(
-                          left: Get.width * 0.04,
-                          right: Get.width * 0.04,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15.0),
-                          border: Border.all(
-                              color: Theme.of(context).indicatorColor,
-                              style: BorderStyle.solid,
-                              width: 0.80),
-                        ),
-                        child: DropdownButton<String>(
-                          value: dropdownValue,
-                          icon: const Icon(
-                            Icons.arrow_drop_down,
-                          ),
-                          iconSize: Get.width * 0.05,
-                          elevation: 16,
-                          style: Theme.of(context).textTheme.headline4,
-                          borderRadius: BorderRadius.circular(15.0),
-                          underline: Container(
-                            height: 0,
-                            color: Colors.transparent,
-                          ),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              dropdownValue = newValue!;
-                            });
-                          },
-                          items: list_island
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
-                                style: Theme.of(context).textTheme.headline4,
+                            decoration: InputDecoration(
+                              labelText:
+                                  AppLocalizations.of(context)!.textfield_phone,
+                              labelStyle: Theme.of(context).textTheme.headline4,
+                              filled: true,
+                              fillColor: AppColors.grey50.withOpacity(0.5),
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.all(13.0),
+                                child: Text(
+                                  "+238",
+                                  style: Theme.of(context).textTheme.headline4,
+                                ), // icon is 48px widget.
                               ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                      SizedBox(height: Get.height * 0.01),
-                      SizedBox(
-                        width: Get.width,
-                        child: TextFormField(
-                          controller: input_cidade,
-                          style: Theme.of(context).textTheme.headline4,
-                          decoration: InputDecoration(
-                            labelText:
-                                AppLocalizations.of(context)!.textfield_city,
-                            labelStyle: Theme.of(context).textTheme.headline4,
-                            filled: true,
-                            fillColor: Theme.of(context).backgroundColor,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                              borderSide: const BorderSide(),
-                            ),
-                          ),
-                          validator: (value) => value!.isEmpty
-                              ? AppLocalizations.of(context)!.validator_city
-                              : null,
-                        ),
-                      ),
-                      SizedBox(height: Get.height * 0.01),
-                      SizedBox(
-                        width: Get.width,
-                        child: TextFormField(
-                          controller: input_endereco,
-                          style: Theme.of(context).textTheme.headline4,
-                          decoration: InputDecoration(
-                            labelText:
-                                AppLocalizations.of(context)!.text_address,
-                            labelStyle: Theme.of(context).textTheme.headline4,
-                            filled: true,
-                            fillColor: Theme.of(context).backgroundColor,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                              borderSide: const BorderSide(),
-                            ),
-                          ),
-                          validator: (value) => value!.isEmpty
-                              ? AppLocalizations.of(context)!
-                                  .validator_enter_address
-                              : null,
-                        ),
-                      ),
-                      SizedBox(height: Get.height * 0.01),
-                      SizedBox(
-                        width: Get.width,
-                        child: TextFormField(
-                          controller: input_tel,
-                          keyboardType: TextInputType.number,
-                          style: Theme.of(context).textTheme.headline4,
-                          decoration: InputDecoration(
-                            labelText:
-                                AppLocalizations.of(context)!.textfield_phone,
-                            labelStyle: Theme.of(context).textTheme.headline4,
-                            filled: true,
-                            fillColor: Theme.of(context).backgroundColor,
-                            prefixIcon: Padding(
-                              padding: const EdgeInsets.all(13.0),
-                              child: Text(
-                                "+238",
-                                style: Theme.of(context).textTheme.headline4,
-                              ), // icon is 48px widget.
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                              borderSide: const BorderSide(
-                                color: Colors.red,
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(20.0),
+                                ),
+                                borderSide: BorderSide(
+                                    color:
+                                        AppColors.black_claro.withOpacity(0.4),
+                                    width: 0.0),
                               ),
+                              focusedBorder: const OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20.0)),
+                                  borderSide:
+                                      BorderSide(color: AppColors.greenColor)),
                             ),
+                            validator: (value) => value!.length == 7
+                                ? null
+                                : AppLocalizations.of(context)!
+                                    .validator_number,
                           ),
-                          validator: (value) => value!.length == 7
-                              ? null
-                              : AppLocalizations.of(context)!.validator_number,
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ),
-        bottomNavigationBar: Row(
-          children: [
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(
-                right: 15,
-                bottom: 10,
-              ),
-              child: Container(
-                height: Get.height * 0.05,
-                width: Get.width * 0.4,
-                decoration: BoxDecoration(
-                  color: AppColors.greenColor,
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(35),
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ButtonUI(
+                    label: AppLocalizations.of(context)!.button_save,
+                    action: () async {
+                      openLoadingStateDialog(context);
+                      var result =
+                          await locationController.validateAndSaveLocation();
+                     Navigator.pop(context);
+                      if (result.success) {
+                        Navigator.pop(context);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                            result.errorMessage!,
+                            style:Theme.of(context).textTheme.labelSmall,
+                          ),
+                          backgroundColor: Theme.of(context).errorColor,
+                        ));
+
+                      }
+                    },
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Theme.of(context).cardColor,
-                      blurRadius: 2.0,
-                      spreadRadius: 0.0,
-                      offset:
-                          const Offset(2.0, 2.0), // changes position of shadow
-                    ),
-                  ],
                 ),
-                child: TextButton(
-                    child: Text(
-                      AppLocalizations.of(context)!.button_save,
-                      style: TextStyle(
-                          fontFamily: AppFonts.poppinsRegularFont,
-                          fontSize: Get.width * 0.035,
-                          color: Colors.white),
-                    ),
-                    onPressed: () {
-                      validateAndSave();
-                    }),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

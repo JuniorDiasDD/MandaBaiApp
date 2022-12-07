@@ -1,30 +1,26 @@
 import 'dart:async';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/cart_controller.dart';
-import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
-import 'package:manda_bai/Model/location.dart';
 import 'package:manda_bai/UI/cart/components/Popupinfo_checkout.dart';
 import 'package:manda_bai/UI/cart/pages/web_view.dart';
-import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
-import 'package:manda_bai/UI/location_destination/page/destination_page.dart';
+import 'package:manda_bai/UI/location_destination/components/item_location.dart';
+import 'package:manda_bai/UI/location_destination/page/new_destination.dart';
+import 'package:manda_bai/UI/widget/dialogs.dart';
+import 'package:manda_bai/constants/controllers.dart';
 import 'package:readmore/readmore.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CheckoutPageStep2 extends StatefulWidget {
-  var location;
 
-  CheckoutPageStep2({Key? key, required this.location}) : super(key: key);
+
+  const CheckoutPageStep2({Key? key}) : super(key: key);
 
   @override
   _CheckoutPageStep2State createState() => _CheckoutPageStep2State();
@@ -88,86 +84,9 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
     super.dispose();
   }
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final CartPageController cartPageController = Get.find();
-  final input_info = TextEditingController();
-  bool isCheckedPromocao = false;
-  final input_codigo = TextEditingController();
-  Future<void> validateAndSave() async {
-    final FormState? form = _formKey.currentState;
-    if (form!.validate()) {
-      if (widget.location != null) {
-        cartPageController.note = input_info.text;
-        cartPageController.loading = true;
-        var check = await ServiceRequest.createOrder(
-            "",
-            widget.location,
-            cartPageController.list,
-            cartPageController.total,
-            cartPageController.note,
-            isCheckedPromocao,
-            input_codigo.text);
-        if (check == "Erro de serviço") {
-          cartPageController.loading = false;
-          return showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return Pop_up_Message(
-                    mensagem: AppLocalizations.of(context)!.message_error_order,
-                    icon: Icons.error,
-                    caminho: "erro");
-              });
-        } else if (check == "Erro de cupom") {
-          cartPageController.loading = false;
-          return showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return Pop_up_Message(
-                    mensagem: AppLocalizations.of(context)!.message_error_order,
-                    icon: Icons.error,
-                    caminho: "erro");
-              });
-        } else if (check == "false") {
-          cartPageController.loading = false;
-          return showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return Pop_up_Message(
-                    mensagem: AppLocalizations.of(context)!.message_error_order,
-                    icon: Icons.error,
-                    caminho: "erro");
-              });
-        } else {
-          cartPageController.loading = false;
-          cartPageController.order = check.toString();
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => WebViewPage(sub: island),
-            ),
-          );
-        }
-      } else {
-        return showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Pop_up_Message(
-                  mensagem: AppLocalizations.of(context)!
-                      .message_error_destination_select,
-                  icon: Icons.error,
-                  caminho: "erro");
-            });
-      }
-    }
-  }
 
-  List<Location> list_location = [];
-  String island = "";
-  Future _carregarIsland() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    island = prefs.getString('island')!;
-    return island;
-  }
+
+
 
   String dataPersone = "";
   Future _carregarDados() async {
@@ -200,53 +119,34 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
         body: Stack(
           children: [
             Form(
-              key: _formKey,
+              key: cartPageController.formKey,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Container(
-                      color: Theme.of(context).primaryColor,
+                    SizedBox(
                       width: double.infinity,
                       child: Padding(
                         padding: const EdgeInsets.only(
-                          right: 10.0,
-                        ),
+                            right: 16.0, left: 8, top: 16),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              child: IconButton(
-                                onPressed: () async {
-                                  cartPageController.loading = true;
-                                  var check = await ServiceRequest.createOrder(
-                                      "cancelled",
-                                      widget.location,
-                                      cartPageController.list,
-                                      cartPageController.total,
-                                      cartPageController.note,
-                                      false,
-                                      "");
-
-                                  cartPageController.loading = false;
-
-                                  Navigator.pop(context);
-                                },
-                                icon: const Icon(
-                                  Icons.arrow_back,
-                                  color: Colors.white,
-                                ),
+                            TextButton(
+                              onPressed: () async {
+                             openLoadingStateDialog(context);
+                             await cartPageController.canceledOrder();
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                "< " +
+                                    AppLocalizations.of(context)!
+                                        .title_checkout_data,
+                                style: Theme.of(context).textTheme.headline3,
                               ),
                             ),
-                            Text(
-                              AppLocalizations.of(context)!.title_checkout_data,
-                              style:
-                                  Theme.of(context).textTheme.headline3!.copyWith(
-                                        color: Colors.white,
-                                      ),
-                            ),
-                            IconButton(
-                              padding: const EdgeInsets.all(0.0),
-                              onPressed: () {
+                            GestureDetector(
+                              onTap: () {
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
@@ -260,9 +160,19 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                   },
                                 );
                               },
-                              icon: const Icon(
-                                Icons.info_outline,
-                                color: Colors.white,
+                              child: Container(
+                                width: Get.width * 0.1,
+                                height: Get.width * 0.1,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: AppColors.grey50.withOpacity(0.8),
+                                ),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(6.0),
+                                  child: Icon(
+                                    Icons.info_outline,
+                                  ),
+                                ),
                               ),
                             ),
                           ],
@@ -324,7 +234,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                     Text(
                                       AppLocalizations.of(context)!
                                           .subtitle_recipient_data,
-                                      style: Theme.of(context).textTheme.headline1,
+                                      style:
+                                          Theme.of(context).textTheme.headline1,
                                     ),
                                     SizedBox(height: Get.height * 0.01),
                                     Row(
@@ -332,209 +243,98 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                         Text(
                                           AppLocalizations.of(context)!
                                                   .text_island +
-                                              " ",
-                                          style:
-                                              Theme.of(context).textTheme.headline2,
+                                              " "+ fullControllerController.island.value,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline2,
                                         ),
-                                        FutureBuilder(
-                                            future: _carregarIsland(),
-                                            builder: (BuildContext context,
-                                                AsyncSnapshot snapshot) {
-                                              if (snapshot.data == null) {
-                                                return const Text(" ");
-                                              } else {
-                                                return Text(
-                                                  island,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline2,
-                                                );
-                                              }
-                                            }),
+                                        const Spacer(),
+                                        TextButton(
+                                          onPressed: ()
+                                            {
+                                              locationController.cleanInptus();
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) => NewDestination(
+                                                           location: null)));
+                                            },
+
+                                          child: Row(
+                                            children: [
+                                              Text(
+                                                AppLocalizations.of(context)!
+                                                    .new_address,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline2,
+                                              ),
+                                              const Icon(
+                                                Icons.add,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ],
                                 ),
                               ),
-                              Container(
-                                height: Get.height * 0.3,
-                                child: widget.location == null
-                                    ? TextButton(
-                                        onPressed: () {
-                                          Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Destination_Page(
-                                                          route: "checkout")));
-                                        },
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              AppLocalizations.of(context)!
-                                                  .text_no_delivery_locations,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headline3,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  AppLocalizations.of(context)!
-                                                      .text_enter_destiny,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline3,
-                                                ),
-                                                const Icon(
-                                                  Icons.add,
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    : Column(
-                                        children: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pushReplacement(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          Destination_Page(
-                                                              route: "checkout")));
-                                            },
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  AppLocalizations.of(context)!
-                                                      .text_delivery_address,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline2,
-                                                ),
-                                                const Spacer(),
-                                                Text(
-                                                  AppLocalizations.of(context)!
-                                                      .text_change,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline3,
-                                                ),
-                                                const Icon(
-                                                  Icons.add,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: Theme.of(context)
-                                                  .dialogBackgroundColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color:
-                                                      Theme.of(context).cardColor,
-                                                  blurRadius: 1.0,
-                                                  spreadRadius: 0.0,
-                                                  offset: const Offset(0.5, 0.5),
-                                                ),
-                                              ],
-                                            ),
-                                            height: Get.height * 0.2,
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(15.0),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    widget.location.name,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline2,
-                                                  ),
-                                                  SizedBox(
-                                                    height: Get.height * 0.01,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      const Icon(
-                                                        Icons.location_on_outlined,
-                                                      ),
-                                                      Text(
-                                                        widget.location.island,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .headline3,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: Get.height * 0.01,
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(
-                                                        left: 15.0),
-                                                    child: Text(
-                                                      widget.location.city +
-                                                          ',' +
-                                                          widget.location.endereco,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headline4,
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: Get.height * 0.01,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      const Icon(
-                                                        Icons.phone,
-                                                      ),
-                                                      Text(
-                                                        widget.location.phone,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .headline4,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                              SizedBox(
+                                height: Get.height*0.3,
+                                child: Obx(
+                                  ()=> locationController.listLocation.isEmpty?Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        AppLocalizations.of(context)!
+                                            .text_no_locations,
+                                        style: Theme.of(context).textTheme.headline3,
                                       ),
+                                      Text(
+                                        AppLocalizations.of(context)!
+                                            .text_add_new_location,
+                                        style:
+                                        Theme.of(context).textTheme.headline3,
+                                      ),
+
+                                    ],
+                                  ):ListView.builder(
+                                    padding: EdgeInsets.only(
+                                      top: 0.0,
+                                      bottom: Get.height * 0.03,
+                                    ),
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: locationController.listLocation.length,
+                                    itemBuilder: (BuildContext context, index) {
+                                      var element = locationController.listLocation[index];
+                                      return ItemLocation(
+                                        location: element);
+                                    },
+                                  ),
+                                ),
                               ),
                               Row(
                                 children: [
                                   Checkbox(
                                     checkColor: Colors.white,
                                     activeColor: Colors.green,
-                                    value: isCheckedPromocao,
+                                    value: cartPageController.isCheckedPromocao,
                                     onChanged: (bool? value) {
                                       setState(() {
-                                        isCheckedPromocao = value!;
+                                        cartPageController.isCheckedPromocao = value!;
                                       });
                                     },
                                   ),
                                   Text(
                                     AppLocalizations.of(context)!.text_discount,
-                                    style: Theme.of(context).textTheme.headline6,
+                                    style:
+                                        Theme.of(context).textTheme.headline6,
                                   ),
                                 ],
                               ),
                               Container(
-                                child: isCheckedPromocao == true
+                                child: cartPageController.isCheckedPromocao == true
                                     ? Column(
                                         children: [
                                           Align(
@@ -551,18 +351,19 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                             height: Get.height * 0.005,
                                           ),
                                           TextFormField(
-                                            controller: input_codigo,
+                                            controller: cartPageController.input_codigo,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline4,
                                             decoration: InputDecoration(
                                               filled: true,
-                                              fillColor:
-                                                  Theme.of(context).backgroundColor,
+                                              fillColor: Theme.of(context)
+                                                  .backgroundColor,
                                               border: OutlineInputBorder(
                                                 borderRadius:
-                                                    new BorderRadius.circular(15.0),
-                                                borderSide: new BorderSide(),
+                                                     BorderRadius.circular(
+                                                        15.0),
+                                                borderSide:  const BorderSide(),
                                               ),
                                             ),
                                             validator: (value) => value!.isEmpty
@@ -599,18 +400,19 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                 width: Get.width,
                                 child: TextFormField(
                                   maxLines: 10,
-                                  controller: input_info,
+                                  controller: cartPageController.input_info,
                                   keyboardType: TextInputType.text,
                                   style: Theme.of(context).textTheme.headline4,
                                   decoration: InputDecoration(
                                     filled: true,
-                                    fillColor: Theme.of(context).backgroundColor,
+                                    fillColor:
+                                        Theme.of(context).backgroundColor,
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(15.0),
                                       borderSide: const BorderSide(),
                                     ),
-                                    hintText:
-                                        AppLocalizations.of(context)!.hint_write,
+                                    hintText: AppLocalizations.of(context)!
+                                        .hint_write,
                                     hintStyle:
                                         Theme.of(context).textTheme.headline4,
                                   ),
@@ -656,7 +458,27 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                 bottom: 10,
               ),
               child: TextButton(
-                onPressed: validateAndSave,
+                onPressed: () async {
+                  openLoadingStateDialog(context);
+                  var result= await cartPageController.validateAndSave();
+                  Navigator.pop(context);
+                  if(result.success){
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WebViewPage(sub: fullControllerController.island.value),
+                      ),
+                    );
+                  }else{
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                        result.errorMessage!,
+                        style:Theme.of(context).textTheme.labelSmall,
+                      ),
+                      backgroundColor: Theme.of(context).errorColor,
+                    ));
+                  }
+                },
                 child: Text(
                   AppLocalizations.of(context)!.subtitle_payment + " >",
                   style: const TextStyle(
