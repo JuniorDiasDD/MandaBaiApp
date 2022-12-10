@@ -18,8 +18,6 @@ import 'package:readmore/readmore.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CheckoutPageStep2 extends StatefulWidget {
-
-
   const CheckoutPageStep2({Key? key}) : super(key: key);
 
   @override
@@ -84,31 +82,27 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
     super.dispose();
   }
 
-
-
-
-
   String dataPersone = "";
   Future _carregarDados() async {
     dataPersone = AppLocalizations.of(context)!.text_personal_data +
         " \n " +
         AppLocalizations.of(context)!.textfield_name +
         ": " +
-        user.name +
+        user.name! +
         "\n Email: " +
-        user.email +
+        user.email! +
         "\n " +
         AppLocalizations.of(context)!.textfield_phone +
         ": " +
-        user.telefone +
+        user.telefone! +
         "\n" +
         AppLocalizations.of(context)!.textfield_city +
         ": " +
-        user.city +
+        user.city! +
         "\n" +
         AppLocalizations.of(context)!.textfield_country +
         ": " +
-        user.country;
+        user.country!;
     return dataPersone;
   }
 
@@ -133,8 +127,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                           children: [
                             TextButton(
                               onPressed: () async {
-                             openLoadingStateDialog(context);
-                             await cartPageController.canceledOrder();
+                                openLoadingStateDialog(context);
+                                await cartPageController.canceledOrder();
                                 Navigator.pop(context);
                                 Navigator.pop(context);
                               },
@@ -243,23 +237,24 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                         Text(
                                           AppLocalizations.of(context)!
                                                   .text_island +
-                                              " "+ fullControllerController.island.value,
+                                              " " +
+                                              fullControllerController
+                                                  .island.value,
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline2,
                                         ),
                                         const Spacer(),
                                         TextButton(
-                                          onPressed: ()
-                                            {
-                                              locationController.cleanInptus();
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) => NewDestination(
-                                                           location: null)));
-                                            },
-
+                                          onPressed: () {
+                                            locationController.cleanInptus();
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                       const NewDestination(
+                                                            location: null)));
+                                          },
                                           child: Row(
                                             children: [
                                               Text(
@@ -281,37 +276,45 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                 ),
                               ),
                               SizedBox(
-                                height: Get.height*0.3,
+                                height: Get.height * 0.3,
                                 child: Obx(
-                                  ()=> locationController.listLocation.isEmpty?Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        AppLocalizations.of(context)!
-                                            .text_no_locations,
-                                        style: Theme.of(context).textTheme.headline3,
-                                      ),
-                                      Text(
-                                        AppLocalizations.of(context)!
-                                            .text_add_new_location,
-                                        style:
-                                        Theme.of(context).textTheme.headline3,
-                                      ),
-
-                                    ],
-                                  ):ListView.builder(
-                                    padding: EdgeInsets.only(
-                                      top: 0.0,
-                                      bottom: Get.height * 0.03,
-                                    ),
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: locationController.listLocation.length,
-                                    itemBuilder: (BuildContext context, index) {
-                                      var element = locationController.listLocation[index];
-                                      return ItemLocation(
-                                        location: element);
-                                    },
-                                  ),
+                                  () => locationController.listLocation.isEmpty
+                                      ? Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              AppLocalizations.of(context)!
+                                                  .text_no_locations,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline3,
+                                            ),
+                                            Text(
+                                              AppLocalizations.of(context)!
+                                                  .text_add_new_location,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline3,
+                                            ),
+                                          ],
+                                        )
+                                      : ListView.builder(
+                                          padding: EdgeInsets.only(
+                                            top: 0.0,
+                                            bottom: Get.height * 0.03,
+                                          ),
+                                          scrollDirection: Axis.vertical,
+                                          itemCount: locationController
+                                              .listLocation.length,
+                                          itemBuilder:
+                                              (BuildContext context, index) {
+                                            var element = locationController
+                                                .listLocation[index];
+                                            return ItemLocation(
+                                                location: element);
+                                          },
+                                        ),
                                 ),
                               ),
                               Row(
@@ -322,7 +325,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                     value: cartPageController.isCheckedPromocao,
                                     onChanged: (bool? value) {
                                       setState(() {
-                                        cartPageController.isCheckedPromocao = value!;
+                                        cartPageController.isCheckedPromocao =
+                                            value!;
                                       });
                                     },
                                   ),
@@ -334,7 +338,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                 ],
                               ),
                               Container(
-                                child: cartPageController.isCheckedPromocao == true
+                                child: cartPageController.isCheckedPromocao ==
+                                        true
                                     ? Column(
                                         children: [
                                           Align(
@@ -351,7 +356,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                             height: Get.height * 0.005,
                                           ),
                                           TextFormField(
-                                            controller: cartPageController.input_codigo,
+                                            controller:
+                                                cartPageController.input_codigo,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .headline4,
@@ -361,9 +367,8 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                                   .backgroundColor,
                                               border: OutlineInputBorder(
                                                 borderRadius:
-                                                     BorderRadius.circular(
-                                                        15.0),
-                                                borderSide:  const BorderSide(),
+                                                    BorderRadius.circular(15.0),
+                                                borderSide: const BorderSide(),
                                               ),
                                             ),
                                             validator: (value) => value!.isEmpty
@@ -460,20 +465,21 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
               child: TextButton(
                 onPressed: () async {
                   openLoadingStateDialog(context);
-                  var result= await cartPageController.validateAndSave();
+                  var result = await cartPageController.validateAndSave();
                   Navigator.pop(context);
-                  if(result.success){
+                  if (result.success) {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => WebViewPage(sub: fullControllerController.island.value),
+                        builder: (context) => WebViewPage(
+                            sub: fullControllerController.island.value),
                       ),
                     );
-                  }else{
+                  } else {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(
                         result.errorMessage!,
-                        style:Theme.of(context).textTheme.labelSmall,
+                        style: Theme.of(context).textTheme.labelSmall,
                       ),
                       backgroundColor: Theme.of(context).errorColor,
                     ));

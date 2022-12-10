@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:manda_bai/constants/controllers.dart';
+import 'package:switcher_button/switcher_button.dart';
 
 class ButtonOption extends StatelessWidget {
   final String textButton;
   final VoidCallback action;
-  const ButtonOption({Key? key, required this.textButton, required this.action})
+  final bool theme;
+  const ButtonOption(
+      {Key? key,
+      required this.textButton,
+      required this.action,
+      this.theme = false})
       : super(key: key);
 
   @override
@@ -19,9 +27,27 @@ class ButtonOption extends StatelessWidget {
               textButton,
               style: Theme.of(context).textTheme.headline4,
             ),
-            Text(
-              ">",
-              style: Theme.of(context).textTheme.headline4,
+            SizedBox(
+              child: theme
+                  ? SwitcherButton(
+                      value: fullControllerController.prefersDarkMode.value,
+                      offColor: Theme.of(context).scaffoldBackgroundColor,
+                      onColor: Theme.of(context).primaryColor,
+                      onChange: (newValue) async {
+                        if (newValue) {
+                          Get.changeThemeMode(ThemeMode.dark);
+                        } else {
+                          Get.changeThemeMode(ThemeMode.light);
+                        }
+                        fullControllerController.prefersDarkMode.value =
+                            newValue;
+                      },
+                      size: 56,
+                    )
+                  : Text(
+                      ">",
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
             )
           ],
         ),

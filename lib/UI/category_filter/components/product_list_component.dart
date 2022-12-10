@@ -5,10 +5,9 @@ import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/description_product/pages/product_detail_page.dart';
-import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
-import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
+import 'package:manda_bai/UI/widget/dialog_custom.dart';
+import 'package:manda_bai/UI/widget/dialogs.dart';
 import 'package:manda_bai/constants/controllers.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProductListComponent extends StatefulWidget {
@@ -23,13 +22,6 @@ class ProductListComponent extends StatefulWidget {
 
 class _ProductListComponentState extends State<ProductListComponent> {
   bool checkFavorite = false;
-
-  Future _addCart(id) async {
-    bool check = await ServiceRequest.addCart(id, 1);
-    return check;
-  }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -57,14 +49,13 @@ class _ProductListComponentState extends State<ProductListComponent> {
                       children: [
                         GestureDetector(
                           onTap: () async {
-                            final SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            var check = prefs.getString('id');
-                            if (check == 'null' || check == null) {
+                            if (!await authenticationController.checkLogin()) {
                               showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return const Pop_Login();
+                                    return DialogCustom(textButton: AppLocalizations.of(context)!.button_login,action: (){
+                                      Navigator.pushNamed(context, '/login');
+                                    },);
                                   });
                             } else if (widget.product.favorite == false) {
                               ServiceRequest.addFavrite(widget.product.id);
@@ -89,7 +80,7 @@ class _ProductListComponentState extends State<ProductListComponent> {
                               color: AppColors.grey50.withOpacity(0.8),
                             ),
                             child:  Padding(
-                                padding: EdgeInsets.all(4.0),
+                                padding: const EdgeInsets.all(4.0),
                                 child:  Icon(Icons.favorite,
                                   color: widget.product.favorite
                                       ? Colors.red
@@ -102,61 +93,58 @@ class _ProductListComponentState extends State<ProductListComponent> {
                         ),
                         GestureDetector(
                           onTap: () async {
-                            final SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                            var check = prefs.getString('id');
-                            if (check == 'null' || check == null) {
+                            if (!await authenticationController.checkLogin()) {
                               showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return const Pop_Login();
+                                    return DialogCustom(textButton: AppLocalizations.of(context)!.button_login,action: (){
+                                      Navigator.pushNamed(context, '/login');
+                                    },);
                                   });
                             } else {
                               if (widget.product.price != 0.0) {
-                                setState(() {
-                                  productController.loading = true;
-                                });
-                                var check = await _addCart(widget.product.id);
-                                if (check == true) {
-                                  setState(() {
-                                    productController.loading = false;
-                                  });
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return Pop_up_Message(
-                                            mensagem:
-                                            AppLocalizations.of(context)!
-                                                .message_success_cart,
-                                            icon: Icons.check,
-                                            caminho: "addCarrinho");
-                                      });
+                                openLoadingStateDialog(context);
+                                var result = await cartPageController.addCart(widget.product.id,1);
+                               Navigator.pop(context);
+                                if (result.success) {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text(
+                                      AppLocalizations.of(context)!
+                                          .message_success_cart,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall,
+                                    ),
+                                    backgroundColor:
+                                    Theme.of(context).primaryColor,
+                                  ));
                                 } else {
-                                  setState(() {
-                                    productController.loading = false;
-                                  });
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return Pop_up_Message(
-                                            mensagem:
-                                            AppLocalizations.of(context)!
-                                                .message_error_cart,
-                                            icon: Icons.error,
-                                            caminho: "erro");
-                                      });
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text(
+                                      result.errorMessage!,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall,
+                                    ),
+                                    backgroundColor:
+                                    Theme.of(context).errorColor,
+                                  ));
                                 }
                               } else {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return Pop_up_Message(
-                                          mensagem:
-                                          AppLocalizations.of(context)!
-                                              .no_stock_description,
-                                          icon: Icons.home_filled,
-                                          caminho: "erro");
-                                    });
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text(
+                                    AppLocalizations.of(context)!
+                                        .no_stock_description,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall,
+                                  ),
+                                  backgroundColor:
+                                  Theme.of(context).errorColor,
+                                ));
                               }
                             }
                           },

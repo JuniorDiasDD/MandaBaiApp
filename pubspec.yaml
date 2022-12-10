@@ -64,6 +64,7 @@ dependencies:
   cloud_firestore: ^3.5.1
   firebase_core: ^1.24.0
   store_redirect: ^2.0.1
+  switcher_button: ^0.0.4
 
 dev_dependencies:
   flutter_test:

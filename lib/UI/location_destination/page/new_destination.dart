@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Model/location.dart';
-import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:manda_bai/UI/location_destination/components/popup_info.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -16,8 +15,8 @@ import 'package:manda_bai/UI/widget/dialogs.dart';
 import 'package:manda_bai/constants/controllers.dart';
 
 class NewDestination extends StatefulWidget {
-  Location? location;
-  NewDestination({Key? key, required this.location}) : super(key: key);
+  final Location? location;
+  const NewDestination({Key? key, required this.location}) : super(key: key);
 
   @override
   State<NewDestination> createState() => _NewDestinationState();
@@ -73,6 +72,7 @@ class _NewDestinationState extends State<NewDestination> {
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
     if (widget.location != null) {
+      locationController.location.value = widget.location!;
       locationController.inputNome.text = widget.location!.name!;
       locationController.inputCidade.text = widget.location!.city!;
       locationController.inputEndereco.text = widget.location!.endereco!;
@@ -239,20 +239,24 @@ class _NewDestinationState extends State<NewDestination> {
                     label: AppLocalizations.of(context)!.button_save,
                     action: () async {
                       openLoadingStateDialog(context);
-                      var result =
-                          await locationController.validateAndSaveLocation();
-                     Navigator.pop(context);
+                      var result = null;
+                      if (widget.location != null) {
+                        result = await locationController.editLocation();
+                      } else {
+                        result =
+                            await locationController.validateAndSaveLocation();
+                      }
+                      Navigator.pop(context);
                       if (result.success) {
                         Navigator.pop(context);
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(
                             result.errorMessage!,
-                            style:Theme.of(context).textTheme.labelSmall,
+                            style: Theme.of(context).textTheme.labelSmall,
                           ),
                           backgroundColor: Theme.of(context).errorColor,
                         ));
-
                       }
                     },
                   ),

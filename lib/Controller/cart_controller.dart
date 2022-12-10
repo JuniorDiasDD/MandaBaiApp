@@ -1,12 +1,9 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Model/cart_model.dart';
+import 'package:manda_bai/constants/controllers.dart';
 import 'package:manda_bai/helpers/result.dart';
-
-import '../constants/controllers.dart';
 
 class CartPageController extends GetxController {
   static CartPageController instance = Get.find();
@@ -41,6 +38,7 @@ class CartPageController extends GetxController {
   bool get deleteFull {
     return _deleteFull.value;
   }
+
   set checkMessage(bool checkMessage) {
     this._checkMessage.value = checkMessage;
   }
@@ -191,7 +189,7 @@ class CartPageController extends GetxController {
     // ignore: unused_local_variable
     if (!_list.isEmpty) {
       for (int i = 0; i < _list.length; i++) {
-        subTotal += _list[i].price * _list[i].amount/100;
+        subTotal += _list[i].price * _list[i].amount / 100;
       }
 
       total = subTotal + taxa;
@@ -206,6 +204,85 @@ class CartPageController extends GetxController {
     super.onInit();
   }
 
+  //cart
+  TextEditingController pesquisa= TextEditingController();
+  var isChecked = false.obs;
+  final listCart = <CartModel>[].obs;
+  Future carregarCart() async {
+    if (listCart.isEmpty) {
+      listCart.value = await ServiceRequest.loadCart();
+      if (listCart.isEmpty) {
+        return null;
+      } else {
+        String money = fullControllerController.initialMoney.value;
+        cartPageController.taxa = 5;
+        var value;
+        if (money == "USD") {
+          value = await ServiceRequest.loadDolar();
+        }
+        for (int m = 0; m < listCart.length; m++) {
+          switch (money) {
+            case 'USD':
+              {
+                if (value != false) {
+                  double dolar = double.parse(value);
+                  listCart[m].price = listCart[m].price / dolar;
+                  cartPageController.taxa = 5 / dolar;
+                }
+                break;
+              }
+            case 'ECV':
+              {
+                listCart[m].price = listCart[m].price * 110.87;
+                cartPageController.taxa = 5 * 110.87;
+                break;
+              }
+          }
+        }
+        //
+        list = listCart;
+        calcule();
+      }
+    }
+
+    return listCart;
+  }
+
+  Future remover() async {
+    List<String> list_item = [];
+    if (isChecked.value) {
+      if (list.isNotEmpty) {
+        for (int i = 0; i < list.length; i++) {
+          list_item.add(list[i].item_key);
+        }
+        listCart.value = await ServiceRequest.removeCart(list_item);
+        list = listCart;
+        calcule();
+      }
+    } else {
+      bool check = false;
+      for (int i = 0; i < list.length; i++) {
+        if (list[i].checkout == true) {
+          list_item.add(list[i].item_key);
+          check = true;
+        }
+      }
+      if (check) {
+        listCart.value = await ServiceRequest.removeCart(list_item);
+          list = listCart;
+          calcule();
+      }
+    }
+  }
+  Future<SetResult> addCart(id,int quant) async {
+    bool check = await ServiceRequest.addCart(id, quant);
+
+    if(check){
+      cartPageController.list=cartPageController.listCart;
+      return SetResult(true);
+    }
+    return SetResult(false,errorMessage: 'Error...');
+  }
 
 //checkout 2
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -217,36 +294,34 @@ class CartPageController extends GetxController {
   Future<SetResult> validateAndSave() async {
     final FormState? form = formKey.currentState;
 
-      if (locationController.location.value.id!=null) {
-        cartPageController.note = input_info.text;
-        cartPageController.loading = true;
+    if (locationController.location.value.id != null) {
+      cartPageController.note = input_info.text;
+      cartPageController.loading = true;
 
-        var check = await ServiceRequest.createOrder(
-            "",
-            locationController.location.value,
-            cartPageController.list,
-            cartPageController.total,
-            cartPageController.note,
-            isCheckedPromocao,
-            input_codigo.text);
+      var check = await ServiceRequest.createOrder(
+          "",
+          locationController.location.value,
+          cartPageController.list,
+          cartPageController.total,
+          cartPageController.note,
+          isCheckedPromocao,
+          input_codigo.text);
 
-        if (check == "Erro de serviço") {
-          return SetResult(false,errorMessage:"Erro no servico");
-        } else if (check == "Erro de cupom") {
-          return SetResult(false,errorMessage:"Erro no cupon");
-        } else if (check == "false") {
-          return SetResult(false,errorMessage:"Erro");
-        } else {
-          return SetResult(true);
-        }
+      if (check == "Erro de serviço") {
+        return SetResult(false, errorMessage: "Erro no servico");
+      } else if (check == "Erro de cupom") {
+        return SetResult(false, errorMessage: "Erro no cupon");
+      } else if (check == "false") {
+        return SetResult(false, errorMessage: "Erro");
       } else {
-       return SetResult(false,errorMessage:"Not Location, Select one");
+        return SetResult(true);
       }
+    } else {
+      return SetResult(false, errorMessage: "Not Location, Select one");
+    }
   }
 
-
   Future<void> canceledOrder() async {
-
     var check = await ServiceRequest.createOrder(
         "cancelled",
         locationController.location.value,
@@ -255,7 +330,5 @@ class CartPageController extends GetxController {
         cartPageController.note,
         false,
         "");
-
-    print(check);
   }
 }

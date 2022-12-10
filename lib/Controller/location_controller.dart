@@ -51,17 +51,59 @@ class LocationController extends GetxController {
           phone: inputTel.text,
           email: "",
           username: itemusernameString!);
-      if (location.value.id != null) {
-        await ServiceRequest.removeLocation(location.value.id!);
-      }
-      var result = await ServiceRequest.addLocation(novo);
 
+      var result = await ServiceRequest.addLocation(novo);
       if (result) {
-        listLocation.add(novo);
+        return SetResult(true);
+      }else {
+        return SetResult(false, errorMessage: "Formulário inválido.");
       }
-      return SetResult(true);
     } else {
       return SetResult(false, errorMessage: "Formulário inválido.");
     }
+  }
+
+  Future<SetResult> editLocation() async {
+    final FormState? form = formKey.currentState;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? itemusernameString = prefs.getString('username');
+    if (form!.validate()) {
+      Location novo = Location(
+          id: location.value.id,
+          name: inputNome.text,
+          city: inputCidade.text,
+          endereco: inputEndereco.text,
+          island: fullControllerController.island.value,
+          phone: inputTel.text,
+          email: "",
+          username: itemusernameString!);
+
+      var remove=await ServiceRequest.removeLocation(location.value.id!);
+      if(remove){
+      var result = await ServiceRequest.addLocation(novo);
+
+      if (result) {
+        return SetResult(true);
+      }else {
+        return SetResult(false, errorMessage: "Formulário inválido.");
+      }
+      }else{
+        return SetResult(false, errorMessage: "Error to Save");
+      }
+    } else {
+      return SetResult(false, errorMessage: "Formulário inválido.");
+    }
+  }
+
+  Future<SetResult> deleteLocation(Location location) async {
+    var result = await ServiceRequest.removeLocation(location.id!);
+
+    if (!result) {
+      return SetResult(false);
+    }
+
+    listLocation.remove(location);
+
+    return SetResult(true);
   }
 }

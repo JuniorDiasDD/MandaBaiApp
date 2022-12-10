@@ -1,5 +1,5 @@
 class User {
-  String name,
+ String? name,
       nickname,
       email,
       telefone,
@@ -9,15 +9,15 @@ class User {
       country,
       city;
   User(
-      {required this.name,
-      required this.email,
-      required this.telefone,
-      required this.senha,
-      required this.username,
-      required this.nickname,
-      required this.avatar,
-      required this.city,
-      required this.country});
+      { this.name,
+       this.email,
+       this.telefone,
+       this.senha,
+       this.username,
+       this.nickname,
+       this.avatar,
+       this.city,
+       this.country});
   static Map<String, dynamic> toMap(User item) => {
         'name': item.name,
         'nickname': item.nickname,

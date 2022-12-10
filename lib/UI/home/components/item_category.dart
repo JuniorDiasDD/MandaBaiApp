@@ -2,21 +2,21 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/full_controller.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Model/category.dart';
 import 'package:manda_bai/UI/category_filter/pages/category_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:manda_bai/constants/controllers.dart';
 
 class ListViewItemComponent extends StatefulWidget {
-  Category category;
-  ListViewItemComponent({Key? key, required this.category}) : super(key: key);
+  final Category category;
+ const ListViewItemComponent({Key? key, required this.category}) : super(key: key);
   @override
   State<ListViewItemComponent> createState() => _ListViewItemComponentState();
 }
 
 class _ListViewItemComponentState extends State<ListViewItemComponent> {
-  final FullController controller = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -74,7 +74,7 @@ class _ListViewItemComponentState extends State<ListViewItemComponent> {
                       // speed: const Duration(milliseconds: 2000),
                     ),
                     RotateAnimatedText(
-                      controller.ilha,
+                      fullControllerController.island.value,
                       textStyle: TextStyle(
                         fontFamily: AppFonts.poppinsBoldFont,
                         fontSize: Get.height * 0.026,

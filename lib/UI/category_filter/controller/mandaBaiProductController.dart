@@ -121,9 +121,9 @@ class MandaBaiProductController extends GetxController {
   //? getCart
   Future<List<CartModel>> loadCart() async {
     String basicAuth = 'Basic ' +
-        base64Encode(utf8.encode(user.username +
+        base64Encode(utf8.encode(user.username! +
             ':' +
-            user.senha));
+            user.senha!));
     var response = await http.get(Uri.parse(getCart),
         headers: <String, String>{'authorization': basicAuth});
     print(response.body);
@@ -149,9 +149,9 @@ class MandaBaiProductController extends GetxController {
   //! removeItemCart
   Future removeCart(ischeck) async {
     String basicAuth = 'Basic ' +
-        base64Encode(utf8.encode(user.username +
+        base64Encode(utf8.encode(user.username! +
             ':' +
-            user.senha));
+            user.senha!));
 
     if (ischeck == true) {
       for (int i = 0; i < cartPageController.list.length; i++) {
@@ -204,9 +204,9 @@ class MandaBaiProductController extends GetxController {
   //? addCart
   Future addCart(item) async {
     String basicAuth = 'Basic ' +
-        base64Encode(utf8.encode(user.username +
+        base64Encode(utf8.encode(user.username! +
             ':' +
-            user.senha));
+            user.senha!));
     var response = await http.post(Uri.parse(addItemCart),
         headers: <String, String>{'authorization': basicAuth},
         body: {'id': item.toString(), 'quantity': "1"});

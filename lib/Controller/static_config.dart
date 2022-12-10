@@ -3,7 +3,7 @@ import 'package:manda_bai/Model/user.dart';
 
 const String version="1.0.2";
 
-User user = new User(
+User user =  User(
     name: " ",
     nickname: " ",
     telefone: " ",

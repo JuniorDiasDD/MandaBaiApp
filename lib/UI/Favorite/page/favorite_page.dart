@@ -4,14 +4,12 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/mandaBaiController.dart';
-import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/Favorite/components/listview_item_favorite.dart';
-import 'package:manda_bai/UI/Favorite/controller/favorite_controller.dart';
+import 'package:manda_bai/UI/widget/dialog_custom.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:manda_bai/constants/controllers.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -23,7 +21,7 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
-  final FavoriteController controller = Get.put(FavoriteController());
+
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
@@ -72,10 +70,10 @@ class _FavoritePageState extends State<FavoritePage> {
     initConnectivity();
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
-    controller.loading = false;
-    controller.vazio = false;
-    controller.list_product = [];
-    controller.list_product_full = [];
+    favoriteController.loading = false;
+    favoriteController.vazio = false;
+    favoriteController.list_product = [];
+    favoriteController.list_product_full = [];
   }
 
   @override
@@ -84,66 +82,11 @@ class _FavoritePageState extends State<FavoritePage> {
     super.dispose();
   }
 
-  bool isChecked = false;
-  TextEditingController pesquisa = TextEditingController();
-  Future _carregar() async {
-    if (controller.list_product.isEmpty && pesquisa.text == "") {
-      controller.list_product = await ServiceRequest.loadFavorite();
-      if (controller.list_product.isEmpty) {
-        controller.vazio = true;
-        return null;
-      } else {
-        var value;
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        String money = prefs.getString('money')!;
-        if (money == "USD") {
-          value = await ServiceRequest.loadDolar();
-        }
-        for (int m = 0; m < controller.list_product.length; m++) {
-          switch (money) {
-            case 'USD':
-              {
-                if (value != false) {
-                  double dolar = double.parse(value);
-                  controller.list_product[m].price =
-                      controller.list_product[m].price / dolar;
-                }
-                break;
-              }
-            case 'ECV':
-              {
-                controller.list_product[m].price =
-                    controller.list_product[m].price * 110.87;
-
-                break;
-              }
-          }
-        }
-        controller.list_product_full = controller.list_product;
-      }
-    }
-
-    return controller.list_product;
-  }
-
-  _search() {
-    controller.list_product = [];
-    setState(() {
-      for (int i = 0; i < controller.list_product_full.length; i++) {
-        if (controller.list_product_full[i].name
-            .toLowerCase()
-            .contains(pesquisa.text.toLowerCase())) {
-          controller.list_product.add(controller.list_product_full[i]);
-        }
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        return new Future(() => false);
+        return  Future(() => false);
       },
       child: SafeArea(
         child: Scaffold(
@@ -153,52 +96,134 @@ class _FavoritePageState extends State<FavoritePage> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      Container(
-                        color: Theme.of(context).primaryColor,
-                        width: double.infinity,
-                        child: Container(
-                          width: Get.width * 0.4,
-                          height: Get.width * 0.1,
-                          margin: EdgeInsets.all(10.0),
-                          child: TextField(
-                            cursorColor: AppColors.greenColor,
-                            controller: pesquisa,
-                            style: Theme.of(context).textTheme.headline4,
-                            decoration: InputDecoration(
-                              focusedBorder: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(30.0)),
-                                  borderSide:
-                                      BorderSide(color: AppColors.greenColor)),
-                              hintText: AppLocalizations.of(context)!.search,
-                              hintStyle: Theme.of(context).textTheme.headline4,
-                              contentPadding:
-                                  const EdgeInsets.only(top: 10, left: 15),
-                              suffixIcon: const Icon(
-                                Icons.search,
-                                color: AppColors.greenColor,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text(
+                                AppLocalizations.of(context)!.label_favorites,
+                                style: Theme.of(context).textTheme.headline3,
                               ),
-                              filled: true,
-                              fillColor: Theme.of(context).backgroundColor,
-                              border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(30.0),
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                if (!await authenticationController.checkLogin()) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return DialogCustom(textButton: AppLocalizations.of(context)!.button_login,action: (){
+                                          Navigator.pushNamed(context, '/login');
+                                        },);
+                                      });
+                                } else {
+                                  Navigator.pushNamed(context, '/cart');
+                                }
+                              },
+                              child: SizedBox(
+                                width: Get.width * 0.13,
+                                height: Get.width * 0.13,
+                                child: Stack(
+                                  children: [
+                                    Container(
+                                      width: Get.width * 0.1,
+                                      height: Get.width * 0.1,
+                                      margin: const EdgeInsets.only(top: 8),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        color: AppColors.grey50.withOpacity(0.8),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(6.0),
+                                        child: WebsafeSvg.asset(
+                                            AppImages.iconMenuCartOutline),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.topRight,
+                                      child: Container(
+                                        width: 20,
+                                        height: 26,
+                                        margin: const EdgeInsets.only(right: 2),
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context).primaryColor,
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(10)),
+                                        ),
+                                        child: Obx(
+                                              () => Center(
+                                            child: cartPageController.listCart.isEmpty
+                                                ? Text(
+                                              "0",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle1!
+                                                  .copyWith(
+                                                  color: AppColors.white),
+                                            )
+                                                : Text(
+                                              cartPageController.listCart.length
+                                                  .toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle1!
+                                                  .copyWith(
+                                                  color: AppColors.white),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
-                            onChanged: (text) {
-                              _search();
-                            },
-                          ),
+                          ],
                         ),
                       ),
+                       Padding(
+                          padding: EdgeInsets.only(
+                              left: Get.width * 0.03,
+                              right: Get.width * 0.03,
+                              bottom: 8),
+                          child:
+                          TextField(
+                            cursorColor: AppColors.greenColor,
+                            controller:  favoriteController.pesquisa,
+                            style: Theme.of(context).textTheme.headline4,
+                            decoration: InputDecoration(
+                              hintText: AppLocalizations.of(context)!.search,
+                              hintStyle: Theme.of(context).textTheme.headline4,
+                              contentPadding: const EdgeInsets.only(top: 8),
+                              focusedBorder: const OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                  borderSide: BorderSide(color: AppColors.greenColor)),
+                              prefixIcon: Icon(
+                                Icons.search,
+                                color: AppColors.black_claro.withOpacity(0.4),
+                              ),
+                              filled: true,
+                              fillColor: AppColors.grey50.withOpacity(0.5),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(20.0),
+                                ),
+                                borderSide: BorderSide(
+                                    color: AppColors.black_claro.withOpacity(0.4), width: 0.0),
+                              ),
+                            ),
+                            onChanged: (text) => favoriteController.search(),
+                          ),
+                        ),
                       FutureBuilder(
-                        future: _carregar(),
+                        future: favoriteController.carregar(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
-                              return Container(
+                              return SizedBox(
                                 height: Get.height * 0.3,
                                 width: Get.width,
                                 child: Center(
@@ -227,8 +252,8 @@ class _FavoritePageState extends State<FavoritePage> {
                               );
                             default:
                               if (snapshot.data == null &&
-                                  controller.vazio != true) {
-                                return Container(
+                                  favoriteController.vazio != true) {
+                                return SizedBox(
                                   height: Get.height * 0.5,
                                   width: Get.width,
                                   child: Column(
@@ -238,7 +263,7 @@ class _FavoritePageState extends State<FavoritePage> {
                                     children: [
                                       WebsafeSvg.asset(
                                           AppImages.favorite_empyt),
-                                      SizedBox(height: 10),
+                                      const SizedBox(height: 10),
                                       Text(
                                         AppLocalizations.of(context)!
                                             .text_no_favorite_product,
@@ -250,7 +275,7 @@ class _FavoritePageState extends State<FavoritePage> {
                                   ),
                                 );
                               } else {
-                                return Container(
+                                return SizedBox(
                                   height: Get.height * 0.82,
                                   child: Obx(
                                     () => ListView.builder(
@@ -259,11 +284,11 @@ class _FavoritePageState extends State<FavoritePage> {
                                         bottom: Get.height * 0.03,
                                       ),
                                       scrollDirection: Axis.vertical,
-                                      itemCount: controller.list_product.length,
+                                      itemCount: favoriteController.list_product.length,
                                       itemBuilder:
                                           (BuildContext context, index) {
                                         var list =
-                                            controller.list_product[index];
+                                        favoriteController.list_product[index];
                                         return ItemFavoriteComponent(
                                             product: list);
                                       },
@@ -280,7 +305,7 @@ class _FavoritePageState extends State<FavoritePage> {
               ),
               Obx(
                 () => SizedBox(
-                  child: controller.loading
+                  child: favoriteController.loading
                       ? Container(
                           color: Colors.black54,
                           height: Get.height,
@@ -298,9 +323,9 @@ class _FavoritePageState extends State<FavoritePage> {
               ),
               Obx(
                 () => SizedBox(
-                  child: controller.vazio
+                  child: favoriteController.vazio
                       ? Center(
-                          child: Container(
+                          child: SizedBox(
                             height: Get.height * 0.5,
                             width: Get.width,
                             child: Column(

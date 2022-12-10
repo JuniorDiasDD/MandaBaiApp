@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Model/islandOrder.dart';
+import 'package:manda_bai/UI/order/Componentes/item_order.dart';
 
-import 'item_pedido.dart';
 
 class ItemOrderByIsland extends StatefulWidget {
   IslandOrder islandOrder;
@@ -36,7 +36,7 @@ class _ItemOrderByIslandState extends State<ItemOrderByIsland> {
                 itemCount: widget.islandOrder.listOrder.length,
                 itemBuilder: (BuildContext context, index) {
                   var list = widget.islandOrder.listOrder[index];
-                  return Item_Pedido(order: list);
+                  return ItemOrder(order: list);
                 },
               ),
             )

@@ -7,6 +7,8 @@ import 'package:websafe_svg/websafe_svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnboardingPage extends StatelessWidget {
+  const OnboardingPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Onboarding(

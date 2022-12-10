@@ -10,16 +10,17 @@ import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/product.dart';
-import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
+import 'package:manda_bai/UI/widget/button_ui.dart';
+import 'package:manda_bai/UI/widget/dialog_custom.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:manda_bai/UI/widget/dialogs.dart';
+import 'package:manda_bai/constants/controllers.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-//import 'package:flutter_html/flutter_html.dart';
 
 class ProdutoDetailPage extends StatefulWidget {
-  Product product;
-  ProdutoDetailPage({Key? key, required this.product}) : super(key: key);
+ final Product product;
+  const ProdutoDetailPage({Key? key, required this.product}) : super(key: key);
   @override
   State<ProdutoDetailPage> createState() => _ProdutoDetailPageState();
 }
@@ -84,45 +85,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
 
   int quantidade = 1;
   bool loading = false;
-  _addCart(id) async {
-    setState(() {
-      loading = true;
-    });
-    bool check = await ServiceRequest.addCart(id, quantidade);
-    if (check) {
-      setState(() {
-        loading = false;
-      });
-      return showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return Pop_up_Message(
-                mensagem: AppLocalizations.of(context)!.message_success_cart,
-                icon: Icons.check,
-                caminho: "description");
-          });
-    } else {
-      setState(() {
-        loading = false;
-      });
-      return showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return Pop_up_Message(
-                mensagem: AppLocalizations.of(context)!.message_error_cart,
-                icon: Icons.error,
-                caminho: "erro");
-          });
-    }
-  }
 
-  var money_txt;
-  Future _carregarMoney() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    money_txt = prefs.getString('money');
-
-    return money_txt;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +129,7 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                                           color: Theme.of(context).cardColor,
                                           blurRadius: 1.0,
                                           spreadRadius: 0.0,
-                                          offset: Offset(0.5, 0.5),
+                                          offset: const Offset(0.5, 0.5),
                                         ),
                                       ],
                                       color: Theme.of(context)
@@ -207,103 +170,80 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
                                                 .headline1,
                                           ),
                                         ),
-                                        FutureBuilder(
-                                            future: _carregarMoney(),
-                                            builder: (BuildContext context,
-                                                AsyncSnapshot snapshot) {
-                                              if (snapshot.data == null) {
-                                                return const Text(" ");
-                                              } else {
-                                                if (widget.product.price ==
-                                                    0.0) {
-                                                  return Text(
-                                                    AppLocalizations.of(
-                                                            context)!
-                                                        .no_stock,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .headline6!
-                                                        .copyWith(
-                                                          color: Colors.red,
-                                                        ),
-                                                  );
-                                                } else {
-                                                  switch (money_txt) {
-                                                    case 'EUR':
-                                                      {
-                                                        return Text(
-                                                          widget.product.price
-                                                                  .toStringAsFixed(
-                                                                      2) +
-                                                              " €",
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .headline5!
-                                                                  .copyWith(
-                                                                    fontSize:
-                                                                        Get.width *
-                                                                            0.04,
-                                                                  ),
-                                                        );
-                                                      }
-                                                    case 'ECV':
-                                                      {
-                                                        return Text(
-                                                          widget.product.price
-                                                                  .toStringAsFixed(
-                                                                      0) +
-                                                              " \$",
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .headline5!
-                                                                  .copyWith(
-                                                                    fontSize:
-                                                                        Get.width *
-                                                                            0.04,
-                                                                  ),
-                                                        );
-                                                      }
-                                                    case 'USD':
-                                                      {
-                                                        return Text(
-                                                          "\$ " +
-                                                              widget
-                                                                  .product.price
-                                                                  .toStringAsFixed(
-                                                                      2),
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .headline5!
-                                                                  .copyWith(
-                                                                    fontSize:
-                                                                        Get.width *
-                                                                            0.04,
-                                                                  ),
-                                                        );
-                                                      }
-                                                  }
-                                                }
-                                                return Container();
-                                              }
-                                            }),
+                                        if (widget.product.price == 0.0)
+                                          Text(
+                                            AppLocalizations.of(context)!
+                                                .no_stock,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline6!
+                                                .copyWith(
+                                                  color: Colors.red,
+                                                ),
+                                          ),
+                                        if (fullControllerController
+                                                .initialMoney.value ==
+                                            'EUR')
+                                          Text(
+                                            widget.product.price
+                                                    .toStringAsFixed(2) +
+                                                " €",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline5!
+                                                .copyWith(
+                                                  fontSize: Get.width * 0.04,
+                                                ),
+                                          ),
+                                        if (fullControllerController
+                                                .initialMoney.value ==
+                                            'ECV')
+                                          Text(
+                                            widget.product.price
+                                                    .toStringAsFixed(0) +
+                                                " \$",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline5!
+                                                .copyWith(
+                                                  fontSize: Get.width * 0.04,
+                                                ),
+                                          ),
+                                        if (fullControllerController
+                                                .initialMoney.value ==
+                                            'USD')
+                                          Text(
+                                            "\$ " +
+                                                widget.product.price
+                                                    .toStringAsFixed(2),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline5!
+                                                .copyWith(
+                                                  fontSize: Get.width * 0.04,
+                                                ),
+                                          ),
                                       ],
                                     ),
                                     const Spacer(),
                                     IconButton(
                                       padding: const EdgeInsets.all(0.0),
                                       onPressed: () async {
-                                        final SharedPreferences prefs =
-                                            await SharedPreferences
-                                                .getInstance();
-                                        var check = prefs.getString('id');
-                                        if (check == 'null' || check == null) {
+                                        if (!await authenticationController
+                                            .checkLogin()) {
                                           showDialog(
                                               context: context,
                                               builder: (BuildContext context) {
-                                                return const Pop_Login();
+                                                return DialogCustom(
+                                                  textButton:
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .button_login,
+                                                  action: () {
+                                                    Navigator.pushNamed(
+                                                        context, '/login');
+                                                  },
+                                                );
                                               });
                                         } else if (widget.product.price !=
                                             0.0) {
@@ -389,64 +329,68 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
             ],
           ),
         ),
-        bottomNavigationBar: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: Get.height * 0.06,
-              width: Get.width * 0.9,
-              margin: const EdgeInsets.only(bottom: 20),
-              decoration: BoxDecoration(
-                color: AppColors.greenColor,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(15),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Theme.of(context).cardColor,
-                    blurRadius: 2.0,
-                    spreadRadius: 0.0,
-                    offset: Offset(2.0, 2.0),
-                  ),
-                ],
-              ),
-              child: TextButton(
-                child: Text(
-                  (AppLocalizations.of(context)!.button_add_cart),
-                  style: TextStyle(
-                      fontFamily: AppFonts.poppinsBoldFont,
-                      fontSize: Get.width * 0.035,
-                      color: Colors.white),
-                ),
-                onPressed: () async {
-                  final SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  var check = prefs.getString('id');
-                  if (check == 'null' || check == null) {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const Pop_Login();
-                        });
-                  } else {
-                    if (widget.product.price != 0.0) {
-                      _addCart(widget.product.id);
-                    } else {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Pop_up_Message(
-                                mensagem: AppLocalizations.of(context)!
-                                    .no_stock_description,
-                                icon: Icons.home_filled,
-                                caminho: "erro");
-                          });
-                    }
-                  }
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ButtonUI(label: AppLocalizations.of(context)!.button_add_cart, action: () async {
+          if (!await authenticationController.checkLogin()) {
+            showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return DialogCustom(
+                textButton:
+                AppLocalizations.of(context)!.button_login,
+                action: () {
+                  Navigator.pushNamed(context, '/login');
                 },
+              );
+            });
+          } else {
+            if (widget.product.price != 0.0) {
+              openLoadingStateDialog(context);
+             var result=await cartPageController.addCart(widget.product.id,quantidade);
+        Navigator.pop(context);
+          if (result.success) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(
+              content: Text(
+                AppLocalizations.of(context)!
+                    .message_success_cart,
+                style: Theme.of(context)
+                    .textTheme
+                    .labelSmall,
               ),
+              backgroundColor:
+              Theme.of(context).primaryColor,
+            ));
+          } else {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(
+              content: Text(
+                result.errorMessage!,
+                style: Theme.of(context)
+                    .textTheme
+                    .labelSmall,
+              ),
+              backgroundColor:
+              Theme.of(context).errorColor,
+            ));
+          }
+            } else {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(
+            content: Text(
+              AppLocalizations.of(context)!
+                  .no_stock_description,
+              style: Theme.of(context)
+                  .textTheme
+                  .labelSmall,
             ),
-          ],
+            backgroundColor:
+            Theme.of(context).errorColor,
+          ));
+            }
+          }
+      },),
         ),
       ),
     );

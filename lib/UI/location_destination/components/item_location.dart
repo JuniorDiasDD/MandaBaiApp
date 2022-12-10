@@ -1,31 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/mandaBaiController.dart';
-import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Model/location.dart';
 import 'package:manda_bai/UI/location_destination/page/new_destination.dart';
+import 'package:manda_bai/UI/widget/dialogs.dart';
 import 'package:manda_bai/constants/controllers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ItemLocation extends StatefulWidget {
-  Location location;
-  ItemLocation({Key? key, required this.location}) : super(key: key);
+  final Location location;
+  final bool select;
+  const ItemLocation({Key? key, required this.location,this.select=true}) : super(key: key);
   @override
   _ItemLocationState createState() => _ItemLocationState();
 }
 
 class _ItemLocationState extends State<ItemLocation> {
-  final MandaBaiController mandaBaiController = Get.find();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        locationController.isRadioSelected.value =
-            widget.location.id.toString();
-        locationController.location.value=widget.location;
+        if(widget.select) {
+          locationController.isRadioSelected.value =
+              widget.location.id.toString();
+          locationController.location.value = widget.location;
+        }
       },
       child: Padding(
-        padding: EdgeInsets.all(
-          Get.width * 0.03,
+        padding: const EdgeInsets.all(
+          8,
         ),
         child: Obx(
             ()=> Container(
@@ -54,7 +56,7 @@ class _ItemLocationState extends State<ItemLocation> {
                         style: Theme.of(context).textTheme.headline2,
                       ),
                       SizedBox(
-                          child: locationController.checkEditLocation.value
+                          child: !widget.select
                               ? Row(
                                   children: [
                                     IconButton(
@@ -69,14 +71,37 @@ class _ItemLocationState extends State<ItemLocation> {
                                                             widget.location)));
                                       },
                                       icon: const Icon(
-                                        Icons.edit,
+                                        Icons.edit_note_outlined,
+                                        color: Colors.orange,
                                       ),
                                     ),
                                     IconButton(
                                       padding: const EdgeInsets.all(0.0),
-                                      onPressed: () {},
+                                      onPressed: () async{
+                                        openLoadingStateDialog(context);
+                                       var result=await locationController.deleteLocation(widget.location);
+                                      Navigator.pop(context);
+                                       if (result.success) {
+                                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                           content: Text(
+                                             AppLocalizations.of(context)!.message_success_update,
+                                             style: Theme.of(context).textTheme.labelSmall,
+                                           ),
+                                           backgroundColor: Colors.green,
+                                         ));
+                                       } else {
+                                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                           content: Text(
+                                             AppLocalizations.of(context)!.message_update_failed,
+                                             style: Theme.of(context).textTheme.labelSmall,
+                                           ),
+                                           backgroundColor: Theme.of(context).errorColor,
+                                         ));
+                                       }
+                                      },
                                       icon: const Icon(
                                         Icons.delete,
+                                        color: Colors.red,
                                       ),
                                     ),
                                   ],
@@ -84,13 +109,13 @@ class _ItemLocationState extends State<ItemLocation> {
                               : Container()),
                     ],
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
+
                   Row(
                     children: [
-                      const Icon(
+                       Icon(
                         Icons.location_on_outlined,
+                        size: 16,
+                        color: Theme.of(context).dividerColor.withOpacity(0.5),
                       ),
                       Text(
                         widget.location.island! +
@@ -104,40 +129,43 @@ class _ItemLocationState extends State<ItemLocation> {
 
                   Padding(
                     padding: const EdgeInsets.only(left: 25.0),
-                    child: Obx(
-                      ()=> SizedBox(
-                        child: locationController.checkEditLocation.value
+                    child:  SizedBox(
+                        child: !widget.select
                             ? Text(
-                                widget.location.endereco!,
+                          "-"+ widget.location.endereco!,
                                 style: Theme.of(context).textTheme.headline4,
                               )
-                            : Row(
-                                children: [
-                                  Text(
-                                    widget.location.endereco!,
-                                    style: Theme.of(context).textTheme.headline4,
-                                  ),
-                                  const Spacer(),
-                                  Radio(
-                                    value: widget.location.id.toString(),
-                                    groupValue: locationController.isRadioSelected.value,
-                                    onChanged: (value) {
-                                        locationController.isRadioSelected.value =
-                                            widget.location.id.toString();
-                                        locationController.location.value=widget.location;
-                                        },
-                                    activeColor: Colors.green,
-                                  ),
-                                ],
-                              ),
+                            : Obx(
+                              ()=> Row(
+                                  children: [
+                                    Text(
+                                      "-"+widget.location.endereco!,
+                                      style: Theme.of(context).textTheme.headline4,
+                                    ),
+                                    const Spacer(),
+                                    Radio(
+                                      value: widget.location.id.toString(),
+                                      groupValue: locationController.isRadioSelected.value,
+                                      onChanged: (value) {
+                                          locationController.isRadioSelected.value =
+                                              widget.location.id.toString();
+                                          locationController.location.value=widget.location;
+                                          },
+                                      activeColor: Colors.green,
+                                    ),
+                                  ],
+                                ),
+                            ),
                       ),
-                    ),
+
                   ),
 
                   Row(
                     children: [
-                      const Icon(
+                       Icon(
                         Icons.phone,
+                        size: 16,
+                        color: Theme.of(context).dividerColor.withOpacity(0.5),
                       ),
                       Text(
                         widget.location.phone!,

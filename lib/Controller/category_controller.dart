@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Model/favorite.dart';
@@ -11,9 +12,28 @@ class CategoryController extends GetxController {
   static CategoryController instance = Get.find();
 
   final _listFilter = <Filter>[].obs;
-  final listCategory = <Category>[].obs;
+  final _listCategory = <Category>[].obs;
+  final _listCategoryFull = <Category>[].obs;
   final countCategory = 0.obs;
   var categorySelect = Category();
+
+  TextEditingController pesquisa = TextEditingController();
+
+  List<Category> get listCategoryFull {
+    return _listCategoryFull;
+  }
+
+  set listCategoryFull(List<Category> list) {
+    _listCategoryFull.value = list;
+  }
+
+  List<Category> get listCategory {
+    return _listCategory;
+  }
+
+  set listCategory(List<Category> list) {
+    _listCategory.value = list;
+  }
 
   List<Filter> get listFilter {
     return _listFilter.value;
@@ -24,8 +44,12 @@ class CategoryController extends GetxController {
   }
 
   Future carregarFilter() async {
-    if(listCategory.isEmpty) {
-      listCategory.value = await ServiceRequest.loadCategory();
+    print("filtro");
+    if (listCategory.isEmpty) {
+      listCategory = await ServiceRequest.loadCategory();
+      if (listCategory.isNotEmpty) {
+        listCategoryFull = listCategory;
+      }
     }
     if (_listFilter.isEmpty) {
       /*_listFilter.add(Filter(
@@ -109,10 +133,6 @@ class CategoryController extends GetxController {
         }
       });
 
-      /* _listFilter.add(Filter(
-          image:
-              "https://www.mandabai.com/wp-content/uploads/2022/02/filterPeixesApp.png",
-          name: "Carnes e Peixes"));*/
 
       if (_listFilter.isEmpty) {
         return null;
@@ -190,79 +210,107 @@ class CategoryController extends GetxController {
     return productController.listProduct;
   }
 
-  Future carregarProductByPresents() async {
-    if (listCategory.isEmpty) {
-      listCategory.value = await ServiceRequest.loadCategory();
-    }
-    listCategory.forEach((element) {
-      if (element.name == "Presentes") {
-        categorySelect = element;
+  var destaqueCurrent = ''.obs;
+
+  Future carregarProductByHome() async {
+    await mandaBaiController.loadDestaque();
+    if (productController.listProductHome.isEmpty ||
+        destaqueCurrent != mandaBaiController.destaque) {
+
+     destaqueCurrent=mandaBaiController.destaque;
+      if (listCategory.isEmpty) {
+        listCategory = await ServiceRequest.loadCategory();
       }
-    });
+      for (var element in listCategory) {
+        if (element.name == mandaBaiController.destaque.value) {
+          categorySelect = element;
+        }
+      }
 
-    productController.listProduct.value =
-        await ServiceRequest.loadProduct(categorySelect.id);
+      productController.listProductHome.value =
+          await ServiceRequest.loadProduct(categorySelect.id);
 
-    if (productController.listProduct.isEmpty) {
-      return null;
-    } else {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      var check = prefs.getString('id');
-      if (check != 'null' && check != null) {
-        final String? itemFavortiesString = prefs.getString('itens_favorites');
-        final String? itemUsernameString = prefs.getString('username');
-        if (itemFavortiesString != null) {
-          productController.listProductFavorite.value =
-              Favorite.decode(itemFavortiesString);
-          for (int i = 0; i < productController.listProduct.length; i++) {
-            for (int f = 0;
-                f < productController.listProductFavorite.length;
-                f++) {
-              if (productController.listProduct[i].id ==
-                      productController.listProductFavorite[f].id &&
-                  productController.listProductFavorite[f].username ==
-                      itemUsernameString) {
-                productController.listProduct[i].favorite = true;
+      if (productController.listProductHome.isEmpty) {
+        return null;
+      } else {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        var check = prefs.getString('id');
+        if (check != 'null' && check != null) {
+          final String? itemFavortiesString =
+              prefs.getString('itens_favorites');
+          final String? itemUsernameString = prefs.getString('username');
+          if (itemFavortiesString != null) {
+            productController.listProductFavorite.value =
+                Favorite.decode(itemFavortiesString);
+            for (int i = 0; i < productController.listProductHome.length; i++) {
+              for (int f = 0;
+                  f < productController.listProductFavorite.length;
+                  f++) {
+                if (productController.listProductHome[i].id ==
+                        productController.listProductFavorite[f].id &&
+                    productController.listProductFavorite[f].username ==
+                        itemUsernameString) {
+                  productController.listProductHome[i].favorite = true;
+                }
               }
             }
           }
         }
-      }
 
-      var value;
-      if (fullControllerController.initialMoney.value == "USD") {
-        value = await ServiceRequest.loadDolar();
-      }
-      if (fullControllerController.initialMoney.value != "EUR") {
-        for (int m = 0; m < productController.listProduct.length; m++) {
-          switch (fullControllerController.initialMoney.value) {
-            case 'USD':
-              {
-                if (value != false) {
-                  double dolar = double.parse(value);
-                  productController.listProduct[m].price =
-                      productController.listProduct[m].price / dolar;
+        var value;
+        if (fullControllerController.initialMoney.value == "USD") {
+          value = await ServiceRequest.loadDolar();
+        }
+        if (fullControllerController.initialMoney.value != "EUR") {
+          for (int m = 0; m < productController.listProductHome.length; m++) {
+            switch (fullControllerController.initialMoney.value) {
+              case 'USD':
+                {
+                  if (value != false) {
+                    double dolar = double.parse(value);
+                    productController.listProductHome[m].price =
+                        productController.listProductHome[m].price / dolar;
+                  }
+                  break;
                 }
-                break;
-              }
-            case 'ECV':
-              {
-                productController.listProduct[m].price =
-                    productController.listProduct[m].price * 110.87;
-                break;
-              }
+              case 'ECV':
+                {
+                  productController.listProductHome[m].price =
+                      productController.listProductHome[m].price * 110.87;
+                  break;
+                }
+            }
           }
         }
       }
     }
-    return productController.listProduct;
+    return productController.listProductHome;
   }
 
   Future carregarCategory() async {
-    listCategory.value = await ServiceRequest.loadCategory();
-    if (listCategory.isEmpty) {
-      return null;
+    if (listCategory.isEmpty && pesquisa.text.isEmpty) {
+      listCategory = await ServiceRequest.loadCategory();
+      if (listCategory.isEmpty) {
+        return null;
+      }
+      listCategoryFull = listCategory;
     }
     return listCategory;
+  }
+
+  search() {
+    listCategory.clear();
+    if (pesquisa.text.isEmpty) {
+      listCategory = listCategoryFull;
+    } else {
+      for (int i = 0; i < listCategoryFull.length; i++) {
+        if (listCategoryFull[i]
+            .name!
+            .toLowerCase()
+            .contains(pesquisa.text.toLowerCase())) {
+          listCategory.add(listCategoryFull[i]);
+        }
+      }
+    }
   }
 }

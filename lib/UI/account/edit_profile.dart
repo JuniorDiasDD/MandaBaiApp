@@ -21,6 +21,8 @@ import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditPorfilePage extends StatefulWidget {
+  const EditPorfilePage({Key? key}) : super(key: key);
+
   @override
   _EditPorfilePageState createState() => _EditPorfilePageState();
 }
@@ -75,13 +77,13 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
 
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
-    input_email.text = user.email;
-    input_numero.text = user.telefone;
-    input_senha.text = user.senha;
-    input_senha_conf.text = user.senha;
-    input_nome.text = user.name;
-    input_country.text = user.country;
-    input_city.text = user.city;
+    input_email.text = user.email!;
+    input_numero.text = user.telefone!;
+    input_senha.text = user.senha!;
+    input_senha_conf.text = user.senha!;
+    input_nome.text = user.name!;
+    input_country.text = user.country!;
+    input_city.text = user.city!;
   }
 
   @override
@@ -305,7 +307,7 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                                         ],
                                         image: DecorationImage(
                                           fit: BoxFit.fill,
-                                          image: NetworkImage(user.avatar),
+                                          image: NetworkImage(user.avatar!),
                                         ),
                                       ),
                                     ),

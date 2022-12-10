@@ -4,12 +4,16 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_colors.dart';
-import 'package:manda_bai/UI/account/pages/edit_profile.dart';
+import 'package:manda_bai/UI/account/edit_profile.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:manda_bai/UI/setting/componente/buttonOption.dart';
 import 'package:manda_bai/UI/setting/componente/headerTitle.dart';
+import 'package:manda_bai/UI/widget/dialog_custom.dart';
+import 'package:manda_bai/constants/controllers.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Setting extends StatefulWidget {
   const Setting({Key? key}) : super(key: key);
@@ -89,38 +93,43 @@ class _SettingState extends State<Setting> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Container(
-                        width: Get.width * 0.3,
-                        height: Get.height * 0.04,
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(20)),
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.help,
-                              color: AppColors.white,
-                            ),
-                            const SizedBox(
-                              width: 16,
-                            ),
-                            Text(
-                              "Ajuda",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline3!
-                                  .copyWith(
-                                    color: AppColors.white,
-                                  ),
-                            )
-                          ],
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.pushNamed(context, '/contact');
+                    },
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Container(
+                          width: Get.width * 0.3,
+                          height: Get.height * 0.04,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20)),
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.help,
+                                color: AppColors.white,
+                              ),
+                              const SizedBox(
+                                width: 16,
+                              ),
+                              Text(
+                                "Ajuda",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline3!
+                                    .copyWith(
+                                      color: AppColors.white,
+                                    ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -128,7 +137,7 @@ class _SettingState extends State<Setting> {
                   Padding(
                     padding: const EdgeInsets.only(left: 32.0, bottom: 16),
                     child: Text(
-                      "Ola",
+                      user.name == null ? "Ola" : "Ola " + user.name!,
                       style: Theme.of(context)
                           .textTheme
                           .headline3!
@@ -136,7 +145,6 @@ class _SettingState extends State<Setting> {
                     ),
                   ),
                   Container(
-
                     width: Get.width,
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.only(
@@ -145,7 +153,8 @@ class _SettingState extends State<Setting> {
                       color: Theme.of(context).scaffoldBackgroundColor,
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 16.0, right: 16,bottom: 8),
+                      padding: const EdgeInsets.only(
+                          left: 16.0, right: 16, bottom: 8),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -153,48 +162,57 @@ class _SettingState extends State<Setting> {
                             height: 32,
                           ),
                           const HeaderTitle(
-                              title: "Conta",
-                              description:
-                                  "Edita sua conta e a aparência da aplicação"),
+                            title: "Conta",
+                            description:
+                                "Edita sua conta e a aparência da aplicação",
+                          ),
                           const SizedBox(
                             height: 8,
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.all(
-                                   Radius.circular(25)),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(25)),
                               color: Theme.of(context).dialogBackgroundColor,
                             ),
                             child: Column(
                               children: [
                                 ButtonOption(
-                                  textButton: "Editar Conta",
-                                  action: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => EditPorfilePage(),
-                                      ),
-                                    );
+                                  textButton:  AppLocalizations.of(context)!.text_edit_profile,
+                                  action: () async {
+                                    if (!await authenticationController
+                                        .checkLogin()) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return DialogCustom(
+                                              textButton:
+                                                  AppLocalizations.of(context)!
+                                                      .button_login,
+                                              action: () {
+                                                Navigator.pushNamed(
+                                                    context, '/login');
+                                              },
+                                            );
+                                          });
+                                    } else {
+                                      Navigator.pushNamed(
+                                          context, '/editProfile');
+                                    }
                                   },
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 16.0,right: 16.0),
+                                  padding: const EdgeInsets.only(
+                                      left: 16.0, right: 16.0),
                                   child: Divider(
                                     height: 0,
                                     color: Theme.of(context).dividerColor,
                                   ),
                                 ),
                                 ButtonOption(
-                                  textButton: "Editar Conta",
-                                  action: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => EditPorfilePage(),
-                                      ),
-                                    );
-                                  },
+                                  textButton: "Tema Escuro",
+                                  action: () {},
+                                  theme: true,
                                 ),
                               ],
                             ),
@@ -205,45 +223,58 @@ class _SettingState extends State<Setting> {
                           const HeaderTitle(
                               title: "Configuração",
                               description:
-                              "Faça a sua configuração do modo que seja melhor"),
+                                  "Faça a sua configuração do modo que seja melhor"),
                           const SizedBox(
                             height: 8,
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(25)),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(25)),
                               color: Theme.of(context).dialogBackgroundColor,
                             ),
                             child: Column(
                               children: [
                                 ButtonOption(
-                                  textButton: "Selecionar Moeda",
+                                  textButton: AppLocalizations.of(context)!
+                                      .text_select_currency,
                                   action: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => EditPorfilePage(),
-                                      ),
-                                    );
+                                    Navigator.pushNamed(
+                                        context, '/settingMoney');
                                   },
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 16.0,right: 16.0),
+                                  padding: const EdgeInsets.only(
+                                      left: 16.0, right: 16.0),
                                   child: Divider(
                                     height: 0,
                                     color: Theme.of(context).dividerColor,
                                   ),
                                 ),
                                 ButtonOption(
-                                  textButton: "Local de Entrega",
-                                  action: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => EditPorfilePage(),
-                                      ),
-                                    );
+                                  textButton:  AppLocalizations.of(context)!
+                                      .text_delivery_location,
+                                  action: () async {
+                                    if (!await authenticationController
+                                        .checkLogin()) {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return DialogCustom(
+                                              textButton:
+                                                  AppLocalizations.of(context)!
+                                                      .button_login,
+                                               action: () {
+                                                Navigator.pushNamed(
+                                                    context, '/login');
+                                              },
+                                            );
+                                          });
+                                    } else {
+                                      await locationController.carregarLocation();
+                                      Navigator.pushNamed(
+                                          context, '/SettingDestination');
+                                    }
                                   },
                                 ),
                               ],
@@ -255,31 +286,29 @@ class _SettingState extends State<Setting> {
                           const HeaderTitle(
                               title: "Redes Socias",
                               description:
-                              "Visita nossas redes sociais para ver como é nosso trabalho no dia a dia"),
+                                  "Visita nossas redes sociais para ver como é nosso trabalho no dia a dia"),
                           const SizedBox(
                             height: 8,
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(25)),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(25)),
                               color: Theme.of(context).dialogBackgroundColor,
                             ),
                             child: Column(
                               children: [
                                 ButtonOption(
                                   textButton: "Facebook",
-                                  action: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => EditPorfilePage(),
-                                      ),
-                                    );
-                                  },
+                                  action: () async {
+                                    var facebookUrl =
+                                        'https://www.facebook.com/shopmandabai/';
+                                    await launch(facebookUrl);
+                                  }
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 16.0,right: 16.0),
+                                  padding: const EdgeInsets.only(
+                                      left: 16.0, right: 16.0),
                                   child: Divider(
                                     height: 0,
                                     color: Theme.of(context).dividerColor,
@@ -287,13 +316,10 @@ class _SettingState extends State<Setting> {
                                 ),
                                 ButtonOption(
                                   textButton: "Instagram",
-                                  action: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => EditPorfilePage(),
-                                      ),
-                                    );
+                                  action: () async {
+                                    var facebookUrl =
+                                        'https://www.instagram.com/mandabaishop/';
+                                    await launch(facebookUrl);
                                   },
                                 ),
                               ],
@@ -304,39 +330,53 @@ class _SettingState extends State<Setting> {
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(25)),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(25)),
                               color: Theme.of(context).dialogBackgroundColor,
                             ),
                             child: Column(
                               children: [
                                 ButtonOption(
-                                  textButton: "Sobre nós e Aplicação",
+                                  textButton: AppLocalizations.of(context)!
+                                      .text_about_us_and_aplication,
                                   action: () {
-                                    Navigator.push(
+                                    Navigator.pushNamed(
                                       context,
-                                      MaterialPageRoute(
-                                        builder: (context) => EditPorfilePage(),
-                                      ),
+                                     '/infoApp'
                                     );
                                   },
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 16.0,right: 16.0),
+                                  padding: const EdgeInsets.only(
+                                      left: 16.0, right: 16.0),
                                   child: Divider(
                                     height: 0,
                                     color: Theme.of(context).dividerColor,
                                   ),
                                 ),
                                 ButtonOption(
-                                  textButton: "Terminar Sessão",
-                                  action: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => EditPorfilePage(),
-                                      ),
-                                    );
+                                  textButton:AppLocalizations.of(context)!.text_logout,
+                                  action: () async {
+                                    var result =
+                                        await authenticationController.logout();
+
+                                    if (result.success) {
+                                      Navigator.of(context)
+                                          .pushNamedAndRemoveUntil('/home',
+                                              (Route<dynamic> route) => false);
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: Text(
+                                          result.errorMessage!,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall,
+                                        ),
+                                        backgroundColor:
+                                            Theme.of(context).errorColor,
+                                      ));
+                                    }
                                   },
                                 ),
                               ],

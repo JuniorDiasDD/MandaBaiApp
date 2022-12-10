@@ -13,7 +13,7 @@ import 'package:manda_bai/Model/category.dart';
 import 'package:manda_bai/Model/favorite.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/category_filter/components/product_list_component.dart';
-import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
+import 'package:manda_bai/UI/widget/dialog_custom.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:manda_bai/constants/controllers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -115,7 +115,7 @@ class _CategoryPageState extends State<CategoryPage> {
   List<String> list_filter = [];
 
   double position = 0.0;
-  var money = "EUR";
+
 
   late ScrollController _controller;
   _scrollListener() async {
@@ -197,7 +197,7 @@ class _CategoryPageState extends State<CategoryPage> {
               }
             }
           }
-          money = prefs.getString('money')!;
+        var  money = fullControllerController.initialMoney.value;
           var value;
           if (money == "USD") {
             value = await ServiceRequest.loadDolar();
@@ -252,6 +252,7 @@ class _CategoryPageState extends State<CategoryPage> {
           }
         }
         var value;
+        var  money = fullControllerController.initialMoney.value;
         if (money == "USD") {
           value = await ServiceRequest.loadDolar();
         }
@@ -297,11 +298,6 @@ class _CategoryPageState extends State<CategoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-
-    /*24 is for notification bar on Android*/
-    final double itemHeight = (size.height) / 3;
-    final double itemWidth = size.width / 2;
     return SafeArea(
       child: Scaffold(
         // resizeToAvoidBottomInset: false,
@@ -311,7 +307,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 onPressed: () {
                   _controller.animateTo(
                     position,
-                    duration: Duration(seconds: 1),
+                    duration:const Duration(seconds: 1),
                     curve: Curves.easeIn,
                   );
                   productController.focus = false;
@@ -333,7 +329,7 @@ class _CategoryPageState extends State<CategoryPage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(
-                                left: 8.0, right: 16.0, top: 8),
+                                left: 8.0, right: 16.0, top: 6),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -359,45 +355,48 @@ class _CategoryPageState extends State<CategoryPage> {
                                 ),
                                 Row(
                                   children: [
-                                    SizedBox(
-                                      width: Get.width * 0.2,
-                                      height: Get.width * 0.1,
-                                      child: DropdownButton(
-                                        icon: Container(
-                                          width: Get.width * 0.1,
-                                          height: Get.width * 0.1,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(50),
-                                            color: AppColors.grey50
-                                                .withOpacity(0.8),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top:4.0),
+                                      child: SizedBox(
+                                        width: Get.width * 0.2,
+                                        height: Get.width * 0.1,
+                                        child: DropdownButton(
+                                          icon: Container(
+                                            width: Get.width * 0.1,
+                                            height: Get.width * 0.1,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              color: AppColors.grey50
+                                                  .withOpacity(0.8),
+                                            ),
+                                            child: const Icon(
+                                              Icons.filter_alt_sharp,
+                                              color: AppColors.black_claro,
+                                              size: 20.09,
+                                            ),
                                           ),
-                                          child: const Icon(
-                                            Icons.filter_alt_sharp,
-                                            color: AppColors.black_claro,
-                                            size: 20.09,
-                                          ),
+                                          isExpanded: true,
+                                          elevation: 16,
+                                          underline: DropdownButtonHideUnderline(
+                                              child: Container()),
+                                          items: list_filter.map((val) {
+                                            return DropdownMenuItem(
+                                              value: val,
+                                              child: Text(val,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline4),
+                                            );
+                                          }).toList(),
+                                          //  value: dropdownValue,
+                                          onChanged: (String? value) {
+                                            setState(() {
+                                              dropdownValue = value!;
+                                              _ordenar();
+                                            });
+                                          },
                                         ),
-                                        isExpanded: true,
-                                        elevation: 16,
-                                        underline: DropdownButtonHideUnderline(
-                                            child: Container()),
-                                        items: list_filter.map((val) {
-                                          return DropdownMenuItem(
-                                            value: val,
-                                            child: Text(val,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline4),
-                                          );
-                                        }).toList(),
-                                        //  value: dropdownValue,
-                                        onChanged: (String? value) {
-                                          setState(() {
-                                            dropdownValue = value!;
-                                            _ordenar();
-                                          });
-                                        },
                                       ),
                                     ),
                                     const SizedBox(
@@ -405,33 +404,73 @@ class _CategoryPageState extends State<CategoryPage> {
                                     ),
                                     GestureDetector(
                                       onTap: () async {
-                                        final SharedPreferences prefs =
-                                            await SharedPreferences
-                                                .getInstance();
-                                        var check = prefs.getString('id');
-                                        if (check == 'null' || check == null) {
+                                        if (!await authenticationController.checkLogin()) {
                                           showDialog(
                                               context: context,
                                               builder: (BuildContext context) {
-                                                return const Pop_Login();
+                                                return DialogCustom(textButton: AppLocalizations.of(context)!.button_login,action: (){
+                                                  Navigator.pushNamed(context, '/login');
+                                                },);
                                               });
                                         } else {
                                           Navigator.pushNamed(context, '/cart');
                                         }
                                       },
-                                      child: Container(
-                                        width: Get.width * 0.1,
-                                        height: Get.width * 0.1,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(50),
-                                          color:
-                                              AppColors.grey50.withOpacity(0.8),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(6.0),
-                                          child: WebsafeSvg.asset(
-                                              AppImages.iconMenuCartOutline),
+                                      child: SizedBox(
+                                        width: Get.width * 0.13,
+                                        height: Get.width * 0.13,
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              width: Get.width * 0.1,
+                                              height: Get.width * 0.1,
+                                              margin: const EdgeInsets.only(top: 8),
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(50),
+                                                color: AppColors.grey50.withOpacity(0.8),
+                                              ),
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(6.0),
+                                                child: WebsafeSvg.asset(
+                                                    AppImages.iconMenuCartOutline),
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: Alignment.topRight,
+                                              child: Container(
+                                                width: 20,
+                                                height: 26,
+                                                margin: const EdgeInsets.only(right: 2),
+                                                decoration: BoxDecoration(
+                                                  color: Theme.of(context).primaryColor,
+                                                  borderRadius: const BorderRadius.all(
+                                                      Radius.circular(10)),
+                                                ),
+                                                child: Obx(
+                                                      () => Center(
+                                                    child: cartPageController.listCart.isEmpty
+                                                        ? Text(
+                                                      "0",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .subtitle1!
+                                                          .copyWith(
+                                                          color: AppColors.white),
+                                                    )
+                                                        : Text(
+                                                      cartPageController.listCart.length
+                                                          .toString(),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .subtitle1!
+                                                          .copyWith(
+                                                          color: AppColors.white),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),

@@ -11,12 +11,15 @@ class AppImages {
   static const iconMenuShopping='assets/images/icons/Shopping.svg';
   static const iconMenuShoppingOutline='assets/images/icons/ShoppingOutline.svg';
   static const iconMenuCartOutline='assets/images/icons/cartOutline.svg';
+  static const iconTrankingEcommerce='assets/images/icons/eCommerce.svg';
+  static const iconTrankingShop='assets/images/icons/Shop.svg';
+  static const iconTrankingCar='assets/images/icons/car.svg';
+  static const iconTrankingBox='assets/images/icons/box.svg';
 
   static const firstOnboardingImage = 'assets/images/onboarding.svg';
   static const secondOnboardingImage = 'assets/images/onboarding_2.svg';
   static const thirdOnboardingImage = 'assets/images/onboarding_3.svg';
   static const cart_empyt = 'assets/images/cart_empyt.svg';
-  static const credit_card = 'assets/images/creditCard.svg';
   static const favorite_empyt = 'assets/images/favorite_empyt.svg';
   static const cvmovel = 'https://www.mandabai.com/wp-content/uploads/2021/12/cvmovel.png';
   static const camara = 'https://www.mandabai.com/wp-content/uploads/2021/12/camara.png';

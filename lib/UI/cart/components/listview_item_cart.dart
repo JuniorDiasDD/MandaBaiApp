@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/cart_controller.dart';
 import 'package:manda_bai/Core/app_colors.dart';
-import 'package:manda_bai/Core/app_fonts.dart';
-
 import 'package:manda_bai/Model/cart_model.dart';
 import 'package:manda_bai/constants/controllers.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class ItemCart extends StatefulWidget {
-  final CartPageController cartPageController = Get.find();
-  CartModel cartModel;
-  int index;
-  ItemCart({required this.cartModel, required this.index});
+
+ final  CartModel cartModel;
+  final int index;
+ const ItemCart({Key? key, required this.cartModel, required this.index}) : super(key: key);
 
   @override
   _ItemCartState createState() => _ItemCartState();
@@ -97,18 +94,18 @@ class _ItemCartState extends State<ItemCart> {
                             () => Checkbox(
                               checkColor: Colors.white,
                               activeColor: AppColors.greenColor,
-                              value: widget.cartPageController
+                              value: cartPageController
                                   .list[widget.index].checkout,
                               onChanged: (bool? value) {
                                 setState(() {
                                   // isChecked = value!;
-                                  widget.cartPageController
+                                  cartPageController
                                       .checkBox(widget.cartModel.id, value);
 
-                                  if (widget.cartPageController.deleteFull ==
+                                  if (cartPageController.deleteFull ==
                                       true) {
                                     if (value == false) {
-                                      widget.cartPageController.deleteFull =
+                                     cartPageController.deleteFull =
                                           false;
                                     }
                                   }
@@ -141,9 +138,9 @@ class _ItemCartState extends State<ItemCart> {
                                         price = widget.cartModel.price * quant/100;
                                       });
 
-                                      widget.cartPageController
+                                     cartPageController
                                           .decrementar(widget.cartModel.id);
-                                      widget.cartPageController.calcule();
+                                      cartPageController.calcule();
                                     }
                                   },
                                 );
@@ -178,9 +175,9 @@ class _ItemCartState extends State<ItemCart> {
                                 setState(() {
                                   quant += 1;
                                   price = widget.cartModel.price * quant/100;
-                                  widget.cartPageController
+                                  cartPageController
                                       .incrementar(widget.cartModel.id);
-                                  widget.cartPageController.calcule();
+                                  cartPageController.calcule();
                                 });
                               },
                             ),

@@ -8,12 +8,12 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
-import 'package:manda_bai/UI/intro/pages/onboarding_page.dart';
 import 'package:manda_bai/constants/controllers.dart';
+import 'package:manda_bai/data/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../data/config.dart';
+
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -62,7 +62,7 @@ class _SplashPageState extends State<SplashPage> {
   Future<void> _updateConnectionStatus(ConnectivityResult result) async {
     setState(() {
       _connectionStatus = result;
-      print(_connectionStatus.toString());
+    });
       if (_connectionStatus == ConnectivityResult.none) {
         setState(() {
           net = 1;
@@ -78,13 +78,9 @@ class _SplashPageState extends State<SplashPage> {
         if (net == 1) {
           Navigator.pop(context);
         }
-      /*  String versionStore = "";
-        setState(() async {
-          versionStore = await fullControllerController.getVersion();
-          print("---" + versionStore);
-        });*/
+
         //check version
-        Future.delayed(Duration(seconds: 2)).then((_) async {
+
          String versionStore = await fullControllerController.getVersion();
           if (versionApp == versionStore) {
             final SharedPreferences prefs =
@@ -94,15 +90,14 @@ class _SplashPageState extends State<SplashPage> {
             if (check.toString() == 'true' && check != null) {
               Navigator.pushReplacementNamed(context, '/home');
             } else {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => OnboardingPage()));
+              Navigator.pushReplacementNamed(context,'/boarding');
             }
           } else {
             Navigator.pushReplacementNamed(context, '/updateApp');
           }
-        });
+
       }
-    });
+
   }
 
   @override
@@ -112,7 +107,7 @@ class _SplashPageState extends State<SplashPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
+          SizedBox(
             width: Get.width,
             height: Get.height * 0.14,
             child: Image.asset(AppImages.appLogo),

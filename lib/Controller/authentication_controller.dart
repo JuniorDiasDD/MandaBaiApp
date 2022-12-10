@@ -6,6 +6,7 @@ import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Model/user.dart';
 import 'package:manda_bai/constants/controllers.dart';
+import 'package:manda_bai/helpers/result.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -32,7 +33,7 @@ class AuthenticationController extends GetxController {
     print('entrou validar');
     final FormState? form = formKey.currentState;
     if (form!.validate()) {
-      User new_user = User(
+      User newUser = User(
           name: input_nome.text,
           telefone: input_telefone.text,
           email: input_email.text,
@@ -44,7 +45,7 @@ class AuthenticationController extends GetxController {
           country: input_country.text);
 
       loading.value = true;
-      return await ServiceRequest.createAccount(new_user);
+      return await ServiceRequest.createAccount(newUser);
     }
     return false;
   }
@@ -54,10 +55,7 @@ class AuthenticationController extends GetxController {
     if (form!.validate()) {
       String username = input_usernameLogin.text;
       String password = input_senhaLogin.text;
-
-      loading.value=true;
       var island = fullControllerController.island.value;
-      print(island.toString());
       var response;
       switch (island) {
         case "Santo Antão":
@@ -98,7 +96,7 @@ class AuthenticationController extends GetxController {
           break;
       }
 
-     // print(response.statusCode.toString() + "\n" + response.body);
+      // print(response.statusCode.toString() + "\n" + response.body);
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
         final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -119,5 +117,32 @@ class AuthenticationController extends GetxController {
         return false;
       }
     }
+  }
+
+  Future<bool> checkLogin() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var check = prefs.getString('id');
+    if (check == null || check == 'null') {
+      return false;
+    }
+
+    return true;
+  }
+
+  Future<SetResult> logout() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var check = prefs.getString('id');
+    if (check != 'null' || check != null) {
+      prefs.remove('id');
+      prefs.remove('username');
+      prefs.remove('password');
+      prefs.remove('user');
+      user= User();
+      cartPageController.listCart.clear();
+      favoriteController.list_product.clear();
+
+      return SetResult(true);
+    }
+    return SetResult(false, errorMessage: 'Error to logout');
   }
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Model/favorite.dart';
 import 'package:manda_bai/Model/product.dart';
@@ -5,8 +6,9 @@ import 'package:manda_bai/constants/controllers.dart';
 
 class ProductController extends GetxController {
   static ProductController instance = Get.find();
-
+TextEditingController pesquisa= TextEditingController();
   final listProduct = <Product>[].obs;
+  final listProductHome = <Product>[].obs;
   final listProductFavorite = <Favorite>[].obs;
 
   final _loading = false.obs;

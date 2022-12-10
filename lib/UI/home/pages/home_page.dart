@@ -1,46 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:manda_bai/Core/app_colors.dart';
+import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/Favorite/page/favorite_page.dart';
-import 'package:manda_bai/UI/Pedido/pages/pedido_page.dart';
+import 'package:manda_bai/UI/order/pages/order_page.dart';
 import 'package:manda_bai/UI/categories/pages/categoriesMenu.dart';
-import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
+import 'package:manda_bai/UI/widget/dialog_custom.dart';
 import 'package:manda_bai/UI/home/pages/start_page.dart';
 import 'package:manda_bai/UI/setting/pages/setting.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:manda_bai/constants/controllers.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 
-import '../../../Core/app_images.dart';
-
 class HomePage extends StatefulWidget {
-  int index;
-  HomePage({Key? key, required this.index}) : super(key: key);
+  final int index;
+  const HomePage({Key? key, required this.index}) : super(key: key);
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
 
   static final List<Widget> _widgetOptions = <Widget>[
-    StartPage(),
+    const StartPage(),
     const CategoriesMenu(),
+    const PedidoPage(),
     const FavoritePage(),
-    PedidoPage(),
     const Setting()
   ];
 
   Future<void> _onItemTapped(int index) async {
     if (index == 2 || index == 3) {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      var check = prefs.getString('id');
-      if (check == 'null' || check == null) {
+      if (!await authenticationController.checkLogin()) {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return const Pop_Login();
+              return DialogCustom(textButton: AppLocalizations.of(context)!.button_login,action: (){
+                Navigator.pushNamed(context, '/login');
+              },);
             });
       } else {
         setState(() {
@@ -56,7 +54,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setState(() {
       _selectedIndex = widget.index;

@@ -2,33 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Model/product.dart';
-import 'package:manda_bai/UI/Favorite/controller/favorite_controller.dart';
-import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:manda_bai/UI/widget/dialogs.dart';
+import 'package:manda_bai/constants/controllers.dart';
 
 class ItemFavoriteComponent extends StatefulWidget {
-  Product product;
-  ItemFavoriteComponent({Key? key, required this.product}) : super(key: key);
+  final Product product;
+  const ItemFavoriteComponent({Key? key, required this.product})
+      : super(key: key);
 
   @override
   _ItemFavoriteComponentState createState() => _ItemFavoriteComponentState();
 }
 
 class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
-  final FavoriteController controller = Get.find();
   bool isChecked = false;
-  Future _addCart(id) async {
-    bool check = await ServiceRequest.addCart(id, 1);
-    return check;
-  }
-
-  String money = "";
-  Future _carregarMoney() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    money = prefs.getString('money')!;
-    return money;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +35,7 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
             BoxShadow(
               color: Theme.of(context).cardColor,
               blurRadius: 2.0,
-              offset: Offset(2.0, 2.0),
+              offset: const Offset(2.0, 2.0),
             )
           ],
         ),
@@ -83,48 +71,43 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                               widget.product.name,
                               style: Theme.of(context).textTheme.headline4,
                             ),
-                            FutureBuilder(
-                                future: _carregarMoney(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot snapshot) {
-                                  if (snapshot.data == null) {
-                                    return const Text(" ");
-                                  } else {
-                                    if (widget.product.price == 0.0) {
-                                      return Text(
-                                        AppLocalizations.of(context)!.no_stock,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline6!
-                                            .copyWith(
-                                              color: Colors.red,
-                                            ),
-                                      );
-                                    } else {
-                                      return Row(
-                                        children: [
-                                          Text(
-                                            money == "ECV"
-                                                ? widget.product.price
-                                                    .toStringAsFixed(0)
-                                                : widget.product.price
-                                                    .toStringAsFixed(2),
-                                            textAlign: TextAlign.center,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline5,
+                            SizedBox(
+                              child: widget.product.price == 0.0
+                                  ? Text(
+                                      AppLocalizations.of(context)!.no_stock,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline6!
+                                          .copyWith(
+                                            color: Colors.red,
                                           ),
-                                          Text(
-                                            " " + money,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline5,
-                                          ),
-                                        ],
-                                      );
-                                    }
-                                  }
-                                }),
+                                    )
+                                  : Row(
+                                      children: [
+                                        Text(
+                                          fullControllerController
+                                                      .initialMoney.value ==
+                                                  "ECV"
+                                              ? widget.product.price
+                                                  .toStringAsFixed(0)
+                                              : widget.product.price
+                                                  .toStringAsFixed(2),
+                                          textAlign: TextAlign.center,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline5,
+                                        ),
+                                        Text(
+                                          " " +
+                                              fullControllerController
+                                                  .initialMoney.value,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline5,
+                                        ),
+                                      ],
+                                    ),
+                            ),
                           ],
                         ),
                       ),
@@ -134,66 +117,56 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                             padding: const EdgeInsets.all(0.0),
                             onPressed: () async {
                               if (widget.product.price != 0.0) {
-                                setState(() {
-                                  controller.loading = true;
-                                });
-                                var check = await _addCart(widget.product.id);
-                                if (check == true) {
-                                  setState(() {
-                                    controller.loading = false;
-                                  });
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return Pop_up_Message(
-                                            mensagem:
-                                                AppLocalizations.of(context)!
-                                                    .message_success_cart,
-                                            icon: Icons.check,
-                                            caminho: "addCarrinho");
-                                      });
+                                openLoadingStateDialog(context);
+                                var result = await favoriteController
+                                    .addCart(widget.product.id);
+                                Navigator.pop(context);
+                                if (result.success) {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text(
+                                      AppLocalizations.of(context)!
+                                          .message_success_cart,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall,
+                                    ),
+                                    backgroundColor:
+                                        Theme.of(context).primaryColor,
+                                  ));
                                 } else {
-                                  setState(() {
-                                    controller.loading = false;
-                                  });
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return Pop_up_Message(
-                                            mensagem:
-                                                AppLocalizations.of(context)!
-                                                    .message_error_cart,
-                                            icon: Icons.error,
-                                            caminho: "erro");
-                                      });
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text(
+                                      result.errorMessage!,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall,
+                                    ),
+                                    backgroundColor:
+                                        Theme.of(context).errorColor,
+                                  ));
                                 }
                               } else {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return Pop_up_Message(
-                                          mensagem:
-                                              AppLocalizations.of(context)!
-                                                  .no_stock_description,
-                                          icon: Icons.home_filled,
-                                          caminho: "erro");
-                                    });
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text(
+                                    AppLocalizations.of(context)!
+                                        .no_stock_description,
+                                    style:
+                                        Theme.of(context).textTheme.labelSmall,
+                                  ),
+                                  backgroundColor: Theme.of(context).errorColor,
+                                ));
                               }
                             },
-                            icon:
-                                Theme.of(context).brightness == Brightness.dark
-                                    ? Icon(
-                                        Icons.shopping_cart,
-                                        color: controller.loading
-                                            ? Colors.green
-                                            : Colors.white,
-                                      )
-                                    : Icon(
-                                        Icons.shopping_cart,
-                                        color: controller.loading
-                                            ? Colors.green
-                                            : Colors.black,
-                                      ),
+                            icon: Icon(
+                              Icons.shopping_cart,
+                              color: Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
                             iconSize: Get.width * 0.05,
                           ),
                           IconButton(
@@ -202,9 +175,9 @@ class _ItemFavoriteComponentState extends State<ItemFavoriteComponent> {
                               setState(() {
                                 ServiceRequest.removeFavrite(widget.product.id);
                                 setState(() {
-                                  bool check =
-                                      controller.remover(widget.product.id);
-                                  controller.vazio = check;
+                                  bool check = favoriteController
+                                      .remover(widget.product.id);
+                                  favoriteController.vazio = check;
                                 });
                               });
                             },

@@ -7,11 +7,9 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/home/components/item_category.dart';
-import 'package:manda_bai/UI/home/pop_up/pop_login.dart';
+import 'package:manda_bai/UI/widget/dialog_custom.dart';
 import 'package:manda_bai/UI/widget/Empty.dart';
-import 'package:manda_bai/UI/widget/Search.dart';
 import 'package:manda_bai/constants/controllers.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 import '../../home/pop_up/popup_message_internet.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -98,30 +96,73 @@ class _CategoriesMenuState extends State<CategoriesMenu> {
                     ),
                     GestureDetector(
                       onTap: () async {
-                        final SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        var check = prefs.getString('id');
-                        if (check == 'null' || check == null) {
+                        if (!await authenticationController.checkLogin()) {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return const Pop_Login();
+                                return DialogCustom(textButton: AppLocalizations.of(context)!.button_login,action: (){
+                                  Navigator.pushNamed(context, '/login');
+                                },);
                               });
                         } else {
                           Navigator.pushNamed(context, '/cart');
                         }
                       },
-                      child: Container(
-                        width: Get.width * 0.1,
-                        height: Get.width * 0.1,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          color: AppColors.grey50.withOpacity(0.8),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(6.0),
-                          child:
-                              WebsafeSvg.asset(AppImages.iconMenuCartOutline),
+                      child: SizedBox(
+                        width: Get.width * 0.13,
+                        height: Get.width * 0.13,
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: Get.width * 0.1,
+                              height: Get.width * 0.1,
+                              margin: const EdgeInsets.only(top: 8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: AppColors.grey50.withOpacity(0.8),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(6.0),
+                                child: WebsafeSvg.asset(
+                                    AppImages.iconMenuCartOutline),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: Container(
+                                width: 20,
+                                height: 26,
+                                margin: const EdgeInsets.only(right: 2),
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).primaryColor,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                ),
+                                child: Obx(
+                                  () => Center(
+                                    child: cartPageController.listCart.isEmpty
+                                        ? Text(
+                                            "0",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle1!
+                                                .copyWith(
+                                                    color: AppColors.white),
+                                          )
+                                        : Text(
+                                            cartPageController.listCart.length
+                                                .toString(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle1!
+                                                .copyWith(
+                                                    color: AppColors.white),
+                                          ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -133,9 +174,35 @@ class _CategoriesMenuState extends State<CategoriesMenu> {
                       right: Get.width * 0.03,
                       top: 8,
                       bottom: 8),
-                  child: Search(
-                    textHint: AppLocalizations.of(context)!.search,
-                    function: () {},
+                  child: TextField(
+                    cursorColor: AppColors.greenColor,
+                    controller: categoryController.pesquisa,
+                    style: Theme.of(context).textTheme.headline4,
+                    decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context)!.search,
+                      hintStyle: Theme.of(context).textTheme.headline4,
+                      contentPadding: const EdgeInsets.only(top: 8),
+                      focusedBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          borderSide: BorderSide(color: AppColors.greenColor)),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: AppColors.black_claro.withOpacity(0.4),
+                      ),
+                      filled: true,
+                      fillColor: AppColors.grey50.withOpacity(0.5),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(20.0),
+                        ),
+                        borderSide: BorderSide(
+                            color: AppColors.black_claro.withOpacity(0.4),
+                            width: 0.0),
+                      ),
+                    ),
+                    onChanged: (text) {
+                    //  categoryController.search();
+                    },
                   ),
                 ),
                 Align(
@@ -164,23 +231,26 @@ class _CategoriesMenuState extends State<CategoriesMenu> {
                           ),
                         );
                       default:
-                        if (snapshot.data == null) {
+                        if (categoryController.listCategory.isEmpty) {
                           return const Empty();
                         } else {
                           return SizedBox(
                             height: Get.height * 0.8,
-                            child: ListView.builder(
-                              padding: EdgeInsets.only(
-                                top: 0.0,
-                                bottom: Get.height * 0.03,
+                            child: Obx(
+                              () => ListView.builder(
+                                padding: EdgeInsets.only(
+                                  top: 0.0,
+                                  bottom: Get.height * 0.03,
+                                ),
+                                scrollDirection: Axis.vertical,
+                                itemCount:
+                                    categoryController.listCategory.length,
+                                itemBuilder: (BuildContext context, index) {
+                                  var list =
+                                      categoryController.listCategory[index];
+                                  return ListViewItemComponent(category: list);
+                                },
                               ),
-                              scrollDirection: Axis.vertical,
-                              itemCount: snapshot.data.length,
-                              itemBuilder: (BuildContext context, index) {
-                                var list =
-                                    categoryController.listCategory[index];
-                                return ListViewItemComponent(category: list);
-                              },
                             ),
                           );
                         }
