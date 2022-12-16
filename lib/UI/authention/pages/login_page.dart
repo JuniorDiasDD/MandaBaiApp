@@ -9,7 +9,6 @@ import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/authention/pages/recovery_password_page.dart';
-import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:manda_bai/UI/widget/TextFormField.dart';
@@ -142,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                                       authenticationController.input_senhaLogin,
                                   obscureText: authenticationController
                                       .statePasswordLogin.value,
-                                  style: Theme.of(context).textTheme.headline4,
+                                  style: Theme.of(context).textTheme.headline4!.copyWith(color:Colors.black),
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor:
@@ -188,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                                     labelText: AppLocalizations.of(context)!
                                         .textfield_password,
                                     labelStyle:
-                                        Theme.of(context).textTheme.headline4,
+                                        Theme.of(context).textTheme.headline4!.copyWith(color: Colors.black),
                                   ),
                                   validator: (value) => value!.isEmpty
                                       ? AppLocalizations.of(context)!
@@ -232,23 +231,20 @@ class _LoginPageState extends State<LoginPage> {
                                     AppLocalizations.of(context)!.button_login,
                                 action: () async {
                                   openLoadingStateDialog(context);
-                                  bool check = await authenticationController
-                                      .validateAndSaveLogin();
+                                  var result = await authenticationController
+                                      .validateAndSaveLogin(context);
                                   Navigator.pop(context);
-                                  if (check == true) {
+                                  if (result.success) {
                                     Navigator.pushReplacementNamed(
                                         context, '/home');
                                   } else {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return Pop_up_Message(
-                                              mensagem: AppLocalizations.of(
-                                                      context)!
-                                                  .message_error_cridencials,
-                                              icon: Icons.error,
-                                              caminho: "erro");
-                                        });
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                      content: Text(
+                                        result.errorMessage!,
+                                        style: Theme.of(context).textTheme.labelSmall,
+                                      ),
+                                      backgroundColor: Theme.of(context).errorColor,
+                                    ));
                                   }
                                 },
                               ),
@@ -256,77 +252,7 @@ class _LoginPageState extends State<LoginPage> {
                                 height: Get.height * 0.01,
                               ),
 
-                              /* SizedBox(
-                            height: Get.height * 0.01,
-                          ),
-                          Column(
-                            children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: new Container(
-                                      width: Get.width * 0.4,
-                                      child: Divider(
-                                        height: 36,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      left: Get.width * 0.05,
-                                      right: Get.width * 0.05,
-                                    ),
-                                    child: Text(
-                                      AppLocalizations.of(context)!.text_or,
-                                      style:
-                                          Theme.of(context).textTheme.headline2,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      width: Get.width * 0.4,
-                                      child: const Divider(
-                                        height: 36,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: Get.height * 0.02,
-                          ),*/
-                              /* Column(
-                            children: [
-                              Container(
-                                width: Get.width,
-                                child: SignInButton(
-                                  Buttons.Google,
-                                  text: "Login com Google",
-                                  onPressed: () {
-                                    _googleSignIn.signIn().then((userData) {
-                                      setState(() {
-                                        _isLoggedIn = true;
-                                        _userObj = userData!;
 
-                                      });
-                                    }).catchError((e) {
-                                      print(e);
-                                    });
-                                  },
-                                ),
-                              ),
-                              Container(
-                                width: Get.width,
-                                child: SignInButton(
-                                  Buttons.Facebook,
-                                  text: "Login com Facebook",
-                                  onPressed: () {},
-                                ),
-                              ),
-                            ],
-                          ),*/
                             ],
                           ),
                         ),

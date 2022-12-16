@@ -4,13 +4,14 @@ import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Model/favorite.dart';
 import 'package:manda_bai/Model/filter.dart';
 import 'package:manda_bai/constants/controllers.dart';
+import 'package:manda_bai/service/category_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Model/category.dart';
 
 class CategoryController extends GetxController {
   static CategoryController instance = Get.find();
-
+CategoryService categoryService=CategoryService();
   final _listFilter = <Filter>[].obs;
   final _listCategory = <Category>[].obs;
   final _listCategoryFull = <Category>[].obs;
@@ -36,17 +37,17 @@ class CategoryController extends GetxController {
   }
 
   List<Filter> get listFilter {
-    return _listFilter.value;
+    return _listFilter;
   }
 
   set listFilter(List<Filter> list) {
-    this._listFilter.value = list;
+    _listFilter.value = list;
   }
 
   Future carregarFilter() async {
     print("filtro");
     if (listCategory.isEmpty) {
-      listCategory = await ServiceRequest.loadCategory();
+      listCategory = await categoryService.loadCategory();
       if (listCategory.isNotEmpty) {
         listCategoryFull = listCategory;
       }
@@ -218,8 +219,8 @@ class CategoryController extends GetxController {
         destaqueCurrent != mandaBaiController.destaque) {
 
      destaqueCurrent=mandaBaiController.destaque;
-      if (listCategory.isEmpty) {
-        listCategory = await ServiceRequest.loadCategory();
+      if (listCategoryFull.isEmpty) {
+         await carregarCategory();
       }
       for (var element in listCategory) {
         if (element.name == mandaBaiController.destaque.value) {
@@ -288,12 +289,12 @@ class CategoryController extends GetxController {
   }
 
   Future carregarCategory() async {
-    if (listCategory.isEmpty && pesquisa.text.isEmpty) {
-      listCategory = await ServiceRequest.loadCategory();
-      if (listCategory.isEmpty) {
+    if (listCategoryFull.isEmpty && pesquisa.text.isEmpty) {
+      listCategoryFull = await categoryService.loadCategory();
+      if (listCategoryFull.isEmpty) {
         return null;
       }
-      listCategoryFull = listCategory;
+      listCategory.addAll(listCategoryFull);
     }
     return listCategory;
   }
@@ -301,7 +302,7 @@ class CategoryController extends GetxController {
   search() {
     listCategory.clear();
     if (pesquisa.text.isEmpty) {
-      listCategory = listCategoryFull;
+      listCategory.addAll(listCategoryFull);
     } else {
       for (int i = 0; i < listCategoryFull.length; i++) {
         if (listCategoryFull[i]

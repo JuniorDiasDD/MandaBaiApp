@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
-import 'package:manda_bai/Core/app_images.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:manda_bai/UI/order/Componentes/item_order.dart';
@@ -110,7 +109,7 @@ class _PedidoPageState extends State<PedidoPage> {
                               ),
                               child: const Padding(
                                 padding: EdgeInsets.all(6.0),
-                                child: Icon(Icons.info_outline),
+                                child: Icon(Icons.info_outline,color: Colors.black,),
                               ),
                             ),
                           ),
@@ -154,6 +153,7 @@ class _PedidoPageState extends State<PedidoPage> {
                                         newValue!;
                                     openLoadingStateDialog(context);
                                     await orderController.carregar();
+                                    orderController.island=newValue;
                                     Navigator.pop(context);
                                   },
                                   items: orderController.listIsland

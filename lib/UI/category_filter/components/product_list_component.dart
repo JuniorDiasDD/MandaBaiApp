@@ -84,7 +84,7 @@ class _ProductListComponentState extends State<ProductListComponent> {
                                 child:  Icon(Icons.favorite,
                                   color: widget.product.favorite
                                       ? Colors.red
-                                      : Theme.of(context).indicatorColor,)
+                                      : Colors.black54,)
                             ),
                           ),
                         ),
@@ -157,7 +157,7 @@ class _ProductListComponentState extends State<ProductListComponent> {
                             ),
                             child:  const Padding(
                                 padding: EdgeInsets.all(4.0),
-                                child:  Icon(Icons.shopping_cart_outlined),
+                                child:  Icon(Icons.shopping_cart_outlined,color: Colors.black,),
                             ),
                           ),
                         ),
@@ -179,7 +179,7 @@ class _ProductListComponentState extends State<ProductListComponent> {
                             Text(
                               widget.product.name,
                               maxLines: 1,
-                              style: Theme.of(context).textTheme.headline4,
+                              style: Theme.of(context).textTheme.headline4!.copyWith(color: Colors.black),
                             ),
                             Container(
                               child: productController.convertPriceProduct(

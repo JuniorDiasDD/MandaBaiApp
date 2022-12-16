@@ -12,7 +12,6 @@ import 'package:manda_bai/UI/home/components/item_filter.dart';
 import 'package:manda_bai/UI/widget/ErrorPage.dart';
 import 'package:manda_bai/UI/widget/HeaderTitle.dart';
 import 'package:manda_bai/UI/widget/PromotionText.dart';
-import 'package:manda_bai/UI/widget/Search.dart';
 import 'package:manda_bai/UI/widget/dialog_custom.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:manda_bai/UI/widget/Empty.dart';
@@ -119,7 +118,9 @@ class _StartPageState extends State<StartPage> {
                           child: Row(
                             children: [
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.pushReplacementNamed(context, '/island');
+                                },
                                 child: Container(
                                   width: Get.width * 0.1,
                                   height: Get.width * 0.1,
@@ -130,7 +131,7 @@ class _StartPageState extends State<StartPage> {
                                   ),
                                   child: const Padding(
                                     padding: EdgeInsets.all(4.0),
-                                    child: Icon(Icons.close),
+                                    child: Icon(Icons.close,color: Colors.black,),
                                   ),
                                 ),
                               ),
@@ -286,7 +287,7 @@ class _StartPageState extends State<StartPage> {
                     ),
                   ],
                 ),
-                Padding(
+               /* Padding(
                   padding: EdgeInsets.only(
                       left: Get.width * 0.05, right: Get.width * 0.05),
                   child: Search(
@@ -298,7 +299,7 @@ class _StartPageState extends State<StartPage> {
                 const SizedBox(
                   height: 8.0,
                 ),
-
+            */
                 FutureBuilder(
                   future: mandaBaiController.loadDiscountData(),
                   builder: (context, AsyncSnapshot snapshot) {

@@ -88,9 +88,9 @@ class _SplashPageState extends State<SplashPage> {
             var check = prefs.getString('onboarding');
             await fullControllerController.getInit();
             if (check.toString() == 'true' && check != null) {
-              Navigator.pushReplacementNamed(context, '/home');
+              Navigator.pushReplacementNamed(context, '/island');
             } else {
-              Navigator.pushReplacementNamed(context,'/boarding');
+              Navigator.pushReplacementNamed(context,'/onboarding');
             }
           } else {
             Navigator.pushReplacementNamed(context, '/updateApp');

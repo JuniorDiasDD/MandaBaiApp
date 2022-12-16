@@ -107,7 +107,7 @@ class _DetailOrderState extends State<DetailOrder> {
                         ),
                         child: const Padding(
                           padding: EdgeInsets.all(6.0),
-                          child: Icon(Icons.info_outline),
+                          child: Icon(Icons.info_outline,color: Colors.black,),
                         ),
                       ),
                     ),
@@ -120,7 +120,7 @@ class _DetailOrderState extends State<DetailOrder> {
                 height: Get.height * 0.15,
 
                 decoration: BoxDecoration(
-                  color: AppColors.white,
+                  color: Theme.of(context).dialogBackgroundColor,
                   boxShadow: [
                     BoxShadow(
                       color: Theme.of(context).cardColor,
@@ -232,7 +232,7 @@ class _DetailOrderState extends State<DetailOrder> {
           ),
         ),
         bottomNavigationBar: Container(
-          color: AppColors.white,
+          color: Theme.of(context).dialogBackgroundColor,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(

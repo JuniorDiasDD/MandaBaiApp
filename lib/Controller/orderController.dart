@@ -32,13 +32,15 @@ class OrderController extends GetxController {
 
   var listOrder = <Order>[].obs;
   Future carregar() async {
+
     if (island.isEmpty || dropdownValue.value != island) {
       listOrder.value = await ServiceRequest.loadOrder(dropdownValue.value);
       if (listOrder.isEmpty) {
         return null;
       }
-      island = dropdownValue.value;
+
     }
+
     return listOrder;
   }
 

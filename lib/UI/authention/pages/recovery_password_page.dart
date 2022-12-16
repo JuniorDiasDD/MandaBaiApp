@@ -11,7 +11,6 @@ import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/authention/pages/validate_code_page.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
-import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RecoveryPassword extends StatefulWidget {
@@ -127,10 +126,7 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
               children: [
                 Stack(
                   children: [
-                    Align(
-                      alignment: Alignment.bottomLeft,
-                      child: ColoredCircleComponent(),
-                    ),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

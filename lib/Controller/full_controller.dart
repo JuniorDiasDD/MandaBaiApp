@@ -23,7 +23,7 @@ class FullController extends GetxController {
   }
 
   set listFilter(List<Filter> list) {
-    this._listFilter.value = list;
+    _listFilter.value = list;
   }
 
   getVersion() async {
@@ -70,12 +70,28 @@ class FullController extends GetxController {
     }
   }
 
+  validateTheme() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var theme = prefs.getString('theme');
+
+    if (theme == "null" || theme == null) {
+      await prefs.setString('theme', "light");
+      prefersDarkMode.value = true;
+    } else {
+      if (theme == 'light') {
+        prefersDarkMode.value = true;
+      } else {
+        prefersDarkMode.value = true;
+      }
+    }
+  }
+
   validateIsland() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     if (prefs.getString('island') == null) {
-      await prefs.setString('island', "pt");
-      island.value = 'pt';
+      await prefs.setString('island', "Santiago");
+      island.value = 'Santiago';
     } else {
       island.value = prefs.getString('island')!;
     }
@@ -104,19 +120,25 @@ class FullController extends GetxController {
   }
 
   getInit() async {
+    await validateTheme();
     await getSymbolMoney();
     await validateLanguage();
     await validateIsland();
     await getUser();
-    await categoryController.carregarProductByHome();
-    await getloadDataHome();
-
   }
 
+  var ultimoClick = ''.obs;
+
   getloadDataHome() async {
-    await mandaBaiController.loadBanner();
-    await mandaBaiController.loadBackground();
+    if (ultimoClick.value != fullControllerController.island.value) {
+      productController.listProductHome.clear();
+      categoryController.listCategory.clear();
+      await categoryController.carregarProductByHome();
+      await mandaBaiController.loadBanner();
+      await mandaBaiController.loadBackground();
+      ultimoClick.value = fullControllerController.island.value;
     }
+  }
 
   sendStore() async {
     StoreRedirect.redirect(

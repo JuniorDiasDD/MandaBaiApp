@@ -39,4 +39,26 @@ class AppImages {
   static const viber_logo = 'assets/images/viber_logo.png';
   static const order_finish ='https://www.mandabai.com/wp-content/uploads/2021/12/completed.png';
   static const order_pendent ='https://www.mandabai.com/wp-content/uploads/2021/12/processing.png';
+
+
+  //islands
+static const santiagoIsland='assets/images/island/Santiago.png';
+static const bravaIsland='assets/images/island/Brava.png';
+static const fogoIsland='assets/images/island/Fogo.png';
+static const maioIsland='assets/images/island/Maio.png';
+static const salIsland='assets/images/island/sal.png';
+static const boaVistaIsland='assets/images/island/BoaVista.png';
+static const saoVicenteIsland='assets/images/island/saoVicente.png';
+static const saoNicolauIsland='assets/images/island/saoNicolau.png';
+static const santoAntaoIsland='assets/images/island/santoAntao.png';
+static const changeIsland='assets/images/island/change.png';
+static const backgroundIsland='assets/images/island/infoBackground.png';
+
+//onboarding
+  static const onboarding1='assets/images/onboarding/onboarding1.png';
+  static const onboarding2='assets/images/onboarding/onboarding2.png';
+  static const onboarding3='assets/images/onboarding/onboarding3.png';
+  static const music1='assets/images/onboarding/music1.png';
+  static const music2='assets/images/onboarding/music2.png';
+
 }

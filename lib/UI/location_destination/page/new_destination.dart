@@ -9,8 +9,8 @@ import 'package:manda_bai/Model/location.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:manda_bai/UI/location_destination/components/popup_info.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:manda_bai/UI/widget/TextFormField.dart';
 import 'package:manda_bai/UI/widget/button_ui.dart';
+import 'package:manda_bai/UI/widget/custom_text_field.dart';
 import 'package:manda_bai/UI/widget/dialogs.dart';
 import 'package:manda_bai/constants/controllers.dart';
 
@@ -131,7 +131,7 @@ class _NewDestinationState extends State<NewDestination> {
                           child: const Padding(
                             padding: EdgeInsets.all(6.0),
                             child: Icon(
-                              Icons.info_outline,
+                              Icons.info_outline,color: Colors.black,
                             ),
                           ),
                         ),
@@ -162,7 +162,7 @@ class _NewDestinationState extends State<NewDestination> {
                           ),
                         ),
                         SizedBox(height: Get.height * 0.01),
-                        TextFormFieldCustom(
+                        CustomTextField(
                           textController: locationController.inputNome,
                           hintText:
                               AppLocalizations.of(context)!.text_recipient_name,
@@ -171,7 +171,7 @@ class _NewDestinationState extends State<NewDestination> {
                           keyboardType: TextInputType.name,
                         ),
                         SizedBox(height: Get.height * 0.01),
-                        TextFormFieldCustom(
+                        CustomTextField(
                           textController: locationController.inputCidade,
                           hintText:
                               AppLocalizations.of(context)!.textfield_city,
@@ -180,7 +180,7 @@ class _NewDestinationState extends State<NewDestination> {
                           keyboardType: TextInputType.name,
                         ),
                         SizedBox(height: Get.height * 0.01),
-                        TextFormFieldCustom(
+                        CustomTextField(
                           textController: locationController.inputEndereco,
                           hintText: AppLocalizations.of(context)!.text_address,
                           requiredLabel: AppLocalizations.of(context)!
@@ -195,11 +195,17 @@ class _NewDestinationState extends State<NewDestination> {
                             keyboardType: TextInputType.number,
                             style: Theme.of(context).textTheme.headline4,
                             decoration: InputDecoration(
-                              labelText:
-                                  AppLocalizations.of(context)!.textfield_phone,
-                              labelStyle: Theme.of(context).textTheme.headline4,
-                              filled: true,
-                              fillColor: AppColors.grey50.withOpacity(0.5),
+                              border: OutlineInputBorder(
+                                borderSide:
+                                BorderSide(color: Theme.of(context).colorScheme.onBackground),
+                                borderRadius: BorderRadius.circular(16.0),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                  borderSide: BorderSide(color: AppColors.greenColor)),
+                              fillColor: Theme.of(context).primaryColor,
+                              hintText: AppLocalizations.of(context)!.textfield_phone,
+                              hintStyle: Theme.of(context).textTheme.headline4,
                               prefixIcon: Padding(
                                 padding: const EdgeInsets.all(13.0),
                                 child: Text(
@@ -207,21 +213,8 @@ class _NewDestinationState extends State<NewDestination> {
                                   style: Theme.of(context).textTheme.headline4,
                                 ), // icon is 48px widget.
                               ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(20.0),
-                                ),
-                                borderSide: BorderSide(
-                                    color:
-                                        AppColors.black_claro.withOpacity(0.4),
-                                    width: 0.0),
-                              ),
-                              focusedBorder: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20.0)),
-                                  borderSide:
-                                      BorderSide(color: AppColors.greenColor)),
                             ),
+
                             validator: (value) => value!.length == 7
                                 ? null
                                 : AppLocalizations.of(context)!

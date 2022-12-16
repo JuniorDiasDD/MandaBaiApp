@@ -30,7 +30,7 @@ class _TextFormFieldCustomState extends State<TextFormFieldCustom> {
       controller: widget.textController,
       obscureText: false,
       keyboardType: widget.keyboardType,
-      style: Theme.of(context).textTheme.headline4,
+      style: Theme.of(context).textTheme.headline4!.copyWith(color: Colors.black),
       decoration: InputDecoration(
         filled: true,
         fillColor:widget.login! ? AppColors.grey50.withOpacity(0.8): AppColors.grey50.withOpacity(0.5),
@@ -54,7 +54,7 @@ class _TextFormFieldCustomState extends State<TextFormFieldCustom> {
                 ), // icon is 48px widget.
               ),
         labelText: widget.hintText,
-        labelStyle: Theme.of(context).textTheme.headline4,
+        labelStyle: Theme.of(context).textTheme.headline4!.copyWith(color: Colors.black),
       ),
       validator: (value) => widget.checkEmail
           ? EmailValidator.validate(value!)

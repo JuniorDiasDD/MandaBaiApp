@@ -10,7 +10,6 @@ import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
-import 'package:manda_bai/UI/intro/components/colored_circle_component.dart';
 
 class SetPasswordPage extends StatefulWidget {
   String email, code;
@@ -140,10 +139,7 @@ class _SetPasswordPageState extends State<SetPasswordPage> {
               children: [
                 Stack(
                   children: [
-                    Align(
-                      alignment: Alignment.bottomLeft,
-                      child: ColoredCircleComponent(),
-                    ),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

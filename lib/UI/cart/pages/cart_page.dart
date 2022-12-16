@@ -145,7 +145,7 @@ class _StartPageState extends State<CartPage> {
                                 child: const Padding(
                                   padding: EdgeInsets.all(6.0),
                                   child: Icon(
-                                    Icons.delete_outline,
+                                    Icons.delete_outline,color: Colors.black,
                                   ),
                                 ),
                               ),

@@ -91,7 +91,7 @@ class _Item_PedidoState extends State<ItemOrder> {
                       style: Theme.of(context)
                           .textTheme
                           .labelSmall!
-                          .copyWith(fontSize: 8),
+                          .copyWith(fontSize: 6),
                     ),
                     const SizedBox(
                       height: 4,
@@ -149,7 +149,7 @@ class _Item_PedidoState extends State<ItemOrder> {
                       style: Theme.of(context).textTheme.labelSmall!.copyWith(color:
                       widget.order.status != "complete"
                           ? widget.order.status == "cancelled"
-                          ? Colors.black26
+                          ? Theme.of(context).dividerColor
                           : Colors.orange
                           : AppColors.greenColor,
                       ),

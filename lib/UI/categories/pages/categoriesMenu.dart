@@ -201,7 +201,7 @@ class _CategoriesMenuState extends State<CategoriesMenu> {
                       ),
                     ),
                     onChanged: (text) {
-                    //  categoryController.search();
+                     categoryController.search();
                     },
                   ),
                 ),

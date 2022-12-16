@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_colors.dart';
-import 'package:manda_bai/UI/account/edit_profile.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:manda_bai/UI/setting/componente/buttonOption.dart';
@@ -120,7 +119,7 @@ class _SettingState extends State<Setting> {
                                 width: 16,
                               ),
                               Text(
-                                "Ajuda",
+                                  AppLocalizations.of(context)!.label_help,
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline3!
@@ -137,7 +136,7 @@ class _SettingState extends State<Setting> {
                   Padding(
                     padding: const EdgeInsets.only(left: 32.0, bottom: 16),
                     child: Text(
-                      user.name == null ? "Ola" : "Ola " + user.name!,
+                      user.name == null ? AppLocalizations.of(context)!.label_greeting : AppLocalizations.of(context)!.label_greeting+" " + user.name!,
                       style: Theme.of(context)
                           .textTheme
                           .headline3!
@@ -161,10 +160,12 @@ class _SettingState extends State<Setting> {
                           const SizedBox(
                             height: 32,
                           ),
-                          const HeaderTitle(
-                            title: "Conta",
+                           HeaderTitle(
+                            title: AppLocalizations.of(context)!
+                                .label_account,
                             description:
-                                "Edita sua conta e a aparência da aplicação",
+                            AppLocalizations.of(context)!
+                                .label_account_info,
                           ),
                           const SizedBox(
                             height: 8,
@@ -210,7 +211,7 @@ class _SettingState extends State<Setting> {
                                   ),
                                 ),
                                 ButtonOption(
-                                  textButton: "Tema Escuro",
+                                  textButton: AppLocalizations.of(context)!.theme_dark ,
                                   action: () {},
                                   theme: true,
                                 ),
@@ -220,10 +221,12 @@ class _SettingState extends State<Setting> {
                           const SizedBox(
                             height: 16,
                           ),
-                          const HeaderTitle(
-                              title: "Configuração",
+                           HeaderTitle(
+                              title: AppLocalizations.of(context)!
+                                  .label_settings,
                               description:
-                                  "Faça a sua configuração do modo que seja melhor"),
+                              AppLocalizations.of(context)!
+                                  .label_settings_info,),
                           const SizedBox(
                             height: 8,
                           ),
@@ -283,10 +286,12 @@ class _SettingState extends State<Setting> {
                           const SizedBox(
                             height: 16,
                           ),
-                          const HeaderTitle(
-                              title: "Redes Socias",
+                           HeaderTitle(
+                              title: AppLocalizations.of(context)!
+                                  .label_rede,
                               description:
-                                  "Visita nossas redes sociais para ver como é nosso trabalho no dia a dia"),
+                              AppLocalizations.of(context)!
+                                  .label_rede_info,),
                           const SizedBox(
                             height: 8,
                           ),

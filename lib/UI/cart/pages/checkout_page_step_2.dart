@@ -164,7 +164,7 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
                                 child: const Padding(
                                   padding: EdgeInsets.all(6.0),
                                   child: Icon(
-                                    Icons.info_outline,
+                                    Icons.info_outline,color: Colors.black,
                                   ),
                                 ),
                               ),
