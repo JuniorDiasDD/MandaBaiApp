@@ -1,19 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/employee.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class Item_Bio extends StatefulWidget {
-  Employee employee;
-  Item_Bio({Key? key, required this.employee}) : super(key: key);
+class ItemBio extends StatefulWidget {
+  final Employee employee;
+  const ItemBio({Key? key, required this.employee}) : super(key: key);
 
   @override
-  _Item_BioState createState() => _Item_BioState();
+  _ItemBioState createState() => _ItemBioState();
 }
 
-class _Item_BioState extends State<Item_Bio> {
+class _ItemBioState extends State<ItemBio> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -28,21 +26,7 @@ class _Item_BioState extends State<Item_Bio> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.employee.cargo,
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                  SizedBox(height: Get.height * 0.002),
-                  Text(
-                    widget.employee.name,
-                    style: Theme.of(context).textTheme.headline4,
-                  ),
-                  SizedBox(height: Get.height * 0.005),
-                ],
-              ),
+
               Padding(
                 padding: const EdgeInsets.all(2.0),
                 child: SizedBox(
@@ -52,8 +36,7 @@ class _Item_BioState extends State<Item_Bio> {
                       Flexible(
                         flex: 1,
                         child: Container(
-                          width: Get.width,
-                          height: Get.height,
+                          width: 96,
                           decoration: BoxDecoration(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(10.0)),
@@ -67,25 +50,59 @@ class _Item_BioState extends State<Item_Bio> {
                       ),
                       Flexible(
                         flex: 2,
-                        child: SizedBox(
-                          height: Get.height,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ListView(
-                              padding: const EdgeInsets.all(0.0),
-                              children: [
-                                Text(
-                                widget.employee.description,
-                                  textAlign: TextAlign.start,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline4!
-                                      .copyWith(
-                                        fontSize: Get.width * 0.03,
-                                      ),
-                                ),
-                              ],
-                            ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.employee.cargo,
+                                style: Theme.of(context).textTheme.headline5,
+                              ),
+                              SizedBox(height: Get.height * 0.002),
+                              Text(
+                                widget.employee.name,
+                                style: Theme.of(context).textTheme.headline4,
+                              ),
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    AppImages.viberLogo,
+                                    height: 14,
+                                    width: 14,
+                                  ),
+                                  const SizedBox(width: 1),
+                                  Image.asset(
+                                    AppImages.whatsappLogo,
+                                    height: 14,
+                                    width: 14,
+                                  ),
+                                  const SizedBox(width: 2),
+                                  Text(
+                                    widget.employee.tel,
+                                    style: Theme.of(context).textTheme.headline4,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(width: 5),
+                              Row(
+                                children: [
+                                  Image.asset(
+                                    AppImages.appLogoGmail,
+                                    height: 14,
+                                    width: 14,
+                                  ),
+                                  const SizedBox(width: 2),
+                                  Expanded(
+                                    child: Text(
+                                      widget.employee.email,
+                                      style: Theme.of(context).textTheme.headline4!.copyWith(fontSize: 12),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -93,53 +110,15 @@ class _Item_BioState extends State<Item_Bio> {
                   ),
                 ),
               ),
-              SizedBox(
-                width: Get.width,
-                height:Get.height*0.02,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Row(
-                          children: [
-                            Image.asset(
-                              AppImages.viber_logo,
-                              height: Get.height * 0.03,
-                              width: Get.width * 0.03,
-                            ),
-                            const SizedBox(width: 1),
-                            Image.asset(
-                              AppImages.whatsapp_logo,
-                              height: Get.height * 0.03,
-                              width: Get.width * 0.03,
-                            ),
-                            const SizedBox(width: 2),
-                            Text(
-                              widget.employee.tel,
-                              style: Theme.of(context).textTheme.headline4,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(width: 5),
-                        Row(
-                          children: [
-                            Image.asset(
-                              AppImages.appLogoGmail,
-                              height: Get.height * 0.03,
-                              width: Get.width * 0.03,
-                            ),
-                               const SizedBox(width: 2),
-                            Text(
-                              widget.employee.email,
-                              style: Theme.of(context).textTheme.headline4,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
+              const SizedBox(height: 16,),
+              Text(
+                widget.employee.description,
+                textAlign: TextAlign.start,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline4!
+                    .copyWith(
+                  fontSize: Get.width * 0.03,
                 ),
               ),
             ],

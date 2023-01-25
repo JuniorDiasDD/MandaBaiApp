@@ -48,8 +48,7 @@ class _SplashPageState extends State<SplashPage> {
     late ConnectivityResult result;
     try {
       result = await _connectivity.checkConnectivity();
-    } on PlatformException catch (e) {
-      print('Couldn\'t check connectivity status' + e.toString());
+    } on PlatformException  {
       return;
     }
 

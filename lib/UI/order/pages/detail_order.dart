@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/order.dart';
+import 'package:manda_bai/UI/order/Componentes/produtc.dart';
 import 'package:manda_bai/UI/order/Componentes/trakingItem.dart';
 import 'package:manda_bai/constants/controllers.dart';
 import '../../home/pop_up/popup_message_internet.dart';
@@ -69,13 +70,17 @@ class _DetailOrderState extends State<DetailOrder> {
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
     super.initState();
   }
+
   @override
   void dispose() {
     _connectivitySubscription.cancel();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
+    orderController.getStatusOrder(widget.order);
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -96,21 +101,6 @@ class _DetailOrderState extends State<DetailOrder> {
                         Navigator.pop(context);
                       },
                     ),
-                    GestureDetector(
-                      onTap: () async {},
-                      child: Container(
-                        width: Get.width * 0.1,
-                        height: Get.width * 0.1,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          color: AppColors.grey50.withOpacity(0.8),
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(6.0),
-                          child: Icon(Icons.info_outline,color: Colors.black,),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -118,7 +108,6 @@ class _DetailOrderState extends State<DetailOrder> {
               Container(
                 width: Get.width,
                 height: Get.height * 0.15,
-
                 decoration: BoxDecoration(
                   color: Theme.of(context).dialogBackgroundColor,
                   boxShadow: [
@@ -126,7 +115,8 @@ class _DetailOrderState extends State<DetailOrder> {
                       color: Theme.of(context).cardColor,
                       blurRadius: 2.0,
                       spreadRadius: 0.0,
-                      offset: const Offset(2.0, 2.0), // changes position of shadow
+                      offset:
+                          const Offset(2.0, 2.0), // changes position of shadow
                     ),
                   ],
                 ),
@@ -137,8 +127,8 @@ class _DetailOrderState extends State<DetailOrder> {
                     ),
                     Image.network(
                         widget.order.status != 'processing'
-                            ? AppImages.order_pendent
-                            : AppImages.order_finish,
+                            ? AppImages.orderPendent
+                            : AppImages.orderFinish,
                         width: Get.width * 0.15,
                         height: Get.width * 0.15,
                         alignment: Alignment.center),
@@ -151,35 +141,34 @@ class _DetailOrderState extends State<DetailOrder> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Total Pago: " + widget.order.total,
+                            AppLocalizations.of(context)!.text_total+": " + widget.order.total,
                             style: Theme.of(context).textTheme.headline3,
                           ),
-                          Text(
-                            "Local de Entrega: " +
-                                widget.order.shipping.city +
-                                " " +
-                                widget.order.shipping.address_1,
-                            style: Theme.of(context).textTheme.labelSmall,
+                          SizedBox(
+                            width: Get.width*0.4,
+                            child: Text(
+                              AppLocalizations.of(context)!.text_delivery_location+" " +
+                                  widget.order.shipping.city +
+                                  " " +
+                                  widget.order.shipping.address_1,
+                              style: Theme.of(context).textTheme.labelSmall,
+                            ),
                           ),
                           Text(
-                            widget.order.status != "complete"
-                                ? widget.order.status == "cancelled"
-                                    ? AppLocalizations.of(context)!
-                                        .text_canceled_order
-                                    : AppLocalizations.of(context)!
-                                        .text_in_process_order
-                                : AppLocalizations.of(context)!
-                                    .text_delivery_order,
+                            orderController.getStringStatusOrder(
+                                widget.order.status, context),
                             style: Theme.of(context)
                                 .textTheme
                                 .labelSmall!
                                 .copyWith(
-                                  color: widget.order.status != "complete"
-                                      ? widget.order.status == "cancelled"
-                                          ? Colors.black26
-                                          : Colors.orange
-                                      : AppColors.greenColor,
-                                ),
+                                    color: widget.order.status == "completed"
+                                        ? AppColors.greenColor
+                                        : widget.order.status == "processing"
+                                            ? Colors.orange
+                                            : widget.order.status == "failed"
+                                                ? Colors.red
+                                                : Theme.of(context)
+                                                    .dividerColor),
                           ),
                         ],
                       ),
@@ -198,16 +187,25 @@ class _DetailOrderState extends State<DetailOrder> {
                           ),
                           const Spacer(),
                           GestureDetector(
-                            onTap: () async {},
+                            onTap: () async {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return ProductList(
+                                    items: widget.order.items,
+                                  );
+                                },
+                              );
+                            },
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: AppColors.greenColor.withOpacity(0.2),
                               ),
                               child: Padding(
-                                padding: EdgeInsets.all(6.0),
+                                padding: const EdgeInsets.all(6.0),
                                 child: Text(
-                                  "ver produtos",
+                                  AppLocalizations.of(context)!.look_products,
                                   style: Theme.of(context).textTheme.labelSmall,
                                 ),
                               ),
@@ -219,15 +217,84 @@ class _DetailOrderState extends State<DetailOrder> {
                   ],
                 ),
               ),
-
               const SizedBox(
                 height: 16,
               ),
-              const TrakingItem(title: 'Processando o Pedido',description:'O seu pedido poderá estar processado entre 15 a 30 minutos',image: AppImages.iconMenuCartOutline,),
-              const TrakingItem(title: 'Encomenda efetuada',description:'Sua encomenda foi efetuado com sucesso será sempre notificado das atualização no estado do processo',image: AppImages.iconTrankingEcommerce,),
-              const TrakingItem(title: 'Recolha dos Produtos',description:'Seus produtos encomendados estão a ser processados',image: AppImages.iconTrankingShop,),
-              const TrakingItem(title: 'A caminho do destino',description:'Encomenda a caminho do endereço associado a encomenda',image: AppImages.iconTrankingCar,),
-              const TrakingItem(title: 'Encomenda Entregue',description:'Encomenda já se encontra entregue com sucesso',lineFinal: true,image: AppImages.iconTrankingBox,),
+              SizedBox(
+                child: orderController.statusOrder.value == 0
+                    ? Container(
+                        padding: EdgeInsets.all(Get.width * 0.2),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              AppImages.orderCancelled,
+                              width: Get.width * 0.4,
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!.order_failed,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline3!
+                                  .copyWith(fontSize: Get.width * 0.025),
+                            ),
+                          ],
+                        ),
+                      )
+                    : Column(
+                        children: [
+                          TrakingItem(
+                            title: AppLocalizations.of(context)!.traking_step_1_title,
+                            description:
+                            AppLocalizations.of(context)!.traking_step_1_info,
+                            image: AppImages.iconMenuCartOutline,
+                            colorStatus: orderController.statusOrder.value > 0
+                                ? true
+                                : false,
+                          ),
+                          TrakingItem(
+                            title: AppLocalizations.of(context)!.traking_step_2_title,
+                            description:
+                            AppLocalizations.of(context)!.traking_step_2_info,
+                            image: AppImages.iconTrankingEcommerce,
+                            colorStatus: orderController.statusOrder.value > 1
+                                ? true
+                                : false,
+                          ),
+                          TrakingItem(
+                            title: AppLocalizations.of(context)!.traking_step_3_title,
+                            description:
+                            AppLocalizations.of(context)!.traking_step_3_info,
+                            image: AppImages.iconTrankingShop,
+                            colorStatus: orderController.statusOrder.value > 4
+                                ? true
+                                : false,
+                          ),
+                          TrakingItem(
+                            title: AppLocalizations.of(context)!.traking_step_4_title,
+                            description:
+                            AppLocalizations.of(context)!.traking_step_4_info,
+                            image: AppImages.iconTrankingCar,
+                            colorStatus: orderController.statusOrder.value > 4
+                                ? true
+                                : false,
+                          ),
+                          TrakingItem(
+                            title: AppLocalizations.of(context)!.traking_step_5_title,
+                            description:
+                            AppLocalizations.of(context)!.traking_step_5_info,
+                            lineFinal: true,
+                            image: AppImages.iconTrankingBox,
+                            colorStatus: orderController.statusOrder.value > 4
+                                ? true
+                                : false,
+                          ),
+                        ],
+                      ),
+              ),
             ],
           ),
         ),
@@ -235,21 +302,55 @@ class _DetailOrderState extends State<DetailOrder> {
           color: Theme.of(context).dialogBackgroundColor,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+            child: SizedBox(
 
-                SizedBox(
-                  width: Get.width*0.6,
-                  child: Text(
-                    "Qualquer encomenda derá ser entregue no maximo de 24 horas.",
-                    style: Theme.of(context).textTheme.headline3!.copyWith(fontSize:Get.width * 0.025 ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.delivery_info,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(fontSize: Get.width * 0.025),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () async {},
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+/* GestureDetector(
+                  onTap: () async {
+                    openLoadingLongStateDialog(context);
+                    var result;
+                    for (var element in widget.order.items) {
+                      result = await orderController.addCart(
+                          element.id, element.quantity);
+                      if (!result.success) {
+                        Navigator.pop(context);
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                            result.errorMessage!,
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                          backgroundColor: Theme.of(context).errorColor,
+                        ));
+                        break;
+                      }
+                    }
+
+                    if (result.success) {
+                      Navigator.pop(context);
+
+                      Navigator.pushNamed(context, '/cart');
+                    }
+                  },
                   child: Container(
-                    width: Get.width*0.3,
+                    width: Get.width * 0.3,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: AppColors.greenColor,
@@ -263,12 +364,4 @@ class _DetailOrderState extends State<DetailOrder> {
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+                ),*/

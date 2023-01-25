@@ -262,7 +262,7 @@ class _FavoritePageState extends State<FavoritePage> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       WebsafeSvg.asset(
-                                          AppImages.favorite_empyt),
+                                          AppImages.favoriteEmpyt),
                                       const SizedBox(height: 10),
                                       Text(
                                         AppLocalizations.of(context)!
@@ -332,7 +332,7 @@ class _FavoritePageState extends State<FavoritePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                WebsafeSvg.asset(AppImages.favorite_empyt),
+                                WebsafeSvg.asset(AppImages.favoriteEmpyt),
                                 SizedBox(height: Get.height * 0.08),
                                 Text(
                                   AppLocalizations.of(context)!

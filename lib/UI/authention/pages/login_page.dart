@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
-import 'package:manda_bai/UI/authention/pages/recovery_password_page.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:manda_bai/UI/widget/TextFormField.dart';
@@ -73,6 +72,8 @@ class _LoginPageState extends State<LoginPage> {
 
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    authenticationController.input_senhaLogin.clear();
+    authenticationController.input_usernameLogin.clear();
   }
 
   @override
@@ -111,9 +112,8 @@ class _LoginPageState extends State<LoginPage> {
                         width: Get.width * 0.6,
                         height: Get.height * 0.15,
                       ),
-                      SizedBox(
-                        height: Get.height * 0.06,
-                      ),
+                      const SizedBox(height: 16),
+
                       Padding(
                         padding: EdgeInsets.only(
                           left: Get.width * 0.05,
@@ -122,7 +122,19 @@ class _LoginPageState extends State<LoginPage> {
                         child: Form(
                           key: authenticationController.formKeyLogin,
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Text(
+                                AppLocalizations.of(context)!
+                                    .info_island_login+ fullControllerController.island.value,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline4!
+                                    .copyWith(
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.white,decoration: TextDecoration.underline),
+                              ),
+                              const SizedBox(height: 16),
                               TextFormFieldCustom(
                                 textController: authenticationController
                                     .input_usernameLogin,
@@ -134,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                                 icon: Icons.person,
                                 login: true,
                               ),
-                              SizedBox(height: Get.height * 0.01),
+                              const SizedBox(height: 8),
                               Obx(
                                 () => TextFormField(
                                   controller:
@@ -177,7 +189,7 @@ class _LoginPageState extends State<LoginPage> {
                                         });
                                       },
                                       icon: Icon(
-                                        authenticationController
+                                        !authenticationController
                                                 .statePasswordLogin.value
                                             ? Icons.visibility_off
                                             : Icons.visibility,
@@ -199,17 +211,14 @@ class _LoginPageState extends State<LoginPage> {
                                 alignment: Alignment.topLeft,
                                 child: TextButton(
                                   style: TextButton.styleFrom(
-                                    primary: Colors.white,
+
                                     textStyle:
                                         TextStyle(fontSize: Get.width * 0.025),
                                   ),
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const RecoveryPassword()),
-                                    );
+                                  authenticationController.clearInputsChange();
+                                    Navigator.pushNamed(context, '/recoveryPassword');
+
                                   },
                                   child: Text(
                                     AppLocalizations.of(context)!
@@ -223,9 +232,7 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                height: Get.height * 0.02,
-                              ),
+                              const SizedBox(height: 16),
                               ButtonUI(
                                 label:
                                     AppLocalizations.of(context)!.button_login,
@@ -248,9 +255,7 @@ class _LoginPageState extends State<LoginPage> {
                                   }
                                 },
                               ),
-                              SizedBox(
-                                height: Get.height * 0.01,
-                              ),
+                              const SizedBox(height: 8),
 
 
                             ],
@@ -274,12 +279,13 @@ class _LoginPageState extends State<LoginPage> {
           ),
           TextButton(
             style: TextButton.styleFrom(
-              primary: AppColors.greenColor,
+
               textStyle: TextStyle(fontSize: Get.width * 0.03),
             ),
             onPressed: () {
               authenticationController.loading.value = false;
               authenticationController.statePassword.value = false;
+              authenticationController.clearInputsRegister();
               Navigator.pushNamed(context, '/register');
             },
             child: Text(

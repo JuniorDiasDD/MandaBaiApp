@@ -4,8 +4,7 @@ import 'package:manda_bai/Core/app_fonts.dart';
 
 import 'app_colors.dart';
 
-abstract class AppThemes {
-  static final ThemeData darkTheme = ThemeData(
+  getDarkTheme(BuildContext context) =>  ThemeData(
     brightness: Brightness.dark,
     scaffoldBackgroundColor: AppColors.black_escuro,
     primaryColor: AppColors.greenColor,
@@ -15,7 +14,7 @@ abstract class AppThemes {
     dialogBackgroundColor: AppColors.black_claro,
     backgroundColor: AppColors.black_escuro,
     canvasColor: AppColors.black_claro,
-    iconTheme: IconThemeData(color: AppColors.white),
+    iconTheme: const IconThemeData(color: AppColors.white),
     checkboxTheme: CheckboxThemeData(
       fillColor: MaterialStateColor.resolveWith((states) => AppColors.white),
     ),
@@ -63,7 +62,7 @@ abstract class AppThemes {
     ),
   );
 
-  static final ThemeData lightTheme = ThemeData(
+  getLightTheme(BuildContext context) =>  ThemeData(
     brightness: Brightness.light,
     scaffoldBackgroundColor: AppColors.white_50,
     primaryColor: AppColors.greenColor,
@@ -74,8 +73,7 @@ abstract class AppThemes {
     backgroundColor: AppColors.white,
     bottomAppBarColor: AppColors.white,
     canvasColor: AppColors.white,
-    accentColor: AppColors.Dimgrey,
-    iconTheme: IconThemeData(color: AppColors.black_escuro),
+    iconTheme: const IconThemeData(color: AppColors.black_escuro),
     checkboxTheme: CheckboxThemeData(
       fillColor:
           MaterialStateColor.resolveWith((states) => AppColors.black_claro),
@@ -123,4 +121,4 @@ abstract class AppThemes {
       ),
     ),
   );
-}
+

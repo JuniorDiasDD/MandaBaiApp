@@ -10,9 +10,9 @@ class OnboardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TemplateOnboarding(
-      image: AppImages.onboarding1,
-      description: 'Djuda bu familia di dento pa fora.',
-      title: AppLocalizations.of(context)!.family,
+      image: AppImages.onboarding2,
+      description: 'De undi bu sta, pa undi bu crê e pa kenha bu crê',
+      title: "Cabo Verde",
       actionButton: () {
         Navigator.pushNamed(context, '/onboarding2');
       },

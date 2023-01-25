@@ -3,7 +3,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:manda_bai/Core/app_images.dart';
@@ -88,21 +87,21 @@ class _CheckoutPageStep2State extends State<CheckoutPageStep2> {
         " \n " +
         AppLocalizations.of(context)!.textfield_name +
         ": " +
-        user.name! +
+         authenticationController.user.value.name! +
         "\n Email: " +
-        user.email! +
+         authenticationController.user.value.email! +
         "\n " +
         AppLocalizations.of(context)!.textfield_phone +
         ": " +
-        user.telefone! +
+         authenticationController.user.value.telefone! +
         "\n" +
         AppLocalizations.of(context)!.textfield_city +
         ": " +
-        user.city! +
+         authenticationController.user.value.city! +
         "\n" +
         AppLocalizations.of(context)!.textfield_country +
         ": " +
-        user.country!;
+         authenticationController.user.value.country!;
     return dataPersone;
   }
 

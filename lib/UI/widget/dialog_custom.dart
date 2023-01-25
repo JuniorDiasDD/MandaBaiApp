@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:manda_bai/UI/widget/button_ui.dart';
+import 'package:manda_bai/constants/controllers.dart';
 
 class DialogCustom extends StatefulWidget {
   final String textButton;
@@ -61,7 +62,7 @@ class _DialogCustomState extends State<DialogCustom> {
                   height: 8,
                 ),
                 Text(
-                  AppLocalizations.of(context)!.message_login,
+                  AppLocalizations.of(context)!.message_login+fullControllerController.island.value,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headline4,
                 ),

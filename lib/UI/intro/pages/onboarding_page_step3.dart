@@ -76,9 +76,8 @@ class _OnboardingTreePageState extends State<OnboardingTreePage> {
   Widget build(BuildContext context) {
     return TemplateOnboarding(
       image: AppImages.onboarding3,
-      description: 'Fazi bu familia de bu terra feliz! ',
-      title:AppLocalizations.of(context)!
-          .family,
+      description: 'Di tudu um poku ',
+      title:"Entrega",
       actionButton: ()async{
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('onboarding','true');
@@ -91,7 +90,8 @@ class _OnboardingTreePageState extends State<OnboardingTreePage> {
       },
       buttonTopLabel: AppLocalizations.of(context)!.login_registar,
       position: 3,
-
+      music: '“Terra fértil das bananeiras, das laranjeiras, do milho que dá cachupa, o cuscuz..." @Poeta de terra',
+      musicImage: AppImages.music1,
 
     );
   }

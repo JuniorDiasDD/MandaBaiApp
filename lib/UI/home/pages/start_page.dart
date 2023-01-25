@@ -300,29 +300,11 @@ class _StartPageState extends State<StartPage> {
                   height: 8.0,
                 ),
             */
-                FutureBuilder(
-                  future: mandaBaiController.loadDiscountData(),
-                  builder: (context, AsyncSnapshot snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return SizedBox(
-                          height: Get.height * 0.1,
-                          width: Get.width,
-                          child: Center(
-                            child: SizedBox(
-                                width: 32,
-                                height: 32,
-                                child: CircularProgressIndicator(
-                                  color: Theme.of(context).primaryColor,
-                                  strokeWidth: 2,
-                                )),
-                          ),
-                        );
-                      default:
-                        if (snapshot.data == null) {
-                          return const Empty();
-                        } else {
-                          return SizedBox(
+
+                        if (mandaBaiController.discountData.isEmpty)
+                           const Empty()
+                         else
+                          SizedBox(
                             height: Get.height * 0.1,
                             width: Get.width,
                             child: Obx(
@@ -340,12 +322,8 @@ class _StartPageState extends State<StartPage> {
                                 },
                               ),
                             ),
-                          );
-                        }
-                    }
+                          ),
 
-                  },
-                ),
                 FutureBuilder(
                   future: categoryController.carregarFilter(),
                   builder: (context, AsyncSnapshot snapshot) {

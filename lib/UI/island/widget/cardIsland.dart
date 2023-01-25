@@ -1,5 +1,7 @@
 import 'package:blobs/blobs.dart';
 import 'package:flutter/material.dart';
+import 'package:manda_bai/Core/app_colors.dart';
+import 'package:manda_bai/constants/controllers.dart';
 
 class CardIsland extends StatelessWidget {
   final String image;
@@ -12,7 +14,7 @@ class CardIsland extends StatelessWidget {
   Widget build(BuildContext context) {
     return Blob.random(
       size: 120,
-      styles:BlobStyles(color: Colors.white),
+      styles:BlobStyles(color: fullControllerController.prefersDarkMode.value? AppColors.black_claro: Colors.white),
       child: GestureDetector(
         onTap: action,
         child: Column(
@@ -21,11 +23,10 @@ class CardIsland extends StatelessWidget {
           children: [
             Image.asset(
               image,
-
             ),
             Text(
               label,
-              style: Theme.of(context).textTheme.subtitle1!.copyWith(color: Colors.black)),
+              style: Theme.of(context).textTheme.subtitle1),
 
           ],
         ),

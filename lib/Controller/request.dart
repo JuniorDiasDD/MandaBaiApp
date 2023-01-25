@@ -14,12 +14,12 @@ class ServiceRequest {
 
   //! Load Products
   static Future<List<Product>> loadProduct(id) async {
-    print('entro product');
+
 
     List<Product> list = [];
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var island = prefs.getString('island');
 
+    var island = fullControllerController.island.value;
+    print('categoria--'+id.toString()+"--"+island.toString());
     var response;
     if (productController.statusLoadProdutoPage == "init") {
       loadProdutoPage = 1;
@@ -158,198 +158,84 @@ class ServiceRequest {
     return list;
   }
 
-
-
-
-
-
-
-  static Future loginFresh() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var island = prefs.getString('island');
-
-    var response;
-    switch (island) {
-      case "Santo Antão":
-        {
-          response = await http.post(Uri.parse(request_login_SantoAntao),
-              body: {'username': user.username, 'password': user.senha});
-
-          break;
-        }
-
-      case "São Vicente":
-        {
-          response = await http.post(Uri.parse(request_login_SaoVicente),
-              body: {'username': user.username, 'password': user.senha});
-
-          break;
-        }
-
-      case "São Nicolau":
-        {
-          response = await http.post(Uri.parse(request_login_SaoNicolau),
-              body: {'username': user.username, 'password': user.senha});
-
-          break;
-        }
-
-      case "Boa Vista":
-        {
-          response = await http.post(Uri.parse(request_login_BoaVista),
-              body: {'username': user.username, 'password': user.senha});
-
-          break;
-        }
-
-      case "Sal":
-        {
-          response = await http.post(Uri.parse(request_login_Sal),
-              body: {'username': user.username, 'password': user.senha});
-
-          break;
-        }
-
-      case "Maio":
-        {
-          response = await http.post(Uri.parse(request_login_Maio),
-              body: {'username': user.username, 'password': user.senha});
-
-          break;
-        }
-
-      case "Santiago":
-        {
-          response = await http.post(Uri.parse(request_login_Santiago),
-              body: {'username': user.username, 'password': user.senha});
-
-          break;
-        }
-
-      case "Fogo":
-        {
-          response = await http.post(Uri.parse(request_login_Fogo),
-              body: {'username': user.username, 'password': user.senha});
-
-          break;
-        }
-
-      case "Brava":
-        {
-          response = await http.post(Uri.parse(request_login_Brava),
-              body: {'username': user.username, 'password': user.senha});
-
-          break;
-        }
-    }
-    if (response.statusCode == 200) {
-      final jsonResponse = json.decode(response.body);
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('id', jsonResponse["data"]["ID"].toString());
-      return true;
-    }
-  }
-
 //! login cocart
   static Future loginCoCart() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var island = prefs.getString('island');
+     var island = fullControllerController.island.value;
 
-    var response, responseCocart;
+    var  responseCocart;
     switch (island) {
       case "Santo Antão":
         {
-          response = await http.post(Uri.parse(request_login_SantoAntao),
-              body: {'username': user.username, 'password': user.senha});
+         // response = await http.post(Uri.parse(request_login_SantoAntao),
+           //   body: {'username':  authenticationController.user.value.username, 'password':  authenticationController.user.value.senha});
           responseCocart = await http.post(
               Uri.parse(request_loginCocart_SantoAntao),
-              body: {'username': user.username, 'password': user.senha});
+              body: {'username':  authenticationController.user.value.username, 'password':  authenticationController.user.value.senha});
           break;
         }
 
       case "São Vicente":
         {
-          response = await http.post(Uri.parse(request_login_SaoVicente),
-              body: {'username': user.username, 'password': user.senha});
-          responseCocart = await http.post(
+           responseCocart = await http.post(
               Uri.parse(request_loginCocart_SaoVicente),
-              body: {'username': user.username, 'password': user.senha});
+              body: {'username':  authenticationController.user.value.username, 'password':  authenticationController.user.value.senha});
           break;
         }
 
       case "São Nicolau":
         {
-          response = await http.post(Uri.parse(request_login_SaoNicolau),
-              body: {'username': user.username, 'password': user.senha});
-          responseCocart = await http.post(
+           responseCocart = await http.post(
               Uri.parse(request_loginCocart_SaoNicolau),
-              body: {'username': user.username, 'password': user.senha});
+              body: {'username':  authenticationController.user.value.username, 'password':  authenticationController.user.value.senha});
           break;
         }
 
       case "Boa Vista":
         {
-          response = await http.post(Uri.parse(request_login_BoaVista),
-              body: {'username': user.username, 'password': user.senha});
           responseCocart = await http.post(
               Uri.parse(request_loginCocart_BoaVista),
-              body: {'username': user.username, 'password': user.senha});
+              body: {'username':  authenticationController.user.value.username, 'password':  authenticationController.user.value.senha});
           break;
         }
 
       case "Sal":
         {
-          response = await http.post(Uri.parse(request_login_Sal),
-              body: {'username': user.username, 'password': user.senha});
-          responseCocart = await http.post(Uri.parse(request_loginCocart_Sal),
-              body: {'username': user.username, 'password': user.senha});
+            responseCocart = await http.post(Uri.parse(request_loginCocart_Sal),
+              body: {'username':  authenticationController.user.value.username, 'password':  authenticationController.user.value.senha});
           break;
         }
 
       case "Maio":
         {
-          response = await http.post(Uri.parse(request_login_Maio),
-              body: {'username': user.username, 'password': user.senha});
-          responseCocart = await http.post(Uri.parse(request_loginCocart_Maio),
-              body: {'username': user.username, 'password': user.senha});
+           responseCocart = await http.post(Uri.parse(request_loginCocart_Maio),
+              body: {'username':  authenticationController.user.value.username, 'password':  authenticationController.user.value.senha});
           break;
         }
 
       case "Santiago":
         {
-          response = await http.post(Uri.parse(request_login_Santiago),
-              body: {'username': user.username, 'password': user.senha});
           responseCocart = await http.post(
               Uri.parse(request_loginCocart_Santiago),
-              body: {'username': user.username, 'password': user.senha});
+              body: {'username':  authenticationController.user.value.username, 'password':  authenticationController.user.value.senha});
           break;
         }
 
       case "Fogo":
         {
-          response = await http.post(Uri.parse(request_login_Fogo),
-              body: {'username': user.username, 'password': user.senha});
-          responseCocart = await http.post(Uri.parse(request_loginCocart_Fogo),
-              body: {'username': user.username, 'password': user.senha});
+           responseCocart = await http.post(Uri.parse(request_loginCocart_Fogo),
+              body: {'username':  authenticationController.user.value.username, 'password':  authenticationController.user.value.senha});
           break;
         }
 
       case "Brava":
         {
-          response = await http.post(Uri.parse(request_login_Brava),
-              body: {'username': user.username, 'password': user.senha});
-          responseCocart = await http.post(Uri.parse(request_loginCocart_Brava),
-              body: {'username': user.username, 'password': user.senha});
+           responseCocart = await http.post(Uri.parse(request_loginCocart_Brava),
+              body: {'username':  authenticationController.user.value.username, 'password':  authenticationController.user.value.senha});
           break;
         }
     }
-
-    //print("Cocart:" + responseCocart.statusCode.toString());
     return responseCocart.statusCode;
   }
-
-
-
 
   //! Cart
   //? getCart
@@ -359,14 +245,13 @@ class ServiceRequest {
     do {
       var loginCocart = await loginCoCart();
       String basicAuth = 'Basic ' +
-          base64Encode(utf8.encode(user.username! + ':' + user.senha!));
+          base64Encode(utf8.encode( authenticationController.user.value.username! + ':' +  authenticationController.user.value.senha!));
       var island = fullControllerController.island.value;
 
       if (loginCocart == 200) {
         switch (island) {
           case "Santo Antão":
-            response = await http.get(Uri.parse(getCartSaoAntao),
-                headers: <String, String>{'authorization': basicAuth});
+            response = await http.get(Uri.parse(getCartSantoAntao),headers: <String, String>{'authorization': basicAuth});
             break;
           case "São Vicente":
             response = await http.get(Uri.parse(getCartSaoVicente),
@@ -423,7 +308,7 @@ class ServiceRequest {
   static Future<List<CartModel>> removeCart(List<String> list_item) async {
     List<CartModel> list = [];
     String basicAuth =
-        'Basic ' + base64Encode(utf8.encode(user.username! + ':' + user.senha!));
+        'Basic ' + base64Encode(utf8.encode( authenticationController.user.value.username! + ':' +  authenticationController.user.value.senha!));
     switch (fullControllerController.island.value) {
       case "Santo Antão":
         {
@@ -615,9 +500,10 @@ class ServiceRequest {
   //! Cart
   //? addCart
   static Future addCart(item, quant) async {
+
     var loginCocart = await loginCoCart();
     String basicAuth =
-        'Basic ' + base64Encode(utf8.encode(user.username! + ':' + user.senha!));
+        'Basic ' + base64Encode(utf8.encode( authenticationController.user.value.username! + ':' +  authenticationController.user.value.senha!));
     var island = fullControllerController.island.value;
 
     if (loginCocart == 200) {
@@ -669,12 +555,15 @@ class ServiceRequest {
               body: {'id': item.toString(), 'quantity': quant.toString()});
           break;
       }
+
       if (response.statusCode == 200) {
         List<CartModel> list = [];
         final jsonResponse = json.decode(response.body);
         final _cats = jsonResponse['items'].cast<Map<String, dynamic>>();
         list = _cats.map<CartModel>((cat) => CartModel.fromJson(cat)).toList();
-        cartPageController.listCart.value = list;
+        cartPageController.listCart.clear();
+        cartPageController.listCart.addAll(list);
+
         return true;
       } else if (response.statusCode == 503) {
         print("Erro de serviço");
@@ -741,14 +630,13 @@ class ServiceRequest {
   static Future<List<Product>> loadFavorite() async {
     List<Product> list = [];
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    // prefs.remove('itens_favorites');
     final String? itemFavortiesString = prefs.getString('itens_favorites');
 
     if (itemFavortiesString != null) {
       final String? itemusernameString = prefs.getString('username');
       // decode and store data in SharedPreferences
       List<Favorite> listFavorites = Favorite.decode(itemFavortiesString);
-      var island = prefs.getString('island');
+      var island = fullControllerController.island.value;
 
       for (int i = 0; i < listFavorites.length; i++) {
         if (listFavorites[i].island == island) {
@@ -944,19 +832,18 @@ class ServiceRequest {
 
   //! order
   //?get ORDER
-  static Future<List<Order>> loadOrder(String island) async {
+  static Future<List<Order>> loadOrder() async {
     List<Order> list = [];
-    List<Order> listOrder = [];
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var id = prefs.getString('id');
     var response;
 
-    if (fullControllerController.island.value != island) {
-      switch (island) {
+      /*switch (fullControllerController.island.value) {
         case "Santo Antão":
           {
             response = await http.post(Uri.parse(request_login_SantoAntao),
-                body: {'username': user.username, 'password': user.senha});
+                body: {'username':  authenticationController.user.value.username, 'password':  authenticationController.user.value.senha});
 
             break;
           }
@@ -964,7 +851,7 @@ class ServiceRequest {
         case "São Vicente":
           {
             response = await http.post(Uri.parse(request_login_SaoVicente),
-                body: {'username': user.username, 'password': user.senha});
+                body: {'username':  authenticationController.user.value.username, 'password':  authenticationController.user.value.senha});
 
             break;
           }
@@ -972,7 +859,7 @@ class ServiceRequest {
         case "São Nicolau":
           {
             response = await http.post(Uri.parse(request_login_SaoNicolau),
-                body: {'username': user.username, 'password': user.senha});
+                body: {'username':  authenticationController.user.value.username, 'password':  authenticationController.user.value.senha});
 
             break;
           }
@@ -980,7 +867,7 @@ class ServiceRequest {
         case "Boa Vista":
           {
             response = await http.post(Uri.parse(request_login_BoaVista),
-                body: {'username': user.username, 'password': user.senha});
+                body: {'username':  authenticationController.user.value.username, 'password':  authenticationController.user.value.senha});
 
             break;
           }
@@ -988,7 +875,7 @@ class ServiceRequest {
         case "Sal":
           {
             response = await http.post(Uri.parse(request_login_Sal),
-                body: {'username': user.username, 'password': user.senha});
+                body: {'username':  authenticationController.user.value.username, 'password':  authenticationController.user.value.senha});
 
             break;
           }
@@ -996,7 +883,7 @@ class ServiceRequest {
         case "Maio":
           {
             response = await http.post(Uri.parse(request_login_Maio),
-                body: {'username': user.username, 'password': user.senha});
+                body: {'username':  authenticationController.user.value.username, 'password':  authenticationController.user.value.senha});
 
             break;
           }
@@ -1004,7 +891,7 @@ class ServiceRequest {
         case "Santiago":
           {
             response = await http.post(Uri.parse(request_login_Santiago),
-                body: {'username': user.username, 'password': user.senha});
+                body: {'username':  authenticationController.user.value.username, 'password':  authenticationController.user.value.senha});
 
             break;
           }
@@ -1012,7 +899,7 @@ class ServiceRequest {
         case "Fogo":
           {
             response = await http.post(Uri.parse(request_login_Fogo),
-                body: {'username': user.username, 'password': user.senha});
+                body: {'username':  authenticationController.user.value.username, 'password':  authenticationController.user.value.senha});
 
             break;
           }
@@ -1020,19 +907,18 @@ class ServiceRequest {
         case "Brava":
           {
             response = await http.post(Uri.parse(request_login_Brava),
-                body: {'username': user.username, 'password': user.senha});
+                body: {'username':  authenticationController.user.value.username, 'password':  authenticationController.user.value.senha});
 
             break;
           }
       }
       if (response.statusCode == 200) {
-        //  print("login:"+response.body);
         final jsonResponse = json.decode(response.body);
         id = jsonResponse["data"]["ID"].toString();
-      }
-    }
+      }*/
 
-    switch (island) {
+
+    switch (fullControllerController.island.value) {
       case "Santo Antão":
         response = await http
             .get(Uri.parse(getOrderSantoAntao + "&customer=" + id.toString()));
@@ -1070,22 +956,18 @@ class ServiceRequest {
             .get(Uri.parse(getOrderBrava + "&customer=" + id.toString()));
         break;
     }
+
+
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       final _cats = jsonResponse.cast<Map<String, dynamic>>();
       list = _cats.map<Order>((cat) => Order.fromJson(cat)).toList();
-
-      for (int i = 0; i < list.length; i++) {
-        if (!list[i].status.contains("pagamento") && !list[i].status.contains("Pagamento")) {
-          listOrder.add(list[i]);
-        }
-      }
     } else if (response.statusCode == 503) {
       print("Erro de serviço");
     } else {
       print("Erro de authentiction");
     }
-    return listOrder;
+    return list;
   }
 
   //! registar
@@ -1408,197 +1290,7 @@ class ServiceRequest {
     return false;
   }
 
-  //SET PASSWORD
-  static Future resetPassword(email) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    var island = prefs.getString('island');
 
-    var response;
-    switch (island) {
-      case "Santo Antão":
-        response = await http.post(Uri.parse(resetPasswordSantiado),
-            body: {'email': email.toString()});
-        break;
-      case "São Vicente":
-        response = await http.post(Uri.parse(resetPasswordSantiado),
-            body: {'email': email.toString()});
-        break;
-      case "São Nicolau":
-        response = await http.post(Uri.parse(resetPasswordSantiado),
-            body: {'email': email.toString()});
-        break;
-      case "Boa Vista":
-        response = await http.post(Uri.parse(resetPasswordSantiado),
-            body: {'email': email.toString()});
-        break;
-      case "Sal":
-        response = await http.post(Uri.parse(resetPasswordSantiado),
-            body: {'email': email.toString()});
-        break;
-      case "Maio":
-        response = await http.post(Uri.parse(resetPasswordSantiado),
-            body: {'email': email.toString()});
-        break;
-      case "Santiago":
-        response = await http.post(Uri.parse(resetPasswordSantiado),
-            body: {'email': email.toString()});
-        break;
-      case "Fogo":
-        response = await http.post(Uri.parse(resetPasswordSantiado),
-            body: {'email': email.toString()});
-        break;
-      case "Brava":
-        response = await http.post(Uri.parse(resetPasswordSantiado),
-            body: {'email': email.toString()});
-        break;
-    }
-    print(response.body);
-    if (response.statusCode == 200) {
-      return true;
-    } else if (response.statusCode == 503) {
-      print("Erro de serviço");
-    } else {
-      print("Erro de authentiction");
-    }
 
-    return false;
-  }
-
-  //validate code the email
-  static Future validateCodePassword(email, code) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    var island = prefs.getString('island');
-
-    var response;
-    switch (island) {
-      case "Santo Antão":
-        response = await http.post(Uri.parse(validateCodeSantiado),
-            body: {'email': email.toString(), 'code': code.toString()});
-        break;
-      case "São Vicente":
-        response = await http.post(Uri.parse(validateCodeSantiado),
-            body: {'email': email.toString(), 'code': code.toString()});
-        break;
-      case "São Nicolau":
-        response = await http.post(Uri.parse(validateCodeSantiado),
-            body: {'email': email.toString(), 'code': code.toString()});
-        break;
-      case "Boa Vista":
-        response = await http.post(Uri.parse(validateCodeSantiado),
-            body: {'email': email.toString(), 'code': code.toString()});
-        break;
-      case "Sal":
-        response = await http.post(Uri.parse(validateCodeSantiado),
-            body: {'email': email.toString(), 'code': code.toString()});
-        break;
-      case "Maio":
-        response = await http.post(Uri.parse(validateCodeSantiado),
-            body: {'email': email.toString(), 'code': code.toString()});
-        break;
-      case "Santiago":
-        response = await http.post(Uri.parse(validateCodeSantiado),
-            body: {'email': email.toString(), 'code': code.toString()});
-        break;
-      case "Fogo":
-        response = await http.post(Uri.parse(validateCodeSantiado),
-            body: {'email': email.toString(), 'code': code.toString()});
-        break;
-      case "Brava":
-        response = await http.post(Uri.parse(validateCodeSantiado),
-            body: {'email': email.toString(), 'code': code.toString()});
-        break;
-    }
-    print(response.body);
-    if (response.statusCode == 200) {
-      return true;
-    } else if (response.statusCode == 503) {
-      print("Erro de serviço");
-    } else {
-      print("Erro de authentiction");
-    }
-    return false;
-  }
-
-  static Future setPassword(email, code, password) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    var island = prefs.getString('island');
-
-    var response;
-    switch (island) {
-      case "Santo Antão":
-        response = await http.post(Uri.parse(setPasswordSantiado), body: {
-          'email': email.toString(),
-          'code': code.toString(),
-          'password': password.toString()
-        });
-        break;
-      case "São Vicente":
-        response = await http.post(Uri.parse(setPasswordSantiado), body: {
-          'email': email.toString(),
-          'code': code.toString(),
-          'password': password.toString()
-        });
-        break;
-      case "São Nicolau":
-        response = await http.post(Uri.parse(setPasswordSantiado), body: {
-          'email': email.toString(),
-          'code': code.toString(),
-          'password': password.toString()
-        });
-        break;
-      case "Boa Vista":
-        response = await http.post(Uri.parse(setPasswordSantiado), body: {
-          'email': email.toString(),
-          'code': code.toString(),
-          'password': password.toString()
-        });
-        break;
-      case "Sal":
-        response = await http.post(Uri.parse(setPasswordSantiado), body: {
-          'email': email.toString(),
-          'code': code.toString(),
-          'password': password.toString()
-        });
-        break;
-      case "Maio":
-        response = await http.post(Uri.parse(setPasswordSantiado), body: {
-          'email': email.toString(),
-          'code': code.toString(),
-          'password': password.toString()
-        });
-        break;
-      case "Santiago":
-        response = await http.post(Uri.parse(setPasswordSantiado), body: {
-          'email': email.toString(),
-          'code': code.toString(),
-          'password': password.toString()
-        });
-        break;
-      case "Fogo":
-        response = await http.post(Uri.parse(setPasswordSantiado), body: {
-          'email': email.toString(),
-          'code': code.toString(),
-          'password': password.toString()
-        });
-        break;
-      case "Brava":
-        response = await http.post(Uri.parse(setPasswordSantiado), body: {
-          'email': email.toString(),
-          'code': code.toString(),
-          'password': password.toString()
-        });
-        break;
-    }
-    if (response.statusCode == 200) {
-      return true;
-    } else if (response.statusCode == 503) {
-      print("Erro de serviço");
-    } else {
-      print("Erro de authentiction");
-    }
-    return false;
-  }
 }

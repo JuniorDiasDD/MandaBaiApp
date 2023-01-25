@@ -11,10 +11,9 @@ class OnboardingTwoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TemplateOnboarding(
-      image: AppImages.onboarding2,
-      description: 'Di tudu um poku',
-      title:AppLocalizations.of(context)!
-          .product,
+      image: AppImages.onboarding1,
+      description: 'Kuida di bu familia di fora pa dentu',
+      title:"Familia",
       actionButton: (){
         Navigator.pushNamed(context, '/onboarding3');
       },
@@ -23,7 +22,7 @@ class OnboardingTwoPage extends StatelessWidget {
       },
       buttonTopLabel: AppLocalizations.of(context)!.textbutton_skip,
       position: 2,
-      music: '““Terra fértil Das bananeiras, das laranajeiras, Do milho que dá cachupa, o cuscuz...."@Poétas de Terra',
+      music: '“Ês mágua de nha partida, el sâ tâ matam nha bida!" @Poétas de Terra',
       musicImage: AppImages.music2,
 
     );

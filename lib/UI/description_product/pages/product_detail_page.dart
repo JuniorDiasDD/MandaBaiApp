@@ -5,21 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:manda_bai/Controller/request.dart';
-import 'package:manda_bai/Core/app_colors.dart';
-import 'package:manda_bai/Core/app_fonts.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/product.dart';
 import 'package:manda_bai/UI/widget/button_ui.dart';
 import 'package:manda_bai/UI/widget/dialog_custom.dart';
-import 'package:manda_bai/UI/home/pop_up/pop_up_message.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:manda_bai/UI/widget/dialogs.dart';
 import 'package:manda_bai/constants/controllers.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProdutoDetailPage extends StatefulWidget {
- final Product product;
+  final Product product;
   const ProdutoDetailPage({Key? key, required this.product}) : super(key: key);
   @override
   State<ProdutoDetailPage> createState() => _ProdutoDetailPageState();
@@ -85,7 +82,6 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
 
   int quantidade = 1;
   bool loading = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -331,66 +327,55 @@ class _ProdutoDetailPageState extends State<ProdutoDetailPage> {
         ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: ButtonUI(label: AppLocalizations.of(context)!.button_add_cart, action: () async {
-          if (!await authenticationController.checkLogin()) {
-            showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return DialogCustom(
-                textButton:
-                AppLocalizations.of(context)!.button_login,
-                action: () {
-                  Navigator.pushNamed(context, '/login');
-                },
-              );
-            });
-          } else {
-            if (widget.product.price != 0.0) {
-              openLoadingStateDialog(context);
-             var result=await cartPageController.addCart(widget.product.id,quantidade);
-        Navigator.pop(context);
-          if (result.success) {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(
-              content: Text(
-                AppLocalizations.of(context)!
-                    .message_success_cart,
-                style: Theme.of(context)
-                    .textTheme
-                    .labelSmall,
-              ),
-              backgroundColor:
-              Theme.of(context).primaryColor,
-            ));
-          } else {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(
-              content: Text(
-                result.errorMessage!,
-                style: Theme.of(context)
-                    .textTheme
-                    .labelSmall,
-              ),
-              backgroundColor:
-              Theme.of(context).errorColor,
-            ));
-          }
-            } else {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(
-            content: Text(
-              AppLocalizations.of(context)!
-                  .no_stock_description,
-              style: Theme.of(context)
-                  .textTheme
-                  .labelSmall,
-            ),
-            backgroundColor:
-            Theme.of(context).errorColor,
-          ));
-            }
-          }
-      },),
+          child: ButtonUI(
+            label: AppLocalizations.of(context)!.button_add_cart,
+            action: () async {
+              if (!await authenticationController.checkLogin()) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return DialogCustom(
+                        textButton: AppLocalizations.of(context)!.button_login,
+                        action: () {
+                          Navigator.pushNamed(context, '/login');
+                        },
+                      );
+                    });
+              } else {
+                if (widget.product.price != 0.0) {
+                  openLoadingStateDialog(context);
+                  var result = await cartPageController.addCart(
+                      widget.product.id, quantidade);
+                  Navigator.pop(context);
+                  if (result.success) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                        AppLocalizations.of(context)!.message_success_cart,
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                      backgroundColor: Theme.of(context).primaryColor,
+                    ));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                        result.errorMessage!,
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                      backgroundColor: Theme.of(context).errorColor,
+                    ));
+                  }
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                      AppLocalizations.of(context)!.no_stock_description,
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                    backgroundColor: Theme.of(context).errorColor,
+                  ));
+                }
+              }
+            },
+          ),
         ),
       ),
     );

@@ -6,8 +6,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:manda_bai/UI/order/pages/order_description_product.dart';
 
 class ItemListOrder extends StatefulWidget {
-  Items items;
-  ItemListOrder({Key? key, required this.items}) : super(key: key);
+  final Items item;
+  const ItemListOrder({Key? key, required this.item}) : super(key: key);
 
   @override
   _ItemListOrderState createState() => _ItemListOrderState();
@@ -17,7 +17,7 @@ class _ItemListOrderState extends State<ItemListOrder> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20.0, right: 20.0,top:10),
+      padding: const EdgeInsets.all(16),
       child: OpenContainer(closedBuilder: (context, action) {
         return Container(
           width: Get.width,
@@ -30,12 +30,12 @@ class _ItemListOrderState extends State<ItemListOrder> {
                 Row(
                   children: [
                     Text(
-                      widget.items.name,
+                      widget.item.name,
                       style: Theme.of(context).textTheme.headline2,
                     ),
                     const Spacer(),
                     Text(
-                      widget.items.total + "\$",
+                      widget.item.total + "\$",
                       style: Theme.of(context).textTheme.headline5,
                     ),
                   ],
@@ -43,7 +43,7 @@ class _ItemListOrderState extends State<ItemListOrder> {
                 const SizedBox(height: 5.0),
                 Text(
                   AppLocalizations.of(context)!.text_amount +": "+
-                      widget.items.quantity.toString(),
+                      widget.item.quantity.toString(),
                   style: Theme.of(context).textTheme.headline4,
                 ),
               ],
@@ -58,7 +58,7 @@ class _ItemListOrderState extends State<ItemListOrder> {
         //  openColor: Theme.of(context).primaryColor,
 
           openBuilder: (context, action){
-            return PedidoDescriptionProduct(idProduct: widget.items.product_id);
+            return PedidoDescriptionProduct(idProduct: widget.item.product_id);
           }),
     );
   }

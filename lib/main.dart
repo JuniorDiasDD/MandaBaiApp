@@ -11,6 +11,9 @@ import 'package:manda_bai/UI/Contact/contact_page.dart';
 import 'package:manda_bai/UI/about/pages/info_app.dart';
 import 'package:manda_bai/UI/account/edit_password.dart';
 import 'package:manda_bai/UI/account/edit_profile.dart';
+import 'package:manda_bai/UI/authention/pages/recovery_password_page.dart';
+import 'package:manda_bai/UI/authention/pages/set_password_page.dart';
+import 'package:manda_bai/UI/authention/pages/validate_code_page.dart';
 import 'package:manda_bai/UI/cart/pages/cart_page.dart';
 import 'package:manda_bai/UI/cart/pages/checkout_page_step_2.dart';
 import 'package:manda_bai/UI/category_filter/controller/mandaBaiProductController.dart';
@@ -68,7 +71,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MandaBai',
       localizationsDelegates: const [
@@ -83,11 +86,11 @@ class App extends StatelessWidget {
         Locale('nl', ''), //
         Locale('fr', ''), // Spanish, no country code
       ],
-      theme: AppThemes.lightTheme,
+      theme: getLightTheme(context),
       // The Mandy red, dark theme.
-      darkTheme: AppThemes.darkTheme,
+      darkTheme: getDarkTheme(context),
       // Use dark or light theme based on system setting.
-      themeMode: ThemeMode.system,
+      themeMode: fullControllerController.prefersDarkMode.value ? ThemeMode.dark : ThemeMode.light,
       initialRoute: '/',
       routes: {
         '/': (context) => const SplashPage(),
@@ -97,6 +100,7 @@ class App extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
         '/home': (context) => const HomePage(index: 0),
+        '/setting': (context) => const HomePage(index: 4),
         '/cart': (context) => const CartPage(),
         '/SettingDestination': (context) => const DestinationPage(),
         '/checkoutFinal': (context) =>const CheckoutPageStep2(),
@@ -109,6 +113,9 @@ class App extends StatelessWidget {
         '/editProfile': (context) => const EditPorfilePage(),
         '/island': (context) => const IslandPage(),
         '/editPassword': (context) => const EditPasswordPage(),
+        '/recoveryPassword': (context) => const RecoveryPassword(),
+        '/validateCodePassword': (context) => const ValidateCode(),
+        '/setPasswordPage': (context) => const SetPasswordPage(),
       },
     );
   }

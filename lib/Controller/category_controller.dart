@@ -11,7 +11,7 @@ import '../Model/category.dart';
 
 class CategoryController extends GetxController {
   static CategoryController instance = Get.find();
-CategoryService categoryService=CategoryService();
+  CategoryService categoryService = CategoryService();
   final _listFilter = <Filter>[].obs;
   final _listCategory = <Category>[].obs;
   final _listCategoryFull = <Category>[].obs;
@@ -53,10 +53,6 @@ CategoryService categoryService=CategoryService();
       }
     }
     if (_listFilter.isEmpty) {
-      /*_listFilter.add(Filter(
-          image:
-              "https://www.mandabai.com/wp-content/uploads/2022/02/filterHomeApp.png",
-          name: "Todos"));*/
       listCategory.forEach((e) {
         switch (e.name) {
           case 'Alimentos':
@@ -134,7 +130,6 @@ CategoryService categoryService=CategoryService();
         }
       });
 
-
       if (_listFilter.isEmpty) {
         return null;
       }
@@ -143,7 +138,6 @@ CategoryService categoryService=CategoryService();
   }
 
   Future carregarProductByIdCategory() async {
-    //  if (controller.statusLoadProdutoPage == "init" && pesquisa.text.isEmpty) {
     if (productController.listProduct.isEmpty) {
       productController.listProduct.value =
           await ServiceRequest.loadProduct(categorySelect.id);
@@ -217,16 +211,19 @@ CategoryService categoryService=CategoryService();
     await mandaBaiController.loadDestaque();
     if (productController.listProductHome.isEmpty ||
         destaqueCurrent != mandaBaiController.destaque) {
+      destaqueCurrent = mandaBaiController.destaque;
 
-     destaqueCurrent=mandaBaiController.destaque;
       if (listCategoryFull.isEmpty) {
-         await carregarCategory();
+        await carregarCategory();
       }
       for (var element in listCategory) {
+
         if (element.name == mandaBaiController.destaque.value) {
           categorySelect = element;
         }
       }
+
+
 
       productController.listProductHome.value =
           await ServiceRequest.loadProduct(categorySelect.id);
@@ -239,22 +236,31 @@ CategoryService categoryService=CategoryService();
         if (check != 'null' && check != null) {
           final String? itemFavortiesString =
               prefs.getString('itens_favorites');
+
           final String? itemUsernameString = prefs.getString('username');
           if (itemFavortiesString != null) {
             productController.listProductFavorite.value =
                 Favorite.decode(itemFavortiesString);
-            for (int i = 0; i < productController.listProductHome.length; i++) {
-              for (int f = 0;
-                  f < productController.listProductFavorite.length;
-                  f++) {
-                if (productController.listProductHome[i].id ==
-                        productController.listProductFavorite[f].id &&
-                    productController.listProductFavorite[f].username ==
-                        itemUsernameString) {
-                  productController.listProductHome[i].favorite = true;
+            if (productController.listProductFavorite.isNotEmpty){
+              for (int i = 0; i <
+                  productController.listProductHome.length; i++) {
+                for (int f = 0;
+                f < productController.listProductFavorite.length;
+                f++) {
+                  if (productController.listProductHome[i].id ==
+                      productController.listProductFavorite[f].id &&
+                      productController.listProductFavorite[f].username ==
+                          itemUsernameString &&
+                      productController.listProductFavorite[f].island ==
+                          fullControllerController.island.value) {
+                    print(productController.listProductHome[i].favorite);
+                    productController.listProductHome[i].favorite = true;
+                  } else {
+                    productController.listProductHome[i].favorite = false;
+                  }
                 }
               }
-            }
+          }
           }
         }
 

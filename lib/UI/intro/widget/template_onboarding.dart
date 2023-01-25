@@ -67,16 +67,17 @@ class TemplateOnboarding extends StatelessWidget {
               const SizedBox(height: 32,),
               Row(
                 children: [
-                  if (position == 1) Image.asset(musicImage!),
-                  if (position == 2) Image.asset(musicImage!),
+                  if (position == 1) Image.asset(musicImage!,height: 32,),
+                  if (position == 2) Image.asset(musicImage!,height: 32),
+                  if (position == 3) Image.asset(musicImage!,height: 32,),
                   const SizedBox(
                     width: 8,
                   ),
                   Expanded(
-                    child: position!=3? Text(
+                    child:  Text(
                       music!,
                       style: Theme.of(context).textTheme.labelSmall,
-                    ):Container(),
+                    )
                   ),
                 ],
               ),

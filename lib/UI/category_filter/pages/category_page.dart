@@ -234,7 +234,6 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   Future _carregarAtualizar() async {
-    // print(productController.statusLoadProdutoPage.toString());
     if (productController.statusLoadProdutoPage != "init" &&
         productController.statusLoadProdutoPage != "close") {
       list_product_cont = await ServiceRequest.loadProduct(widget.category.id);
@@ -242,7 +241,7 @@ class _CategoryPageState extends State<CategoryPage> {
         productController.statusLoadProdutoPage = "close";
         return null;
       } else {
-        if (!list_favorite.isEmpty) {
+        if (list_favorite.isNotEmpty) {
           for (int i = 0; i < list_product_cont.length; i++) {
             for (int f = 0; f < list_favorite.length; f++) {
               if (list_product_cont[i].id == list_favorite[f].id) {
@@ -277,7 +276,7 @@ class _CategoryPageState extends State<CategoryPage> {
             }
           }
         }
-        if (!list_product_cont.isEmpty) {
+        if (list_product_cont.isNotEmpty) {
           setState(() {
             for (int m = 0; m < list_product_cont.length; m++) {
               list_product.add(list_product_cont[m]);

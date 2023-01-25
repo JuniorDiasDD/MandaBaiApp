@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Model/filter.dart';
 import 'package:manda_bai/constants/controllers.dart';
 import 'package:manda_bai/helpers/result.dart';
@@ -76,16 +76,32 @@ class FullController extends GetxController {
 
     if (theme == "null" || theme == null) {
       await prefs.setString('theme', "light");
-      prefersDarkMode.value = true;
+      Get.changeThemeMode(ThemeMode.light);
+      prefersDarkMode.value=false;
     } else {
       if (theme == 'light') {
-        prefersDarkMode.value = true;
+        Get.changeThemeMode(ThemeMode.light);
+        prefersDarkMode.value=false;
       } else {
-        prefersDarkMode.value = true;
+        Get.changeThemeMode(ThemeMode.dark);
+        prefersDarkMode.value=true;
       }
     }
   }
 
+  setPrefersDark(bool newValue) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (newValue) {
+      Get.changeThemeMode(ThemeMode.dark);
+      await prefs.setString('theme', "dark");
+    } else {
+      Get.changeThemeMode(ThemeMode.light);
+      await prefs.setString('theme', "light");
+    }
+    prefersDarkMode.value = newValue;
+
+
+  }
   validateIsland() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -107,15 +123,15 @@ class FullController extends GetxController {
       final String? userString = prefs.getString('user');
       var userCache = json.decode(userString!);
 
-      user.username = username.toString();
-      user.senha = password.toString();
-      user.name = userCache["name"];
-      user.email = userCache["email"];
-      user.nickname = userCache["nickname"];
+      authenticationController.user.value.username = username.toString();
+      authenticationController.user.value.senha = password.toString();
+      authenticationController.user.value.name = userCache["name"];
+      authenticationController.user.value.email = userCache["email"];
+      authenticationController.user.value.nickname = userCache["nickname"];
       //  user.avatar = userCache["avatar"];
-      user.telefone = userCache["telefone"];
-      user.city = userCache["city"];
-      user.country = userCache["country"];
+      authenticationController.user.value.telefone = userCache["telefone"];
+      authenticationController.user.value.city = userCache["city"];
+      authenticationController.user.value.country = userCache["country"];
     }
   }
 
@@ -131,12 +147,15 @@ class FullController extends GetxController {
 
   getloadDataHome() async {
     if (ultimoClick.value != fullControllerController.island.value) {
+      authenticationController.logout();
       productController.listProductHome.clear();
-      categoryController.listCategory.clear();
+      categoryController.listCategoryFull.clear();
       await categoryController.carregarProductByHome();
       await mandaBaiController.loadBanner();
       await mandaBaiController.loadBackground();
       ultimoClick.value = fullControllerController.island.value;
+      await mandaBaiController.loadDiscountData();
+
     }
   }
 

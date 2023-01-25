@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:manda_bai/Controller/cart_controller.dart';
-import 'package:manda_bai/Controller/mandaBaiController.dart';
 import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Model/cart_model.dart';
 import 'package:manda_bai/Model/favorite.dart';
@@ -121,9 +120,9 @@ class MandaBaiProductController extends GetxController {
   //? getCart
   Future<List<CartModel>> loadCart() async {
     String basicAuth = 'Basic ' +
-        base64Encode(utf8.encode(user.username! +
+        base64Encode(utf8.encode( authenticationController.user.value.username! +
             ':' +
-            user.senha!));
+             authenticationController.user.value.senha!));
     var response = await http.get(Uri.parse(getCart),
         headers: <String, String>{'authorization': basicAuth});
     print(response.body);
@@ -149,9 +148,9 @@ class MandaBaiProductController extends GetxController {
   //! removeItemCart
   Future removeCart(ischeck) async {
     String basicAuth = 'Basic ' +
-        base64Encode(utf8.encode(user.username! +
+        base64Encode(utf8.encode( authenticationController.user.value.username! +
             ':' +
-            user.senha!));
+             authenticationController.user.value.senha!));
 
     if (ischeck == true) {
       for (int i = 0; i < cartPageController.list.length; i++) {
@@ -204,9 +203,9 @@ class MandaBaiProductController extends GetxController {
   //? addCart
   Future addCart(item) async {
     String basicAuth = 'Basic ' +
-        base64Encode(utf8.encode(user.username! +
+        base64Encode(utf8.encode( authenticationController.user.value.username! +
             ':' +
-            user.senha!));
+             authenticationController.user.value.senha!));
     var response = await http.post(Uri.parse(addItemCart),
         headers: <String, String>{'authorization': basicAuth},
         body: {'id': item.toString(), 'quantity': "1"});

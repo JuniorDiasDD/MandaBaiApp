@@ -4,7 +4,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -135,12 +134,14 @@ class _SettingState extends State<Setting> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 32.0, bottom: 16),
-                    child: Text(
-                      user.name == null ? AppLocalizations.of(context)!.label_greeting : AppLocalizations.of(context)!.label_greeting+" " + user.name!,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline3!
-                          .copyWith(fontSize: 20),
+                    child: Obx(
+                        ()=> Text(
+                          authenticationController.user.value.name == null ? AppLocalizations.of(context)!.label_greeting : AppLocalizations.of(context)!.label_greeting+" " +  authenticationController.user.value.name!,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline3!
+                            .copyWith(fontSize: 20),
+                      ),
                     ),
                   ),
                   Container(

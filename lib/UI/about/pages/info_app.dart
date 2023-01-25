@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:manda_bai/Controller/static_config.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/about/components/item_developer.dart';
 import 'package:manda_bai/UI/about/pages/privacy_policy.dart';
@@ -100,7 +101,7 @@ class _InfoPageState extends State<InfoApp> {
                     style: Theme.of(context).textTheme.headline1,
                   ),
                   Text(
-                    "V.1.0.0",
+                    "V"+version,
                     style: Theme.of(context).textTheme.headline5,
                   ),
                   SizedBox(height: Get.height * 0.01),
@@ -138,7 +139,7 @@ class _InfoPageState extends State<InfoApp> {
                         children: [
                           ItemDeveloper(
                               image:
-                              "https://www.mandabai.com/wp-content/uploads/2022/01/fotoPassPorte6.jpg",
+                              "https://santiago.mandabai.com/wp-content/uploads/2022/10/181D76A8-7427-4783-AED9-DAA9A318651F_1_201_a-scaled.jpg",
                               name: "Júnior Dias Silva",
                               cargo: AppLocalizations.of(context)!
                                   .info_app_func_eng),
@@ -224,7 +225,7 @@ class _InfoPageState extends State<InfoApp> {
                           children: [
                             Icon(
                               Icons.description,
-                              color: Theme.of(context).indicatorColor,
+                              color: Theme.of(context).primaryColor,
                               size: Get.height * 0.025,
                             ),
                             Padding(
@@ -271,7 +272,7 @@ class _InfoPageState extends State<InfoApp> {
                           children: [
                             Icon(
                               Icons.security,
-                              color: Theme.of(context).indicatorColor,
+                              color: Theme.of(context).primaryColor,
                               size: Get.height * 0.025,
                             ),
                             Padding(

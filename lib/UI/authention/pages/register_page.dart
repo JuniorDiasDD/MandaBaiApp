@@ -77,7 +77,6 @@ class _RegisterPageState extends State<RegisterPage> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,14 +86,17 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
                 Container(
                     alignment: Alignment.centerLeft,
                     margin: const EdgeInsets.only(top: 33.0),
                     width: Get.width,
-                    child: TextButton(child:Text('< '+AppLocalizations.of(context)!.button_register,
-                      style: Theme.of(context).textTheme.headline3,),onPressed: ()=> Navigator.pop(context),)
-                ),
+                    child: TextButton(
+                      child: Text(
+                        '< ' + AppLocalizations.of(context)!.button_register,
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                    )),
                 Image.asset(
                   AppImages.appLogoIcon,
                   width: Get.width * 0.6,
@@ -113,19 +115,22 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Column(
                       children: [
                         Text(
-                          AppLocalizations.of(context)!.text_registre,
+                          AppLocalizations.of(context)!.text_registre+ fullControllerController.island.value,
                           style: Theme.of(context).textTheme.headline2,
                         ),
                         SizedBox(
                           height: Get.height * 0.02,
                         ),
+
+                        SizedBox(height: Get.height * 0.01),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
                               width: Get.width * 0.43,
                               child: CustomTextField(
-                                  textController: authenticationController.input_nome,
+                                  textController:
+                                      authenticationController.input_nome,
                                   hintText: AppLocalizations.of(context)!
                                       .textfield_name,
                                   requiredLabel: AppLocalizations.of(context)!
@@ -134,7 +139,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             SizedBox(
                               width: Get.width * 0.43,
                               child: CustomTextField(
-                                  textController: authenticationController.input_nickname,
+                                  textController:
+                                      authenticationController.input_nickname,
                                   hintText: AppLocalizations.of(context)!
                                       .textfield_nickname,
                                   requiredLabel: AppLocalizations.of(context)!
@@ -149,20 +155,23 @@ class _RegisterPageState extends State<RegisterPage> {
                             SizedBox(
                               width: Get.width * 0.43,
                               child: CustomTextField(
-                                  textController: authenticationController.input_country,
+                                  textController:
+                                      authenticationController.input_country,
                                   hintText: AppLocalizations.of(context)!
                                       .textfield_country,
                                   requiredLabel: AppLocalizations.of(context)!
-                                      .validator_country),
+                                      .validator_country,
+                              icon: Icons.location_pin,),
                             ),
                             SizedBox(
                               width: Get.width * 0.43,
                               child: CustomTextField(
-                                  textController: authenticationController.input_city,
+                                  textController:
+                                      authenticationController.input_city,
                                   hintText: AppLocalizations.of(context)!
                                       .textfield_city,
                                   requiredLabel: AppLocalizations.of(context)!
-                                      .validator_city),
+                                      .validator_city,icon: Icons.location_city,),
                             ),
                           ],
                         ),
@@ -177,7 +186,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         SizedBox(height: Get.height * 0.01),
                         CustomTextField(
-                          textController: authenticationController.input_telefone,
+                          textController:
+                              authenticationController.input_telefone,
                           hintText:
                               AppLocalizations.of(context)!.textfield_phone,
                           requiredLabel:
@@ -187,7 +197,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         SizedBox(height: Get.height * 0.01),
                         CustomTextField(
-                          textController: authenticationController.input_username,
+                          textController:
+                              authenticationController.input_username,
                           hintText:
                               AppLocalizations.of(context)!.textfield_user,
                           requiredLabel:
@@ -197,26 +208,26 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         SizedBox(height: Get.height * 0.01),
                         CustomTextFieldObscure(
-                          requiredLabel: AppLocalizations.of(context)!
-                              .validator_password,
-                          hintText: AppLocalizations.of(context)!
-                              .textfield_password,
-                          textController: authenticationController
-                              .input_senha,
+                          requiredLabel:
+                              AppLocalizations.of(context)!.validator_password,
+                          hintText:
+                              AppLocalizations.of(context)!.textfield_password,
+                          textController: authenticationController.input_senha,
                         ),
-
-                        SizedBox(height: Get.height * 0.005),
+                        const SizedBox(height: 32),
                         ButtonUI(
                           label: AppLocalizations.of(context)!.button_register,
                           action: () async {
                             openLoadingLongStateDialog(context);
-                            var result=  await authenticationController.validateAndSave(context);
+                            var result = await authenticationController
+                                .validateAndSave(context);
                             Navigator.pop(context);
                             if (result.success) {
-                              Navigator.pushReplacementNamed(
-                                  context, '/login');
+                              Navigator.pushNamedAndRemoveUntil(context,
+                                  '/login', (Route<dynamic> route) => false);
                             } else {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
                                 content: Text(
                                   result.errorMessage!,
                                   style: Theme.of(context).textTheme.labelSmall,
@@ -234,7 +245,6 @@ class _RegisterPageState extends State<RegisterPage> {
               ],
             ),
           ),
-
         ],
       ),
     );

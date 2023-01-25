@@ -3,7 +3,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/static_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:manda_bai/UI/widget/TextFormField.dart';
@@ -67,12 +66,12 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
     initConnectivity();
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
-    authenticationController.input_email.text = user.email!;
-    authenticationController.input_telefone.text = user.telefone!;
-    authenticationController.input_nome.text = user.name!;
-    authenticationController.input_nickname.text = user.nickname!;
-    authenticationController.input_country.text = user.country!;
-    authenticationController.input_city.text = user.city!;
+    authenticationController.input_email.text =  authenticationController.user.value.email!;
+    authenticationController.input_telefone.text =  authenticationController.user.value.telefone!;
+    authenticationController.input_nome.text =  authenticationController.user.value.name!;
+    authenticationController.input_nickname.text =  authenticationController.user.value.nickname!;
+    authenticationController.input_country.text =  authenticationController.user.value.country!;
+    authenticationController.input_city.text =  authenticationController.user.value.city!;
   }
 
   @override
@@ -207,7 +206,14 @@ class _EditPorfilePageState extends State<EditPorfilePage> {
                             .validateEditProfile(context);
                         Navigator.pop(context);
                         if (result.success) {
-                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                              AppLocalizations.of(context)!.message_success_update,
+                              style: Theme.of(context).textTheme.labelSmall,
+                            ),
+                            backgroundColor: Theme.of(context).primaryColor,
+                          ));
+                          Navigator.pushReplacementNamed(context, '/setting');
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text(

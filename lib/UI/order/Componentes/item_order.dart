@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/Model/order.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:manda_bai/UI/order/pages/detail_order.dart';
 import 'package:manda_bai/constants/controllers.dart';
 
@@ -11,10 +10,10 @@ class ItemOrder extends StatefulWidget {
   final Order order;
   const ItemOrder({Key? key, required this.order}) : super(key: key);
   @override
-  _Item_PedidoState createState() => _Item_PedidoState();
+  _ItemPedidoState createState() => _ItemPedidoState();
 }
 
-class _Item_PedidoState extends State<ItemOrder> {
+class _ItemPedidoState extends State<ItemOrder> {
   @override
   void initState() {
     super.initState();
@@ -28,9 +27,7 @@ class _Item_PedidoState extends State<ItemOrder> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    DetailOrder(
-                        order: widget.order)));
+                builder: (context) => DetailOrder(order: widget.order)));
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 10.0),
@@ -64,8 +61,8 @@ class _Item_PedidoState extends State<ItemOrder> {
                   ),
                   Image.network(
                       widget.order.status != 'processing'
-                          ? AppImages.order_pendent
-                          : AppImages.order_finish,
+                          ? AppImages.orderPendent
+                          : AppImages.orderFinish,
                       width: 24,
                       height: 24,
                       alignment: Alignment.center),
@@ -141,21 +138,19 @@ class _Item_PedidoState extends State<ItemOrder> {
                 child: Row(
                   children: [
                     Text(
-                      widget.order.status != "complete"
-                          ? widget.order.status == "cancelled"
-                              ? AppLocalizations.of(context)!.text_canceled_order
-                              : AppLocalizations.of(context)!.text_in_process_order
-                          : AppLocalizations.of(context)!.text_delivery_order,
-                      style: Theme.of(context).textTheme.labelSmall!.copyWith(color:
-                      widget.order.status != "complete"
-                          ? widget.order.status == "cancelled"
-                          ? Theme.of(context).dividerColor
-                          : Colors.orange
-                          : AppColors.greenColor,
-                      ),
+                      orderController.getStringStatusOrder(
+                          widget.order.status, context),
+                      style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                          color: widget.order.status == "completed"
+                              ? AppColors.greenColor
+                              : widget.order.status == "processing"
+                                  ? Colors.orange
+                                  : widget.order.status == "failed"
+                                      ? Colors.red
+                                      : Theme.of(context).dividerColor),
                     ),
                     Text(
-                    " >",
+                      " >",
                       style: Theme.of(context).textTheme.labelSmall,
                     ),
                   ],

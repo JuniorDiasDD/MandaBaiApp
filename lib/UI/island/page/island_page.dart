@@ -74,160 +74,168 @@ class _IslandPageState extends State<IslandPage> {
     _connectivitySubscription.cancel();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      body: Column(
-
-        children: [
-          const Spacer(),
-          Text(
-              'ESCOLHA A MORABEZA',
-              style: Theme.of(context).textTheme.headline1!.copyWith(color: Colors.white)),
-
-         const SizedBox(
-            height: 32,
-          ),
-          SizedBox(
-            width: Get.width,
-            child:Center(
-              child: Wrap(
-
-                children:  [
-                  CardIsland(
-                    image: AppImages.santiagoIsland,
-                    label: 'Santiago',
-                    action: () async {
-                    fullControllerController.island.value='Santiago';
-                    openLoadingIslandStateDialog(context);
-                    await fullControllerController.getloadDataHome();
-                    Navigator.pop(context);
-                    Navigator.pushNamed(context, '/home');
-                    },
-                  ),
-                  CardIsland(
-                    image: AppImages.salIsland,
-                    label: 'Sal',
-                    action: () async {
-                      fullControllerController.island.value='Sal';
-                      openLoadingIslandStateDialog(context);
-                      await fullControllerController.getloadDataHome();
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, '/home');
-                    },
-                  ),
-                  CardIsland(
-                    image: AppImages.maioIsland,
-                    label: 'Maio',
-                    action: () async {
-                      fullControllerController.island.value='Maio';
-                      openLoadingIslandStateDialog(context);
-                      await fullControllerController.getloadDataHome();
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, '/home');
-                    },
-                  ),
-                  CardIsland(
-                    image: AppImages.saoVicenteIsland,
-                    label: 'São Vicente',
-                    action: () async {
-                      fullControllerController.island.value='São Vicente';
-                      openLoadingIslandStateDialog(context);
-                      await fullControllerController.getloadDataHome();
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, '/home');
-                    },
-                  ),
-                  CardIsland(
-                    image: AppImages.bravaIsland,
-                    label: 'Brava',
-                    action: () async {
-                      fullControllerController.island.value='Brava';
-                      openLoadingIslandStateDialog(context);
-                      await fullControllerController.getloadDataHome();
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, '/home');
-                    },
-                  ),
-                  CardIsland(
-                    image: AppImages.saoNicolauIsland,
-                    label: 'São Nicolau',
-                    action: () async {
-                      fullControllerController.island.value='São Nicolau';
-                      openLoadingIslandStateDialog(context);
-                      await fullControllerController.getloadDataHome();
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, '/home');
-                    },
-                  ),
-                  CardIsland(
-                    image: AppImages.santoAntaoIsland,
-                    label: 'Santo Antão',
-                    action: () async {
-                      fullControllerController.island.value='Santo Antão';
-                      openLoadingIslandStateDialog(context);
-                      await fullControllerController.getloadDataHome();
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, '/home');
-                    },
-                  ),
-                  CardIsland(
-                    image: AppImages.fogoIsland,
-                    label: 'Fogo',
-                    action: () async {
-                      fullControllerController.island.value='Fogo';
-                      openLoadingIslandStateDialog(context);
-                      await fullControllerController.getloadDataHome();
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, '/home');
-                    },
-                  ),
-                  CardIsland(
-                    image: AppImages.boaVistaIsland,
-                    label: 'BoaVista',
-                    action: () async {
-                      fullControllerController.island.value='BoaVista';
-                      openLoadingIslandStateDialog(context);
-                      await fullControllerController.getloadDataHome();
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, '/home');
-                    },
-                  ),
-                ],
+    return  WillPopScope(
+      onWillPop: () {
+        return Future(() => false);
+      },
+      child: Scaffold(
+        backgroundColor: Theme.of(context).primaryColor,
+        body: Column(
+          children: [
+            const Spacer(),
+            Text('ESCOLHA A MORABEZA',
+                style: Theme.of(context)
+                    .textTheme
+                    .headline1!
+                    .copyWith(color: Colors.white)),
+            const SizedBox(
+              height: 32,
+            ),
+            SizedBox(
+              width: Get.width,
+              child: Center(
+                child: Wrap(
+                  children: [
+                    CardIsland(
+                      image: AppImages.santiagoIsland,
+                      label: 'Santiago',
+                      action: () async {
+                        fullControllerController.island.value = 'Santiago';
+                        openLoadingIslandStateDialog(context);
+                        await fullControllerController.getloadDataHome();
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/home');
+                      },
+                    ),
+                    CardIsland(
+                      image: AppImages.salIsland,
+                      label: 'Sal',
+                      action: () async {
+                        fullControllerController.island.value = 'Sal';
+                        openLoadingIslandStateDialog(context);
+                        await fullControllerController.getloadDataHome();
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/home');
+                      },
+                    ),
+                    CardIsland(
+                      image: AppImages.maioIsland,
+                      label: 'Maio',
+                      action: () async {
+                        fullControllerController.island.value = 'Maio';
+                        openLoadingIslandStateDialog(context);
+                        await fullControllerController.getloadDataHome();
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/home');
+                      },
+                    ),
+                    CardIsland(
+                      image: AppImages.saoVicenteIsland,
+                      label: 'São Vicente',
+                      action: () async {
+                        fullControllerController.island.value = 'São Vicente';
+                        openLoadingIslandStateDialog(context);
+                        await fullControllerController.getloadDataHome();
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/home');
+                      },
+                    ),
+                    CardIsland(
+                      image: AppImages.saoNicolauIsland,
+                      label: 'São Nicolau',
+                      action: () async {
+                        fullControllerController.island.value = 'São Nicolau';
+                        openLoadingIslandStateDialog(context);
+                        await fullControllerController.getloadDataHome();
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/home');
+                      },
+                    ),
+                    CardIsland(
+                      image: AppImages.santoAntaoIsland,
+                      label: 'Santo Antão',
+                      action: () async {
+                        fullControllerController.island.value = 'Santo Antão';
+                        openLoadingIslandStateDialog(context);
+                        await fullControllerController.getloadDataHome();
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/home');
+                      },
+                    ),
+                    CardIsland(
+                      image: AppImages.fogoIsland,
+                      label: 'Fogo',
+                      action: () async {
+                        fullControllerController.island.value = 'Fogo';
+                        openLoadingIslandStateDialog(context);
+                        await fullControllerController.getloadDataHome();
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/home');
+                      },
+                    ),
+                    CardIsland(
+                      image: AppImages.boaVistaIsland,
+                      label: 'BoaVista',
+                      action: () async {
+                        fullControllerController.island.value = 'BoaVista';
+                        openLoadingIslandStateDialog(context);
+                        await fullControllerController.getloadDataHome();
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/home');
+                      },
+                    ),
+                    CardIsland(
+                      image: AppImages.bravaIsland,
+                      label: 'Brava',
+                      action: () async {
+                        fullControllerController.island.value = 'Brava';
+                        openLoadingIslandStateDialog(context);
+                        await fullControllerController.getloadDataHome();
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, '/home');
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-
-          const Spacer(),
-          Container(
-            width: Get.width,
-            height: Get.height*0.15,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(AppImages.backgroundIsland),
-                fit: BoxFit.cover,
+            const Spacer(),
+            Container(
+              width: Get.width,
+              height: Get.height * 0.15,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(fullControllerController.prefersDarkMode.value
+                      ? AppImages.backgroundBlackIsland
+                      : AppImages.backgroundIsland),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.message_outlined,
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    SizedBox(
+                      width: Get.width * 0.6,
+                      child: Text(
+                          'Escolha em qual das ilhas desejas fazer as suas compras',
+                          style: Theme.of(context).textTheme.headline4),
+                    ),
+                  ],
+                ),
               ),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-
-                  const Icon(Icons.message_outlined,color: Colors.black,),
-                 const SizedBox(width: 16,),
-                  SizedBox(
-                    width: Get.width*0.6,
-                    child: Text('Escolha em qual das ilhas desejas fazer as suas compras',
-                    style: Theme.of(context).textTheme.headline4!.copyWith(color: Colors.black),),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-
-        ],
+          ],
+        ),
       ),
     );
   }

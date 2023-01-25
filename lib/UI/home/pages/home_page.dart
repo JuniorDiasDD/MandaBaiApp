@@ -62,47 +62,52 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: _selectedIndex == 0
-                ? WebsafeSvg.asset(AppImages.iconMenuHome)
-                : WebsafeSvg.asset(AppImages.iconMenuHomeOutline),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: _selectedIndex == 1
-                ? WebsafeSvg.asset(AppImages.iconMenuCategory)
-                : WebsafeSvg.asset(AppImages.iconMenuCategoryOutline),
-            label: AppLocalizations.of(context)!.label_category,
-          ),
-          BottomNavigationBarItem(
-            icon: _selectedIndex == 2
-                ? WebsafeSvg.asset(AppImages.iconMenuShopping)
-                : WebsafeSvg.asset(AppImages.iconMenuShoppingOutline),
-            label: AppLocalizations.of(context)!.label_order,
-          ),
-          BottomNavigationBarItem(
-            icon: _selectedIndex == 3
-                ? WebsafeSvg.asset(AppImages.iconMenuFavorite)
-                : WebsafeSvg.asset(AppImages.iconMenuFavoriteOutline),
-            label: AppLocalizations.of(context)!.label_favorites,
-          ),
-          BottomNavigationBarItem(
-            icon: _selectedIndex == 4
-                ? WebsafeSvg.asset(AppImages.iconMenuSetting)
-                : WebsafeSvg.asset(AppImages.iconMenuSettingOutline),
-            label: AppLocalizations.of(context)!.label_more,
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: AppColors.greenColor,
-        unselectedItemColor: Theme.of(context).indicatorColor,
-        onTap: _onItemTapped,
+    return WillPopScope(
+      onWillPop: () {
+        return Future(() => false);
+      },
+      child: Scaffold(
+        body: Center(
+          child: _widgetOptions.elementAt(_selectedIndex),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: _selectedIndex == 0
+                  ? WebsafeSvg.asset(AppImages.iconMenuHome)
+                  : WebsafeSvg.asset(AppImages.iconMenuHomeOutline),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: _selectedIndex == 1
+                  ? WebsafeSvg.asset(AppImages.iconMenuCategory)
+                  : WebsafeSvg.asset(AppImages.iconMenuCategoryOutline),
+              label: AppLocalizations.of(context)!.label_category,
+            ),
+            BottomNavigationBarItem(
+              icon: _selectedIndex == 2
+                  ? WebsafeSvg.asset(AppImages.iconMenuShopping)
+                  : WebsafeSvg.asset(AppImages.iconMenuShoppingOutline),
+              label: AppLocalizations.of(context)!.label_order,
+            ),
+            BottomNavigationBarItem(
+              icon: _selectedIndex == 3
+                  ? WebsafeSvg.asset(AppImages.iconMenuFavorite)
+                  : WebsafeSvg.asset(AppImages.iconMenuFavoriteOutline),
+              label: AppLocalizations.of(context)!.label_favorites,
+            ),
+            BottomNavigationBarItem(
+              icon: _selectedIndex == 4
+                  ? WebsafeSvg.asset(AppImages.iconMenuSetting)
+                  : WebsafeSvg.asset(AppImages.iconMenuSettingOutline),
+              label: AppLocalizations.of(context)!.label_more,
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: AppColors.greenColor,
+          unselectedItemColor: Theme.of(context).indicatorColor,
+          onTap: _onItemTapped,
+        ),
       ),
     );
   }

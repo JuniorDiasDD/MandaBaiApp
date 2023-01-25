@@ -164,7 +164,7 @@ class _ContactPageState extends State<ContactPage> {
                     Flexible(
                       flex: 1,
                       child: Image.network(
-                        AppImages.gmail_logo,
+                        AppImages.gmailLogo,
                         height: Get.height * 0.08,
                         width: Get.width * 0.08,
                       ),
@@ -201,7 +201,7 @@ class _ContactPageState extends State<ContactPage> {
                   color: Theme.of(context).cardColor,
                   blurRadius: 4.0,
                   spreadRadius: 0.0,
-                  offset: Offset(2.0, 2.0), // changes position of shadow
+                  offset: const Offset(2.0, 2.0), // changes position of shadow
                 ),
               ],
             ),
@@ -216,7 +216,7 @@ class _ContactPageState extends State<ContactPage> {
                     Flexible(
                       flex: 1,
                       child: Image.asset(
-                        AppImages.whatsapp_logo,
+                        AppImages.whatsappLogo,
                         height: Get.height * 0.08,
                         width: Get.width * 0.08,
                       ),
@@ -268,7 +268,7 @@ class _ContactPageState extends State<ContactPage> {
                     Flexible(
                       flex: 1,
                       child: Image.network(
-                        AppImages.messenger_logo,
+                        AppImages.messengerLogo,
                         height: Get.height * 0.08,
                         width: Get.width * 0.08,
                       ),

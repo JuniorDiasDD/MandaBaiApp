@@ -1,18 +1,6 @@
-import 'package:manda_bai/Model/user.dart';
-
 
 const String version="1.0.2";
 
-User user =  User(
-    name: " ",
-    nickname: " ",
-    telefone: " ",
-    senha: "",
-    email: "",
-    avatar: "",
-    username: "",
-    city: "",
-    country: "");
 
 //! Configuração de serviços
 //?links- urls
@@ -162,7 +150,7 @@ const String get_ProdutoBrava = linkBrava + "products/";
 //! Cart
 const String getCart = link_2 + "cart";
 const String getCartSantiago = CocartSantiago + "cart";
-const String getCartSaoAntao = CocartSantoAntao + "cart";
+const String getCartSantoAntao = CocartSantoAntao + "cart";
 const String getCartSaoVicente = CocartSaoVicente + "cart";
 const String getCartSaoNicolau = CocartSaoNicolau + "cart";
 const String getCartBoaVista = CocartBoaVista + "cart";
@@ -206,17 +194,17 @@ const String register_client_Santiago = linkSantiago + "customers?" + keySantiag
 const String register_client_Fogo = linkFogo + "customers?" + keyFogo;
 const String register_client_Brava = linkBrava + "customers?" + keyBrava;
 
-//! login Cocart
+/*
 const String request_login_SantoAntao = urlSantoAntao + "custom-plugin/login";
 const String request_login_SaoVicente = urlSaoVicente + "custom-plugin/login";
 const String request_login_SaoNicolau = urlSaoNicolau + "custom-plugin/login";
 const String request_login_Sal = urlSal + "custom-plugin/login";
 const String request_login_BoaVista = urlBoaVista + "custom-plugin/login";
 const String request_login_Maio = urlMaio + "custom-plugin/login";
-const String request_login_Santiago = urlSantiago + "custom-plugin/login";
+const String request_login_Santiago = urlSantiago + "api/v1/token";
 const String request_login_Fogo = urlFogo + "custom-plugin/login";
 const String request_login_Brava = urlBrava + "custom-plugin/login";
-const String request_login = url_pricipal + "custom-plugin/login";
+const String request_login = url_pricipal + "custom-plugin/login";*/
 
 const String request_login_cocart_ = "";
 const String request_loginCocart_SantoAntao = CocartSantoAntao + "login";
@@ -266,11 +254,14 @@ const String getOrderIdFogo = linkFogo + "orders/";
 const String getOrderIdBrava = linkBrava + "orders/";
 
 //reset password
-const String resetPasswordSantiado = urlSantiago + "bdpwr/v1/reset-password";
+const String resetPassword = "bdpwr/v1/reset-password";
+
 //validate code
-const String validateCodeSantiado = urlSantiago + "bdpwr/v1/validate-code";
+const String validateCode =  "bdpwr/v1/validate-code";
+
 //set Password
-const String setPasswordSantiado = urlSantiago + "bdpwr/v1/set-password";
+const String setPasswordUrl = "bdpwr/v1/set-password";
+
 
 int loadProdutoPage = 1;
 int loadProdutoTotal = 0;

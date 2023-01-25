@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:manda_bai/constants/controllers.dart';
 import 'package:switcher_button/switcher_button.dart';
 
@@ -34,13 +33,7 @@ class ButtonOption extends StatelessWidget {
                       offColor: Theme.of(context).scaffoldBackgroundColor,
                       onColor: Theme.of(context).primaryColor,
                       onChange: (newValue) async {
-                        if (newValue) {
-                          Get.changeThemeMode(ThemeMode.dark);
-                        } else {
-                          Get.changeThemeMode(ThemeMode.light);
-                        }
-                        fullControllerController.prefersDarkMode.value =
-                            newValue;
+                       await fullControllerController.setPrefersDark(newValue);
                       },
                       size: 56,
                     )

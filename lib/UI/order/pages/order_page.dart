@@ -6,10 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:manda_bai/UI/order/Componentes/item_order.dart';
-import 'package:manda_bai/UI/widget/dialogs.dart';
 import 'package:manda_bai/constants/controllers.dart';
+import 'package:websafe_svg/websafe_svg.dart';
 
 class PedidoPage extends StatefulWidget {
   const PedidoPage({Key? key}) : super(key: key);
@@ -67,7 +68,7 @@ class _PedidoPageState extends State<PedidoPage> {
     initConnectivity();
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
-    orderController.dropdownValue = fullControllerController.island;
+
   }
 
   @override
@@ -116,79 +117,7 @@ class _PedidoPageState extends State<PedidoPage> {
                         ],
                       ),
                     ),
-                    Obx(
-                      () => Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                  left: Get.width * 0.04,
-                                  right: Get.width * 0.04,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  border: Border.all(
-                                      color: Theme.of(context).indicatorColor,
-                                      style: BorderStyle.solid,
-                                      width: 0.80),
-                                ),
-                                child: DropdownButton<String>(
-                                  value: orderController.dropdownValue.value,
-                                  icon: const Icon(
-                                    Icons.arrow_drop_down,
-                                  ),
-                                  iconSize: Get.width * 0.05,
-                                  elevation: 16,
-                                  style: Theme.of(context).textTheme.headline4,
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  underline: Container(
-                                    height: 0,
-                                    color: Colors.transparent,
-                                  ),
-                                  onChanged: (String? newValue) async {
-                                    orderController.dropdownValue.value =
-                                        newValue!;
-                                    openLoadingStateDialog(context);
-                                    await orderController.carregar();
-                                    orderController.island=newValue;
-                                    Navigator.pop(context);
-                                  },
-                                  items: orderController.listIsland
-                                      .map<DropdownMenuItem<String>>(
-                                          (String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(
-                                        value,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline4,
-                                      ),
-                                    );
-                                  }).toList(),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            child: orderController.listOrder.isEmpty
-                                ? Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      AppLocalizations.of(context)!
-                                          .text_empty_order,
-                                      style:
-                                          Theme.of(context).textTheme.headline3,
-                                    ),
-                                  )
-                                : null,
-                          ),
-                        ],
-                      ),
-                    ),
+
                     FutureBuilder(
                       future: orderController.carregar(),
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -209,16 +138,19 @@ class _PedidoPageState extends State<PedidoPage> {
                             );
                           default:
                             if (snapshot.data == null) {
-                              return SizedBox(
-                                height: Get.height * 0.5,
+                              return   SizedBox(
                                 width: Get.width,
-                                child: Center(
-                                  child: Text(
-                                    AppLocalizations.of(context)!
-                                        .text_empty_order,
-                                    style:
-                                        Theme.of(context).textTheme.headline3,
-                                  ),
+                                height: Get.height * 0.7,
+                                child: Column(
+                                  children: [
+                                    SizedBox(height: Get.height * 0.2),
+                                    WebsafeSvg.asset(AppImages.cartEmpyt),
+                                    SizedBox(height: Get.height * 0.08),
+                                    Text(
+                                      AppLocalizations.of(context)!.text_empty_cart,
+                                      style: Theme.of(context).textTheme.headline4,
+                                    ),
+                                  ],
                                 ),
                               );
                             } else {

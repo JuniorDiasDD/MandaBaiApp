@@ -6,12 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:manda_bai/Core/app_colors.dart';
-import 'package:manda_bai/Core/app_images.dart';
-import 'package:manda_bai/Model/employee.dart';
 import 'package:manda_bai/UI/about/components/item_bio.dart';
 import 'package:manda_bai/UI/about/components/item_mandatario.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
 import 'package:manda_bai/UI/widget/base_page.dart';
+import 'package:manda_bai/constants/controllers.dart';
 import 'package:readmore/readmore.dart';
 
 class InfoMandaBai extends StatefulWidget {
@@ -71,64 +70,9 @@ class _InfoAppState extends State<InfoMandaBai> {
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
 
-  }
-  List<Employee> list_employee = [];
-  List<Employee> list_employee_Mandatarios = [];
-  Future _carregar(context) async {
-    if(list_employee.isEmpty){
-      list_employee.add(Employee(
-        name: 'Carlos Pereira',
-        cargo: AppLocalizations.of(context)!.text_role_carlos,
-        image:
-        'https://www.mandabai.com/wp-content/uploads/elementor/thumbs/img-16-pbkbaaof0qxdaun3rdjj72eggo8xuf1tzefuxajdjk.jpg',
-        description: AppLocalizations.of(context)!.text_description_carlos,
-        tel: '+31639838997',
-        email: 'pereirac2207@gmail.com',
-      ));
-      list_employee.add(Employee(
-        name: 'Eveline Tavares',
-        cargo: AppLocalizations.of(context)!.text_role_eveline,
-        image:
-        'https://www.mandabai.com/wp-content/uploads/elementor/thumbs/Design-sem-nome-4-pbwjcdm6kbjiw14u4pb8kvevyan7bq0lqfaqzjbqds.jpg',
-        description: AppLocalizations.of(context)!.text_description_eveline,
-        tel: '+2389724140',
-        email: 'eveline.mandabai@gmail.com',
-      ));
-    }
 
-    return list_employee;
   }
 
-  Future _carregarMandatarios(context) async {
-    if(list_employee_Mandatarios.isEmpty){
-      list_employee_Mandatarios.add(Employee(
-          name: 'Celly Fontes',
-          cargo: AppLocalizations.of(context)!.text_role_antonio,
-          image:
-          'https://santiago.mandabai.com/wp-content/uploads/2022/01/Design-sem-nome-37.jpg',
-          description: AppLocalizations.of(context)!.text_description_antonio,
-          tel: '+774 3812002 ',
-          email: 'bellisimacosmeticsusa@gmail.com'));
-      list_employee_Mandatarios.add(Employee(
-          name: 'António Coelho Monteiro',
-          cargo: AppLocalizations.of(context)!.text_role_antonio,
-          image:
-          'https://santiago.mandabai.com/wp-content/uploads/2022/01/Design-sem-nome-35.jpg',
-          description: AppLocalizations.of(context)!.text_description_antonio,
-          tel: '+1 3057786138',
-          email: 'acmonteiro48@gmail.com'));
-      list_employee_Mandatarios.add(Employee(
-          name: 'Francisco de Pina',
-          cargo: AppLocalizations.of(context)!.text_role_estevao,
-          image:
-          'https://santiago.mandabai.com/wp-content/uploads/2022/01/Design-sem-nome-36.jpg',
-          description: AppLocalizations.of(context)!.text_description_estevao,
-          tel: '+351913098511\n+351938880906',
-          email: 'francisco.r.depina@gmail.com'));
-    }
-
-    return list_employee_Mandatarios;
-  }
   @override
   void dispose() {
     _connectivitySubscription.cancel();
@@ -137,6 +81,7 @@ class _InfoAppState extends State<InfoMandaBai> {
 
   @override
   Widget build(BuildContext context) {
+    mandaBaiController.carregarEmployee(context);
     return SafeArea(
       child: BasePage(
         title:    AppLocalizations.of(context)!.title_about_us,
@@ -173,44 +118,11 @@ class _InfoAppState extends State<InfoMandaBai> {
                     style: Theme.of(context).textTheme.headline2,
                   ),
                 ),
-                const SizedBox(height: 10),
-                FutureBuilder(
-                  future: _carregar(context),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return Container(
-                          height: Get.height * 0.2,
-                          width: Get.width,
-                          child: Center(
-                            child: Image.network(
-                              AppImages.loading,
-                              width: Get.width * 0.2,
-                              height: Get.height * 0.2,
-                              alignment: Alignment.center,
-                            ),
-                          ),
-                        );
-                      default:
-                        if (snapshot.data == null) {
-                          return Container();
-                        } else {
-                          return Container(
-                            height: Get.height * 0.35,
-                            child: ListView.builder(
-                              padding: EdgeInsets.all(0.0),
-                              scrollDirection: Axis.vertical,
-                              itemCount: list_employee.length,
-                              itemBuilder: (BuildContext context, index) {
-                                var list = list_employee[index];
-                                return Item_Bio(employee: list);
-                              },
-                            ),
-                          );
-                        }
-                    }
-                  },
-                ),
+
+
+               Wrap(
+                 children: mandaBaiController.listEmployee.map((element) =>  ItemBio(employee: element),).toList(),
+               ),
                 const SizedBox(height: 20),
                 Align(
                   alignment: Alignment.topLeft,
@@ -221,43 +133,10 @@ class _InfoAppState extends State<InfoMandaBai> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                FutureBuilder(
-                  future: _carregarMandatarios(context),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return Container(
-                          height: Get.height * 0.2,
-                          width: Get.width,
-                          child: Center(
-                            child: Image.network(
-                              AppImages.loading,
-                              width: Get.width * 0.2,
-                              height: Get.height * 0.2,
-                              alignment: Alignment.center,
-                            ),
-                          ),
-                        );
-                      default:
-                        if (snapshot.data == null) {
-                          return Container();
-                        } else {
-                          return Container(
-                            height: Get.height * 0.35,
-                            child: ListView.builder(
-                              padding: EdgeInsets.all(0.0),
-                              scrollDirection: Axis.vertical,
-                              itemCount: list_employee_Mandatarios.length,
-                              itemBuilder: (BuildContext context, index) {
-                                var list = list_employee_Mandatarios[index];
-                                return ItemMandatario(employee: list);
-                              },
-                            ),
-                          );
-                        }
-                    }
-                  },
+                Wrap(
+                  children: mandaBaiController.listEmployeeMandatarios.map((element) => ItemMandatario(employee: element),).toList(),
                 ),
+
                 SizedBox(height: Get.height * 0.04),
                 Container(
                   margin: EdgeInsets.only(

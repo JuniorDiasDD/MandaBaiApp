@@ -191,7 +191,7 @@ class _StartPageState extends State<CartPage> {
                           child: Column(
                             children: [
                               SizedBox(height: Get.height * 0.2),
-                              WebsafeSvg.asset(AppImages.cart_empyt),
+                              WebsafeSvg.asset(AppImages.cartEmpyt),
                               SizedBox(height: Get.height * 0.08),
                               Text(
                                 AppLocalizations.of(context)!.text_empty_cart,

@@ -8,7 +8,7 @@ import 'package:manda_bai/helpers/result.dart';
 class FavoriteController extends GetxController {
   static FavoriteController instance = Get.find();
   final _loading = false.obs;
-final _vazio=false.obs;
+  final _vazio = false.obs;
   final _list_product = <Product>[].obs;
   final _list_product_full = <Product>[].obs;
   List<Product> get list_product {
@@ -16,7 +16,7 @@ final _vazio=false.obs;
   }
 
   set list_product(List<Product> list) {
-    this._list_product.value = list;
+    _list_product.value = list;
   }
 
   List<Product> get list_product_full {
@@ -24,23 +24,25 @@ final _vazio=false.obs;
   }
 
   set list_product_full(List<Product> list) {
-    this._list_product_full.value = list;
+    _list_product_full.value = list;
   }
 
   set loading(bool loading) {
-    this._loading.value = loading;
+    _loading.value = loading;
   }
 
   bool get vazio {
     return _vazio.value;
   }
+
   set vazio(bool loading) {
-    this._vazio.value = loading;
+    _vazio.value = loading;
   }
 
   bool get loading {
     return _loading.value;
   }
+
   remover(int id) {
     if (_list_product_full.isNotEmpty) {
       for (int i = 0; i < _list_product_full.length; i++) {
@@ -48,17 +50,17 @@ final _vazio=false.obs;
           _list_product_full.removeAt(i);
         }
       }
-      list_product=_list_product_full;
-      if(list_product.isEmpty){
+      list_product = _list_product_full;
+      if (list_product.isEmpty) {
         return true;
       }
     }
     return false;
   }
 
-
   var isChecked = false.obs;
   TextEditingController pesquisa = TextEditingController();
+
   Future carregar() async {
     if (list_product.isEmpty && pesquisa.text == "") {
       list_product = await ServiceRequest.loadFavorite();
@@ -77,15 +79,13 @@ final _vazio=false.obs;
               {
                 if (value != false) {
                   double dolar = double.parse(value);
-                  list_product[m].price =
-                     list_product[m].price / dolar;
+                  list_product[m].price = list_product[m].price / dolar;
                 }
                 break;
               }
             case 'ECV':
               {
-               list_product[m].price =
-               list_product[m].price * 110.87;
+                list_product[m].price = list_product[m].price * 110.87;
 
                 break;
               }
@@ -100,20 +100,21 @@ final _vazio=false.obs;
 
   search() {
     list_product = [];
-      for (int i = 0; i < list_product_full.length; i++) {
-        if (list_product_full[i].name
-            .toLowerCase()
-            .contains(pesquisa.text.toLowerCase())) {
-         list_product.add(list_product_full[i]);
-        }
+    for (int i = 0; i < list_product_full.length; i++) {
+      if (list_product_full[i]
+          .name
+          .toLowerCase()
+          .contains(pesquisa.text.toLowerCase())) {
+        list_product.add(list_product_full[i]);
       }
+    }
   }
 
   Future<SetResult> addCart(id) async {
     bool check = await ServiceRequest.addCart(id, 1);
 
-    if(!check){
-      return SetResult(false,errorMessage: 'Error in add to Cart');
+    if (!check) {
+      return SetResult(false, errorMessage: 'Error in add to Cart');
     }
 
     return SetResult(true);

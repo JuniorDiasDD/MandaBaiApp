@@ -3,16 +3,16 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
-import 'package:manda_bai/Controller/request.dart';
 import 'package:manda_bai/Core/app_images.dart';
 import 'package:manda_bai/UI/home/pop_up/popup_message_internet.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:manda_bai/constants/controllers.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PedidoDescriptionProduct extends StatefulWidget {
-  int idProduct;
-  PedidoDescriptionProduct({Key? key, required this.idProduct})
+  final int idProduct;
+  const PedidoDescriptionProduct({Key? key, required this.idProduct})
       : super(key: key);
 
   @override
@@ -75,21 +75,8 @@ class _PedidoDescriptionProductState extends State<PedidoDescriptionProduct> {
     _connectivitySubscription.cancel();
     super.dispose();
   }
-  var product;
-  Future carregar() async {
-    product = await ServiceRequest.loadProductbyId(widget.idProduct);
-    if (product == false) {
-      return null;
-    }
-    return product;
-  }
-  var money_txt;
-  Future _carregarMoney() async {
-     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    money_txt = prefs.getString('money');
 
-    return money_txt;
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -101,11 +88,11 @@ class _PedidoDescriptionProductState extends State<PedidoDescriptionProduct> {
             child: Column(
               children: [
                 FutureBuilder(
-                    future: carregar(),
+                    future: orderController.carregarProduct(widget.idProduct),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
-                          return Container(
+                          return SizedBox(
                             height: Get.height * 0.2,
                             width: Get.width,
                             child: Center(
@@ -125,10 +112,10 @@ class _PedidoDescriptionProductState extends State<PedidoDescriptionProduct> {
                               children: [
                                 Stack(
                                   children: [
-                                    Container(
+                                    SizedBox(
                                       height: Get.height * 0.5,
                                       child: Image.network(
-                                        product.image,
+                                        orderController.product.image,
                                         width: Get.width,
                                         fit: BoxFit.cover,
                                       ),
@@ -147,7 +134,7 @@ class _PedidoDescriptionProductState extends State<PedidoDescriptionProduct> {
                                       color: Theme.of(context).cardColor,
                                       blurRadius: 1.0,
                                       spreadRadius: 0.0,
-                                      offset: Offset(0.5, 0.5),
+                                      offset: const Offset(0.5, 0.5),
                                     ),
                                   ],
                                   color: Theme.of(context).dialogBackgroundColor,
@@ -176,71 +163,53 @@ class _PedidoDescriptionProductState extends State<PedidoDescriptionProduct> {
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Container(
+                                        SizedBox(
                                           width: Get.width * 0.7,
                                           child: Text(
-                                            product.name,
+                                            orderController.product.name,
                                             style:
                                                 Theme.of(context).textTheme.headline1,
                                           ),
                                         ),
-                                        FutureBuilder(
-                                            future: _carregarMoney(),
-                                            builder: (BuildContext context,
-                                                AsyncSnapshot snapshot) {
-                                              if (snapshot.data == null) {
-                                                return const Text(" ");
-                                              } else {
-                                                switch (money_txt) {
-                                                  case 'EUR':
-                                                    {
-                                                      return Text(
-                                                        product.price
-                                                                .toStringAsFixed(2) +
-                                                            " €",
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .headline5!
-                                                            .copyWith(
-                                                              fontSize:
-                                                                  Get.width * 0.04,
-                                                            ),
-                                                      );
-                                                    }
-                                                  case 'ECV':
-                                                    {
-                                                      return Text(
-                                                        product.price
-                                                                .toStringAsFixed(0) +
-                                                            " \$",
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .headline5!
-                                                            .copyWith(
-                                                              fontSize:
-                                                                  Get.width * 0.04,
-                                                            ),
-                                                      );
-                                                    }
-                                                  case 'USD':
-                                                    {
-                                                      return Text(
-                                                        "\$ " +
-                                                            product.price
-                                                                .toStringAsFixed(2),
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .headline5!
-                                                            .copyWith(
-                                                              fontSize:
-                                                                  Get.width * 0.04,
-                                                            ),
-                                                      );
-                                                    }
-                                                }
-                                                return Container();
-                                              }
-                                            }),
+                                        if(fullControllerController.initialMoney.value=='EUR')
+                                          Text(
+                                            orderController.product.price
+                                                .toStringAsFixed(2) +
+                                                " €",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline5!
+                                                .copyWith(
+                                              fontSize:
+                                              Get.width * 0.04,
+                                            ),
+                                          )
+                                        else if(fullControllerController.initialMoney.value=='USD')
+                                          Text(
+                                            "\$ " +
+                                                orderController.product.price
+                                                    .toStringAsFixed(2),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline5!
+                                                .copyWith(
+                                              fontSize:
+                                              Get.width * 0.04,
+                                            ),
+                                          )
+                                        else
+                                          Text(
+                                            orderController.product.price
+                                                .toStringAsFixed(0) +
+                                                " \$",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline5!
+                                                .copyWith(
+                                              fontSize:
+                                              Get.width * 0.04,
+                                            ),
+                                          ),
                                         Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
@@ -257,10 +226,8 @@ class _PedidoDescriptionProductState extends State<PedidoDescriptionProduct> {
                                         SizedBox(height: Get.height * 0.01),
                                         Align(
                                           alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            product.description,
-                                            style:
-                                            Theme.of(context).textTheme.headline4,
+                                          child: Html(
+                                            data: orderController.product.description,
                                           ),
                                         ),
                                       ],
