@@ -18,8 +18,9 @@ class ServiceRequest {
 
     List<Product> list = [];
 
-    var island = fullControllerController.island.value;
-    print('categoria--'+id.toString()+"--"+island.toString());
+    String island = fullControllerController.island.value;
+
+
     var response;
     if (productController.statusLoadProdutoPage == "init") {
       loadProdutoPage = 1;

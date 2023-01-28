@@ -51,6 +51,7 @@ class MandaBaiController extends GetxController {
     list.forEach((element) {
       if(element.island==fullControllerController.island.value){
         imageBackground.value=element.image!;
+
       }
     });
 
@@ -68,21 +69,22 @@ class MandaBaiController extends GetxController {
       ));
       listEmployee.add(Employee(
         name: 'Eveline Tavares',
-        cargo: AppLocalizations.of(context)!.text_role_junior,
-        image:
-        'https://www.mandabai.com/wp-content/uploads/elementor/thumbs/Design-sem-nome-4-pbwjcdm6kbjiw14u4pb8kvevyan7bq0lqfaqzjbqds.jpg',
-        description: AppLocalizations.of(context)!.text_description_junior,
-        tel: '+351 939779618',
-        email: 'junior.mandabai@gmail.com',
-      ));
-      listEmployee.add(Employee(
-        name: 'Junior Silva',
         cargo: AppLocalizations.of(context)!.text_role_eveline,
         image:
-        'https://santiago.mandabai.com/wp-content/uploads/2022/10/181D76A8-7427-4783-AED9-DAA9A318651F_1_201_a-scaled.jpg',
+        'https://www.mandabai.com/wp-content/uploads/elementor/thumbs/Design-sem-nome-4-pbwjcdm6kbjiw14u4pb8kvevyan7bq0lqfaqzjbqds.jpg',
         description: AppLocalizations.of(context)!.text_description_eveline,
         tel: '+2389724140',
         email: 'eveline.mandabai@gmail.com',
+      ));
+      listEmployee.add(Employee(
+        name: 'Junior Silva',
+        cargo: AppLocalizations.of(context)!.text_role_junior,
+        image:
+        'https://santiago.mandabai.com/wp-content/uploads/2022/10/181D76A8-7427-4783-AED9-DAA9A318651F_1_201_a-scaled.jpg',
+        description: AppLocalizations.of(context)!.text_description_junior,
+
+        tel: '+351 939779618',
+        email: 'juniormandabai@gmail.com',
       ));
  listEmployeeMandatarios.clear();
  listEmployeeMandatarios.add(Employee(

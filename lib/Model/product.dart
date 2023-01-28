@@ -7,16 +7,17 @@ class Product {
   double price;
   Product(
       {required this.id,
-        required this.name,
-        required this.image,
-        required this.in_stock,
-        required this.stock_quantity,
-        required this.on_sale,
-        required this.price,
-        required this.description,
-        required this.sale_price,
-        required this.favorite});
+      required this.name,
+      required this.image,
+      required this.in_stock,
+      required this.stock_quantity,
+      required this.on_sale,
+      required this.price,
+      required this.description,
+      required this.sale_price,
+      required this.favorite});
   factory Product.fromJson(Map<String, dynamic> json) {
+
     return Product(
       id: json['id'],
       name: json['name'].toString(),
@@ -26,7 +27,7 @@ class Product {
       in_stock: json['stock_status'].toString(),
       on_sale: json['on_sale'].toString(),
       stock_quantity: json['stock_quantity'].toString(),
-      image: json['images'][0]["src"],
+      image:  json['images'][0]["src"],
       favorite: false,
     );
   }

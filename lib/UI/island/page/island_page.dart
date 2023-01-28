@@ -180,7 +180,7 @@ class _IslandPageState extends State<IslandPage> {
                       image: AppImages.boaVistaIsland,
                       label: 'BoaVista',
                       action: () async {
-                        fullControllerController.island.value = 'BoaVista';
+                        fullControllerController.island.value = 'Boa Vista';
                         openLoadingIslandStateDialog(context);
                         await fullControllerController.getloadDataHome();
                         Navigator.pop(context);

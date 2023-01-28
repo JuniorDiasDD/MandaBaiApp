@@ -45,7 +45,7 @@ class CategoryController extends GetxController {
   }
 
   Future carregarFilter() async {
-    print("filtro");
+    _listFilter.clear();
     if (listCategory.isEmpty) {
       listCategory = await categoryService.loadCategory();
       if (listCategory.isNotEmpty) {
@@ -53,7 +53,9 @@ class CategoryController extends GetxController {
       }
     }
     if (_listFilter.isEmpty) {
-      listCategory.forEach((e) {
+
+      for (var e in listCategory) {
+
         switch (e.name) {
           case 'Alimentos':
             {
@@ -128,7 +130,7 @@ class CategoryController extends GetxController {
               break;
             }
         }
-      });
+      }
 
       if (_listFilter.isEmpty) {
         return null;
@@ -212,7 +214,6 @@ class CategoryController extends GetxController {
     if (productController.listProductHome.isEmpty ||
         destaqueCurrent != mandaBaiController.destaque) {
       destaqueCurrent = mandaBaiController.destaque;
-
       if (listCategoryFull.isEmpty) {
         await carregarCategory();
       }
@@ -253,7 +254,7 @@ class CategoryController extends GetxController {
                           itemUsernameString &&
                       productController.listProductFavorite[f].island ==
                           fullControllerController.island.value) {
-                    print(productController.listProductHome[i].favorite);
+
                     productController.listProductHome[i].favorite = true;
                   } else {
                     productController.listProductHome[i].favorite = false;
@@ -300,6 +301,7 @@ class CategoryController extends GetxController {
       if (listCategoryFull.isEmpty) {
         return null;
       }
+      listCategory.clear();
       listCategory.addAll(listCategoryFull);
     }
     return listCategory;

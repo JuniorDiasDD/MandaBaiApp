@@ -330,7 +330,7 @@ class _StartPageState extends State<StartPage> {
                     if (snapshot.hasError) {
                       return const ErrorPage(text: 'Erro the system');
                     }
-                    if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.connectionState == ConnectionState.done && categoryController.listFilter.isNotEmpty) {
                       return Column(
                         children: [
                           HeaderTitle(
@@ -342,32 +342,13 @@ class _StartPageState extends State<StartPage> {
                               Navigator.pushNamed(context, '/categories');
                             },
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              ItemFilter(
-                                  filter: categoryController.listFilter[0]),
-                              ItemFilter(
-                                  filter: categoryController.listFilter[1]),
-                              ItemFilter(
-                                  filter: categoryController.listFilter[2]),
-                              ItemFilter(
-                                  filter: categoryController.listFilter[3]),
-                            ],
+                          Wrap(
+                            children: categoryController.listFilter.map((e) => Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: ItemFilter(filter: e),
+                            )).toList(),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              ItemFilter(
-                                  filter: categoryController.listFilter[4]),
-                              ItemFilter(
-                                  filter: categoryController.listFilter[5]),
-                              ItemFilter(
-                                  filter: categoryController.listFilter[6]),
-                              ItemFilter(
-                                  filter: categoryController.listFilter[7]),
-                            ],
-                          ),
+
                         ],
                       );
                     }

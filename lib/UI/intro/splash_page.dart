@@ -79,7 +79,6 @@ class _SplashPageState extends State<SplashPage> {
         }
 
         //check version
-
          String versionStore = await fullControllerController.getVersion();
           if (versionApp == versionStore) {
             final SharedPreferences prefs =
@@ -106,9 +105,8 @@ class _SplashPageState extends State<SplashPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            width: Get.width,
-            height: Get.height * 0.14,
+          Padding(
+            padding: const EdgeInsets.all(32.0),
             child: Image.asset(AppImages.appLogo),
           ),
         ],
